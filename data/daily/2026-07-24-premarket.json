@@ -1,0 +1,2153 @@
+{
+ "report_type": "premarket",
+ "date": "2026-07-24",
+ "generated_at": "2026-07-24 约20:20 SGT（盘前数据截至ET盘前时段，指数收盘数据为7/23）",
+ "title": "盘前报告 · 2026-07-24（周五）",
+ "subtitle": "",
+ "badges": [],
+ "signal_light": {
+  "bias": {
+   "level": "high",
+   "label": "降级档正式触发+地缘危机未解除(Iran拒绝停火)+盘前指数窄幅震荡但结构脆弱"
+  },
+  "bond": {
+   "level": "high",
+   "label": "10Y 4.703%去年1月来新高，RATE-ALERT持续恶化"
+  },
+  "dxy": {
+   "level": "low",
+   "label": "DXY约101，距103防线仍有缓冲"
+  },
+  "breadth": {
+   "level": "high",
+   "label": "T2108 46.66正式跌破50，5日/10日ratio双双<1，降级档三理由两恶化"
+  },
+  "discipline": [
+   "降级档正式触发：新仓减半仓位+只做A级，且今天A级候选门槛要比昨天更严格",
+   "Setup B(突破类)今日不做——板块单日极差6.34pct全周最高，突破后squat概率显著上升",
+   "A/D回踩类优先做防御侧(XLU/XLP/XLV/XLE)——防御均值+0.15% vs 进攻-3.04%，差距比昨天更大",
+   "地缘风险未解除(Iran拒绝停火/Trump威胁大规模打击)，不因油价单日回落而放松警惕"
+  ]
+ },
+ "scoreboard_rows": [
+  {
+   "condition": "SPY收盘≥753.53（进攻线）",
+   "type": "upgrade",
+   "threshold": "≥753.53",
+   "current": "738.18",
+   "distance_pct": "-2.03%",
+   "status": "unmet"
+  },
+  {
+   "condition": "QQQ收盘≥713.32（20MA·随均线漂移）",
+   "type": "upgrade",
+   "threshold": "≥713.32",
+   "current": "691.96",
+   "distance_pct": "-2.99%",
+   "status": "unmet"
+  },
+  {
+   "condition": "10日ratio>1.35",
+   "type": "upgrade",
+   "threshold": ">1.35",
+   "current": "0.80",
+   "distance_pct": "-41%",
+   "status": "unmet"
+  },
+  {
+   "condition": "T2108<50（降级触发线）",
+   "type": "downgrade",
+   "threshold": "<50触发",
+   "current": "46.66",
+   "distance_pct": "🔴已跌破，超出触发线6.68%",
+   "status": "triggered"
+  },
+  {
+   "condition": "4%下跌家数>400",
+   "type": "downgrade",
+   "threshold": ">400",
+   "current": "319",
+   "distance_pct": "距门槛20%（自40%收窄）",
+   "status": "safe"
+  },
+  {
+   "condition": "VIX>22",
+   "type": "downgrade",
+   "threshold": ">22",
+   "current": "18.70",
+   "distance_pct": "距门槛15%（自32%收窄）",
+   "status": "safe"
+  },
+  {
+   "condition": "QQQ收盘≥690（周防守线）",
+   "type": "downgrade",
+   "threshold": "<690触发",
+   "current": "691.96",
+   "distance_pct": "缓冲仅+0.28%（自+2.22%大幅收窄）",
+   "status": "safe"
+  },
+  {
+   "condition": "10Y>4.50%（久期防线）",
+   "type": "duration",
+   "threshold": ">4.50%触发",
+   "current": "4.703%（TNX 47.03）",
+   "distance_pct": "超出+4.5%，去年1月来新高",
+   "status": "triggered"
+  },
+  {
+   "condition": "DXY>103（久期防线）",
+   "type": "duration",
+   "threshold": ">103触发",
+   "current": "约101",
+   "distance_pct": "缓冲仍在",
+   "status": "safe"
+  },
+  {
+   "condition": "SMH收盘≥5MA（半导体解禁线）",
+   "type": "techparity",
+   "threshold": "≥约578",
+   "current": "580.17",
+   "distance_pct": "勉强维持，缓冲极薄",
+   "status": "met"
+  },
+  {
+   "condition": "SMH收盘≥598.40（50MA修复线）",
+   "type": "techparity",
+   "threshold": "≥598.40",
+   "current": "580.17",
+   "distance_pct": "-3.05%（自-1.92%再扩大）",
+   "status": "unmet"
+  }
+ ],
+ "scoreboard_note": "🔴今天记分板恶化的不是一条而是两条：**T2108正式跌破50（降级档不再是擦边，是正式触发）**，QQQ周防守线缓冲从+2.22%收窄到只剩+0.28%——离690只差一根小阴线。10Y创去年1月来新高，利率+广度+防守线三条同时在恶化的边缘。这是本周记分板最差的一版。",
+ "risk_checklist": [
+  {
+   "label": "S&P 500 overextension",
+   "level": "low",
+   "detail": "SPY距20MA-1.05%，没有延伸风险，跌出来的"
+  },
+  {
+   "label": "Increasing downward momentum",
+   "level": "high",
+   "detail": "🔴QQQ收盘位置38%、QQQE38%、SPY40%——三只都收在区间下段，7/21那波修复的成果基本吐完"
+  },
+  {
+   "label": "Top range breakdown",
+   "level": "mid",
+   "detail": "QQQ 690周防守线缓冲仅+0.28%，是本轮最接近击穿的一次"
+  },
+  {
+   "label": "Technical deterioration",
+   "level": "high",
+   "detail": "🔴XLC-3.50%/XLY-4.61%远差于其他板块，QQQ/QQQE跌破20MA且RSI破50——纳指结构在真正恶化，不是权重股单独的问题（QQQE跟QQQ跌幅接近）"
+  },
+  {
+   "label": "Market breadth worsening",
+   "level": "high",
+   "detail": "🔴🔴T2108 46.66正式跌破50，4%上涨137vs下跌319（连续两天转差），5日ratio0.97/10日ratio0.80都<1——降级档三个理由里两个同时在恶化"
+  },
+  {
+   "label": "VIX >20 spike",
+   "level": "mid",
+   "detail": "VIX18.70+2.06pt，盘中触及19.43，接近但未到22——趋势是在恶化"
+  },
+  {
+   "label": "利率外生冲击",
+   "level": "high",
+   "detail": "🔴10Y 4.703%去年1月来新高，RATE-ALERT持续恶化"
+  },
+  {
+   "label": "地缘外生冲击",
+   "level": "high",
+   "detail": "🔴🔴**未解除，仍在升级**：Houthi新一轮点名袭击两艘沙特油轮(Encelia/Layla)，7艘船绕行避开Bab el-Mandeb海峡，美军完成第12轮对伊朗打击，Trump威胁'大规模军事惩罚'/'massive attack'。油价Brent仍在$99附近(周内+13%)，周五略有回落但绝不是危机解除的信号"
+  },
+  {
+   "label": "Theme momentum weakening",
+   "level": "mid",
+   "detail": "半导体：INTC盘后+12%的利好今早盘前已经褪色(仅+0.69%)，MU/SNDK盘前反而-1.53%/-2.39%给回昨天涨幅——'跳空修复'的判断昨晚已经撤回，今天盘前验证了撤回是对的"
+  }
+ ],
+ "risk_checklist_note": "9项里3项到高档(利率/地缘/广度)、1项从mid升到high(下跌动能)——比昨天更差，不是更好。",
+ "regime_triggers": {
+  "upgrade": {
+   "rule": "SPY≥753.53且10日ratio>1.35",
+   "items": [
+    "SPY 738.18，距753.53还差2.03% ❌（比昨天-0.81%明显拉远）",
+    "10日ratio 0.80，距1.35 -41% ❌（自0.92回落，方向变差）"
+   ]
+  },
+  "downgrade": {
+   "rule": "T2108<50 或 4%下跌>400 或 VIX>22（任一触发）",
+   "items": [
+    "🔴T2108 46.66 已触发（正式，非擦边）",
+    "🟢4%下跌319 safe但已用掉80%缓冲",
+    "🟢VIX18.70 safe但已用掉85%缓冲"
+   ]
+  }
+ },
+ "breadth_table": {
+  "headers": [
+   "指标",
+   "当前值",
+   "前值",
+   "判断"
+  ],
+  "rows": [
+   [
+    "SPX >20MA (S5TW)",
+    "45.52(7/22)",
+    "48.90",
+    "连续下滑，7/23值明天才有"
+   ],
+   [
+    "SPX >50MA (S5FI)",
+    "62.22(7/22)",
+    "59.24",
+    "逆势小升"
+   ],
+   [
+    "NDX >20MA (NDTW)",
+    "32.03(7/22)",
+    "47.54",
+    "🔴大幅恶化-15.51pct"
+   ],
+   [
+    "NDX >50MA (NDFI)",
+    "46.60(7/22)",
+    "43.68",
+    "小幅回升，打破此前连续4日不变"
+   ],
+   [
+    "IWM >20MA (R2TW)",
+    "41.16(7/22)",
+    "60.63",
+    "🔴大幅恶化-19.47pct"
+   ],
+   [
+    "IWM >50MA (R2FI)",
+    "60.55(7/22)",
+    "62.68",
+    "小幅回落"
+   ],
+   [
+    "T2108",
+    "46.66",
+    "50.93",
+    "🔴🔴跌破50，降级档正式重新触发"
+   ],
+   [
+    "4%以上上涨家数",
+    "137",
+    "160",
+    "继续萎缩"
+   ],
+   [
+    "4%以上下跌家数",
+    "319",
+    "240",
+    "🔴继续恶化"
+   ],
+   [
+    "5日ratio",
+    "0.97",
+    "0.91",
+    "小幅回升但仍<1"
+   ],
+   [
+    "10日ratio",
+    "0.80",
+    "0.92",
+    "🔴回落，方向变差"
+   ]
+  ],
+  "num_cols": []
+ },
+ "breadth_table_note": "①-⑥来自Vic Sheet最新到7/22（滞后一天，NDX/IWM的20MA成分股比例双双大幅下滑，7/22当天广度确认恶化）；⑦-⑪Stockbee已是7/23收盘值，T2108正式跌破50是本轮最重要的单条信号。",
+ "other_assets_table": {
+  "headers": [
+   "资产",
+   "现值",
+   "日变动",
+   "信号"
+  ],
+  "rows": [
+   [
+    "10Y美债",
+    "4.703%(TNX 47.03)",
+    "持平高位",
+    "去年1月来新高，RATE-ALERT持续恶化"
+   ],
+   [
+    "VIX",
+    "18.70",
+    "+2.06pt",
+    "盘中触及19.43，趋势向上"
+   ],
+   [
+    "DXY",
+    "约101",
+    "-",
+    "缓冲仍在103防线下方"
+   ],
+   [
+    "黄金(GLD)",
+    "371.52",
+    "-2.0%",
+    "risk-off日黄金反而跌，跟避险逻辑不符，可能是流动性去杠杆挤兑效应"
+   ],
+   [
+    "WTI/Brent",
+    "约$91/$99",
+    "周内+13%",
+    "🔴🔴Houthi袭击沙特油轮持续，7艘船绕行Bab el-Mandeb，美军12轮打击伊朗，Trump威胁'大规模军事惩罚'。周五略回落但危机远未解除"
+   ],
+   [
+    "BTC(IBIT)",
+    "-",
+    "-",
+    "单边榜掉到2分"
+   ]
+  ],
+  "num_cols": []
+ },
+ "joint_signal_lines": [
+  "<b>联合信号①更新（重要反转）：</b>昨天判断'能源+金融同步走强'，实际7/23收盘位置显示**完全反过来**——XLE/XOP盘中冲高(一度+1.5%+)尾盘全部回吐(收盘位置10%/7%)，XLF/KRE盘中最弱尾盘反而买盘涌入(收盘位置93%/95%)。今天盘前XLE/XOP反而又+1.25%/+2.68%在反弹、XLF/KRE还在-0.25%/-0.69%——**如果这个模式延续，该重新评估：金融的尾盘买盘可能比能源的盘中冲高更值得信任，方法2选股权重应该从能源为主切到金融为主**",
+  "<b>联合信号②：</b>降级档从'T2108险守'变成'正式跌破'，且5日/10日ratio双双<1——三个降级理由里两个在恶化，只有VIX还没到22。今天新仓仍是减半仓位+只做A级，且A级候选门槛应该更严格",
+  "<b>联合信号③（半导体判断修正）：</b>昨晚'INTC暴涨→SMH跳空修复'的判断已撤回（SMH里INTC权重低，NVDA才是最大权重20.78%）。今天盘前验证撤回是对的：SMH盘前-0.48%，MU/SNDK盘前-1.53%/-2.39%在给回昨天涨幅。**这几只票这几天在剧烈的暴跌-暴力反弹之间来回甩，不是进入平静整理，今天不是加仓这条链的时点**",
+  "<b>联合信号④（地缘风险未解除）：</b>Houthi/Bab el-Mandeb局势仍在升级不是缓和——新增两艘被点名的沙特油轮遇袭、7艘船绕行、美军第12轮打击伊朗、Trump威胁'大规模军事惩罚'。**Vic昨晚'大盘没跌完'的判断，今早的新闻和数据都支持，不能因为油价周五小幅回落就当作危机结束的信号**"
+ ],
+ "macro_radar_table": {
+  "headers": [
+   "事件",
+   "日期(ET)",
+   "预期/前值",
+   "结果/现状",
+   "市场解读"
+  ],
+  "rows": [
+   [
+    "🎯SLB财报",
+    "7/24盘前",
+    "EPS $0.51",
+    "待公布",
+    "能源龙头，油服链读数，直接影响OIH/BKR的持续性判断"
+   ],
+   [
+    "AXP/VZ/HCA/CHTR/BAH财报",
+    "7/24盘前",
+    "-",
+    "待公布",
+    "本周最后一批常规财报"
+   ],
+   [
+    "Houthi/Bab el-Mandeb局势",
+    "持续升级",
+    "-",
+    "🔴🔴新点名两艘沙特油轮(Encelia/Layla)遇袭，7艘船绕行，美军12轮打击伊朗，Trump威胁'大规模军事惩罚'/'massive attack'",
+    "中东风险溢价的核心，未解除"
+   ],
+   [
+    "🎯FOMC利率决议",
+    "7/29 14:00",
+    "下周三",
+    "-",
+    "10Y已创新高，会前任何风吹草动都会放大"
+   ],
+   [
+    "MSFT/AMZN/META财报",
+    "本周内(待确认具体日期)",
+    "-",
+    "-",
+    "capex叙事已证实会扩散，这三家的财报是下一个判决点"
+   ]
+  ],
+  "num_cols": []
+ },
+ "macro_radar_detail": "Houthi袭油轮多源核实(CNBC/Spokesman/TWZ/Reason)，具体船名(Encelia/Layla)与美军12轮打击伊朗均已交叉确认。SLB财报预期来自Nasdaq日历API。",
+ "sector_rs_tables": [
+  {
+   "title": "第一组：XL标准板块+指数基准（15只，按T-1%降序）",
+   "headers": [
+    "TICKER",
+    "T-1%",
+    "5日%",
+    "1月%",
+    "盘前",
+    "驱动/原因",
+    "RS(1周)"
+   ],
+   "rows": [
+    [
+     "XLI",
+     "+1.73%",
+     "+0.99%",
+     "+2.13%",
+     "+0.45%",
+     "🟢RTX/LMT/HON/TMO真beat真涨拉动+1.73%",
+     "+3.0"
+    ],
+    [
+     "XLV",
+     "+1.26%",
+     "-0.22%",
+     "+6.08%",
+     "+0.01%",
+     "+1.26%防御兑现，月线+6.08%仍是中期主线",
+     "+1.8"
+    ],
+    [
+     "XLU",
+     "+0.57%",
+     "+1.58%",
+     "+2.49%",
+     "+0.24%",
+     "5日+1.58%，防御继续有资金",
+     "+3.6"
+    ],
+    [
+     "XLE",
+     "+0.30%",
+     "+4.14%",
+     "+9.03%",
+     "-0.10%",
+     "单边榜4/4连续第6日，但**RSI68.4/距20MA3.35ATR已高度延伸**，且7/23收盘位置只有10%——盘中冲高尾盘全部回吐",
+     "+6.1"
+    ],
+    [
+     "XLRE",
+     "-0.13%",
+     "-1.12%",
+     "+0.69%",
+     "+0.04%",
+     "",
+     "+0.9"
+    ],
+    [
+     "XLF",
+     "-0.39%",
+     "-1.62%",
+     "+3.62%",
+     "+0.36%",
+     "🟢7/23收盘位置93%——**盘中最弱、尾盘反而收在日内高位**，跟能源走势完全反过来；单边榜3/4但5日转负(-1.62%)",
+     "+0.4"
+    ],
+    [
+     "IWM",
+     "-0.58%",
+     "-1.18%",
+     "-1.09%",
+     "+0.38%",
+     "",
+     "+0.8"
+    ],
+    [
+     "DIA",
+     "-1.00%",
+     "-1.63%",
+     "-0.07%",
+     "+0.43%",
+     "",
+     "+0.3"
+    ],
+    [
+     "XLK",
+     "-1.01%",
+     "+0.52%",
+     "-3.12%",
+     "+0.05%",
+     "1月转负(-3.12%)，NVDA/AMD小跌但MU+3.20%/WDC+0.29%/SNDK+0.69%——半导体内部分化",
+     "+2.5"
+    ],
+    [
+     "XLB",
+     "-1.04%",
+     "-1.18%",
+     "-1.14%",
+     "-0.04%",
+     "延续弱势",
+     "+0.8"
+    ],
+    [
+     "VOO",
+     "-1.23%",
+     "-1.67%",
+     "+0.34%",
+     "+0.24%",
+     "",
+     "+0.3"
+    ],
+    [
+     "XLP",
+     "-1.39%",
+     "-3.03%",
+     "-0.61%",
+     "+0.11%",
+     "",
+     "-1.1"
+    ],
+    [
+     "QQQ",
+     "-1.90%",
+     "-1.98%",
+     "-3.04%",
+     "+0.17%",
+     "",
+     "+0.0"
+    ],
+    [
+     "XLC",
+     "-3.50%",
+     "-6.45%",
+     "-1.76%",
+     "+0.21%",
+     "🔴GOOGL权重最大，capex恐慌正中靶心，1月-1.76%",
+     "-4.5"
+    ],
+    [
+     "XLY",
+     "-4.61%",
+     "-7.31%",
+     "-4.40%",
+     "+0.50%",
+     "🔴🔴TSLA权重最大，1月-4.40%全场最差",
+     "-5.3"
+    ]
+   ],
+   "num_cols": [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   "row_highlights": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  {
+   "title": "第二组：AI/科技/半导体/量子/网安/软件（11只）",
+   "headers": [
+    "TICKER",
+    "T-1%",
+    "5日%",
+    "1月%",
+    "盘前",
+    "驱动/原因",
+    "RS(1周)"
+   ],
+   "rows": [
+    [
+     "DRAM",
+     "+0.92%",
+     "+11.39%",
+     "-15.78%",
+     "-2.95%",
+     "",
+     "+13.4"
+    ],
+    [
+     "EUV",
+     "-0.04%",
+     "+3.45%",
+     "-11.37%",
+     "+0.39%",
+     "",
+     "+5.4"
+    ],
+    [
+     "QTUM",
+     "-0.94%",
+     "+0.41%",
+     "-12.16%",
+     "+0.30%",
+     "",
+     "+2.4"
+    ],
+    [
+     "SMH",
+     "-1.15%",
+     "+1.98%",
+     "-6.73%",
+     "+0.28%",
+     "",
+     "+4.0"
+    ],
+    [
+     "AIQ",
+     "-1.35%",
+     "+0.03%",
+     "-6.35%",
+     "+0.29%",
+     "",
+     "+2.0"
+    ],
+    [
+     "CIBR",
+     "-1.80%",
+     "-4.54%",
+     "+4.17%",
+     "+0.85%",
+     "",
+     "-2.6"
+    ],
+    [
+     "KOID",
+     "-2.10%",
+     "-1.47%",
+     "-8.45%",
+     "+1.49%",
+     "",
+     "+0.5"
+    ],
+    [
+     "IGV",
+     "-2.16%",
+     "-7.04%",
+     "-0.25%",
+     "+1.00%",
+     "",
+     "-5.1"
+    ],
+    [
+     "ARKK",
+     "-2.89%",
+     "-3.70%",
+     "-3.72%",
+     "+0.80%",
+     "",
+     "-1.7"
+    ],
+    [
+     "MAGS",
+     "-4.63%",
+     "-7.18%",
+     "+0.14%",
+     "+0.35%",
+     "",
+     "-5.2"
+    ],
+    [
+     "ARKG",
+     "-",
+     "-",
+     "-",
+     "+0.03%",
+     "",
+     "-"
+    ]
+   ],
+   "num_cols": [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   "row_highlights": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  {
+   "title": "第三组：航天/国防/能源/材料/加密/中国/医疗/其他（27只）",
+   "headers": [
+    "TICKER",
+    "T-1%",
+    "5日%",
+    "1月%",
+    "盘前",
+    "驱动/原因",
+    "RS(1周)"
+   ],
+   "rows": [
+    [
+     "ITA",
+     "+3.08%",
+     "+3.18%",
+     "+0.97%",
+     "+0.64%",
+     "",
+     "+5.2"
+    ],
+    [
+     "EWY",
+     "+2.01%",
+     "+6.43%",
+     "-9.54%",
+     "-2.04%",
+     "",
+     "+8.4"
+    ],
+    [
+     "WGMI",
+     "+1.94%",
+     "+21.14%",
+     "-17.91%",
+     "+2.16%",
+     "",
+     "+23.1"
+    ],
+    [
+     "PAVE",
+     "+1.61%",
+     "+1.29%",
+     "-0.52%",
+     "+0.85%",
+     "",
+     "+3.3"
+    ],
+    [
+     "PPH",
+     "+1.22%",
+     "+0.06%",
+     "+4.40%",
+     "-1.76%",
+     "",
+     "+2.0"
+    ],
+    [
+     "IAK",
+     "+0.61%",
+     "+1.48%",
+     "+4.74%",
+     "无quote",
+     "",
+     "+3.5"
+    ],
+    [
+     "AIRR",
+     "+0.45%",
+     "+1.58%",
+     "-4.12%",
+     "+1.46%",
+     "",
+     "+3.6"
+    ],
+    [
+     "URA",
+     "+0.39%",
+     "+5.16%",
+     "-9.76%",
+     "-0.32%",
+     "",
+     "+7.1"
+    ],
+    [
+     "FXI",
+     "+0.09%",
+     "-0.20%",
+     "+4.96%",
+     "+0.29%",
+     "",
+     "+1.8"
+    ],
+    [
+     "XBI",
+     "+0.08%",
+     "+0.15%",
+     "+3.54%",
+     "+0.67%",
+     "",
+     "+2.1"
+    ],
+    [
+     "IHI",
+     "+0.06%",
+     "-5.29%",
+     "+0.65%",
+     "-0.85%",
+     "",
+     "-3.3"
+    ],
+    [
+     "LIT",
+     "+0.03%",
+     "+0.23%",
+     "-12.00%",
+     "-0.03%",
+     "",
+     "+2.2"
+    ],
+    [
+     "NASA",
+     "-0.17%",
+     "+0.04%",
+     "-19.17%",
+     "+0.00%",
+     "",
+     "+2.0"
+    ],
+    [
+     "XHB",
+     "-0.22%",
+     "-3.71%",
+     "-1.40%",
+     "无quote",
+     "",
+     "-1.7"
+    ],
+    [
+     "XOP",
+     "-0.53%",
+     "+5.54%",
+     "+13.30%",
+     "-0.68%",
+     "单边榜1/4，同上高延伸+收盘位置7%，回吐更彻底",
+     "+7.5"
+    ],
+    [
+     "ASHR",
+     "-0.54%",
+     "+0.67%",
+     "-3.55%",
+     "-0.75%",
+     "",
+     "+2.6"
+    ],
+    [
+     "KRE",
+     "-0.60%",
+     "-3.55%",
+     "+2.78%",
+     "+0.27%",
+     "5日-3.55%单边榜掉到2分，收盘位置95%——同XLF尾盘走强",
+     "-1.6"
+    ],
+    [
+     "KWEB",
+     "-0.64%",
+     "-4.40%",
+     "+7.27%",
+     "-0.24%",
+     "",
+     "-2.4"
+    ],
+    [
+     "OIH",
+     "-1.42%",
+     "+1.56%",
+     "-0.41%",
+     "+0.01%",
+     "",
+     "+3.5"
+    ],
+    [
+     "TAN",
+     "-1.62%",
+     "-2.45%",
+     "-9.75%",
+     "-0.13%",
+     "",
+     "-0.5"
+    ],
+    [
+     "IBIT",
+     "-1.85%",
+     "+0.71%",
+     "+3.79%",
+     "+0.38%",
+     "",
+     "+2.7"
+    ],
+    [
+     "GLD",
+     "-2.00%",
+     "+1.80%",
+     "-1.54%",
+     "无quote",
+     "高位收弱",
+     "+3.8"
+    ],
+    [
+     "REMX",
+     "-2.02%",
+     "-5.05%",
+     "-24.28%",
+     "+0.40%",
+     "",
+     "-3.1"
+    ],
+    [
+     "COPX",
+     "-2.03%",
+     "+4.94%",
+     "-1.40%",
+     "-0.08%",
+     "",
+     "+6.9"
+    ],
+    [
+     "ETHB",
+     "-2.58%",
+     "+0.10%",
+     "+12.97%",
+     "+0.04%",
+     "",
+     "+2.1"
+    ],
+    [
+     "JETS",
+     "-2.59%",
+     "-6.18%",
+     "-5.97%",
+     "+0.34%",
+     "",
+     "-4.2"
+    ],
+    [
+     "SLV",
+     "-3.45%",
+     "+3.31%",
+     "-6.59%",
+     "+1.37%",
+     "",
+     "+5.3"
+    ]
+   ],
+   "num_cols": [
+    1,
+    2,
+    3,
+    4,
+    6
+   ],
+   "row_highlights": [
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    ""
+   ]
+  }
+ ],
+ "unilateral_scan_table": {
+  "headers": [
+   "排名",
+   "TICKER",
+   "得分",
+   "通过项",
+   "5日%",
+   "1月%",
+   "RS(1周)",
+   "距50MA",
+   "延伸档位"
+  ],
+  "rows": [
+   [
+    "1",
+    "XOP",
+    "4/4",
+    "跌天数≤4·低点未破坏·站稳20MA·RSI强势+MA上翘",
+    "+5.54%",
+    "+13.30%",
+    "+7.5",
+    "2.71×ATR",
+    "HIGH（只做回踩类）"
+   ],
+   [
+    "2",
+    "XLE",
+    "4/4",
+    "跌天数≤4·低点未破坏·站稳20MA·RSI强势+MA上翘",
+    "+4.14%",
+    "+9.03%",
+    "+6.1",
+    "2.43×ATR",
+    "HIGH（只做回踩类）"
+   ],
+   [
+    "3",
+    "ETHB",
+    "3/4",
+    "跌天数≤4·站稳20MA·RSI强势+MA上翘",
+    "+0.10%",
+    "+12.97%",
+    "+2.1",
+    "0.34×ATR",
+    "mild"
+   ],
+   [
+    "4",
+    "FXI",
+    "3/4",
+    "跌天数≤4·站稳20MA·RSI强势+MA上翘",
+    "-0.20%",
+    "+4.96%",
+    "+1.8",
+    "0.05×ATR",
+    "HIGH（只做回踩类）"
+   ],
+   [
+    "5",
+    "XLF",
+    "3/4",
+    "跌天数≤4·站稳20MA·RSI强势+MA上翘",
+    "-1.62%",
+    "+3.62%",
+    "+0.4",
+    "3.34×ATR",
+    "HIGH（只做回踩类）"
+   ],
+   [
+    "6",
+    "OIH",
+    "2/4",
+    "跌天数≤4·站稳20MA",
+    "+1.56%",
+    "-0.41%",
+    "+3.5",
+    "-2.12×ATR",
+    "ok"
+   ],
+   [
+    "7",
+    "IAK",
+    "2/4",
+    "跌天数≤4·RSI强势+MA上翘",
+    "+1.48%",
+    "+4.74%",
+    "+3.5",
+    "3.13×ATR",
+    "HIGH（只做回踩类）"
+   ],
+   [
+    "8",
+    "IBIT",
+    "2/4",
+    "站稳20MA·RSI强势+MA上翘",
+    "+0.71%",
+    "+3.79%",
+    "+2.7",
+    "-1.21×ATR",
+    "ok"
+   ]
+  ],
+  "num_cols": [
+   4,
+   5,
+   6
+  ],
+  "row_highlights": [
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   "",
+   ""
+  ]
+ },
+ "unilateral_scan_note": "XOP/XLE仍是1/2名但**双双HIGH延伸(2.4-2.7×ATR)**——单边榜的分数在说'趋势没变'，但昨天的盘中路径已经在提示'位置不便宜了，动能在减弱'。XLF掉到3分且5日转负，KRE跌出体系。**小结：单边榜今天读起来要打折扣**——分数还没跟上昨天盘中发生的事，机器指标本身有滞后性，今天的判断更依赖收盘位置(rngpos)这类日内结构数据，不能只看单边榜分数。",
+ "futures_table": {
+  "headers": [],
+  "rows": [],
+  "num_cols": []
+ },
+ "futures_note": "",
+ "etf_table": {
+  "headers": [
+   "ETF",
+   "收盘价",
+   "T-1%（盘前%）",
+   "进攻线(+1ATR)",
+   "谨慎线(20MA)",
+   "降级线(-1ATR)",
+   "50MA",
+   "距50MA",
+   "判断"
+  ],
+  "rows": [
+   [
+    "SPY",
+    "738.18",
+    "-1.23%（盘前+0.30%）",
+    "754.2",
+    "745.92",
+    "737.64",
+    "745.05",
+    "-0.8×ATR",
+    "738.18收盘位置40%，未突破753.53进攻线；隔夜期货仅+0.1%窄幅震荡"
+   ],
+   [
+    "RSP",
+    "211.92",
+    "-0.37%（盘前+0.31%）",
+    "-",
+    "-",
+    "-",
+    "209.87",
+    "1.0×ATR",
+    "-0.37%远好于QQQ-1.90%——但这次不是'轮出'，是XLC/XLY两个权重板块被capex恐慌精准打击"
+   ],
+   [
+    "QQQ",
+    "691.96",
+    "-1.90%（盘前+0.17%）",
+    "727.8",
+    "713.32",
+    "698.84",
+    "718.75",
+    "-1.9×ATR",
+    "691.96全场最差，RSI 41.8跌破50；GOOGL/TSLA/MSFT/AMZN/META集体跟跌"
+   ],
+   [
+    "QQQE",
+    "116.17",
+    "-0.96%（盘前无quote）",
+    "-",
+    "-",
+    "-",
+    "118.28",
+    "-1.3×ATR",
+    "-0.96%，纳指权重问题比大盘更集中"
+   ],
+   [
+    "DIA",
+    "516.26",
+    "-1.00%（盘前+0.43%）",
+    "-",
+    "-",
+    "-",
+    "514.14",
+    "0.4×ATR",
+    "工业股真beat真涨托底，跌幅最小"
+   ],
+   [
+    "IWM",
+    "292.09",
+    "-0.58%（盘前+0.38%）",
+    "300.65",
+    "296.25",
+    "291.85",
+    "291.02",
+    "0.2×ATR",
+    "-0.58%全场最强抗跌，收盘位置68%——小盘离capex叙事最远"
+   ],
+   [
+    "SMH",
+    "580.17",
+    "-1.15%（盘前+0.28%）",
+    "-",
+    "-",
+    "-",
+    "598.88",
+    "-0.7×ATR",
+    "🔴收盘位置48%守中段，但盘前又-0.48%——INTC盘后+12%的利好没能传导（SMH里INTC权重很低，NVDA占20.78%才是最大权重），MU/SNDK盘前分别-1.53%/-2.39%给回昨天涨幅，'跳空修复'判断已撤回"
+   ]
+  ],
+  "num_cols": [
+   1,
+   2
+  ]
+ },
+ "positions_moomoo_table": {
+  "headers": [
+   "TICKER",
+   "现价",
+   "成本",
+   "距止损",
+   "持有理由",
+   "失效条件",
+   "论点检查/今日行动"
+  ],
+  "rows": [],
+  "num_cols": [],
+  "row_highlights": []
+ },
+ "positions_longbridge_table": {
+  "headers": [
+   "TICKER",
+   "现价",
+   "成本",
+   "距止损",
+   "持有理由",
+   "失效条件",
+   "论点检查/今日行动"
+  ],
+  "rows": [
+   [
+    "NVDY",
+    "12.57（盘前+0.08%）",
+    "12.58",
+    "止损12.1距+3.7%",
+    "英伟达表现大幅强于SMH，但大概率是横盘，所以小仓买入NVDY",
+    "",
+    "论点仍成立，NVDA相对SMH强的逻辑没变。距止损12.10仍有缓冲。今天SMH盘前偏弱，NVDA本身盘前接近平——继续持有观察"
+   ]
+  ],
+  "num_cols": [],
+  "row_highlights": []
+ },
+ "news_week": [
+  "7/24盘前：SLB(能源龙头)·AXP·VZ·HCA·CHTR·BAH",
+  "7/27盘后：CDNS·NUE·CLS·CINF·PFG·FFIV等；7/29 14:00 FOMC利率决议",
+  "本周内持续：Houthi/Bab el-Mandeb局势(未解除)、10Y是否破4.70%、MSFT/AMZN/META财报日期待确认"
+ ],
+ "industry_radar_table": {
+  "headers": [
+   "主题",
+   "信号",
+   "解读"
+  ],
+  "rows": [
+   [
+    "能源(反转警示)",
+    "XLE/XOP昨日盘中冲高尾盘全部回吐(收盘位置10%/7%)，今早盘前又反弹+1.25%/+2.68%",
+    "🔴盘中路径比收盘方向更能说明问题——尾盘卖压不是噪音，是昨天最重要的价格行为信号，今天不是加仓点"
+   ],
+   [
+    "金融(尾盘买盘)",
+    "XLF/KRE盘中最弱尾盘收在日内高位(93%/95%)，PNC/V/MA/AON/CB/JPM等多只收盘位置85-100%",
+    "🟢跟能源反过来，这可能是更值得信任的资金流向——但MA台账缓冲仅+0.23%提醒'位置好≠安全'"
+   ],
+   [
+    "半导体(判断已修正)",
+    "INTC盘后利好未能传导SMH(SMH里NVDA权重20.78%>>INTC)，MU/SNDK盘前回吐昨日涨幅",
+    "'跳空修复'判断已撤回。这几只在暴跌-反弹间剧烈甩动，不是进入平静整理"
+   ],
+   [
+    "中东地缘",
+    "Houthi新点名两艘油轮遇袭、7船绕行、美军12轮打击伊朗、Trump威胁'大规模军事惩罚'",
+    "🔴🔴仍在升级不是缓和，Vic昨晚'大盘没跌完'的判断被今早新闻支持"
+   ]
+  ],
+  "num_cols": []
+ },
+ "adanos_scan_table": {
+  "headers": [
+   "TICKER",
+   "buzz",
+   "热度变化",
+   "趋势",
+   "看多%",
+   "盘前",
+   "核实结论"
+  ],
+  "rows": [
+   [
+    "MARS",
+    "28.9",
+    "+164%",
+    "rising",
+    "100%",
+    "无quote",
+    "热度不高，单条提及，暂不采信"
+   ],
+   [
+    "AERO",
+    "26.8",
+    "+57%",
+    "rising",
+    "0%",
+    "无quote",
+    "热度不高，单条提及，暂不采信"
+   ]
+  ],
+  "num_cols": [
+   1
+  ]
+ },
+ "strong_sector_setups_table": {
+  "headers": [
+   "TICKER",
+   "板块",
+   "Setup标签",
+   "RS(1周)/9EMA/量比",
+   "机器说明",
+   "评分(1-5)"
+  ],
+  "rows": [
+   [
+    "EQT",
+    "XLE/XOP",
+    "D+E+W",
+    "+10.1 / 9EMA+4.27% / 量1.07x",
+    "板块gate仍是XLE但**已高度延伸(RSI68.4/距20MA3.35ATR)**，7/23收盘位置15%回吐明显。Setup标签变成D/E/W——不再是纯粹E级确认，评分下调，等回踩不追",
+    "3"
+   ],
+   [
+    "TPL",
+    "XLE/XOP",
+    "B+W",
+    "+4.3 / 9EMA+1.99% / 量0.64x",
+    "5日转正但收盘位置20%，尾盘回吐同能源普遍模式，降级",
+    "2"
+   ],
+   [
+    "GPN",
+    "XLF",
+    "B+A+W",
+    "-1.3 / 9EMA-0.66% / 量0.75x",
+    "XLF支付，B+A+W；7/23收盘位置37%，仍在低位整理，未追高，纪律没被打脸",
+    "3"
+   ],
+   [
+    "MET",
+    "XLF/IAK",
+    "B+W",
+    "+0.7 / 9EMA-0.09% / 量1.11x",
+    "XLF/IAK，B+W；收盘位置73%，尾盘走强",
+    "3"
+   ],
+   [
+    "PNC",
+    "XLF",
+    "A+W",
+    "-0.3 / 9EMA-0.75% / 量0.76x",
+    "XLF银行，A+W；收盘位置87%——尾盘买盘明显，是今天financial里位置最好的之一",
+    "4"
+   ],
+   [
+    "AFL",
+    "XLF/IAK",
+    "B+A+D+W",
+    "+3.0 / 9EMA+0.89% / 量0.85x",
+    "XLF/IAK，B/A/D/W；收盘位置86%",
+    "3"
+   ],
+   [
+    "V",
+    "XLF/DIA",
+    "A+W",
+    "-1.7 / 9EMA-0.91% / 量0.48x",
+    "XLF/DIA，A+W；收盘位置87%，台账7/20起tracking已partial判定，继续观察",
+    "3"
+   ],
+   [
+    "MA",
+    "XLF",
+    "A+W",
+    "-1.9 / 9EMA-0.96% / 量0.58x",
+    "XLF，A+W；收盘位置92%但台账缓冲仅+0.23%——离失效线529.08还是很近，位置好不代表安全",
+    "2"
+   ],
+   [
+    "BAC",
+    "XLF",
+    "B+A+W",
+    "+1.6 / 9EMA+0.71% / 量0.82x",
+    "XLF，B+A+W；收盘位置72%，新入选",
+    "3"
+   ],
+   [
+    "STT",
+    "XLF",
+    "B+A+W",
+    "+1.2 / 9EMA+0.75% / 量0.73x",
+    "XLF，B+A+W；收盘位置40%，台账缓冲仍有空间",
+    "3"
+   ]
+  ],
+  "num_cols": []
+ },
+ "footer_sources": "数据来源：LongBridge OpenAPI(LongPort SDK)、Vic的Google Sheets(Maket breath tab滞后到7/22)、Stockbee公开表(7/23收盘)、Vic自建宏观Sheet、CNN Fear&Greed、Nasdaq财报日历、SEC EDGAR(本轮无新增)、Adanos(cache版)、WebSearch(CNBC/Spokesman/TWZ/Reason核实Houthi局势，Benzinga/TradingView核实半导体链)。 段2新增：LongPort SDK盘前quote(820只fresh/0 stale)、WebSearch核实SLB/AXP等财报。",
+ "_phase": 2,
+ "_phase1_at": "2026-07-24 11:38 SGT",
+ "_phase1_note": "【隔夜结论·段1】7/23大盘继续跌(SPY-1.23%/QQQ-1.90%)，且是精准打击AI capex+EV两个主题(XLC-3.50%/XLY-4.61%)，不是无差别risk-off——XLI/XLV/XLU三个真beat+防御板块反而收涨。记分板本轮最差：T2108正式跌破50(降级档不再是擦边)，QQQ周防守线缓冲收窄到只剩+0.28%，10Y创去年1月来新高。🔴最重要的两条修正：①昨天'能源+金融同步走强'的判断，盘中路径完全反过来——能源冲高尾盘全回吐(收盘位置10%/7%)，金融盘中最弱尾盘反而买盘涌入(93%/95%)，今早盘前又是能源反弹金融继续弱，这个模式如果延续，选股权重该从能源切到金融。②'INTC暴涨→SMH跳空修复'的判断已撤回并被今早验证：SMH盘前-0.48%，MU/SNDK盘前-1.53%/-2.39%在回吐昨天涨幅，这几只在暴跌-反弹间剧烈甩动不是进入平静整理。Houthi/Bab el-Mandeb局势仍在升级：新点名两艘沙特油轮遇袭、7船绕行、美军12轮打击伊朗、Trump威胁大规模军事惩罚——Vic昨晚'大盘没跌完'的判断被今早新闻支持，不能因油价周五小幅回落就当危机解除。",
+ "x_sentiment_macro": [
+  {
+   "handle": "@KobeissiLetter",
+   "time": "3h ago",
+   "summary": "BREAKING: Iran has rejected a US ceasefire deal presented by Iraqi leaders, per NYT."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "4h ago",
+   "summary": "BREAKING: Trump says \"any and all damages\" done to ships/cargo related to recent attacks will be covered using frozen Iranian funds."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "6h ago",
+   "summary": "Median sale price of existing US homes +2.2% YoY in June to record $408,77x."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "7h ago",
+   "summary": "BREAKING: $INTC surges over +11% after stronger-than-expected earnings driven by AI."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8h ago",
+   "summary": "Japanese insurers bought +$3.9B of 10Y+ JGBs in June, largest monthly purchase in 3 years, sharp reversal from -$1.2B prior month."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "10h ago",
+   "summary": "US job postings on Indeed fell -3.5% YoY (week ending July 10), near lowest levels."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "11h ago",
+   "summary": "BREAKING: Trump says he is \"close\" to a decision on a \"massive attack\" on Iran, per Axios."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "12h ago",
+   "summary": "BREAKING: Nasdaq 100 extends losses to over -2.5% on the day as Iran War escalates and tech drops on earnings; S&P 500 erased -$900B market cap that day."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "13h ago",
+   "summary": "BREAKING: US 10Y yield surges above 4.70%, first time since January 2025."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "14h ago",
+   "summary": "$100 oil is back — Brent above $100/barrel, up +42% in 2 days."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "14h ago (7/23 8:16am Truth Social)",
+   "summary": "Quoted Trump Truth Social post: US will \"hold Iran responsible\" for Houthi strikes since Houthis are a \"Surrogate and/or Proxy of Iran\"; \"major military punishment will be inflicted upon Iran and... the Houthis.\""
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "18h ago",
+   "summary": "BREAKING: US oil prices rise above $90/barrel, first time since June 11."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "19h ago",
+   "summary": "BREAKING: Brent crude surges above $98/barrel after Houthis strike two Saudi Arabian targets."
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "Jul 23",
+   "summary": "US oil surges above $88/barrel as Iran War continues to escalate."
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "3h ago",
+   "summary": "Article repost: \"Seven Pipeline Projects That Could Break Iran's Grip On Hormuz Chokepoint.\""
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "4h ago",
+   "summary": "\"Intel erased all gains\" — quote-repost of own 7h-ago article \"Intel Saves The Tech Day, Sees 15-Year High For Sales Growth, 'Unprecedented Demand'.\""
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "5h ago",
+   "summary": "*TRUMP: WILL USE IRAN'S MONEY TO PAY FOR DAMAGE TO SHIPS, CARGO."
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "5h ago",
+   "summary": "Trump Admin Weighing Military Intervention In Mali (headline repost)."
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "6h ago",
+   "summary": "Article repost: \"Three Levers China Is Pulling To Weather Gulf Energy Shock; How Long Can Beijing Hold Out?\""
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "6h ago",
+   "summary": "US to impose tariffs ranging 10%-12.5% on major trading partners as part of new deal."
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "1h ago",
+   "summary": "Oil Vol (OVX) breaking higher; Equity Vol (VIX) so far ignoring it — vol divergence flagged."
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "14h ago (7/23)",
+   "summary": "\"I've been whining about volatility risk embedded in this market. And so far, tech sold off, but...\" (gamma/vol risk commentary, thread continues)."
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "12h ago",
+   "summary": "WSJ: \"The Fed Is Heading Into One of Its Most Unpredictable Meetings in Years.\""
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "12h ago",
+   "summary": "On the July Fed meeting: \"I can make a good case for either raising rates or not... they're just kin[d of stuck]\" — signals real hawkish/dovish split risk at upcoming FOMC."
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "Jul 23",
+   "summary": "Fed chairman has scheduled a press conference (context: doubt about whether one would happen)."
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "10h ago",
+   "summary": "Quoted Trump: \"Under my administration, we will be slashing energy and electricity prices by half within 12 months\" — juxtaposed against own earlier post: price increases since start of Iran war — Sulfur +146%, European Nat Gas +94%, Heating Oil +[cut off]."
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "11h ago",
+   "summary": "Tesla Q2 revenue hit record $28B, +26% YoY, highest revenue growth in recent quarters."
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "11h ago",
+   "summary": "$TSLA delivered 480k vehicles in Q2, +25% YoY (384k prior year) — highest YoY delivery growth."
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "12h ago",
+   "summary": "87% of Google's record $112B Q2 net income came from historic markups in [advertising/cloud pricing] — $GOOGL."
+  }
+ ],
+ "x_sentiment_stocks": [
+  {
+   "handle": "@bluechipdaily",
+   "time": "2h ago",
+   "ticker": "无具体标的",
+   "note": "\"My comments for CNBC today. In brief, don't be in a hurry to rush in yet.\" — cautious, don't-chase-the-bounce stance.",
+   "aligned": "—"
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "7h ago",
+   "ticker": "SPY/QQQ",
+   "note": "\"The gaps weren't filled today. The $QQQ gap is the more ominous-looking one.\" Classic Deemer gap-theory read — unfilled gap = bearish tell.",
+   "aligned": "是——WalterDeemer的缺口理论跟我们记分板QQQ防守线缓冲只剩0.28%同向，都指向下方风险未消化完"
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "13h ago",
+   "ticker": "SPY/QQQ",
+   "note": "$SPY would have to rally to 746.37 and $QQQ to 703.62 to fill that morning's gaps — how quickly (if at all) gaps fill gives a read on market health.",
+   "aligned": "是——WalterDeemer的缺口理论跟我们记分板QQQ防守线缓冲只剩0.28%同向，都指向下方风险未消化完"
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "10h ago",
+   "ticker": "TSLA",
+   "note": "\"$TSLA with a textbook breakout today\" (chart posted).",
+   "aligned": "否——RichardMoglen说textbook breakout，但TSLA盘后财报capex担忧+盘中-14%，技术突破被基本面叙事直接打脸，不采信"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "6h ago",
+   "ticker": "ASML",
+   "note": "\"Tension 2 release? Come back in 1 month to see the results!\" — classic Tension & Release setup call, chart posted.",
+   "aligned": "待验证——ASML已反弹，跟MU/SNDK的暴跌反弹模式类似，同样不确定是否稳固"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "3h ago",
+   "ticker": "NVDA",
+   "note": "In reply to others discussing favorite names: \"$NVDA is next :))\" — bullish nod, not a full setup writeup.",
+   "aligned": "中性——ohiain只是回复式点评不是完整setup，且SMH本身NVDA权重最大，跟我们对半导体链的谨慎一致"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "9h ago",
+   "ticker": "无具体标的",
+   "note": "\"So much strength in healthcare this AM.\" — sector rotation observation, no specific ticker.",
+   "aligned": "—"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "38m ago",
+   "ticker": "无具体标的",
+   "note": "\"We have to pay attention to this, it's not as simple as oil went up. Energy going up could be an ear[ly warning sign]\" — quoting Brent Crude $96 headline, macro-risk framing not a stock setup.",
+   "aligned": "—"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "39m ago",
+   "ticker": "ASML/INTC",
+   "note": "Market recap: Nasdaq composite fell to a 4-week low amid rising oil prices from US-Iran tensions; $ASML rebounded on strong Q2 earnings; Intel's stock surged on major earnings beat.",
+   "aligned": "待验证——市场综述提到ASML反弹与INTC财报并列，半导体链内部分化，跟我们判断一致"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "2h ago",
+   "ticker": "IBM",
+   "note": "\"$IBM is easily one of the best short setups still. Once 200 breaks there is nothing much to stop it for a[while]\" — bearish breakdown setup.",
+   "aligned": "否——不在今日方向板块，做空建议不进候选"
+  },
+  {
+   "handle": "@aleabitoreddit",
+   "time": "2-4h ago",
+   "ticker": "AMD/AAOI/LITE/COHR/SIVE",
+   "note": "PROMOTER ACCOUNT (downweight per standing note): discusses CPO (co-packaged optics) laser supply chain — cites Rosenblatt/Morgan Stanley notes naming AMD as likely first CPO customer, ranks AAOI/LITE/COHR/SIVE as top-3 CPO laser visibility plays; general AI-capex-bullish framing, no de-escalation acknowledgment.",
+   "aligned": "否——promoter类账号(已降权)，光模块供应链论调，不在今日方向板块"
+  }
+ ],
+ "x_sentiment_note": "国会交易：众议院通过限制议员炒股法案，但Massie指出共和党夹带了voter-ID条款(暗示政治操作)，参议院能否干净过关存疑，与Vic持仓无关。<br><br><b>①地缘局势：13账号扫描显示这是持续升级，不是缓和，且比我早上WebSearch看到的更严峻——@KobeissiLetter独立确认'Iran has rejected a US ceasefire deal presented by Iraqi leaders'(伊朗拒绝了伊拉克斡旋的停火方案)，@unusual_whales同时报'Iran: US Using Ceasefires to Rearm, Attacks to Resume'(伊朗方面被指控利用停火期备战，油气基础设施仍在打击清单上)。</b>三个独立信号(拒绝停火/借停火备战/Trump'eyes massive new strike')共同指向同一个结论：这不是一次性冲击，是仍在演化的多周危机，Vic昨晚'大盘没跌完'的判断，三个独立X信号源都在支持。<br><br><b>②spotgamma的一条期权结构信号值得单独拎出：'Oil Vol(OVX)在走高，但Equity Vol(VIX)目前还没跟上——vol divergence'。</b>翻译成白话：油价的波动率已经在定价更大的不确定性，但股市的波动率(VIX 18.70)还没完全跟上。如果这个divergence收敛(VIX补涨)，大概率是股市继续跌来'追平'油市已经给出的风险定价，不是油市自己降温——这是一条独立于新闻叙事的、纯期权结构角度的'还没跌完'证据。<br><br><b>③@WalterDeemer的缺口理论提供了一个具体的技术验证点：</b>SPY要回到746.37、QQQ要回到703.62才算补上7/23早盘留下的缺口，'QQQ的缺口看起来更凶险'(Deemer原话)。这跟我们记分板QQQ周防守线缓冲只剩+0.28%是同一个判断从两个角度得出的——在这两条缺口补上之前，不该假设下跌已经结束。<br><br><b>④@spluscollective提了一个容易被忽略的反向视角：'能源上涨本身可能是个早期警示信号，不是简单的油价涨了这么简单'</b>——如果解读成滞胀信号(油价推升通胀预期、伤害消费需求)，那么我们方法2里'能源是唯一确定性方向'的判断需要多一层警惧：能源股价格上涨的驱动力如果是'经济要滞胀'而不是'能源公司基本面变好'，这类上涨的可持续性和普通beat驱动的上涨不是一回事。<br><br>⑤个股类：@bluechipdaily明确'不要急着冲进去接反弹'(don't rush in yet)，跟我们'降级档减半仓'的纪律同向。@RichardMoglen说TSLA是'教科书突破'但这条被盘后capex担忧+盘中-14%直接打脸，不采信技术形态、以基本面叙事为准。@BillAckman本周确认无交易相关内容(纯政治/教育话题)。",
+ "ml_leaders": [],
+ "ml_leaders_note": "",
+ "leader_vs_defensive_note": "",
+ "thirteen_dg_rows": [],
+ "thirteen_dg_note": "SEC EDGAR getcurrent查询于ET 23:38(前日晚)执行，返回No recent filings——受理窗口(ET 06:00起)未开启，本轮无新增，非抓取失败。",
+ "squeeze_candidates": [],
+ "squeeze_note": "iborrowdesk连续第二天连接失败(HTTP 000)，FINRA做空比例API不带日期过滤会返回旧数据——三源仍全废，不输出候选。",
+ "x_watch_table": {
+  "headers": [
+   "提及日",
+   "账号",
+   "TICKER",
+   "提及时价",
+   "最新收盘",
+   "自提及%",
+   "备注"
+  ],
+  "rows": [
+   [
+    "2026-07-15",
+    "@aleabitoreddit",
+    "AEHR",
+    "72.01",
+    "88.51",
+    "+22.91%",
+    "财报+36%后：FY27指引$130-150M(+160-200%)，硅"
+   ],
+   [
+    "2026-07-15",
+    "@aleabitoreddit",
+    "NBIS",
+    "194.09",
+    "220.97",
+    "+13.85%",
+    "Reflection AI $1B GB300协议，当日-5%利好出尽—"
+   ],
+   [
+    "2026-07-22",
+    "@aleabitoreddit",
+    "CIFR",
+    "22.89",
+    "25.82",
+    "+12.80%",
+    "(promoter降权)7/21 +16.8%，算力/矿工链"
+   ],
+   [
+    "2026-07-23",
+    "@spluscollective",
+    "URI",
+    "1035.06",
+    "1139.71",
+    "+10.11%",
+    "'一直在看但没下手'；6/26称URI是被低估的数据中心概念，现在被市场"
+   ],
+   [
+    "2026-07-22",
+    "@aleabitoreddit",
+    "HUT",
+    "108.98",
+    "117.67",
+    "+7.97%",
+    "(promoter降权)15年98亿AI数据中心租约，7/21 +10."
+   ],
+   [
+    "2026-07-16",
+    "@spluscollective",
+    "STRL",
+    "668.82",
+    "717.34",
+    "+7.25%",
+    "同上，AI/DC二线"
+   ],
+   [
+    "2026-07-16",
+    "@ohiain",
+    "DELL",
+    "412.68",
+    "439.34",
+    "+6.46%",
+    "收阴吞没线，同一系列点名"
+   ],
+   [
+    "2026-07-14",
+    "@spluscollective",
+    "FIX",
+    "1732.03",
+    "1831.15",
+    "+5.72%",
+    "ML名单成员：这个dip是礼物like last few dips，因股"
+   ],
+   [
+    "2026-07-15",
+    "@spluscollective",
+    "STRL",
+    "679.62",
+    "717.34",
+    "+5.55%",
+    "周线21EMA反弹，最佳DC建设商强护城河"
+   ],
+   [
+    "2026-07-16",
+    "@spluscollective",
+    "FIX",
+    "1736.7",
+    "1831.15",
+    "+5.44%",
+    "AI/DC经济monster companies，capex担忧回调后关"
+   ],
+   [
+    "2026-07-07",
+    "@bluechipdaily",
+    "GS",
+    "1021",
+    "1074.72",
+    "+5.26%",
+    "反弹自上升50MA，下周财报<long>（注意数据前2小时禁仓纪律）"
+   ],
+   [
+    "2026-07-15",
+    "@RichardMoglen",
+    "BLLN",
+    "124.87",
+    "128.94",
+    "+3.26%",
+    "旗形/区间整理"
+   ],
+   [
+    "2026-07-15",
+    "@bluechipdaily",
+    "MPC",
+    "303.4",
+    "312.27",
+    "+2.92%",
+    "炼油新高（7/8 Chart of Day后+4.2%）——战争炼油ma"
+   ],
+   [
+    "2026-07-23",
+    "@spluscollective",
+    "LQDA",
+    "87.04",
+    "89.03",
+    "+2.29%",
+    "'按计划运行'，XBI板块需要的喘息回调；7/6列为Idea#4，PT1"
+   ],
+   [
+    "2026-07-16",
+    "@ohiain",
+    "ARM",
+    "277.01",
+    "283.04",
+    "+2.18%",
+    "跌破50EMA，'领涨股正在跌破关键枢轴位'系列点名之一"
+   ],
+   [
+    "2026-07-22",
+    "@spluscollective",
+    "NBIS",
+    "216.92",
+    "220.97",
+    "+1.87%",
+    "NVDA加码持股是'市场的无声自白'；情绪看NBIS、确认看NVDA"
+   ],
+   [
+    "2026-07-22",
+    "@aleabitoreddit",
+    "CLSK",
+    "15.38",
+    "15.61",
+    "+1.50%",
+    "(promoter降权)7/21 +13.7%；机器扫描独立命中W形态R"
+   ],
+   [
+    "2026-07-15",
+    "@aleabitoreddit",
+    "MU",
+    "983.12",
+    "990.21",
+    "+0.72%",
+    "SLC NAND H2涨价120-170%（TrendForce），MU"
+   ],
+   [
+    "2026-07-22",
+    "@aleabitoreddit",
+    "IREN",
+    "41.29",
+    "40.58",
+    "-1.72%",
+    "(promoter降权)ARR目标上调至40亿+，7/21 +19.7%"
+   ],
+   [
+    "2026-07-23",
+    "@aleabitoreddit",
+    "AMD",
+    "552.33",
+    "539.69",
+    "-2.29%",
+    "【promoter降权】同上，中国AI数据中心CPU长约"
+   ],
+   [
+    "2026-07-23",
+    "@aleabitoreddit",
+    "INTC",
+    "102.62",
+    "100.23",
+    "-2.33%",
+    "【promoter降权】援引路透：INTC/AMD将与中国客户签AI数据"
+   ],
+   [
+    "2026-07-22",
+    "@ohiain",
+    "PLTR",
+    "132.66",
+    "123.37",
+    "-7.00%",
+    "简短看多'看起来不错'——Vic已持仓(mentor跟单)"
+   ],
+   [
+    "2026-07-23",
+    "@aleabitoreddit",
+    "GOOGL",
+    "342.09",
+    "317.69",
+    "-7.13%",
+    "【promoter降权】capex指引上调至$195-205B；称超大厂"
+   ],
+   [
+    "2026-07-17",
+    "@spluscollective",
+    "CAVA",
+    "68.1",
+    "63.21",
+    "-7.18%",
+    "inverse H&S构筑中，高信念buy&hold，目标135+（提及"
+   ],
+   [
+    "2026-07-22",
+    "@ohiain",
+    "RIVN",
+    "17.76",
+    "16.46",
+    "-7.32%",
+    "扛整个EV板块，'压缩是扩张的前奏'(Tension & Release"
+   ],
+   [
+    "2026-07-22",
+    "@ohiain",
+    "RDDT",
+    "185.84",
+    "168.78",
+    "-9.18%",
+    "买方若收复9/21EMA具备slingshot潜力(延续7/14同一se"
+   ],
+   [
+    "2026-07-22",
+    "@spluscollective",
+    "APPS",
+    "9.18",
+    "8.03",
+    "-12.53%",
+    "'对这家公司很着迷'，认为仍有上行空间"
+   ],
+   [
+    "2026-07-23",
+    "@aleabitoreddit",
+    "TSLA",
+    "374.01",
+    "319.69",
+    "-14.52%",
+    "【promoter降权】摘录Q2财报会Musk：'Optimus将是史上"
+   ]
+  ],
+  "num_cols": []
+ },
+ "x_watch_note": "台账58条，已按规则过滤展示。",
+ "_phase2_at": "2026-07-24 20:10 SGT",
+ "defensive_basket": [
+  {
+   "ticker": "WMT",
+   "price": "108.4",
+   "pct": "盘前+0.09%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "KO",
+   "price": "81.17",
+   "pct": "盘前+0.47%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "PM",
+   "price": "191.12",
+   "pct": "盘前+0.23%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "XLP",
+   "price": "83.21",
+   "pct": "盘前+0.11%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "BRK.B",
+   "price": "490.85",
+   "pct": "盘前-0.12%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "XLU",
+   "price": "46.19",
+   "pct": "盘前+0.24%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "MCD",
+   "price": "262.8",
+   "pct": "盘前+0.22%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "WM",
+   "price": "237.27",
+   "pct": "盘前+0.08%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "TLT",
+   "price": "83.17",
+   "pct": "盘前无quote",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "PG",
+   "price": "146.97",
+   "pct": "盘前-0.38%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "SCHD",
+   "price": "32.8",
+   "pct": "盘前无quote",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "COR",
+   "price": "305.06",
+   "pct": "盘前-0.33%",
+   "role": "防御篮子"
+  }
+ ],
+ "strong_sector_setups_permission": "<b>①regime→setup类型准入（判据=7/23收盘数据）：</b><br><b>Setup E（shakeout+burst）</b>：✅可做 — 全场量比均值0.99×，具备出现放量确认bar的条件<br><b>Setup B/Base Breakout（突破类）</b>：🔴今日不做 — 板块单日极差6.34pct（个股通常放大板块1.7-2.7×）——高换手轮动环境下突破后squat概率显著上升，实证胜率27%已是全部setup里最差<br><b>Setup A/D（回踩类）</b>：✅优先做防御侧（XLU/XLP/XLV/XLE） — 防御均值+0.15% vs 进攻均值-3.04%——回踩买点只在资金流入的那一侧才有跟进买盘<br><br><b>跟昨天比，今天的准入条件其实更宽松了（Setup E从'不可执行'变成'可做'，全场量比回升到0.99×），但这不代表风险变小——恰恰是量能回升+板块极差扩大到6.34pct，说明轮动更剧烈了，不是更平静了。</b>A/D回踩优先防御侧这条今天的差距(0.15% vs -3.04%)比昨天大得多，方向更清楚：能源/公用/医疗/必需消费四个防御板块是今天回踩买点该看的地方，进攻侧(科技/消费/通信)不该碰新仓。",
+ "playbook_scenarios": [
+  {
+   "scenario": "地缘危机降温，risk-on修复",
+   "prob": 15,
+   "detail": "Iran接受某种停火安排，油价回落，10Y见顶回落，SPY/QQQ补上7/23早盘缺口(746.37/703.62)",
+   "action": "若出现，可考虑恢复正常仓位，但要等确认信号(缺口补上+VIX回落)不要提前抢跑"
+  },
+  {
+   "scenario": "危机僵持，窄幅震荡消化",
+   "prob": 40,
+   "detail": "Houthi/Iran局势维持现状不进一步升级也不降温，油价高位震荡，市场逐步消化AI capex担忧，防御板块(XLU/XLP/XLV/XLE)继续跑赢，QQQ在690附近拉锯",
+   "action": "降级档纪律执行：减半仓+只做A级，优先防御侧回踩，能源/金融两条线都保留观察"
+  },
+  {
+   "scenario": "危机升级，risk-off加深",
+   "prob": 30,
+   "detail": "Trump'massive attack'威胁兑现或Houthi进一步扩大袭击范围，oil vol/equity vol背离收敛(VIX补涨)，QQQ跌破690周防守线，T2108继续下探",
+   "action": "严格执行止损，不加仓，能源候选EQT/TPL等若跌破失效位立即离场"
+  },
+  {
+   "scenario": "半导体链独立反弹(与大盘背离)",
+   "prob": 15,
+   "detail": "INTC财报的正面基本面信号最终传导开(不止INTC自己)，MU/SNDK止住给回、SMH突破598.40修复线，跟大盘的risk-off方向脱钩",
+   "action": "目前证据不支持(今早MU/SNDK盘前继续走弱)，除非看到SMH放量突破598.40，否则不追"
+  }
+ ],
+ "watchlist_a": [],
+ "watchlist_b_table": {
+  "headers": [
+   "TICKER",
+   "来源",
+   "状态",
+   "说明"
+  ],
+  "rows": [
+   [
+    "PNC",
+    "方法2·XLF银行",
+    "🟢台账tracking第9日+尾盘位置好",
+    "A+W，盘前+0.7%。7/23收盘位置87%(尾盘买盘明显)，缓冲仍有空间。带A标签不受'不追突破'限制"
+   ],
+   [
+    "V",
+    "方法2·XLF/DIA",
+    "🟡台账已partial判定，继续观察",
+    "A+W，盘前+0.66%。7/23收盘位置87%，台账7/20判定partial(未破位但未到明显正收益)"
+   ],
+   [
+    "AFL",
+    "方法2·XLF/IAK保险",
+    "🟢台账tracking，尾盘位置好",
+    "B/A/D/W，盘前0%。7/23收盘位置86%。带A+D不受突破限制"
+   ],
+   [
+    "MET",
+    "方法2·XLF/IAK保险",
+    "🟢台账tracking，尾盘位置好",
+    "B/W，盘前0%。7/23收盘位置73%。带B标签——今日不追突破，等回踩"
+   ],
+   [
+    "BAC",
+    "方法2·XLF银行",
+    "🟡新入选",
+    "B+A+W，盘前+0.34%。7/23收盘位置72%，A标签部分不受限制但B标签部分等回踩"
+   ],
+   [
+    "STT",
+    "方法2·XLF",
+    "🟡新入选",
+    "B+A+W，盘前+0.44%。7/23收盘位置40%，中性位置"
+   ],
+   [
+    "TPL",
+    "方法2·能源",
+    "🔴降级为观察",
+    "B+W，盘前+1.74%(异动)。7/23收盘位置20%(尾盘回吐)。带B标签+能源尾盘走弱模式，仅观察不建仓"
+   ]
+  ],
+  "num_cols": []
+ },
+ "watchlist_c": [
+  "EQT(能源，昨天唯一A级，今天降级)——Setup变成D+E+W混合、7/23收盘位置15%、盘前-0.28%，尾盘回吐模式延续，等能源整体企稳信号(收盘位置回到50%以上)再考虑",
+  "GPN(XLF支付，B+A+W)——盘前-0.12%，7/23收盘位置37%仍在低位整理，继续观察不建仓",
+  "MA(XLF支付，A+W)——⚠️台账缓冲仅+0.23%离失效线529.08很近，收盘位置92%看似强势但缓冲太薄，不新增",
+  "MU/SNDK/WDC(半导体存储)——盘前继续走弱(-1.58%/-2.59%/-1.87%)，给回昨天涨幅，确认'暴跌-暴力反弹'的剧烈甩动模式仍在延续，不是进入平静整理，本轮不追",
+  "AXP/VZ/CHTR(今日财报，盘前分别-2.69%/-2.21%/-4.35%)——反应偏负面，不在候选池，仅记录关注",
+  "SLB(能源龙头，今日盘前财报后+4.4%)——EPS $0.52小幅超预期$0.51，但不在watchlist曾扫描名单，仅作板块读数参考"
+ ],
+ "setup_conclusion": "<b>今天没有A级候选——这是诚实的结果，不是漏扫。</b>昨天唯一的A级EQT，今天7/23收盘位置只有15%(尾盘剧烈回吐)+Setup标签从纯E降级成D/E/W混合，已经不满足A级门槛。B级7只全部是XLF名字，能源候选(TPL/EQT)因为尾盘回吐模式全部降级为观察。<b>这跟昨天'胜率诚实核算'是同一个纪律——候选质量真实下降的时候，宁可给B级/观察，不硬凑一个A级出来。</b>今天的方法2扫描结果本身也在印证联合信号④：金融尾盘位置全面好于能源，7只B级里6只是XLF、只有1只(降级观察的TPL)是能源。",
+ "today_position": {
+  "primary": [
+   "无A级——今天不做新仓，只观察B级回踩"
+  ],
+  "watch": [
+   "PNC/V/AFL/MET(XLF B级，等回踩或9EMA企稳)",
+   "BAC/STT(XLF新入选，观察)",
+   "EQT/TPL(能源，等企稳信号)"
+  ],
+  "avoid": [
+   "半导体/存储链新仓(MU/SNDK/WDC盘前继续走弱)",
+   "任何突破类(Setup B)追高入场",
+   "AXP/VZ/CHTR(今日财报负面反应)",
+   "高Beta/长久期成长(RATE-ALERT持续冻结)"
+  ],
+  "invalidate": "若VIX补涨突破22或QQQ跌破690周防守线(目前缓冲仅+0.28%)，降级档可能升级为更严格的风控——今天的0.28%缓冲是本轮最薄的一次，任何新消息都可能触发"
+ },
+ "key_takeaways": [
+  "🔴T2108正式跌破50，降级档从'擦边险守'变成'正式触发'，QQQ周防守线缓冲收窄到只剩+0.28%",
+  "地缘危机未解除：Iran拒绝停火方案、Trump威胁'大规模军事惩罚'、7艘船绕行Bab el-Mandeb——三个独立X信号源确认仍在升级，油价周五小幅回落不是危机解除的信号",
+  "spotgamma的oil vol/equity vol背离(OVX走高VIX未跟上)+WalterDeemer的SPY/QQQ缺口理论(746.37/703.62未补)，两条独立技术信号都指向'大盘可能没跌完'",
+  "MU/SNDK/WDC盘前继续走弱(-1.58%/-2.59%/-1.87%)，昨晚'INTC暴涨→SMH跳空修复'的判断被验证是错的，已撤回",
+  "今天没有A级候选——EQT从昨天唯一的A级降级为观察，7只B级候选全部是XLF名字，能源候选(TPL)因尾盘回吐模式降级",
+  "@spluscollective提的反向视角：能源上涨若是滞胀信号(通胀预期+需求受损)而非基本面驱动，这类上涨的可持续性和普通beat驱动上涨不是一回事"
+ ],
+ "recon_ledger": [
+  {
+   "claim": "QQQ收盘维持在690周防守线上方",
+   "trigger": "跌破690则claim被推翻，降级档风控可能升级"
+  },
+  {
+   "claim": "T2108继续在50下方(降级档维持触发状态)",
+   "trigger": "收盘回升≥50则claim被推翻"
+  },
+  {
+   "claim": "MU/SNDK/WDC今日不出现反转企稳(仍延续给回昨日涨幅的模式)",
+   "trigger": "若三者今日收盘转强且收盘位置>60%，则claim被推翻，半导体链可能真正企稳"
+  },
+  {
+   "claim": "XLF系B级候选(PNC/V/AFL/MET/BAC/STT)不出现有效突破前追高买盘",
+   "trigger": "若任一放量突破且未回踩，需单独记录"
+  },
+  {
+   "claim": "Houthi/Iran局势本日不出现明确降温信号(如停火达成)",
+   "trigger": "若出现确认的停火/降温消息，claim被推翻，risk-on修复情景概率应上调"
+  },
+  {
+   "claim": "10Y维持在4.60%上方",
+   "trigger": "跌回4.60%以下则RATE-ALERT应考虑解除"
+  },
+  {
+   "claim": "VIX维持在22下方",
+   "trigger": "突破22则触发VIX降级条件，且验证spotgamma的vol divergence收敛假设"
+  }
+ ],
+ "premarket_movers": [
+  {
+   "ticker": "AMKR",
+   "price": "70.82",
+   "pct": "+8.40%",
+   "pm_vol": "6.7万",
+   "vol_tag": "低量·谨慎",
+   "catalyst": "8/40系晚间无消息，可能是补涨或轮动，未查到具体催化",
+   "sector_readthrough": "半导体封测",
+   "judgment": "消息未明确核实前不当交易信号，仅记录"
+  }
+ ],
+ "premarket_movers_note": "今日仅1只触及|7%|门槛(AMKR)，其余异动集中在3-6%区间(SLB财报+4.4%/CHTR财报-4.35%/AXP财报-2.69%)，已在news_today/watchlist_c中单独记录，不重复列入本表。",
+ "news_today": [
+  [
+   "盘前",
+   "SLB财报(WebSearch核实)",
+   "EPS $0.52小幅超预期$0.51(去年同期$0.74)，中东扰动带来的每股0.06-0.08美元逆风已在预期内",
+   "能源/油服链",
+   "盘前+4.4%",
+   "是——OIH/BKR等油服链读数"
+  ],
+  [
+   "盘前",
+   "AXP/VZ/CHTR财报",
+   "盘前分别-2.69%/-2.21%/-4.35%，反应偏负面(具体数字未逐一核实，以盘前方向为准)",
+   "消费金融/电信/媒体",
+   "盘前均下跌",
+   "否，不在今日方向板块"
+  ],
+  [
+   "隔夜",
+   "Houthi袭击升级(WebSearch+X多源核实)",
+   "新点名两艘沙特油轮(Encelia/Layla)遇袭，7艘船绕行Bab el-Mandeb，美军完成第12轮打击伊朗，Trump威胁大规模军事惩罚，Iran拒绝伊拉克斡旋停火方案",
+   "能源/全场risk-off",
+   "油价周内+13%仍高位",
+   "是——地缘风险核心，未解除"
+  ]
+ ]
+}

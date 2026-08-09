@@ -1,0 +1,58 @@
+[
+ {
+  "date": "2026-08-04",
+  "sd": 1.511,
+  "idx_move": 1.806,
+  "ratio": 0.84,
+  "sd_pctile": 95,
+  "ratio_pctile": 21,
+  "cor1m": null,
+  "cor3m": null,
+  "regime": "指数主导",
+  "action": "闸门/FTD 权重高，可按市场级信号行动",
+  "sd_median_1y": 0.809,
+  "ratio_median_1y": 1.63
+ },
+ {
+  "date": "2026-08-05",
+  "sd": 0.939,
+  "idx_move": 0.195,
+  "ratio": 4.83,
+  "sd_pctile": 66,
+  "ratio_pctile": 81,
+  "cor1m": 7.08,
+  "cor3m": 9.33,
+  "regime": "选股主导",
+  "action": "指数信号基本无信息量——当天不做基于大盘判断的仓位动作，只做个股结构",
+  "sd_median_1y": 0.811,
+  "ratio_median_1y": 1.64
+ },
+ {
+  "date": "2026-08-06",
+  "sd": 0.662,
+  "idx_move": 0.17,
+  "ratio": 3.9,
+  "sd_pctile": 29,
+  "ratio_pctile": 78,
+  "cor1m": 6.62,
+  "cor3m": 9.41,
+  "regime": "选股主导",
+  "action": "指数信号基本无信息量——当天不做基于大盘判断的仓位动作，只做个股结构",
+  "sd_median_1y": 0.809,
+  "ratio_median_1y": 1.65
+ },
+ {
+  "date": "2026-08-07",
+  "sd": 0.766,
+  "idx_move": 0.61,
+  "ratio": 1.26,
+  "sd_pctile": 44,
+  "ratio_pctile": 38,
+  "cor1m": 7.38,
+  "cor3m": 10.48,
+  "regime": "指数主导",
+  "action": "闸门/FTD 权重高，可按市场级信号行动",
+  "sd_median_1y": 0.807,
+  "ratio_median_1y": 1.64
+ }
+]

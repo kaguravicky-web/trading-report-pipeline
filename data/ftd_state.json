@@ -1,0 +1,21 @@
+{
+ "day1_date": "2026-07-30",
+ "confirmed_by": "Vic肉眼（2026-07-31：「第一天我肉眼看，只有在出现第一根绿bar以后，你才开始观测follow through，昨天是第一天」）",
+ "indices": [
+  "QQQ",
+  "VOO",
+  "IWM",
+  "DIA",
+  "RSP",
+  "QQQE"
+ ],
+ "day1_lows": {
+  "QQQ": 673.3,
+  "VOO": 675.21
+ },
+ "history": [],
+ "note_panel": "2026-08-05 面板由 QQQ/VOO 扩到六只，判定改为同日≥2只达标（Vic 拍板）。IWM/DIA/RSP/QQQE 的 Day1 低点未经人工确认，由各自 Day1 当天最低价自动填充。",
+ "parked": true,
+ "parked_at": "2026-08-06",
+ "parked_reason": "Vic 2026-08-06：「我觉得这次 ftd 的尝试在交易层面没有成功，你先放 FTD placeholder 停止追踪，让我想想，看看有没有其他理论，下次我想试试 deemer 的理论」。2026-08-04 FTD 成立后并未转化成任何实际交易动作——它给的是市场级「可以做」，而当天真正需要的是个股级「做哪一只」，FTD 对后者零贡献。重置线 QQQ 673.30 / VOO 675.21 留档：若日后重启，跌破即需重新肉眼确认 Day 1。"
+}

@@ -1,0 +1,14 @@
+# output/ 是独立仓库（kaguravicky-web/trading-reports，PUBLIC），不并进来
+output/
+
+# 行情缓存：9MB 且可重新拉取，不进版本控制
+data/cache/
+
+# 凭据与券商账户导出——**这两项永远不进仓库**
+deepvue/.env.local
+moomoo/
+
+# Python
+__pycache__/
+*.pyc
+.venv/

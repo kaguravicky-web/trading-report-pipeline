@@ -1,0 +1,45 @@
+{
+ "_说明": "「被止损扫出后随即大涨」案例台账（2026-08-07建，Vic：「veev和gtlb都在大升前被甩了出去」）。攒样本用途有二：①判断「止损距离≤4%且≤1×ATR」这把尺是不是系统性把主线里刚被洗过的票筛掉了 ②验证执行纪律#8（盘前撤单+开盘等15分钟）能挽回多少。样本<8个不下结论，不据此改规则。",
+ "cases": [
+  {
+   "ticker": "VEEV",
+   "account": "longbridge",
+   "exit_date": "2026-08-06",
+   "exit_price": 210.29,
+   "qty": 40,
+   "exit_type": "止损被扫（盘前跳空低开触发）",
+   "exit_day_low": 208.07,
+   "exit_price_vs_day_low_pct": 1.07,
+   "exit_day_close": 217.8,
+   "exit_day_range_pos": 98,
+   "next_day_open": 224.35,
+   "next_day_close": 230.47,
+   "next_day_pct": 5.82,
+   "missed_pct": 9.6,
+   "missed_usd": 807.2,
+   "claude_grade_that_day": "C",
+   "claude_reason": "收盘区间98%、RSI 70.1、距20MA +2.49ATR，判「已经走完的形态」——当天又涨5.82%，判断错误",
+   "note": "8/6 盘前 -2.77% 打掉止损后收 +2.01%。卖出价在当日最低点上方仅 1.07%"
+  },
+  {
+   "ticker": "GTLB",
+   "account": "moomoo",
+   "exit_date": "2026-08-06",
+   "exit_price": 34.2,
+   "qty": 30,
+   "exit_type": "止损被扫（盘前跳空低开触发）",
+   "exit_day_low": 33.89,
+   "exit_price_vs_day_low_pct": 0.91,
+   "exit_day_close": 35.68,
+   "exit_day_range_pos": 92,
+   "next_day_open": 37.55,
+   "next_day_close": 38.97,
+   "next_day_pct": 9.22,
+   "missed_pct": 13.9,
+   "missed_usd": 143.1,
+   "claude_grade_that_day": "C",
+   "claude_reason": "合规失效位32.90 → 止损距离7.72%/1.43ATR，两个门槛都超，判「不该重新买回来」——当天涨9.22%，判断错误",
+   "note": "8/6 盘前 -4.26% 打掉止损后收 -1.33%。卖出价在当日最低点上方仅 0.91%。三重底 31.96/34.71，8/6 盘中破 34.71 后收回"
+  }
+ ]
+}

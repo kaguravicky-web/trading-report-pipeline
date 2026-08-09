@@ -1,0 +1,88 @@
+{
+  "date": "2026-07-04",
+  "generated_at": "2026-07-04 20:15 SGT",
+  "title": "测试样本：科技降温，广度扩张仍支撑中期趋势",
+  "subtitle": "这是渲染管线的测试数据，用于检查视觉效果，不代表真实市场判断。",
+  "badges": [
+    {"kind": "green", "text": "Checklist 1/8 High · Low Risk"},
+    {"kind": "amber", "text": "等待非农"}
+  ],
+  "signal_light": {
+    "bias": {"level": "low", "label": "OFFENSE"},
+    "bond": {"level": "low", "label": "CALM", "detail": "MOVE 78 · 10Y脉冲 -5bps"},
+    "dxy": {"level": "low", "label": "NEUTRAL", "detail": "101.04 · -0.34%/5日"},
+    "joint": {"level": "low", "label": "无制约"},
+    "breadth": {"level": "low", "label": "BULLISH", "detail": "T2108=51 · VIX9D/VIX=0.92"},
+    "gate": {"level": "mid", "label": "QQQ $725.17 / 进攻线 $726.01"},
+    "nature": "结构性主线日",
+    "discipline": "医疗/金融主线为主，半导体只持不追"
+  },
+  "scoreboard_cards": [
+    {"label": "10D breadth ratio", "value": "1.49", "note": "门槛 >1.35，已满足"},
+    {"label": "NDX>50MA", "value": "56.86%", "note": "门槛 >52%，已满足"},
+    {"label": "SPY收盘", "value": "$734.20", "note": "门槛 ≥$748，未满足"}
+  ],
+  "scoreboard_note": "2/3满足，可加风险；但SPY未达门槛，维持中性偏多不全面进攻",
+  "risk_checklist": [
+    {"label": "S&P 500 overextension", "level": "mid", "value": "Intermediate", "detail": "VOO+1.26 ATR"},
+    {"label": "Increasing downward momentum", "level": "mid", "value": "Intermediate", "detail": "晶片弱但广度未恶化"},
+    {"label": "Top range breakdown", "level": "low", "value": "Low", "detail": "VOO仍在20/50/200MA上"},
+    {"label": "Technical deterioration", "level": "mid", "value": "Intermediate", "detail": "QQQ失守20MA"},
+    {"label": "Market breadth worsening", "level": "low", "value": "Low", "detail": "六项MA广度均>50%"},
+    {"label": "VIX >20 / spike", "level": "low", "value": "Low", "detail": "VIX约16.6"},
+    {"label": "Breakout win rate down", "level": "mid", "value": "Intermediate", "detail": "晶片失速"},
+    {"label": "Theme momentum weakening", "level": "high", "value": "High", "detail": "SMH/AIQ同步偏弱"}
+  ],
+  "risk_checklist_score": "1/8 High = Low Risk",
+  "risk_checklist_note": "短线修正集中在AI硬件，中期趋势未受损",
+  "regime_triggers": {
+    "upgrade": {"rule": "满足2/3才成立", "items": ["QQQ收复20MA 726.01并站上+1SD 728.90", "10Y跌破4.40%，DXY不反向急升", "5D breadth ratio维持>1.5且RSP/IWM守强"]},
+    "downgrade": {"rule": "任一触发即成立", "items": ["SPY跌破-1SD 716.49", "QQQ跌破-1SD 684.14", "5D breadth ratio<1或VIX>20"]}
+  },
+  "macro_deviation_table": {"headers": ["指数", "价格", "5MA", "偏离%", "判断"], "rows": [["QQQ", "725.17", "700.16", "+3.55%", "偏热"], ["SMH", "298.10", "285.40", "+4.45%", "偏热"]], "num_cols": [3]},
+  "breadth_table": {"headers": ["指标", "当前值", "5日前", "趋势", "判断"], "rows": [["T2108", "50.97", "48.19", "↑", "中性偏多"]], "num_cols": []},
+  "cross_asset_table": {"headers": ["资产", "最新价/收益率", "日变动", "信号"], "rows": [["美债10Y", "4.49%", "-0.08%", "偏鸽"]], "num_cols": [2]},
+  "macro_events_table": {"headers": ["事件", "类型", "日期(SGT)", "预期/结果", "市场含义", "状态"], "rows": [["非农就业", "劳动力数据", "2026-07-03", "+57K vs +110K", "就业降温", "RECENT"]], "num_cols": []},
+  "bond_dxy_lines": [
+    "10Y: 4.49% · 2Y: 4.17% · 利差: +0.32%",
+    "MOVE: 78.00  [CALM]",
+    "10Y 5日脉冲: -8bps  [NEUTRAL]",
+    "DXY: 101.04 · 5日Δ: -0.38%  [NEUTRAL]",
+    "联合信号: 无制约",
+    "覆盖指令: 无"
+  ],
+  "sector_rs_tables": [
+    {"title": "第一组：XL标准板块+指数基准", "headers": ["TICKER", "名称", "价格", "日%", "vs QQQ超额", "RS趋势", "驱动/原因"], "rows": [["XLF", "金融", "51.20", "+2.18%", "+2.49%", "↑", "利率预期改善"]], "num_cols": [3, 4]},
+    {"title": "第二组：AI/科技/半导体/量子/网安/软件", "headers": ["TICKER", "名称", "价格", "日%", "vs QQQ超额", "RS趋势", "驱动/原因"], "rows": [["SMH", "半导体", "298.10", "-1.40%", "-1.10%", "↓", "AI资本支出担忧"]], "num_cols": [3, 4]},
+    {"title": "第三组：航天/国防/能源/材料/加密/中国/医疗/其他", "headers": ["TICKER", "名称", "价格", "日%", "vs QQQ超额", "RS趋势", "驱动/原因"], "rows": [["XBI", "生技", "150.21", "+0.80%", "+1.10%", "↑", "板块轮动"]], "num_cols": [3, 4]}
+  ],
+  "index_gate_table": {"headers": ["指数", "当前价", "进攻确认线", "谨慎线", "降级线", "状态"], "rows": [["QQQ", "725.17", "726.01", "706.52", "684.14", "谨慎"], ["SPY", "734.20", "748.00", "728.99", "716.49", "谨慎"], ["IWM", "299.32", "306.69", "290.00", "285.00", "中性"]], "num_cols": []},
+  "etf_table": {"headers": ["ETF", "日变化", "5日", "1月", "20/50/200MA", "RSI", "50MA ATR"], "rows": [["QQQ", "-1.52%", "+1.23%", "-2.81%", "下/上/上", "59", "+1.45"], ["SPY", "-0.14%", "+1.56%", "-1.82%", "上/上/上", "61", "+1.26"]], "num_cols": [1, 2, 3, 5, 6]},
+  "news_today": ["MU财报后盘前+8.2%，带动记忆体板块（Reuters）", "COIN因加密风险偏好回升盘前+5.1%（Saxo）"],
+  "news_week": ["周三CPI数据公布", "周五FOMC官员讲话"],
+  "industry_radar_table": {"headers": ["活动名称", "日期(SGT)", "主办/主角", "关注重点", "相关标的", "级别"], "rows": [["NVIDIA GTC", "2026-07-10", "NVIDIA", "AI算力路线图", "NVDA/SMH", "HIGH"]], "num_cols": []},
+  "placeholders": {
+    "thirteenf": "尚未接入13F自动数据源（WhaleWisdom/Dataroma/SEC EDGAR），本模块待下一版补上",
+    "congress_trades": "尚未接入国会议员交易自动数据源（capitoltrades.com/quiverquant.com），本模块待下一版补上",
+    "short_squeeze": "尚未接入轧空扫描所需的做空比例/借券成本数据源，本模块待下一版补上"
+  },
+  "watchlist_a": [
+    {"ticker": "MU", "sector": "半导体", "why": "盘前+8.2% · 量比2.1 · 财报催化", "entry": "125.00", "invalid": "118.50", "target": "132.00", "avoid_if": "SMH跌破20MA"}
+  ],
+  "watchlist_b_table": {"headers": ["TICKER", "板块", "盘前%", "量比", "待确认条件", "升级触发"], "rows": [["COIN", "加密金融", "+5.1%", "1.2", "量比不足1.5", "量比升破1.5"]], "num_cols": [2, 3]},
+  "watchlist_c": ["KLAC — 设备链弱势，无主线归属"],
+  "watchlist_conclusion": "今日最值得关注：MU（半导体主线延续，财报催化确认）",
+  "ml_leaders": [
+    {"ticker": "MRVL", "price": "82.10", "pct": "+1.2%", "structure": "整理中", "behavior": "2026-07-02 大盘红日跌0.2%跑赢QQQ", "signal": "无setup", "entry": "80.50", "invalid": "77.20"},
+    {"ticker": "SNDK", "price": "2080.10", "pct": "-8.5%", "structure": "延伸过度勿追", "behavior": "待确认", "signal": "延伸过度勿追", "entry": "-", "invalid": "-"}
+  ],
+  "playbook_scenarios": [
+    {"title": "情景A — 牛市确认", "trigger": "10Y跌破4.40%且QQQ重返20MA", "action": "分两段增加QQQ/IGV", "target": "QQQ 741.49"},
+    {"title": "情景B — 震荡消化", "trigger": "QQQ高开低走前30分钟回吐超50%", "action": "新仓冻结，存量守止损", "target": "等待30分钟量能确认"},
+    {"title": "情景C — 转弱防守", "trigger": "10Y突破警戒位或QQQ跌破谨慎线", "action": "高Beta优先减半", "target": "仓位上限按纪律执行"}
+  ],
+  "positions_moomoo_table": {"headers": ["TICKER", "PRICE", "COST", "P&L%", "STATUS", "ACTION"], "rows": [["WRBY", "29.10", "27.72", "+4.98%", "HOLD", "无"]], "num_cols": [3]},
+  "positions_longbridge_table": {"headers": ["TICKER", "PRICE", "COST", "P&L%", "TREND", "NOTE"], "rows": [["SYK", "330.50", "319.70", "+3.38%", "上升", "医疗主线"], ["BRKR", "58.20", "61.63", "-5.57%", "下降", "计划外建仓"], ["XLV", "168.40", "162.00", "+3.95%", "上升", "主线ETF"]], "num_cols": [3]},
+  "polymarket_table": {"headers": ["市场问题", "最高概率选项", "概率", "成交量", "交易含义"], "rows": [["7月是否降息", "是", "62%", "$4.2M", "偏鸽定价"]], "num_cols": [2]},
+  "footer_sources": "数据来源：LongBridge OpenAPI（实时行情/持仓）、Adanos X Top100、WebSearch（VIX9D/Fear&Greed/宏观）、Polymarket、用户提供（Moomoo CSV/Stockbee截图）。本报告不构成投资建议。"
+}

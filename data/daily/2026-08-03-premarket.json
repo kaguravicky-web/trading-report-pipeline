@@ -1,0 +1,1392 @@
+{
+ "report_type": "premarket",
+ "date": "2026-08-03",
+ "title": "盘前简报 2026-08-03（周一）",
+ "subtitle": "⚠️**本份只含段1（隔夜收盘+X扫描）——段2盘前报价未跑（个人原因）**；盘前异动/盘前列/A-B-C定稿判断均缺失，不是遗漏是当天没跑",
+ "badges": [
+  {
+   "text": "段2未跑",
+   "kind": "red"
+  },
+  {
+   "text": "FTD窗口本周开启",
+   "kind": "green"
+  },
+  {
+   "text": "降级档2/4",
+   "kind": "amber"
+  },
+  {
+   "text": "8月首个交易日",
+   "kind": "blue"
+  },
+  {
+   "text": "仓位治理6笔待补",
+   "kind": "red"
+  }
+ ],
+ "signal_light": {
+  "bias": {
+   "level": "mid",
+   "label": "7/31三闸门全部收复降级线，但反弹队列全部收在当日最低区——价格修复、买盘未确认"
+  },
+  "bond": {
+   "level": "high",
+   "label": "10Y 4.745%（TNX 47.45），升破4.70%，RATE-ALERT维持"
+  },
+  "dxy": {
+   "level": "low",
+   "label": "美元UUP 28.17，7月全月走弱"
+  },
+  "breadth": {
+   "level": "high",
+   "label": "T2108 47.36仍<50、5日ratio 0.98差0.02站上——降级档2/4维持"
+  },
+  "discipline": [
+   "🔴**本周唯一的主动触发器是 8/4-8/7 的 FTD 窗口**（Day 4-7）。今晚收盘后才是 Day 3，按O'Neil规则**不必上涨，只要重置线不破**（QQQ 673.30 / VOO 675.21）rally attempt 就还活着。**今天不是买入日**。",
+   "**月报的结论直接约束本周操作**：7月日内 +362.55（胜率73%）vs 自主波段 -2204.70（胜率36%）——**判断力64%是够的，问题在持有方式**。所以8月默认状态是**日内为主、FTD确认后才上隔夜波段**，这不是变保守，是把仓位结构对齐到「没有延续性」这个已被四周验证的市场性质。",
+   "**7/31的日内派发形态是新增的必查项**：指数收涨但反弹队列收在最低区（LRCX 0% / BE 1% / MRVL 3% / MU 4% / SNDK 13%）。**即使FTD成立，也要先查反弹队列收盘区间中位数——<25%就说明在派发不在承接，当天不建仓**。",
+   "🔴**仓位治理：13笔持仓里6笔不合规**（MU/KOD/S/META 缺持有理由，SPCX/QQQ 缺止损）。按8/1起的硬性规则，这一节会每天出现直到补齐；**月报里已定：若8月第一周仍未补齐，新仓一律不建，直到存量补完**。"
+  ]
+ },
+ "gate_scoreboard_rows": [
+  {
+   "ticker": "VOO",
+   "close": "686.65",
+   "attack": "693.66",
+   "dist_attack": "-1.01%",
+   "defend": "677.26",
+   "dist_defend": "+1.39%",
+   "state": "中性区",
+   "state_kind": "neutral",
+   "note": "距进攻线只剩-1.01%，是三个里最接近升级的"
+  },
+  {
+   "ticker": "QQQ",
+   "close": "687.99",
+   "attack": "717.24",
+   "dist_attack": "-4.08%",
+   "defend": "685.72",
+   "dist_defend": "+0.33%",
+   "state": "中性区",
+   "state_kind": "neutral",
+   "note": "刚收复降级线0.33%，缓冲最薄"
+  },
+  {
+   "ticker": "IWM",
+   "close": "291.20",
+   "attack": "298.60",
+   "dist_attack": "-2.48%",
+   "defend": "289.52",
+   "dist_defend": "+0.58%",
+   "state": "中性区",
+   "state_kind": "neutral",
+   "note": "周五还-0.48%，小盘全周没参与"
+  }
+ ],
+ "scoreboard_note": "**三个闸门全部回到中性区**（7月以来第一次同时站上降级线）；**VOO距进攻线只剩-1.01%**，是最接近升级的一个；但QQQ缓冲仅+0.33%——**上周五那种日内回吐就足以把它打回去**",
+ "breadth_score_rows": [
+  {
+   "condition": "T2108 ≥50",
+   "type": "downgrade",
+   "threshold": "50.0",
+   "current": "47.36",
+   "prev": "47.50",
+   "chg": "-0.14",
+   "distance_pct": "-5.3%",
+   "status": "triggered"
+  },
+  {
+   "condition": "5日 ratio ≥1.0",
+   "type": "downgrade",
+   "threshold": "1.00",
+   "current": "0.98",
+   "prev": "0.88",
+   "chg": "+0.10",
+   "distance_pct": "-2.0%",
+   "status": "triggered"
+  },
+  {
+   "condition": "涨4%+ > 跌4%+",
+   "type": "downgrade",
+   "threshold": "涨>跌",
+   "current": "179/216",
+   "prev": "437/189",
+   "chg": "翻负",
+   "distance_pct": "-17.3%",
+   "status": "triggered"
+  },
+  {
+   "condition": "VIX <22",
+   "type": "downgrade",
+   "threshold": "22.0",
+   "current": "15.99",
+   "prev": "17.09",
+   "chg": "-1.10",
+   "distance_pct": "-27.3%",
+   "status": "safe"
+  },
+  {
+   "condition": "10日 ratio >1.35",
+   "type": "upgrade",
+   "threshold": "1.35",
+   "current": "0.91",
+   "prev": "0.91",
+   "chg": "+0.00",
+   "distance_pct": "-32.6%",
+   "status": "unmet"
+  }
+ ],
+ "breadth_score_note": "**降级档三条仍在触发区**：T2108 47.36、5日ratio 0.98（**只差0.02**）、涨跌4%+ 179/216；**解除要「5日ratio站回1.0 且 VOO守住677.26」两条同时**——上周五的教训就是价格腿单独收复不算数；VIX 15.99是四条里唯一从没坏过的",
+ "risk_checklist": [
+  {
+   "label": "Breadth",
+   "level": "high",
+   "detail": "T2108 47.36全周未站上50"
+  },
+  {
+   "label": "买盘质量",
+   "level": "high",
+   "detail": "7/31指数涨但反弹队列收在最低区（中位数约13%）——日内派发"
+  },
+  {
+   "label": "Rate pressure",
+   "level": "high",
+   "detail": "10Y 4.745%升破4.70%"
+  },
+  {
+   "label": "Whipsaw",
+   "level": "high",
+   "detail": "上周四天四种市场，没有一种活过两天"
+  },
+  {
+   "label": "Concentration",
+   "level": "mid",
+   "detail": "7/30 QQQ-QQQE差2.24pt；周线等权反而占优"
+  },
+  {
+   "label": "Technical",
+   "level": "mid",
+   "detail": "QQQ -1.77ATR、SMH -1.99ATR仍在50MA下"
+  },
+  {
+   "label": "Volatility",
+   "level": "low",
+   "detail": "VIX 15.99，四条降级条件里唯一没坏过的"
+  },
+  {
+   "label": "Event risk",
+   "level": "low",
+   "detail": "本周财报 ANET 8/4盘后、SNDK 8/5盘后"
+  },
+  {
+   "label": "Dollar",
+   "level": "low",
+   "detail": "UUP 28.17，7月全月走弱"
+  }
+ ],
+ "risk_checklist_note": "9项里4项深红；**新进榜的是「买盘质量」**——7/31指数收涨而反弹队列全部收在当日最低区，这个形态比价格本身更重要；「Whipsaw」维持深红：上周四天四种市场",
+ "ftd": {
+  "day1": "2026-07-30",
+  "day_n": 2,
+  "reset": false,
+  "verdict": "Rally Attempt Day 2——**还没进 FTD 观察窗（Day 4-7）**",
+  "rows": [
+   {
+    "ticker": "QQQ",
+    "day_n": 2,
+    "pct": 0.65,
+    "vol_ratio_prev": 0.76,
+    "day1_low": 673.3,
+    "undercut": false,
+    "undercut_dates": [],
+    "pass_gain": false,
+    "pass_vol": false,
+    "in_window": false,
+    "is_ftd": false,
+    "strong": false
+   },
+   {
+    "ticker": "VOO",
+    "day_n": 2,
+    "pct": 0.71,
+    "vol_ratio_prev": 1.27,
+    "day1_low": 675.21,
+    "undercut": false,
+    "undercut_dates": [],
+    "pass_gain": false,
+    "pass_vol": true,
+    "in_window": false,
+    "is_ftd": false,
+    "strong": false
+   }
+  ],
+  "confirmed_by": "Vic肉眼（2026-07-31：「第一天我肉眼看，只有在出现第一根绿bar以后，你才开始观测follow through，昨天是第一天」）"
+ },
+ "ftd_table": {
+  "headers": [
+   "指数",
+   "计数",
+   "当日涨幅",
+   "量/前日",
+   "Day1低点",
+   "重置线",
+   "判定"
+  ],
+  "rows": [
+   [
+    "QQQ",
+    "Day 2",
+    "+0.65%",
+    "0.76×",
+    "673.30",
+    "未破",
+    "未进窗口(Day 4-7)"
+   ],
+   [
+    "VOO",
+    "Day 2",
+    "+0.71%",
+    "1.27×",
+    "675.21",
+    "未破",
+    "未进窗口(Day 4-7)"
+   ]
+  ],
+  "num_cols": [
+   2
+  ],
+  "center_cols": [
+   1,
+   5,
+   6
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "10%",
+   "10%",
+   "13%",
+   "12%",
+   "13%",
+   "14%",
+   "28%"
+  ]
+ },
+ "ftd_note": "**已完成 Rally Attempt Day 2**（Day 1 = 7/30，你肉眼确认）——表里的计数只算已收盘的交易日，**今晚收盘后才成为 Day 3**；**Day 2-3 不必上涨，只要重置线不破**：QQQ 673.30 / VOO 675.21，周五收 687.99 / 686.65，两条都有充裕缓冲；🔴**FTD观察窗是 8/4-8/7（Day 4-7）**，即明天起任一指数单日 ≥1.25% 且成交量高于前日即触发；**触发当天收盘直接建1/3 starter仓、不等回踩**（O'Neil原文是买入指令不是等待指令）；**但先查一件事**：反弹队列收盘区间中位数 <25% 则当天不建仓——7/31就是这个形态",
+ "atr_extension_table": [
+  {
+   "ticker": "VOO",
+   "close": "686.65",
+   "ma50": "685.01",
+   "atr14": "8.16",
+   "dist_ma50_atr": 0.2,
+   "trend": "临界",
+   "judgment": "方向未定，下一交易日确认"
+  },
+  {
+   "ticker": "QQQ",
+   "close": "687.99",
+   "ma50": "715.09",
+   "atr14": "15.30",
+   "dist_ma50_atr": -1.77,
+   "trend": "下降",
+   "judgment": "压力持续加深"
+  },
+  {
+   "ticker": "DIA",
+   "close": "524.32",
+   "ma50": "517.06",
+   "atr14": "6.12",
+   "dist_ma50_atr": 1.19,
+   "trend": "横盘偏强",
+   "judgment": "守稳，未转强"
+  },
+  {
+   "ticker": "IWM",
+   "close": "291.20",
+   "ma50": "292.49",
+   "atr14": "4.47",
+   "dist_ma50_atr": -0.29,
+   "trend": "临界",
+   "judgment": "方向未定，下一交易日确认"
+  },
+  {
+   "ticker": "SMH",
+   "close": "540.53",
+   "ma50": "596.17",
+   "atr14": "27.91",
+   "dist_ma50_atr": -1.99,
+   "trend": "下降",
+   "judgment": "压力持续加深"
+  },
+  {
+   "ticker": "RSP",
+   "close": "215.01",
+   "ma50": "211.39",
+   "atr14": "2.24",
+   "dist_ma50_atr": 1.62,
+   "trend": "相对强",
+   "judgment": "相对强势格局"
+  },
+  {
+   "ticker": "QQQE",
+   "close": "117.07",
+   "ma50": "118.67",
+   "atr14": "1.65",
+   "dist_ma50_atr": -0.97,
+   "trend": "下降",
+   "judgment": "趋势未修复，但未过度延伸"
+  }
+ ],
+ "atr_extension_note": "周五收盘：**RSP +1.62ATR、DIA +1.19ATR 是仅有的两个明确在50MA上方的**；VOO +0.20ATR刚站回；**QQQ -1.77ATR、SMH -1.99ATR 仍在下方**；追价风险低（没有一个过度延伸），破位风险中等",
+ "other_assets_table": {
+  "headers": [
+   "资产",
+   "数值",
+   "信号"
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "16%",
+   "14%",
+   "70%"
+  ],
+  "rows": [
+   [
+    "10Y (TNX)",
+    "4.745%",
+    "**升破4.70%**，RATE-ALERT维持，高Beta/长久期继续冻结"
+   ],
+   [
+    "VIX",
+    "15.99",
+    "**VIX1D 12.29 < VIX = Contango**，短端极度平静；但广度未修复时低VIX不是安全信号，是市场没为下跌定价"
+   ],
+   [
+    "USO（油）",
+    "129.17",
+    "7月XOP +15.38%/XLE +12.76%是月度冠军；地缘反复但需求叙事没坏"
+   ],
+   [
+    "美元 UUP",
+    "28.17",
+    "7月全月走弱，与10Y上行背离"
+   ],
+   [
+    "BTC",
+    "62982",
+    "7月IBIT +4.82%，未破位"
+   ]
+  ]
+ },
+ "joint_signal_lines": [
+  "**价格修复、买盘未确认**：三闸门全部收复降级线，但7/31反弹队列全部收在当日最低区",
+  "**低VIX + 广度未修复**：VIX 15.99是7月最低区间，但T2108仍<50——市场没为下跌定价，不等于没有下跌风险"
+ ],
+ "macro_radar_table": {
+  "headers": [
+   "日期",
+   "事件",
+   "市场解读"
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "12%",
+   "34%",
+   "54%"
+  ],
+  "rows": [
+   [
+    "8/4 二",
+    "🔴**FTD观察窗开启（Day 4）** + ANET盘后财报",
+    "本周唯一的主动交易触发器"
+   ],
+   [
+    "8/5 三",
+    "SNDK 盘后财报",
+    "存储链读数；SNDK是你的持仓（+1.04%）"
+   ],
+   [
+    "8/7 五",
+    "**FTD窗口最后一天（Day 7）**",
+    "窗口内无FTD则反弹确认失败"
+   ],
+   [
+    "9/10",
+    "下次FOMC",
+    "X池称9月加息概率已升到60-82%区间（**三个来源数字不一致，见下方备注**）"
+   ]
+  ]
+ },
+ "macro_radar_detail": "本周没有一级宏观数据，**结构性变量只有FTD窗口**；⚠️**9月加息概率有分歧**：X池报「60%创纪录」，WebSearch查到CME FedWatch为82%（7/23口径）和另一来源76.9%——**三个数字对不上，不采信单一来源**，只记录「市场已在为9月加息定价」这个方向",
+ "week_calendar": {
+  "headers": [
+   "周一 8/3",
+   "周二 8/4",
+   "周三 8/5",
+   "周四 8/6",
+   "周五 8/7",
+   "周末"
+  ],
+  "cells": [
+   [
+    "FTD **Day 3**（不必涨，守住重置线即可）",
+    "8月首个交易日"
+   ],
+   [
+    "🔴**FTD窗口开启 Day 4**",
+    "**ANET 盘后财报**"
+   ],
+   [
+    "FTD Day 5",
+    "**SNDK 盘后财报**（你的持仓）"
+   ],
+   [
+    "FTD Day 6"
+   ],
+   [
+    "🔴**FTD窗口最后一天 Day 7**"
+   ],
+   [
+    "窗口内无FTD则反弹确认失败"
+   ]
+  ]
+ },
+ "breadth_table": {
+  "headers": [
+   "指标",
+   "T（7/31）",
+   "T-1（7/30）",
+   "变化",
+   "基准",
+   "判断"
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "22%",
+   "12%",
+   "12%",
+   "10%",
+   "12%",
+   "32%"
+  ],
+  "rows": [
+   [
+    "涨4%+ / 跌4%+",
+    "179 / 216",
+    "437 / 189",
+    "翻负",
+    "涨>跌",
+    "7/30刚翻正一天就翻回去"
+   ],
+   [
+    "5日 ratio",
+    "0.98",
+    "0.88",
+    "+0.10",
+    "≥1.0",
+    "**只差0.02站上**"
+   ],
+   [
+    "10日 ratio",
+    "0.91",
+    "0.91",
+    "+0.00",
+    "≥1.35",
+    "升级条件仍0/2"
+   ],
+   [
+    "T2108",
+    "47.36",
+    "47.50",
+    "-0.14",
+    "≥50",
+    "**全周未站上50**"
+   ]
+  ]
+ },
+ "breadth_table_note": "Stockbee（已到7/31）：**5日ratio 0.98只差0.02，是最接近解除的一条**；但 T2108 47.36 仍在50下方、涨跌4%+ 再翻负；⚠️今晨首次抓取失败（Remote end closed connection），重试成功后 T2108 由46.66修订为47.36；S&P500全量市宽tab仍HTTP 400（老师在改表）",
+ "unilateral_scan_table": {
+  "headers": [
+   "排名",
+   "TICKER",
+   "得分",
+   "Weinstein",
+   "通过项",
+   "5日%",
+   "1月%",
+   "RS(1周)",
+   "距50MA",
+   "延伸档位"
+  ],
+  "rows": [
+   [
+    "1",
+    "XLE",
+    "4/4",
+    "Stage 2 上升",
+    "跌天数≤4·低点未破坏·站稳20MA·RSI强势+MA上翘",
+    "-0.12%",
+    "+12.76%",
+    "-0.7",
+    "2.41×ATR",
+    "mild"
+   ],
+   [
+    "2",
+    "XLI",
+    "2/4",
+    "Stage 2 上升",
+    "跌天数≤4·低点未破坏",
+    "-1.54%",
+    "-1.92%",
+    "-2.1",
+    "0.44×ATR",
+    "ok"
+   ],
+   [
+    "3",
+    "XLRE",
+    "2/4",
+    "Stage 2 上升",
+    "站稳20MA·RSI强势+MA上翘",
+    "-1.92%",
+    "+2.01%",
+    "-2.5",
+    "0.58×ATR",
+    "ok"
+   ]
+  ],
+  "num_cols": [
+   5,
+   6,
+   7
+  ],
+  "row_highlights": [
+   "",
+   "",
+   ""
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "6%",
+   "8%",
+   "7%",
+   "12%",
+   "25%",
+   "8%",
+   "8%",
+   "8%",
+   "9%",
+   "9%"
+  ]
+ },
+ "unilateral_scan_note": "**XLE 4/4分连续第四天登顶**，且延伸档位仍是MILD（2.41ATR）——7月它是月度冠军（XLE +12.76% / XOP +15.38%）；**但本轮按你的指令只做科技，能源不选**；2-5名 KWEB/FXI（中国）+ XSW/IGV（软件）——**榜单上一个美股半导体都没有**",
+ "positions_moomoo_table": {
+  "headers": [
+   "TICKER",
+   "现价",
+   "成本",
+   "距止损",
+   "持有理由",
+   "失效条件"
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "9%",
+   "10%",
+   "10%",
+   "13%",
+   "23%",
+   "35%"
+  ],
+  "num_cols": [],
+  "rows": [
+   [
+    "TTAN",
+    "83.06",
+    "79.27",
+    "止损77，+7.87%",
+    "200MA支撑",
+    "**+4.78%**，本组最好。缓冲见「距止损」列"
+   ],
+   [
+    "NET",
+    "278.98",
+    "268.49",
+    "止损271.30，+2.83%",
+    "【mentor跟单】",
+    "**+3.91%**。**止损已上移到成本之上，是保本单**"
+   ],
+   [
+    "S",
+    "19.06",
+    "18.42",
+    "止损17，+12.12%",
+    "⚠️**待补录**",
+    "**+3.47%**。缓冲见「距止损」列"
+   ],
+   [
+    "GTLB",
+    "34.51",
+    "33.52",
+    "止损32，+7.84%",
+    "【mentor跟单】",
+    "**+2.95%**。缓冲见「距止损」列"
+   ],
+   [
+    "META",
+    "556.71",
+    "545.89",
+    "止损524.49，+6.14%",
+    "⚠️**待补录**",
+    "**+1.98%**。缓冲见「距止损」列"
+   ],
+   [
+    "KOD",
+    "41.58",
+    "41.47",
+    "止损37.90，+9.71%",
+    "⚠️**待补录**",
+    "**+0.27%**。缓冲见「距止损」列"
+   ],
+   [
+    "MRVL",
+    "187.56",
+    "193.30",
+    "止损162，+15.78%",
+    "积累",
+    "**-2.97%**。买在7/31日内派发当天；距9EMA -0.84%"
+   ],
+   [
+    "MU",
+    "823.03",
+    "849.84",
+    "止损787，+4.58%",
+    "⚠️**待补录**",
+    "**-3.15%**。7/31 -5.90%，距9EMA -4.85%"
+   ],
+   [
+    "SPCX",
+    "108.37",
+    "114.20",
+    "🔴**止损为空**",
+    "底部bullish engulfing",
+    "**-5.10%**，全组最差"
+   ]
+  ]
+ },
+ "positions_moomoo_note": "九笔六盈三亏；**NET的保本单是唯一主动的风险管理动作**；🔴**四笔缺持有理由、一笔缺止损**——见下方仓位治理节",
+ "positions_longbridge_table": {
+  "headers": [
+   "TICKER",
+   "现价",
+   "成本",
+   "距止损",
+   "持有理由",
+   "失效条件"
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "9%",
+   "10%",
+   "10%",
+   "13%",
+   "23%",
+   "35%"
+  ],
+  "num_cols": [],
+  "rows": [
+   [
+    "LITE",
+    "713.94",
+    "687.80",
+    "止损620，+15.15%",
+    "光模块和太空应该先到底",
+    "**+3.80%**。缓冲见「距止损」列"
+   ],
+   [
+    "QQQ",
+    "687.99",
+    "674.46",
+    "🔴**止损为空**",
+    "预计不加息，点阵图出之前买的",
+    "**+2.01%**。缓冲见「距止损」列"
+   ],
+   [
+    "SNDK",
+    "1214.83",
+    "1202.37",
+    "止损998，+21.73%",
+    "买入，应该还会继续积累",
+    "**+1.04%**。**8/5盘后财报**；止损距现价-17.8%是全部持仓最宽"
+   ],
+   [
+    "SKHY",
+    "143.73",
+    "145.67",
+    "止损124，+15.91%",
+    "等底部确认",
+    "**-1.33%**。SK海力士ADR，7/28韩股暴跌后的底部反转论点仍在，缓冲+15.91%"
+   ]
+  ]
+ },
+ "position_governance_table": {
+  "headers": [
+   "TICKER",
+   "账户",
+   "股数",
+   "成本",
+   "止损",
+   "持有理由",
+   "缺什么"
+  ],
+  "rows": [
+   [
+    "MU",
+    "moomoo",
+    "3",
+    "849.84",
+    "787.00",
+    "待Vic补录",
+    "缺 **持有理由**"
+   ],
+   [
+    "KOD",
+    "moomoo",
+    "60",
+    "41.47",
+    "37.90",
+    "待Vic补录",
+    "缺 **持有理由**"
+   ],
+   [
+    "S",
+    "moomoo",
+    "220",
+    "18.42",
+    "17.00",
+    "待Vic补录",
+    "缺 **持有理由**"
+   ],
+   [
+    "META",
+    "moomoo",
+    "8",
+    "545.89",
+    "524.49",
+    "待Vic补录",
+    "缺 **持有理由**"
+   ],
+   [
+    "SPCX",
+    "moomoo",
+    "30",
+    "114.20",
+    "**空**",
+    "底部第一根bullish engulfing",
+    "缺 **止损**"
+   ],
+   [
+    "QQQ",
+    "longbridge",
+    "14",
+    "674.46",
+    "**空**",
+    "预计不加息，点阵图出之前买的",
+    "缺 **止损**"
+   ]
+  ],
+  "num_cols": [],
+  "center_cols": [
+   1,
+   2
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "11%",
+   "13%",
+   "9%",
+   "11%",
+   "12%",
+   "26%",
+   "18%"
+  ]
+ },
+ "position_governance_note": "🔴**8/1起的硬性规则，13笔持仓里6笔不合规**：MU / KOD / S / META 四笔thesis是「待Vic补录」、SPCX / QQQ 两笔止损为空；**没有持有理由 = 盘后无法做论点对账**；**没有止损 = 无法做风险对账**；**月报已定：若8月第一周仍未补齐，新仓一律不建，直到存量补完**",
+ "defensive_basket": [
+  {
+   "ticker": "TLT",
+   "price": "82.74",
+   "pct": "-1.20%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "XLU",
+   "price": "44.78",
+   "pct": "-4.19%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "XLP",
+   "price": "86.99",
+   "pct": "+1.09%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "GLD",
+   "price": "380.17",
+   "pct": "-0.10%",
+   "role": "防御篮子"
+  },
+  {
+   "ticker": "PG",
+   "price": "150.36",
+   "pct": "-0.56%",
+   "role": "防御篮子"
+  }
+ ],
+ "leader_vs_defensive_note": "防御端上周分化：XLP +1.09% 是唯一周涨的，**XLU -4.19% 是全场周跌幅最大**（10Y升破4.70%压制）；GLD -0.10% 基本持平；**资金既没有涌向久期也没有涌向防御**——与「不是risk-off，是没有延续性」一致",
+ "ml_leaders": [],
+ "ml_leaders_note": "",
+ "strong_sector_setups_table": {
+  "headers": [
+   "TICKER",
+   "板块",
+   "Setup标签",
+   "RS(1周)",
+   "距9EMA",
+   "距20MA(ATR)",
+   "量比",
+   "机器说明"
+  ],
+  "num_cols": [
+   3,
+   4,
+   5
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "9%",
+   "13%",
+   "11%",
+   "9%",
+   "10%",
+   "12%",
+   "9%",
+   "27%"
+  ],
+  "rows": [
+   [
+    "MSFT",
+    "DIA/XLK/IGV/CIBR",
+    "W",
+    "+21.2",
+    "+12.05%",
+    "4.24",
+    "1.72x",
+    "双底未破前低：L1=377.39 L2=388.74"
+   ],
+   [
+    "CRM",
+    "DIA/XLK/IGV",
+    "W",
+    "+11.9",
+    "+4.07%",
+    "1.60",
+    "0.76x",
+    "双底未破前低：L1=155.15 L2=175.9"
+   ],
+   [
+    "ADSK",
+    "XLK/IGV",
+    "D+W",
+    "+11.1",
+    "+3.05%",
+    "1.83",
+    "0.86x",
+    "突破221.81(2026-07-28,量1.72×)后缩量回踩；三重底未破前低：L1=201.96 L2=202.15"
+   ],
+   [
+    "ADBE",
+    "XLK/IGV",
+    "D",
+    "+10.7",
+    "+3.58%",
+    "1.60",
+    "0.96x",
+    "突破240.15(2026-07-29,量1.71×)后缩量回踩"
+   ],
+   [
+    "INTU",
+    "XLK/IGV",
+    "W",
+    "+6.1",
+    "+2.82%",
+    "1.53",
+    "0.72x",
+    "三重底未破前低：L1=278.96 L2=303.8"
+   ],
+   [
+    "FTNT",
+    "XLK/IGV/CIBR",
+    "C",
+    "+5.7",
+    "+3.92%",
+    "0.52",
+    "1.13x",
+    "undercut收回：支撑146.12，假破深度1.61%"
+   ],
+   [
+    "CDNS",
+    "XLK/SMH/IGV",
+    "Ew+W",
+    "+3.7",
+    "+0.18%",
+    "-0.88",
+    "0.89x",
+    "shakeout已收回331.56(深3.46%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方；三重底未破前低：L1=325.96 L2=329.59"
+   ],
+   [
+    "SNPS",
+    "XLK/SMH/IGV",
+    "W",
+    "+3.5",
+    "+1.02%",
+    "-0.94",
+    "1.16x",
+    "三重底未破前低：L1=369.02 L2=370.2"
+   ],
+   [
+    "ACN",
+    "XLK/CIBR",
+    "W",
+    "+12.3",
+    "+5.48%",
+    "2.39",
+    "1.13x",
+    "三重底未破前低：L1=129.96 L2=135.96"
+   ],
+   [
+    "NTAP",
+    "XLK/CIBR",
+    "W",
+    "+5.9",
+    "+4.01%",
+    "1.53",
+    "0.69x",
+    "三重底未破前低：L1=163.36 L2=163.68"
+   ],
+   [
+    "GEN",
+    "XLK/CIBR",
+    "W",
+    "+5.7",
+    "+2.00%",
+    "1.07",
+    "1.13x",
+    "双底未破前低：L1=24.97 L2=26.61"
+   ],
+   [
+    "IBM",
+    "DIA/XLK/CIBR",
+    "Ew+W",
+    "+3.9",
+    "+0.35%",
+    "-1.41",
+    "0.64x",
+    "shakeout已收回212.34(深6.19%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方；双底未破前低：L1=199.19 L2=215.11"
+   ]
+  ]
+ },
+ "strong_sector_setups_permission": "",
+ "regime_triggers": {},
+ "thirteen_dg_rows": [],
+ "thirteen_dg_note": "SEC 13D/13G实时流今晨查询：无新增申报。",
+ "squeeze_candidates": [],
+ "squeeze_note": "",
+ "news_week": [],
+ "industry_radar_table": {},
+ "adanos_scan_table": {
+  "headers": [
+   "TICKER",
+   "buzz",
+   "热度变化",
+   "趋势",
+   "看多%",
+   "盘前"
+  ],
+  "rows": []
+ },
+ "x_sentiment_macro": [
+  {
+   "handle": "@KobeissiLetter",
+   "time": "今晨(约3小时前)",
+   "summary": "全球央行Q2购金量同比+62吨达289吨，创纪录规模的央行购金潮"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "今晨(约5小时前)",
+   "summary": "特朗普宣布取消对伊朗军事打击、称已就'和平框架参数'达成一致，带动美股期货走高、美油价跌破79美元/桶"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "今晨(约9小时前)",
+   "summary": "标普500成分股本季财报beat率创新高，AI相关公司财报表现空前强劲"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "今晨(约12小时前)",
+   "summary": "本周大事清单：市场消化伊朗停火消息、AMD/SPCX周二公布财报、周五公布7月ADP非农就业数据"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "周日8/2",
+   "summary": "市场对9月FOMC加息25bp的预期概率升至创纪录60%，与近期FOMC三票要求加息的鹰派信号相呼应"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "周日8/2",
+   "summary": "中国7月制造业PMI降至49.2（多月新低，2月来首次跌破50），非制造业PMI同步走弱，经济动能放缓"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "周日8/2",
+   "summary": "美国6月个人储蓄率降至2.7%，连续5个月下滑，创2008年4月以来次低"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "周六8/1(转发早前贴)",
+   "summary": "债市状况'疯狂'——市场都在关注AI叙事时，美国借贷成本(长端收益率)已升至多年高点"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "今晨(约2小时前)",
+   "summary": "高盛顶级衍生品交易员警告多头：近期资金流更多是'总量下降(gross down)'而非'净买入(net up)'，暗示反弹持续性存疑"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "今晨(约3小时前)",
+   "summary": "日本财务省官员(三村/片山)连续发声将持续汇市干预；特朗普称美方协助干预日元是'友谊信号'；财长贝森特称不排除再次联合干预日元"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "今晨(约3小时前)",
+   "summary": "美联储理事沃什(Kevin Warsh)提议重新讨论议息会议频率与时点安排（与NickTimiraos报道互相印证）"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "今晨(约5小时前)",
+   "summary": "高盛Prime经纪台报告本轮'轧空式'买入为2020年11月以来最大单日买入规模"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "今晨(约6小时前)",
+   "summary": "长文《日本、布雷顿森林2.0与套息交易时代的终结》，讨论日元carry trade平仓风险"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "周日8/2",
+   "summary": "英国海军称有油轮报告在阿曼哈桑港附近听到爆炸声"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "今晨(约5小时前)",
+   "summary": "发文《波动率新常态成形》，指出SNDK上周的极端波动预示单只股票波动率进入新常态（SNDK 8/5盘后财报，需关注）"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "周六8/1",
+   "summary": "过去10个交易日QQQ put偏度被大力抛售，暗示期权交易员情绪偏多头"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "周六8/1",
+   "summary": "评论财长贝森特'信号博弈手法很强'（配图，具体所指不明，疑似指口头市场干预）"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "周日8/2",
+   "summary": "转发Leopold Aschenbrenner的AI对冲基金7月因保证金追缴巨亏67%的新闻，调侃'这是第一个伊朗相关的纾困案例？'——【语气存疑，反讽】"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "周六8/1",
+   "summary": "圣路易斯联储主席穆萨莱姆(Musalem)对FT表示'市场本周说话了，我听取了这个信号'，暗示近期市场波动已影响其政策立场趋鸽"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "周六8/1",
+   "summary": "美联储理事沃什(Warsh)提议讨论减少议息会议频率（与zerohedge报道一致）"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "周六8/1",
+   "summary": "达拉斯联储6月核心PCE(trimmed mean)单月年化仅1.4%，为近年最低读数之一，通胀降温信号"
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "今晨(约12-14小时前)",
+   "summary": "30年期美债收益率月末收在5.27%，创2007年7月以来新高；美债市场已连续6年处于回撤中，为历史最长；美国国债7月以来已增加逾4500亿美元；另评论SpaceX正重演经典IPO'过山车'剧本——狂热首发、预期过高，现步入调整"
+  },
+  {
+   "handle": "@charliebilello",
+   "time": "周五7/31",
+   "summary": "META/TSLA/GOOGL/AMZN/MSFT/AAPL/NFLX二季度营收同比增速对比图（META+28%最高，SPY基准+13%）；四大云厂商(AMZN/GOOGL/MSFT/META)二季度合计资本开支1650亿美元，同比+87%——呼应本周MSFT维持资本开支vs META上调开支后市场反应分化的叙事"
+  }
+ ],
+ "x_sentiment_stocks": [
+  {
+   "handle": "@bluechipdaily",
+   "time": "周日8/2",
+   "ticker": "MU",
+   "note": "MU三个月内从310涨到1255，'不必买在最低点或卖在最高点也能在这笔交易中赚大钱'",
+   "aligned": ""
+  },
+  {
+   "handle": "@bluechipdaily",
+   "time": "周日8/2",
+   "ticker": "SNDK",
+   "note": "3月深跌区间买入SNDK的投资者目前已获利约4倍",
+   "aligned": ""
+  },
+  {
+   "handle": "@bluechipdaily",
+   "time": "周五7/31",
+   "ticker": "SNDK",
+   "note": "SNDK当日一度较开盘下跌11.6%，'这种波动区间很消磨心理资本'；作者此前在2000-2150区间减仓一半，随后错过26%反弹",
+   "aligned": ""
+  },
+  {
+   "handle": "@bluechipdaily",
+   "time": "周六8/1",
+   "ticker": "",
+   "note": "目前现金仓位24%，'并非自满'，提到即将到来的季节性因素是会员站近几周持续讨论的话题",
+   "aligned": ""
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "周日8/2",
+   "ticker": "XLV",
+   "note": "'在如此大的板块里出现岛型反转(island reversal)并不常见'（配图，指医疗保健板块XLV）",
+   "aligned": ""
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "周六8/1",
+   "ticker": "MSFT/META",
+   "note": "Fidelity客户订单买卖偏斜数据显示：MSFT前一日上涨时散户大举买入，META下跌期间散户买盘同样以6:1占优（仅供参考）",
+   "aligned": ""
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "周五7/31",
+   "ticker": "SPY/QQQ/AAPL/AMZN",
+   "note": "跟踪跳空缺口回补进度：SPY需跌到724.46、QQQ需跌到685.12才算完全回补当周跳空缺口；AAPL缺口已回补QQQ尚未；用缺口回补速度衡量本轮反弹强度",
+   "aligned": ""
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "周五7/31",
+   "ticker": "QQQ",
+   "note": "【语气存疑，反讽】调侃'现在有没有卖《我扛过了2026年QQQ大回调》T恤了'，引用另一账号'QQQ回调结束，大家该回去上班了'，暗示这轮所谓回调极其短暂",
+   "aligned": ""
+  },
+  {
+   "handle": "@BillAckman",
+   "time": "周日8/2",
+   "ticker": "FNMA/FMCC",
+   "note": "本周期发言主要集中在纽约市税收/Mamdani市长'空置房产税'政治议题，与交易关联度低；唯一相关内容为回复中提及'现在是让房利美/房地美脱离政府托管的时候了'，与其FNMA/FMCC相关持仓有关",
+   "aligned": ""
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "今晨(约1小时前，转发@TedHZhang)",
+   "ticker": "",
+   "note": "转发'我的William O'Neil选股器按RS-3个月排序后，最上面挤满了石油天然气股票，不是好兆头'，并评论'时代的信号'——与7月能源板块XOP/XLE领跑全场的背景叙事一致，暗示末端/防御性轮动信号",
+   "aligned": ""
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "周日8/2",
+   "ticker": "",
+   "note": "发起投票'修正低点是否已经出现？'，结果Yes 39.2% / No 60.8%（1731票），多数投票者认为尚未见底",
+   "aligned": ""
+  },
+  {
+   "handle": "@ohiain",
+   "time": "周六8/1",
+   "ticker": "HPE/NTAP",
+   "note": "回复中提到'昨晚电话会上刚聊到这个，HPE和NTAP是我目前看到仅有的潜在可操作setup'",
+   "aligned": ""
+  },
+  {
+   "handle": "@ohiain",
+   "time": "周日8/2",
+   "ticker": "",
+   "note": "'给我一个横盘不动4-5周的龙头股，我比泥地里的猪还开心，大基座正在构筑'（tight consolidation设置哲学表述，未指定具体标的）",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约8小时前)",
+   "ticker": "SMH/SOXX",
+   "note": "SPY持平期间SMH/SOXX成分股7月中旬曾下跌20%，'过去几年领涨的AI芯片股正在降温，读懂言外之意，别盲目追涨'",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约1小时前)",
+   "ticker": "AMP",
+   "note": "配图+关注表情，未附文字说明（观察中，无明确论点）",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约5小时前)",
+   "ticker": "LLY",
+   "note": "'确有回调但逻辑仍在，只要守住50日均线就继续持有'",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约8小时前)",
+   "ticker": "CLS",
+   "note": "Celestica'需要多一点耐心，结构仍在构筑中'",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约11小时前)",
+   "ticker": "META/MSFT/AMZN",
+   "note": "'META也会有它的时候，但现在还不是时候。660美元时我以为它见底了……结果是MSFT/AMZN先见底'；另提到已在MSFT月线50均线附近建仓，'近期不打算动'",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "今晨(约10小时前)",
+   "ticker": "FLR",
+   "note": "持续看多Fluor(FLR)，'市场迟早会意识到这家公司的价值'，此前6/20曾提出FLR对标STRL有4-5倍潜力空间",
+   "aligned": ""
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "周日8/2",
+   "ticker": "ASTS",
+   "note": "回复中称'SpaceX估值1.4万亿不会持续太久，ASTS很快会达到数倍估值水平'",
+   "aligned": ""
+  },
+  {
+   "handle": "@aleabitoreddit",
+   "time": "周六8/1",
+   "ticker": "LITE",
+   "note": "【promoter类账号，观点默认降权，需其他中立信号源交叉确认】转发Lumentum CEO在RAISE Summit的警告：AI数据中心用InP激光器供应缺口正在扩大",
+   "aligned": ""
+  },
+  {
+   "handle": "@aleabitoreddit",
+   "time": "周六8/1",
+   "ticker": "SNDK/BE",
+   "note": "【promoter类账号，观点默认降权】为AI对冲基金经理Leopold Aschenbrenner(7月巨亏67%)辩护，称媒体'过度渲染'其SNDK/BE相关交易为'失败'",
+   "aligned": ""
+  }
+ ],
+ "x_sentiment_macro_summary": "周末窗口23条宏观帖，收敛到三条：①**Fed路径**——@zerohedge与@NickTimiraos双源报Warsh提议减少议息会议频率；9月加息概率被称已升至纪录高位（**但X说60%、WebSearch查到82%和76.9%，三个数字对不上，只记方向不采信数值**）；②**动量崩塌的余波**——多个账号报AI相关对冲基金7月巨亏（有一只-67%），与「7月是动量因子史上最差月份之一」互相印证；③**日元干预**——@zerohedge与@unusual_whales双源提到贝森特表态；@RichardMoglen转发的一条值得单独记：**「选股器被石油天然气股占满不是好兆头」**，这与7月XOP/XLE领跑全场是同一个现象的两种读法",
+ "x_sentiment_note": "",
+ "x_watch_table": {
+  "headers": [
+   "提及日",
+   "账号",
+   "TICKER",
+   "提及时价",
+   "最新收盘",
+   "自提及%",
+   "备注"
+  ],
+  "num_cols": [
+   3,
+   4,
+   5
+  ],
+  "table_class": "fixed-cols",
+  "col_widths": [
+   "10%",
+   "15%",
+   "9%",
+   "11%",
+   "11%",
+   "10%",
+   "34%"
+  ],
+  "rows": [
+   [
+    "2026-07-23",
+    "@spluscollective",
+    "URI",
+    "1035.06",
+    "1079.26",
+    "+4.27%",
+    "'一直在看但没下手'；6/26称URI是被低估的数据中心概念，现在被市场"
+   ],
+   [
+    "2026-07-23",
+    "@aleabitoreddit",
+    "GOOGL",
+    "342.09",
+    "356.13",
+    "+4.10%",
+    "【promoter降权】capex指引上调至$195-205B；称超大厂"
+   ]
+  ]
+ },
+ "x_watch_note": "",
+ "footer_sources": [
+  "LongPort OpenAPI",
+  "Stockbee Market Monitor",
+  "Vic宏观Google Sheet",
+  "Nasdaq财报日历",
+  "CME FedWatch（经媒体转述）",
+  "X观点池13账号"
+ ],
+ "cross_check": {
+  "verdict": "split",
+  "stances": {
+   "攻守记分板": "neutral",
+   "市宽打分": "bear",
+   "动能打分": "bear"
+  },
+  "high_n": 4,
+  "headline": "🔴三表分歧：攻守记分板=中性、市宽打分=偏空、动能打分=偏空",
+  "detail": "**价格位置好于内部结构**（指数还没破位但广度已经在恶化）——这是典型的派发/顶部型分歧，价格是滞后项，2026-07-21/22那次就是这个形态：大盘当天还在涨、SPX>20MA却单日掉3.18pt，两天后QQQ才正式跌破690。**这种分歧下，以广度为准、不要用'指数还没破'安慰自己。**；动能打分（偏空，high档4项）与另两张表不一致——动能打分是定性观感，另两张是定量门槛；**定性与定量打架时以定量为准，并回头检查是不是某一项的档位打得太重或太轻。**"
+ },
+ "_phase": 1,
+ "_phase1_at": "2026-08-03 14:18 SGT",
+ "_phase1_note": "段1：FTD Day 3（窗口8/4-8/7）；三闸门全部回中性区但广度2/4仍触发；7/31日内派发形态；仓位治理6笔不合规；本周只做科技+日内为主",
+ "recon_ledger": [
+  {
+   "claim": "QQQ与VOO收盘均不跌破FTD重置线（673.30 / 675.21）",
+   "trigger": "任一跌破则rally attempt计数归零，需重新肉眼确认Day 1"
+  },
+  {
+   "claim": "降级档维持2/4触发（5日ratio未站上1.0 或 T2108未站上50）",
+   "trigger": "两条同时满足则降级档解除"
+  },
+  {
+   "claim": "今日不建新仓（仓位治理6笔未补齐前）",
+   "trigger": "若建仓则记unplanned"
+  },
+  {
+   "claim": "SMH收盘守住5MA（半导体解禁条件维持）",
+   "trigger": "跌回5MA下方则禁碰恢复"
+  },
+  {
+   "claim": "XLE不因「只做科技」指令而被误选进候选",
+   "trigger": "若出现在A/B级则违反当日指令"
+  },
+  {
+   "claim": "10Y维持在4.50%上方",
+   "trigger": "跌回4.50%以下则RATE-ALERT考虑解除"
+  }
+ ],
+ "_phase2_skipped": "2026-08-03 段2未跑（Vic：孩子生病）。8/4补记：盘前报价数据已不可回溯，不补造。"
+}

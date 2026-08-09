@@ -1,0 +1,94 @@
+{
+  "report_type": "postmarket",
+  "date": "2026-07-02",
+  "generated_at": "2026-07-02 20:30 SGT（本报告2026-07-04回溯生成，用于验证渲染管线，内容取自Vic当天真实TradeBook记录+LongBridge真实收盘数据）",
+  "title": "医疗单边框架兑现，半导体系统性去风险确认",
+  "subtitle": "资料截至2026-07-02美股收盘（LongBridge实时数据）。本报告为渲染管线验证，用Vic当天TradeBook真实盘后记录重建，非当天实时生成。",
+  "badges": [{"kind": "green", "text": "医疗主线兑现"}, {"kind": "red", "text": "半导体系统性去风险"}, {"kind": "amber", "text": "计划外建仓1笔"}],
+
+  "close_summary_cards": [
+    {"label": "SPY", "value": "-0.13%", "note": "收744.78"},
+    {"label": "QQQ", "value": "-1.73%", "note": "收712.60"},
+    {"label": "SMH", "value": "-4.54%", "note": "收592.29，系统性去风险确认"},
+    {"label": "VIX", "value": "15.81", "note": "低位，非系统性恐慌"}
+  ],
+
+  "hit_count": 5, "partial_count": 0, "miss_count": 1,
+  "recon_rows": [
+    {"section": "XLV医疗主线", "plan": "单边确认·NFP后受益", "actual": "XLV+2.63%·SYK+4.20%", "result": "hit", "fix": "保留"},
+    {"section": "GH不追高", "plan": "$170高位不追", "actual": "GH收$167.98", "result": "hit", "fix": "保留"},
+    {"section": "NFP前禁仓", "plan": "数据前冻结", "actual": "NFP后才建仓", "result": "hit", "fix": "保留"},
+    {"section": "SMH系统性回避", "plan": "连续跌>4%不逢低", "actual": "SMH-4.54%（Stockbee/LongBridge）", "result": "hit", "fix": "保留"},
+    {"section": "10Y防线", "plan": "4.50%警戒", "actual": "NFP弱→10Y回落至约4.46-4.50%", "result": "hit", "fix": "保留"},
+    {"section": "XLF降息承压", "plan": "NFP弱→XLF弱", "actual": "XLF+1.53%跑赢", "result": "miss", "fix": "NFP弱+10Y降<15bps→XLF中性，不降级"},
+    {"section": "BRKR计划外", "plan": "未出现在盘前候选清单", "actual": "直接建仓（BRKR收61.64，+1.65%）", "result": "unplanned", "fix": "未入清单标的当日不建仓"}
+  ],
+  "recon_note": "5命中/1失误/1计划外。核心框架（医疗主线、SMH系统性去风险、NFP前禁仓）全部兑现；主要偏差是XLF与利率关系判断过于线性，以及一笔计划外建仓破坏纪律。",
+
+  "hit_rate_stats": {
+    "today": {"hit": 5, "partial": 0, "miss": 1, "rate": "71%（不含计划外）"}
+  },
+
+  "lessons": {
+    "good": ["医疗主线完全兑现", "NFP前禁仓", "SMH/科技全面回避"],
+    "bad": ["XLF逻辑判断偏差（NFP弱不等于XLF弱）", "BRKR计划外建仓"],
+    "pattern": ["本周QQQ-1.81%但SPY-0.13%，医疗/金融对冲科技去风险；震荡市内单边板块（XLV）框架有效，ML Leader名单需大幅重置"]
+  },
+  "corrections": [
+    {"status": "keep", "text": "XLV单边判断·NFP前禁仓·SMH系统性去风险定性·高位不追"},
+    {"status": "adjust", "text": "XLF与利率关系：10Y降<15bps→XLF中性持有，不降级"},
+    {"status": "fix", "text": "计划外建仓→未入当日盘前候选清单的标的，当日禁止建仓"},
+    {"status": "reverse", "text": "若下周SYK/XLV缩量回踩→入场机会；若放量跌破$163.74→医疗主线转弱"}
+  ],
+
+  "tradebook_block": "【今日盘后总结】2026-07-02\nSPY:-0.13% · QQQ:-1.73% · SMH:-4.54% · XLV:+2.63% · VIX:~15.81\n\n命中:5/7 · 部分:0/7 · 失误:1/7 · 计划外:1\n\n盘前预判 | 原始条件 | 实际结果 | 对账 | 下次修正\n[XLV医疗主线] | 单边确认·NFP后受益 | XLV+2.63%·SYK+4.20% | ✅命中 | 保留\n[GH不追高] | $170高位不追 | GH收$167.98 | ✅命中 | 保留\n[NFP前禁仓] | 数据前冻结 | NFP后才建仓 | ✅命中 | 保留\n[SMH系统性回避] | 连续跌>4%不逢低 | SMH-4.54% | ✅命中 | 保留\n[10Y防线] | 4.50%警戒 | NFP弱→10Y回落~4.46-4.50% | ✅命中 | 保留\n[XLF降息承压] | NFP弱→XLF弱 | XLF+1.53%跑赢 | ❌失误 | NFP弱+10Y降<15bps→XLF中性\n[BRKR计划外] | 未出现在盘前候选清单 | 直接建仓 | ⚠️计划外 | 未入清单标的当日不建仓\n\n→ 对账后修正\n✅ 保留：XLV单边判断·NFP前禁仓·SMH系统性去风险定性·高位不追\n⚠️ 调整：XLF与利率关系（10Y降<15bps→XLF中性持有）\n❌ 修正：计划外建仓→未入当日盘前清单的标的禁止当日建仓\n△ 反向信号：若下周SYK/XLV缩量回踩→入场机会；若放量跌破$163.74→医疗主线转弱\n\n✅ 做对：医疗主线完全兑现；NFP前禁仓；SMH/科技全面回避\n❌ 做错：XLF逻辑判断偏差；BRKR计划外建仓\n🔍 累积pattern：本周QQQ-1.81%但SPY-0.13%，医疗/金融对冲科技去风险\n震荡市内单边板块（XLV）框架有效，Leader名单需大幅重置\n\n请在TradeBook「盘后总结」tab粘贴以上内容，并填写：\n执行纪律A-D · 补充/纠正 · 今日失误 · 今日亮点（约2分钟）",
+
+  "index_table": {"headers": ["ETF/指数", "最新", "日变化", "20/50/200MA", "判断"], "rows": [
+    ["QQQ", "712.60", "-1.73%", "下/上/上", "短线转弱，中期未破"],
+    ["SPY", "744.78", "-0.13%", "上/上/上", "接近持平"],
+    ["IWM", "297.58", "-0.58%", "上/上/上", "跟跌但抗跌"],
+    ["DIA", "527.88", "+1.05%", "上/上/上", "价值领涨，创新高"],
+    ["VIX", "15.81", "-2.65%（估）", "下/下/下", "系统性风险低"]
+  ], "num_cols": [2]},
+  "sector_bar_items": [
+    {"label": "XLV 医疗", "value": 2.63}, {"label": "XLF 金融", "value": 1.53},
+    {"label": "DIA 道指", "value": 1.05}, {"label": "IWM 小盘", "value": -0.58},
+    {"label": "QQQ 科技", "value": -1.73}, {"label": "SMH 半导体", "value": -4.54}
+  ],
+  "sector_table": {"headers": ["ETF", "日变化", "判断"], "rows": [
+    ["XLV 医疗", "+2.63%", "防御领涨，主线兑现，RSI偏热只持不追"],
+    ["XLF 金融", "+1.53%", "跑赢盘前预判，10Y小降<15bps不降级"],
+    ["SMH 半导体", "-4.54%", "系统性去风险确认，不设逢低线"]
+  ], "num_cols": [1]},
+
+  "theme_review_table": {"headers": ["板块", "盘前预判", "实际表现", "A级标的结果", "经验总结"], "rows": [
+    ["医疗", "单边确认·NFP后受益", "XLV+2.63%·SYK+4.20%", "无A级候选，靠持仓兑现", "框架有效，继续持有不追"],
+    ["半导体", "系统性去风险，不逢低", "SMH-4.54%，ML Leader全数下跌", "无", "确认系统性，等5MA+RSI改善"]
+  ], "num_cols": []},
+
+  "earnings_table": {"headers": ["Ticker", "EPS实际", "EPS预期", "营收实际", "营收预期", "盘后涨跌"], "rows": [], "num_cols": [5]},
+
+  "positions_moomoo_table": {"headers": ["TICKER", "CLOSE", "CHG%", "KEY EVENT", "STATUS"], "rows": [], "num_cols": [2]},
+  "positions_longbridge_table": {"headers": ["TICKER", "CLOSE", "CHG%", "KEY EVENT", "STATUS"], "rows": [
+    ["SYK", "326.54", "+4.20%", "医疗主线确认", "HOLD"],
+    ["BRKR", "61.64", "+1.65%", "计划外建仓", "ALERT－未入清单"],
+    ["XLV", "163.74", "+2.63%", "主线ETF", "HOLD"]
+  ], "num_cols": [2]},
+
+  "ml_leaders_postmarket": [
+    {"ticker": "MRVL", "pct": "-9.84%", "qqq_pct": "-1.73%", "excess": "-8.11%", "regime": "大盘红日", "behavior_ok": "no", "setup_triggered": "无", "structure_change": "系统性下跌"},
+    {"ticker": "SNDK", "pct": "-14.13%", "qqq_pct": "-1.73%", "excess": "-12.40%", "regime": "大盘红日", "behavior_ok": "no", "setup_triggered": "无", "structure_change": "系统性下跌，名单最弱"},
+    {"ticker": "ASX", "pct": "-2.61%", "qqq_pct": "-1.73%", "excess": "-0.88%", "regime": "大盘红日", "behavior_ok": "so-so", "setup_triggered": "无", "structure_change": "相对抗跌，观察企稳"}
+  ],
+  "ml_tier_change": "无正式变化，但14只名单当日全数下跌且全数跑输QQQ，用户TradeBook已标注「Leader名单需大幅重置」，建议下次盘前与用户确认",
+  "ml_tomorrow_watch": "观察ASX/STM/PWR（名单内相对最抗跌的三只）是否率先止跌企稳",
+
+  "next_day_outlook": [
+    "半导体等重回5MA+RSI改善前不设逢低线，维持系统性去风险定性",
+    "医疗/金融主线延续，只持有不追高（RSI已偏热）",
+    "XLF与利率关系已修正为：10Y降<15bps→中性持有，不做方向性判断",
+    "计划外建仓纪律：未出现在当日盘前候选清单的标的，当日不得新开仓"
+  ],
+
+  "footer_sources": "数据来源：LongBridge OpenAPI（真实收盘价）、Vic本人2026-07-02 TradeBook真实盘后记录（对账/教训/修正规则/TradeBook输出块均为真实历史数据，未编造）。本报告用于验证渲染管线，非当日实时生成。"
+}

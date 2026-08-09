@@ -1,0 +1,90 @@
+{
+ "_说明": "信号灯历史台账（2026-07-07建，Vic确认的改进#5）。每个交易日盘前记录四个信号灯状态，盘后回填当日SPY/QQQ实际表现。目的：Vic想给信号灯加权重（他记得曾经全绿灯只有DXY黄灯、结果市场暴跌），但现在样本太少，先诚实地攒数据——至少30个样本后再回测哪个灯真有预测力、哪个灯是噪音，不凭印象定权重。level含义：low=绿/mid=黄/high=红。fetch_market_data.py每次运行自动维护。",
+ "entries": [
+  {
+   "date": "2026-07-06",
+   "bias": "mid",
+   "bond": "low",
+   "dxy": "low",
+   "breadth": "low",
+   "spy_next_pct": 0.87,
+   "qqq_next_pct": 1.43,
+   "outcome_date": "2026-07-06",
+   "_note": "手工回填的第一条：当天盘前SELECTIVE(黄)+其余三绿，当日SPY+0.87/QQQ+1.43。之后的条目由脚本自动append。"
+  },
+  {
+   "date": "2026-07-07",
+   "bias": "mid",
+   "bond": "mid",
+   "dxy": "low",
+   "breadth": "low",
+   "spy_next_pct": -0.48,
+   "qqq_next_pct": -1.85,
+   "outcome_date": "2026-07-07",
+   "_note": "bond灯首次转黄(mid)的当天，10Y收盘即破4.50防线——第一个\"黄灯有效性\"样本"
+  },
+  {
+   "date": "2026-07-08",
+   "bias": "high",
+   "bond": "high",
+   "dxy": "low",
+   "breadth": "mid",
+   "spy_next_pct": -0.31,
+   "qqq_next_pct": 0.28,
+   "_note": "首个双红灯日（bias+bond均high）：美伊MoU撕毁+10Y 4.582+KOSPI连环崩 结果：双红灯日指数反而V型收复（QQQ+0.28位置93），但广度两线跌破——红灯预警的是风险不是单日方向。",
+   "outcome_date": "2026-07-08"
+  },
+  {
+   "date": "2026-07-09",
+   "bias": "high",
+   "bond": "high",
+   "dxy": "low",
+   "breadth": "high",
+   "spy_next_pct": 0.43,
+   "qqq_next_pct": 0.31,
+   "_note": "降级档首日（T2108 47.96/5日ratio 0.83）+RATE-ALERT D3；但盘前全场抢跑修复（SMH+2.3%重上600，亚洲V反），债股分歧（10Y钉4.565）",
+   "outcome_date": "2026-07-10"
+  },
+  {
+   "date": "2026-07-10",
+   "bias": "high",
+   "bond": "mid",
+   "dxy": "low",
+   "breadth": "high",
+   "spy_next_pct": -0.77,
+   "qqq_next_pct": -1.9,
+   "_note": "降级档D2（5日ratio 0.76恶化中/T2108 49.12）+RATE-ALERT D4但10Y回落至4.540转黄；伊朗报复美军基地市场无反应；SKHY上市日",
+   "outcome_date": "2026-07-13"
+  },
+  {
+   "date": "2026-07-13",
+   "bias": "mid",
+   "bond": "mid",
+   "dxy": "low",
+   "breadth": "mid",
+   "spy_next_pct": 0.36,
+   "qqq_next_pct": 1.12,
+   "outcome_date": "2026-07-14"
+  },
+  {
+   "date": "2026-07-16",
+   "bias": "mid",
+   "bond": "high",
+   "dxy": "low",
+   "breadth": "mid",
+   "spy_next_pct": -0.99,
+   "qqq_next_pct": -1.5,
+   "outcome_date": "2026-07-17"
+  },
+  {
+   "date": "2026-07-27",
+   "bias": null,
+   "bond": null,
+   "dxy": null,
+   "breadth": null,
+   "spy_next_pct": 0.24,
+   "qqq_next_pct": -0.97,
+   "outcome_date": "2026-07-28"
+  }
+ ]
+}

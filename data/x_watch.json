@@ -1,0 +1,572 @@
+{
+ "_说明": "X trader点名台账（2026-07-07建，Vic确认的改进#6）。7个个股/Setup类账号每次明确点名的票都记一条：日期/账号/ticker/提及时参考价（提及前最后一个收盘价）。fetch_market_data.py每次运行自动补最新价和涨跌幅——既统计『这个trader值不值得跟』，也是免费候选池。X提取的setup默认进当日B级候选（只看不做），除非通过了CONTEXT.md选股规则二次验证才能升A。",
+ "entries": [
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "HIMS",
+   "ref_price": 36.8,
+   "note": "watching closely名单"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "IBM",
+   "ref_price": 289.52,
+   "note": "watching closely名单"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "LLY",
+   "ref_price": 1213.91,
+   "note": "watching closely名单（'leadership is still leadership, 需消化几天等r/r'）"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "RBRK",
+   "ref_price": 83.64,
+   "note": "watching closely名单"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "RDDT",
+   "ref_price": 194.67,
+   "note": "watching名单+此前单独发帖看多（AI-powered social+data platform论点，持有正股）"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "SOFI",
+   "ref_price": 18.24,
+   "note": "Vic在其账号看到的提及（具体帖子未定位到，参考价仍用7/2收盘）"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "TEM",
+   "ref_price": 60.27,
+   "note": "watching closely名单"
+  },
+  {
+   "date": "2026-07-05",
+   "handle": "@ohiain",
+   "ticker": "TTWO",
+   "ref_price": 254.99,
+   "note": "watching closely名单"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@RichardMoglen",
+   "ticker": "BE",
+   "ref_price": 270.89,
+   "note": "21EMA收复，whipping around（波动大）"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@RichardMoglen",
+   "ticker": "BEAM",
+   "ref_price": 34.79,
+   "note": "Deepvue图表标注（未附具体setup描述）"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@spluscollective",
+   "ticker": "BOT",
+   "ref_price": 35.63,
+   "note": "加入其watchlist，机器人主题，作者自己说只当trade不当position"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@bluechipdaily",
+   "ticker": "CRWD",
+   "ref_price": 193.98,
+   "note": "新高<long>；@RichardMoglen同日也标注breakout（双账号共振）"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@bluechipdaily",
+   "ticker": "GS",
+   "ref_price": 1021,
+   "note": "反弹自上升50MA，下周财报<long>（注意数据前2小时禁仓纪律）"
+  },
+  {
+   "date": "2026-07-07",
+   "handle": "@RichardMoglen",
+   "ticker": "LLY",
+   "ref_price": 1213.91,
+   "note": "flagging out nicely——与@ohiain 7/5观察名单重合，双账号共振"
+  },
+  {
+   "date": "2026-07-10",
+   "handle": "@ohiain",
+   "ticker": "NVDA",
+   "ref_price": 210.96,
+   "note": "CHOC底部转强：未创新低+收复9/21EMA测50EMA，weekly looks nuts（7/10盘后帖，ref=7/10收盘）"
+  },
+  {
+   "date": "2026-07-12",
+   "handle": "@spluscollective",
+   "ticker": "AMD",
+   "ref_price": 557.89,
+   "note": "本周top idea：NVDA/SMH转强带动AMD继续走高，买现货忌weekly/monthly期权"
+  },
+  {
+   "date": "2026-07-12",
+   "handle": "@spluscollective",
+   "ticker": "BAND",
+   "ref_price": 75.48,
+   "note": "cup-base，PT1=100，软件板块开始转强逻辑"
+  },
+  {
+   "date": "2026-07-14",
+   "handle": "@spluscollective",
+   "ticker": "FIX",
+   "ref_price": 1732.03,
+   "note": "ML名单成员：这个dip是礼物like last few dips，因股价太高只能场边加油"
+  },
+  {
+   "date": "2026-07-14",
+   "handle": "@spluscollective",
+   "ticker": "GEV",
+   "ref_price": 1080.29,
+   "note": "自述已买入（Hence I got GEV/MELI）"
+  },
+  {
+   "date": "2026-07-14",
+   "handle": "@spluscollective",
+   "ticker": "MELI",
+   "ref_price": 1867.3,
+   "note": "自述已买入；ref待盘后补（不在watchlist）"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@aleabitoreddit",
+   "ticker": "AEHR",
+   "ref_price": 72.01,
+   "note": "财报+36%后：FY27指引$130-150M(+160-200%)，硅光子ramp"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@RichardMoglen",
+   "ticker": "BLLN",
+   "ref_price": 124.87,
+   "note": "旗形/区间整理"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@bluechipdaily",
+   "ticker": "CRWD",
+   "ref_price": 210.73,
+   "note": "still holding接近新高（5/9起2026唯一软件买入）；Moglen同日：RS昨日、突破今日"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@spluscollective",
+   "ticker": "CSCO",
+   "ref_price": 117.09,
+   "note": "自述已建swing：目前最好看的swing"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@bluechipdaily",
+   "ticker": "GS",
+   "ref_price": 1140.0,
+   "note": "财报后创新高<long>，想看到好收盘"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@bluechipdaily",
+   "ticker": "MPC",
+   "ref_price": 303.4,
+   "note": "炼油新高（7/8 Chart of Day后+4.2%）——战争炼油margin主题"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@aleabitoreddit",
+   "ticker": "MU",
+   "ref_price": 983.12,
+   "note": "SLC NAND H2涨价120-170%（TrendForce），MU 21%份额受益"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@aleabitoreddit",
+   "ticker": "NBIS",
+   "ref_price": 194.09,
+   "note": "Reflection AI $1B GB300协议，当日-5%利好出尽——ML名单成员"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@RichardMoglen",
+   "ticker": "PENG",
+   "ref_price": 77.8,
+   "note": "最好看的半导体之一（半导体链禁碰中，仅记录）"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@spluscollective",
+   "ticker": "SHAZ",
+   "ref_price": 71.26,
+   "note": "重要位置R/R好"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@spluscollective",
+   "ticker": "STRL",
+   "ref_price": 679.62,
+   "note": "周线21EMA反弹，最佳DC建设商强护城河"
+  },
+  {
+   "date": "2026-07-15",
+   "handle": "@spluscollective",
+   "ticker": "TE",
+   "ref_price": 6.84,
+   "note": "IPO AVWAP，bag holders最后希望（高风险，不入候选）"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@spluscollective",
+   "ticker": "ALAB",
+   "ref_price": 350.62,
+   "note": "50MA附近，作者自己质疑还值不值得碰"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@ohiain",
+   "ticker": "ARM",
+   "ref_price": 277.01,
+   "note": "跌破50EMA，'领涨股正在跌破关键枢轴位'系列点名之一"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@spluscollective",
+   "ticker": "COIN",
+   "ref_price": 167.21,
+   "note": "同上crypto反弹受益股"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@ohiain",
+   "ticker": "DELL",
+   "ref_price": 412.68,
+   "note": "收阴吞没线，同一系列点名"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@spluscollective",
+   "ticker": "FIX",
+   "ref_price": 1736.7,
+   "note": "AI/DC经济monster companies，capex担忧回调后关注反弹"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@spluscollective",
+   "ticker": "HOOD",
+   "ref_price": 115.54,
+   "note": "crypto反弹受益股（BTC重回50MA后点名）"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@ohiain",
+   "ticker": "INTC",
+   "ref_price": 102.99,
+   "note": "技术面转弱，同日@jimcramer重申INTC最爱个股形成反指对照"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@WalterDeemer",
+   "ticker": "SPCX",
+   "ref_price": 135.27,
+   "note": "跌破IPO价格线，13EMA下穿63EMA，跟SpotGamma的gamma翻转、RichardMoglen观察名单三方共振看空"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@spluscollective",
+   "ticker": "STRL",
+   "ref_price": 668.82,
+   "note": "同上，AI/DC二线"
+  },
+  {
+   "date": "2026-07-16",
+   "handle": "@RichardMoglen",
+   "ticker": "VKTX",
+   "ref_price": 37.81,
+   "note": "半导体形态收紧于21一线，盘整待成熟"
+  },
+  {
+   "date": "2026-07-17",
+   "handle": "@spluscollective",
+   "ticker": "CAVA",
+   "ref_price": 68.1,
+   "note": "inverse H&S构筑中，高信念buy&hold，目标135+（提及前收盘68.10）"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@spluscollective",
+   "ticker": "APPS",
+   "ref_price": 9.18,
+   "note": "'对这家公司很着迷'，认为仍有上行空间"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@aleabitoreddit",
+   "ticker": "CIFR",
+   "ref_price": 22.89,
+   "note": "(promoter降权)7/21 +16.8%，算力/矿工链"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@aleabitoreddit",
+   "ticker": "CLSK",
+   "ref_price": 15.38,
+   "note": "(promoter降权)7/21 +13.7%；机器扫描独立命中W形态RS+15.8"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@aleabitoreddit",
+   "ticker": "HUT",
+   "ref_price": 108.98,
+   "note": "(promoter降权)15年98亿AI数据中心租约，7/21 +10.5%"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@aleabitoreddit",
+   "ticker": "IREN",
+   "ref_price": 41.29,
+   "note": "(promoter降权)ARR目标上调至40亿+，7/21 +19.7%"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@spluscollective",
+   "ticker": "NBIS",
+   "ref_price": 216.92,
+   "note": "NVDA加码持股是'市场的无声自白'；情绪看NBIS、确认看NVDA"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@ohiain",
+   "ticker": "PLTR",
+   "ref_price": 132.66,
+   "note": "简短看多'看起来不错'——Vic已持仓(mentor跟单)"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@ohiain",
+   "ticker": "RDDT",
+   "ref_price": 185.84,
+   "note": "买方若收复9/21EMA具备slingshot潜力(延续7/14同一setup)"
+  },
+  {
+   "date": "2026-07-22",
+   "handle": "@ohiain",
+   "ticker": "RIVN",
+   "ref_price": 17.76,
+   "note": "扛整个EV板块，'压缩是扩张的前奏'(Tension & Release雏形)"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@aleabitoreddit",
+   "ticker": "AMD",
+   "ref_price": 552.33,
+   "note": "【promoter降权】同上，中国AI数据中心CPU长约"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@aleabitoreddit",
+   "ticker": "GOOGL",
+   "ref_price": 342.09,
+   "note": "【promoter降权】capex指引上调至$195-205B；称超大厂capex上调先利好光通信"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@aleabitoreddit",
+   "ticker": "INTC",
+   "ref_price": 102.62,
+   "note": "【promoter降权】援引路透：INTC/AMD将与中国客户签AI数据中心CPU长约，部分CPU涨价"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@spluscollective",
+   "ticker": "LQDA",
+   "ref_price": 87.04,
+   "note": "'按计划运行'，XBI板块需要的喘息回调；7/6列为Idea#4，PT1看90，类比HIMS"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@aleabitoreddit",
+   "ticker": "TSLA",
+   "ref_price": 374.01,
+   "note": "【promoter降权】摘录Q2财报会Musk：'Optimus将是史上最大产品'"
+  },
+  {
+   "date": "2026-07-23",
+   "handle": "@spluscollective",
+   "ticker": "URI",
+   "ref_price": 1035.06,
+   "note": "'一直在看但没下手'；6/26称URI是被低估的数据中心概念，现在被市场注意到"
+  },
+  {
+   "date": "2026-07-28",
+   "handle": "@ohiain",
+   "ticker": "DELL",
+   "ref_price": 429.02,
+   "note": "周线关注名单：紧密建设性底部"
+  },
+  {
+   "date": "2026-07-28",
+   "handle": "@ohiain",
+   "ticker": "NTAP",
+   "ref_price": 182.92,
+   "note": "周线关注名单：紧密建设性底部（同批还有HPE/DELL/ABBV/MRK/LLY）"
+  },
+  {
+   "date": "2026-08-02",
+   "handle": "@bluechipdaily",
+   "ticker": "GLW",
+   "ref_price": 146.64,
+   "note": "存储/光通信链在高位分批兑现"
+  },
+  {
+   "date": "2026-08-02",
+   "handle": "@bluechipdaily",
+   "ticker": "SNDK",
+   "ref_price": 1288.03,
+   "note": "🔴在高位分批兑现——与Vic 8/2-8/3加仓方向相反，且8/5盘后财报"
+  },
+  {
+   "date": "2026-08-02",
+   "handle": "@bluechipdaily",
+   "ticker": "WDC",
+   "ref_price": 527.22,
+   "note": "存储/光通信链在高位分批兑现（同批 SNDK/GLW）"
+  },
+  {
+   "date": "2026-08-03",
+   "handle": "@aleabitoreddit",
+   "ticker": "LITE",
+   "ref_price": 779.89,
+   "note": "【promoter降权】引Lumentum CEO在RAISE峰会警告AI数据中心InP激光器供应缺口（CEO原话，相对可信）"
+  },
+  {
+   "date": "2026-08-04",
+   "handle": "@spluscollective",
+   "ticker": "CRWD",
+   "ref_price": 202.54,
+   "note": "支撑位企稳可加仓（引7/22旧帖：正测试上一轮扩张启动的关键区域）；与机器扫描E类命中共振"
+  },
+  {
+   "date": "2026-08-04",
+   "handle": "@ohiain",
+   "ticker": "HPE",
+   "ref_price": 50.24,
+   "note": "Tension & Release：220%大涨后横盘9周形成coil整理，本周他唯一的具体setup"
+  },
+  {
+   "date": "2026-08-04",
+   "handle": "@RichardMoglen",
+   "ticker": "NBIS",
+   "ref_price": 212.58,
+   "note": "强势K线重新站上21日均线；同日 +11.64%、AI需求乐观"
+  },
+  {
+   "date": "2026-08-04",
+   "handle": "@spluscollective",
+   "ticker": "XOM",
+   "ref_price": 155.06,
+   "note": "能源股形态看涨，但作者自己语气偏谨慎（「是否只是看起来简单的setup」）"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@RichardMoglen",
+   "ticker": "NET",
+   "ref_price": 284.43,
+   "note": "财报双超+上调全年指引，盘后+17.41%；他标注「明日重点关注跳空缺口」——缺口交易的跟踪对象"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "NET",
+   "ref_price": 284.43,
+   "note": "「报告扎实，AI的骨干」，当晚AH涨幅最大的名字之一"
+  },
+  {
+   "date": "2026-08-06",
+   "handle": "@RichardMoglen",
+   "ticker": "CBRS",
+   "ref_price": 211.3,
+   "note": "从21日均线附近推升，短线技术反弹setup"
+  },
+  {
+   "date": "2026-08-06",
+   "handle": "@ohiain",
+   "ticker": "ARM",
+   "ref_price": 286.68,
+   "note": "楔形突破想法已兑现获利；继续看9周线与50日均线的关系，暗示逼空后续"
+  },
+  {
+   "date": "2026-08-05",
+   "handle": "@ohiain",
+   "ticker": "UMAC",
+   "ref_price": 24.23,
+   "note": "四个交易日内+50%，7/28曾提示重新站上9周线；他称这类暴力拉升「很少无迹可寻」"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "TEAM",
+   "ref_price": 110.17,
+   "note": "Atlassian财报后盘后+8.22%"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "ZETA",
+   "ref_price": 25.56,
+   "note": "持续做多，预期测试历史新高（当日 -5.58%）"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "DAVE",
+   "ref_price": 365.26,
+   "note": "增长强劲但有阵痛，建议等50日均线企稳再考虑，不急于追高（当日 -15.09%）"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "SEZL",
+   "ref_price": 178.53,
+   "note": "财报双超，但他自己提出「是不是要利好出尽」——正面消息+谨慎语气"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "WDC",
+   "ref_price": 451.52,
+   "note": "🔴反向观点：「虽然喜欢，但这些名字目前一个都不碰，市场已经给出足够信号」——存储链回避，当日 -13.03%，与SNDK -6.81% 同向"
+  },
+  {
+   "date": "2026-08-06",
+   "handle": "@BillAckman",
+   "ticker": "UBER",
+   "ref_price": 70.47,
+   "note": "转发并同意：2027年预期利润15倍、2028年12倍，「开始看起来像无脑买入」"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@aleabitoreddit",
+   "ticker": "AXTI",
+   "ref_price": 75.17,
+   "note": "【promoter降权】InP衬底供需失衡逻辑，称仍长期持有；当日 +9.56%、5日 +60.14%"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@aleabitoreddit",
+   "ticker": "AAOI",
+   "ref_price": 124.22,
+   "note": "【promoter降权】称存在20-40%的800G/1.6T光模块产能缺口；财报后盘后 -5.22%"
+  }
+ ]
+}

@@ -2149,3 +2149,137 @@ def split_positions_by_account(rows: list, positions: list):
     for r, p in zip(rows, positions):
         (mm if p.get("account") == "moomoo" else lb).append(r)
     return mm, lb
+
+
+# =========================================================================
+# 轧空面板（2026-08-09 重建，Vic：「轧空我发现 groupon 和 wolf，我觉得那个板块
+# 还是有用的…就是要找办法解决数据问题」）
+#
+# 旧数据源 iborrowdesk 整周 403，面板一周没有真实数据。改用两个 FINRA 免费端点，
+# 都不需要 key、不需要登录：
+#   ① 合并短仓（双周结算，T+约10个工作日）——空仓量、日均量、**days to cover**
+#   ② 每日做空量 CNMSshvol（T+1）——当日做空量占总量的比例
+# 试过并排除的：iborrowdesk（连接被关）、IBKR usa.txt（ftp3 超时 / download2 404）、
+# Nasdaq 短仓 API（只支持 Nasdaq 上市，WOLF 在 NYSE 拿不到）、stockanalysis（404）。
+# **借券费/使用率仍然没有免费源**——面板不假装有这一列，缺就是缺。
+#
+# 三段判据（8/9 用 WOLF / GRPN 双样本定的）：
+#   燃料：DTC >= 5 且最近一期空仓没有明显下降（空头被困在低流动性里）
+#   点火：单日大阳、收盘位置 >= 80%、量 >= 1.2×
+#   续航：**上涨日的做空占比不降反升 = 空头还在抵抗，轧空没走完**
+#
+# 双样本对照（这是判据的来源，别删）：
+#   WOLF 7/15 DTC 6.79（自 5/15 的 2.19 一路升，空仓 +0.34% 没减）
+#        → 7/30 +18.59% / 8/4 +11.13% / 8/6 +9.53% / 8/7 **+19.14%**
+#        且做空占比 34%→49%→**59.3%**（8/7 那根大阳当天最高）= 空头加码对抗
+#   GRPN 7/15 DTC 9.13（更高，且空仓 +11.87% 空头在加）
+#        → 却是 8/6 -7.84%、8/7 收盘位置 15%，放量往下
+#        做空占比常年 45~72% 但股价在跌 = **空头是对的**
+#   🔴结论：**高空头比例只是燃料，不是信号。** 没有点火的高 DTC 是「空头正确」，
+#   不是「即将轧空」——GRPN 就是这个反例，不要因为 DTC 高就把它放进候选。
+# =========================================================================
+
+FINRA_SI_URL = "https://api.finra.org/data/group/otcMarket/name/consolidatedShortInterest"
+FINRA_SHVOL_URL = "https://cdn.finra.org/equity/regsho/daily/CNMSshvol%s.txt"
+SQUEEZE_DTC_MIN = 5.0
+SQUEEZE_RANGE_POS_MIN = 80
+SQUEEZE_VOL_MIN = 1.2
+
+
+def _http(url, body=None, timeout=25):
+    import urllib.request, ssl
+    c = ssl.create_default_context(); c.check_hostname = False; c.verify_mode = ssl.CERT_NONE
+    h = {"Accept": "application/json", "User-Agent": "Mozilla/5.0"}
+    if body is not None:
+        h["Content-Type"] = "application/json"
+        req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=h)
+    else:
+        req = urllib.request.Request(url, headers=h)
+    return urllib.request.urlopen(req, timeout=timeout, context=c).read()
+
+
+def finra_short_interest(ticker: str, since: str = None, limit: int = 60) -> list:
+    """双周合并短仓。返回按结算日升序的 [{date, short, adv, dtc, chg_pct}]，失败返回 []。
+
+    🔴 FINRA 返回是**升序**且 limit 从头截断——`since` 给早了会拿到最旧的几期而不是最新的。
+    （8/9 第一次跑就踩到：since=2026-01-01 + limit=12 取到 6/30，把 WOLF 的 DTC 读成 3.85，
+    真值是 7/15 的 6.79，判定直接反了。）所以 since 默认只回看 180 天。"""
+    if since is None:
+        from datetime import date, timedelta
+        since = (date.today() - timedelta(days=180)).isoformat()
+    body = {"limit": limit, "compareFilters": [
+        {"fieldName": "symbolCode", "fieldValue": ticker, "compareType": "EQUAL"},
+        {"fieldName": "settlementDate", "fieldValue": since, "compareType": "GTE"}]}
+    try:
+        raw = json.loads(_http(FINRA_SI_URL, body))
+    except Exception:
+        return []
+    out = [{"date": r["settlementDate"], "short": r.get("currentShortPositionQuantity"),
+            "adv": r.get("averageDailyVolumeQuantity"), "dtc": r.get("daysToCoverQuantity"),
+            "chg_pct": r.get("changePercent"), "exchange": r.get("marketClassCode")}
+           for r in raw]
+    return sorted(out, key=lambda x: x["date"])
+
+
+def finra_short_volume(tickers, dates: list) -> dict:
+    """每日做空量占比。dates 是 'YYYYMMDD' 列表。返回 {ticker: [(date, pct), ...]}。
+    一天一个文件（约 540KB），所以调用方自己控制天数——别一次拉三个月。"""
+    want = set(tickers)
+    out = {t: [] for t in want}
+    for ds in dates:
+        try:
+            txt = _http(FINRA_SHVOL_URL % ds).decode()
+        except Exception:
+            continue
+        for ln in txt.splitlines()[1:]:
+            p = ln.split("|")
+            if len(p) >= 5 and p[1] in want:
+                try:
+                    sv, tv = float(p[2]), float(p[4])
+                except ValueError:
+                    continue
+                if tv:
+                    out[p[1]].append((p[0], round(sv / tv * 100, 1)))
+    return out
+
+
+def squeeze_read(ticker: str, cache: dict = None, sv_series: list = None,
+                 si_series: list = None) -> dict:
+    """把三段判据合成一个判定。cache 提供当日的 t1_pct / range_pos / vol_ratio。
+
+    返回 {ticker, dtc, short_trend, fuel, ignition, persistence, verdict}
+    verdict 只有四种，措辞是单向的（不写「但是」）：
+      **轧空进行中**   燃料+点火+续航 三段齐
+      **点火未续航**   涨了但做空占比在降 → 空头在平，追的是尾声
+      **有燃料无点火** DTC 够高但没有大阳线 → 这是「空头正确」不是「即将轧空」
+      **不在池内**     燃料不足
+    """
+    m = (cache or {}).get("metrics", {}).get(ticker, {}) if cache else {}
+    si = si_series if si_series is not None else finra_short_interest(ticker)
+    dtc = si[-1]["dtc"] if si else None
+    # 空仓趋势：最近一期相对上一期
+    short_trend = None
+    if len(si) >= 2 and si[-2]["short"]:
+        short_trend = (si[-1]["short"] - si[-2]["short"]) / si[-2]["short"] * 100
+    fuel = bool(dtc and dtc >= SQUEEZE_DTC_MIN and (short_trend is None or short_trend > -10))
+
+    t1, pos, vr = m.get("t1_pct"), m.get("range_pos"), m.get("vol_ratio")
+    ignition = bool(t1 and t1 > 0 and pos is not None and pos >= SQUEEZE_RANGE_POS_MIN
+                    and vr and vr >= SQUEEZE_VOL_MIN)
+    # 续航：上涨日做空占比不降反升
+    persistence = None
+    if sv_series and len(sv_series) >= 3:
+        last, prior = sv_series[-1][1], sum(x[1] for x in sv_series[-4:-1]) / 3
+        persistence = last >= prior
+    if not fuel:
+        verdict = "**不在池内**（DTC %s 未达 %.1f）" % (dtc, SQUEEZE_DTC_MIN)
+    elif not ignition:
+        verdict = ("**有燃料无点火**（DTC %.2f）——这是「空头正确」不是「即将轧空」，"
+                   "GRPN 就是这个反例" % dtc)
+    elif persistence is False:
+        verdict = "**点火未续航**——做空占比在上涨日回落，空头在平仓，追的是尾声"
+    else:
+        verdict = "🎯**轧空进行中**（DTC %.2f，做空占比在上涨日仍升）" % dtc
+    return {"ticker": ticker, "dtc": dtc, "short_trend": short_trend, "fuel": fuel,
+            "ignition": ignition, "persistence": persistence, "verdict": verdict,
+            "sv_last": sv_series[-1][1] if sv_series else None}

@@ -57,7 +57,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742250-AAOI",
@@ -145,7 +147,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742266-WOLF",
@@ -317,7 +321,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742278-CIEN",
@@ -365,7 +371,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407141-HPE",
@@ -439,7 +447,9 @@
         "提前恐慌砍"
       ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407145-PWR",
@@ -503,7 +513,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407149-LRCX",
@@ -559,7 +571,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407152-NBIS",
@@ -617,7 +631,9 @@
         "破位不砍"
       ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407155-INTC",
@@ -665,7 +681,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407158-MSTR",
@@ -722,7 +740,8 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "横盘整理应该小仓，或者等突破再入"
+      "execution_note": "横盘整理应该小仓，或者等突破再入",
+      "execution_states": []
     },
     {
       "id": "NEW-6031213619619-SPCX",
@@ -778,7 +797,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619704-BE",
@@ -850,7 +871,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619716-TSM",
@@ -906,7 +929,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619733-AAPL",
@@ -970,7 +995,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619742-WOLF",
@@ -1027,7 +1054,8 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": ""
+      "execution_note": "",
+      "execution_states": []
     },
     {
       "id": "NEW-5985964687659-TMO",
@@ -1091,7 +1119,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985964687676-PURR",
@@ -1147,7 +1177,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985964687681-LABU",
@@ -1203,7 +1235,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995375-GOOG",
@@ -1213,13 +1247,13 @@
       "entry_date": "2026-08-05",
       "exit_date": "2026-08-06",
       "setup_type": "Pullback",
-      "planned": false,
+      "planned": null,
       "day_trade": false,
       "mentor": false,
       "stop_initial": 354,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "回踩支撑",
       "exit_logic": "",
       "stop_history": [
         {
@@ -1256,10 +1290,12 @@
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "均线price action不是很强",
+      "execution_states": []
     },
     {
       "id": "NEW-5985933995401-BMNR",
@@ -1339,7 +1375,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995407-CSCO",
@@ -1387,7 +1425,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995414-ANET",
@@ -1459,7 +1499,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995424-MU",
@@ -1515,7 +1557,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995429-IOT",
@@ -1571,7 +1615,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903678628955-VEEV",
@@ -1627,7 +1673,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903678628973-WGMI",
@@ -1683,7 +1731,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903678628977-DRAM",
@@ -1739,7 +1789,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297962-BE",
@@ -1797,7 +1849,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297979-LITE",
@@ -1855,7 +1909,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297988-AVPT",
@@ -1905,7 +1961,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297991-DYN",
@@ -1974,7 +2032,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297995-PLTR",
@@ -2038,7 +2098,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803374923220-MRVL",
@@ -2139,7 +2201,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803374923241-SOXX",
@@ -2224,7 +2288,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803374923246-PANW",
@@ -2285,7 +2351,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279837-MU",
@@ -2365,7 +2433,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279853-NOW",
@@ -2429,7 +2499,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279858-IBM",
@@ -2477,7 +2549,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279863-META",
@@ -2549,7 +2623,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785563859720",
@@ -2597,7 +2673,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562922225452-SNDK",
@@ -2682,7 +2760,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682739-MU",
@@ -2746,7 +2826,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682758-MRVL",
@@ -2802,7 +2884,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682764-KOD",
@@ -2858,7 +2942,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682767-S",
@@ -2919,7 +3005,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682773-SOXL",
@@ -2999,7 +3087,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682777-AXTI",
@@ -3055,7 +3145,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682779-META",
@@ -3135,7 +3227,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335951-SKHY",
@@ -3236,7 +3330,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335975-LITE",
@@ -3321,7 +3417,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335980-XBI",
@@ -3377,7 +3475,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5470556914489-SPCX",
@@ -3534,7 +3634,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5470556914517-SOXL",
@@ -3638,7 +3740,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5470556914527-SNDK",
@@ -3718,7 +3822,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555335-WAT",
@@ -3774,7 +3880,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555352-BE",
@@ -3838,7 +3946,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555356-TTAN",
@@ -3907,7 +4017,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555395-SMH",
@@ -3971,7 +4083,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555398-WPM",
@@ -4027,7 +4141,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384814760",
@@ -4091,7 +4207,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384777955",
@@ -4147,7 +4265,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384682232",
@@ -4256,7 +4376,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384569110",
@@ -4341,7 +4463,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785383957768",
@@ -4429,7 +4553,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785297366991",
@@ -4501,7 +4627,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785297155385",
@@ -4557,7 +4685,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785296412879",
@@ -4613,7 +4743,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785296305079",
@@ -4685,7 +4817,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785214398369",
@@ -4741,7 +4875,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784779159376",
@@ -4813,7 +4949,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784779055697",
@@ -4885,7 +5023,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778920189",
@@ -4941,7 +5081,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778778426",
@@ -5013,7 +5155,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778677307",
@@ -5069,7 +5213,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778562404",
@@ -5149,7 +5295,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778462769",
@@ -5205,7 +5353,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784776926818",
@@ -5261,7 +5411,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693830239",
@@ -5317,7 +5469,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693718479",
@@ -5373,7 +5527,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693647118",
@@ -5429,7 +5585,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693595981",
@@ -5485,7 +5643,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693500502",
@@ -5541,7 +5701,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693443180",
@@ -5597,7 +5759,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693393728",
@@ -5653,7 +5817,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693301836",
@@ -5709,7 +5875,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784358571156",
@@ -5765,7 +5933,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245274376",
@@ -5821,7 +5991,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245194967",
@@ -5877,7 +6049,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245039522",
@@ -5933,7 +6107,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244812160",
@@ -5997,7 +6173,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244565206",
@@ -6053,7 +6231,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244494669",
@@ -6109,7 +6289,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244386546",
@@ -6165,7 +6347,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784175369556",
@@ -6221,7 +6405,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784175248839",
@@ -6277,7 +6463,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784174863846",
@@ -6333,7 +6521,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173764331",
@@ -6389,7 +6579,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173583604",
@@ -6445,7 +6637,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173461294",
@@ -6509,7 +6703,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173251570",
@@ -6565,7 +6761,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784050228853",
@@ -6621,7 +6819,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042199305",
@@ -6685,7 +6885,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042122920",
@@ -6741,7 +6943,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042016887",
@@ -6829,7 +7033,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784003200686",
@@ -6885,7 +7091,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784003041317",
@@ -6949,7 +7157,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784002898370",
@@ -7013,7 +7223,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703824310",
@@ -7069,7 +7281,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703764824",
@@ -7125,7 +7339,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703561616",
@@ -7181,7 +7397,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697360399",
@@ -7237,7 +7455,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697256409",
@@ -7293,7 +7513,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697125753",
@@ -7349,7 +7571,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697006464",
@@ -7405,7 +7629,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783607129859",
@@ -7461,7 +7687,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783605541959",
@@ -7517,7 +7745,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783605384531",
@@ -7573,7 +7803,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "SPCX-20260702",
@@ -7629,7 +7861,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "WRBY-2026",
@@ -7685,7 +7919,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "BRKR-2026",
@@ -7741,7 +7977,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "SYK-2026",
@@ -7802,7 +8040,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "XLV-2026",
@@ -7866,7 +8106,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "BB-20260707",
@@ -7922,7 +8164,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "ELV-20260707",
@@ -7978,7 +8222,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "UPS-20260707",
@@ -8034,7 +8280,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     }
   ],
   "daily_summaries": [

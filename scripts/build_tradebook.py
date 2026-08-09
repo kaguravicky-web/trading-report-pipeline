@@ -776,21 +776,34 @@ function readTri(id){ const v = $("#"+id).value; return v==="yes" ? true : (v===
 
 function commitEdit(id){
   const t = state.trades.find(x=>x.id===id);
+  if(!t){ editing = null; render(); return; }
+  // 🔴2026-08-09修复Vic报的"点了完成按钮，他不会收起来"：
+  // 这里以前无条件读 $("#xxx").value，一旦某个输入框没渲染就抛TypeError，
+  // 抛在函数中段 → 后面的 `editing=null; render()` 执行不到 → 表单永远收不起来。
+  // 三个真实触发路径（都复现过）：
+  //   ①日内交易——止损轨迹整块按规则隐藏了，但这里还在读 st_s_i；
+  //   ②已平仓页开着筛选、编辑的交易不匹配该筛选 → 整个表单不在DOM里；
+  //   ③搜索框有内容且编辑的交易不匹配 → 同上。
+  // 现在：表单不在DOM就干脆退出编辑态；在DOM的话每个读取都判空，缺哪个就保留原值。
+  if(!$("#f_ticker")){ editing = null; render(); return; }
   // 账户/日内/跟单/Planned 现在是分段按钮，点的时候就已经写进state了，这里不用再从DOM读
   const dtDate = t.day_trade && $("#f_tradedate") ? ($("#f_tradedate").value||null) : null;
   t.legs.forEach((l,i)=>{
-    l.date = t.day_trade ? dtDate : ($("#lg_d_"+i) ? ($("#lg_d_"+i).value||null) : l.date);
-    l.action = $("#lg_a_"+i).value;
-    l.qty = num($("#lg_q_"+i).value) || 0;
-    l.price = num($("#lg_p_"+i).value);
-    l.note = $("#lg_n_"+i).value;
+    if(t.day_trade) l.date = dtDate;
+    else if($("#lg_d_"+i)) l.date = $("#lg_d_"+i).value || null;
+    if($("#lg_a_"+i)) l.action = $("#lg_a_"+i).value;
+    if($("#lg_q_"+i)) l.qty = num($("#lg_q_"+i).value) || 0;
+    if($("#lg_p_"+i)) l.price = num($("#lg_p_"+i).value);
+    if($("#lg_n_"+i)) l.note = $("#lg_n_"+i).value;
   });
   // 建仓日期＝第一笔买入日期（日内用统一交易日期），初始止损日期自动同步，不用重复填
   const entryDate = t.day_trade ? dtDate : ((t.legs.find(l=>l.action==="buy"&&l.date)||{}).date || null);
+  // 日内不渲染止损表，这里读不到就原样保留（旧数据不删，取消日内勾选后还能看到）
   (t.stop_history||[]).forEach((s,i)=>{
-    s.date = (i===0) ? (entryDate || s.date) : (($("#st_d_"+i) ? $("#st_d_"+i).value : s.date) || null);
-    s.stop = num($("#st_s_"+i).value);
-    s.note = $("#st_n_"+i).value;
+    if(i===0) s.date = entryDate || s.date;
+    else if($("#st_d_"+i)) s.date = $("#st_d_"+i).value || null;
+    if($("#st_s_"+i)) s.stop = num($("#st_s_"+i).value);
+    if($("#st_n_"+i)) s.note = $("#st_n_"+i).value;
   });
   t.stop_history = (t.stop_history||[]).filter(s=>s.stop!=null);  // 没填数字的占位行自动清掉
   t.ticker = $("#f_ticker").value.trim().toUpperCase();

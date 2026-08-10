@@ -1235,8 +1235,17 @@ def render_premarket(data: dict) -> str:
     # 2026-07-12 Vic：记分板/温度/联合信号/宏观雷达的分析性文字是"小结"，
     # 用蓝色callout格式渲染，不再是灰色小字（"这些灰色字很重要啊"）
     gate_rows = data.get("gate_scoreboard_rows", [])
-    scoreboard_body = (build_gate_scoreboard(gate_rows) if gate_rows
-                       else build_scoreboard_table(data.get("scoreboard_rows", [])))
+    # 🔴 2026-08-10 改回优先级：**攻守记分板就是 scoreboard_rows**（升级/降级/技术平价三类，
+    # 7/22 之前一直如此）。7/27 那次把它拆成 gate_scoreboard_rows 之后，这里的
+    # `if gate_rows` 让 scoreboard_rows 永远走不到，Vic 的九行板子就此消失了两周。
+    # gate_scoreboard_rows 保留作闸门视图和 cross_check 的输入，挂在记分板下面。
+    sb_rows = data.get("scoreboard_rows") or []
+    if sb_rows:
+        scoreboard_body = build_scoreboard_table(sb_rows)
+        if gate_rows:
+            scoreboard_body += "<h3>闸门位置</h3>" + build_gate_scoreboard(gate_rows)
+    else:
+        scoreboard_body = build_gate_scoreboard(gate_rows) if gate_rows else build_scoreboard_table([])
     if data.get("scoreboard_note"):
         scoreboard_body += build_split_callout(data["scoreboard_note"])
     body_sections.append(section("scoreboard", "攻守记分板", scoreboard_body))

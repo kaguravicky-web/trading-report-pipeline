@@ -23,6 +23,28 @@ Vic 当时提「6天后全部通过的项目就不用再QA，删除就可以了�
 
 结构规格见下方 REPORT_SPEC：盘前/盘后/周报/月报各自的必备节+顺序+必填字段，
 拦「少一节 / 顺序变了 / 同一 anchor 渲染两次」。改渲染器顺序时必须同步改它。
+
+═══════════════════════════════════════════════════════════════════════════
+🔴 2026-08-10 Vic：「我感觉 QA 以后，质量怎么变差了，变得认不出。。。」——**他是对的。**
+
+时间线：7/27 攻守记分板被拆成两张表 → **7/28 QA 建成** → 7/29~8/03 动能温度打分
+九个标签被逐步换掉。**漂移是在 QA 建成前后一两天开始的，而 QA 一次都没拦住。**
+
+三个原因，都是这个文件自身的设计缺陷：
+ ① **查的全是表面格式**——emoji、字面星号、小数位、列宽、指数顺序、中文化。
+    8/10 之前**没有一条在查「内容还是不是原来那个东西」**。报告可以全绿，同时面目全非。
+ ② **REPORT_SPEC.required_fields 只列 15 个字段**，盘前实际 78 个，
+    等于宣告其余 63 个「可有可无」，于是结构被放开手改。
+ ③ **最危险的一层：我每次加检查都照「当时最近那份报告」写。**
+    8/10 上午我就把漂移后的 6 条计分板写成了 SCOREBOARD_CONDITIONS——
+    **再晚一步，漂移就被 QA 盖章成「正确」永久固化了。**
+
+**所以这个文件从今天起多一条元规则：**
+**每条涉及「内容口径」的检查，必须在注释里写明它照的是哪一份报告、哪一天。**
+改这类检查的期望值时，同样要写明新基线是哪一天、为什么换。
+没有日期出处的口径检查 = 把某次漂移写成了标准。
+当前口径基线：攻守记分板 / 动能温度打分 = **2026-07-23 ~ 07-24**（11 行 4 桶的成熟形态）。
+═══════════════════════════════════════════════════════════════════════════
 """
 import argparse
 import json
@@ -242,8 +264,10 @@ def _pct_colored(html, data):
     body = html[html.find("</style>"):]
     # 形如 <td ...>+8.97%</td> 的单元格必须带 up/dn 类；没带说明该列漏进num_cols了
     bad = []
-    for m in re.finditer(r'<td([^>]*)>\s*(?:<[^>]+>)*\s*([+-]\d+(?:\.\d+)?%)\s*(?:</[^>]+>)*\s*</td>',
-                         body):
+    # 2026-08-10：原正则的 (?:<[^>]+>)* 会**跨过 </td>**，把「前面的空单元格 + 后面着色的单元格」
+    # 拼成一次匹配，attrs 取自空单元格 → 误报。内层跳标签必须排除 </td>。
+    for m in re.finditer(r'<td([^>]*)>\s*(?:<(?!/td)[^>]+>)*\s*([+-]\d+(?:\.\d+)?%)'
+                         r'\s*(?:</(?!td)[^>]+>)*\s*</td>', body):
         attrs, val = m.group(1), m.group(2)
         if "up" not in attrs and "dn" not in attrs:
             bad.append(val)
@@ -632,6 +656,31 @@ def _price_matches_cache(html, data):
 SIGNAL_LIGHT_KEYS = ["bias", "bond", "dxy", "breadth", "discipline"]
 
 
+@check("今日动能温度打分固定九项（2026-08-10 Vic：「今日动能打分还是你编的啊」）")
+def _risk_labels_fixed(html, data):
+    """标签是 Vic 的框架，不是每天自由发挥的小标题。
+    7/06–7/28 稳定了 17 个交易日，7/29~8/03 之间被我逐步换成
+    Breadth / 买盘质量 / Whipsaw / Concentration / 避险需求 / 持仓风控——那批全是漂移。
+    正确口径见 2026-07-22 那份。"""
+    if data is None or data.get("report_type") != "premarket":
+        return
+    items = data.get("risk_checklist") or []
+    if not items:
+        return
+    have = [str(x.get("label", "")).strip() for x in items]
+    miss = [l for l in RISK_LABELS if l not in have]
+    extra = [l for l in have if l not in RISK_LABELS]
+    msg = []
+    if miss:
+        msg.append("缺 %s" % miss)
+    if extra:
+        msg.append("🔴**自造标签** %s" % extra)
+    if len(items) != len(RISK_LABELS):
+        msg.append("共 %d 项，应为 %d 项" % (len(items), len(RISK_LABELS)))
+    if msg:
+        return "；".join(msg) + "——口径见 2026-07-22 那份"
+
+
 @check("信号灯必须五格齐（2026-08-10 Vic：「今天盘前的信号灯好少，少了几个呢」）")
 def _signal_light_full(html, data):
     """build_signal_light 只认 bias/bond/dxy/breadth 四个块 + discipline 黄卡，
@@ -698,7 +747,8 @@ PREMARKET_FIELDS = {
     # —— 基线：2026-08-07 那份已知良好的盘前，逐字段导出 ——
     "report_type", "date", "title", "subtitle", "badges", "generated_at", "footer_sources",
     "signal_light", "risk_checklist", "risk_checklist_note",
-    "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note", "scoreboard_note",
+    "scoreboard_rows", "scoreboard_note",   # 攻守记分板本体（7/22 原版九行）
+    "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note",
     "cross_check", "regime_triggers", "breadth_table", "breadth_table_note",
     "atr_extension_table", "atr_extension_note",
     "other_assets_table", "joint_signal_lines", "macro_radar_table", "macro_radar_detail",
@@ -746,34 +796,71 @@ def _premarket_field_set(html, data):
 
 # 攻守计分板的六条是 Vic 的框架，不是我可以增删的。
 # 8/10 我删掉了 VIX<22、把「QQQ 收在进攻线上方」扩成三条、又加了框架里没有的「月度±25%」。
-SCOREBOARD_CONDITIONS = [
-    ("T2108", "downgrade"), ("5日 ratio", "downgrade"),
-    ("涨4%+", "downgrade"), ("VIX", "downgrade"),
-    ("10日 ratio", "upgrade"), ("进攻线", "upgrade"),
+# =========================================================================
+# 攻守记分板的正确口径（2026-08-10 第二次修正）
+#
+# 🔴 我今天上午第一次「还原」时，照的是 8/7 那份——**照的是已经漂了的版本**，
+#    差点把漂移写成 QA 的标准永久固化。Vic 指了 7/22，我又只照 7/22，
+#    结果检查对 7/15 和 7/23 全部误报——**因为板子本来就是会长的**。
+#
+# 抽 7 月全月比对之后，真正不变的是**四个 type 桶**，不是某一组固定条件：
+#   upgrade    进攻线 / 20MA / 10日ratio（3~4 行）      —— 全程都在
+#   downgrade  T2108 / 4%下跌家数 / VIX / 周防守线（2~4 行） —— 全程都在
+#   techparity SMH 解禁线 / 结构修复线（1~2 行）        —— 7/13 起
+#   duration   10Y >4.50% / DXY >103 久期防线（1~2 行）  —— 7/06~7/24 一直在，
+#              **8/10 我漏了整个桶**
+# 行数在 7~11 之间浮动是正常的（新增久期防线、SMH 换线都会改行数）。
+# 所以检查改成「骨架 + 核心条件」，允许加行，但**不允许整桶消失**。
+SCOREBOARD_BUCKETS = {"upgrade", "downgrade", "techparity", "duration"}
+# 四个核心条件从 7/06 起没缺过，但**写法变过**（7/13–7/20 写作「10D breadth ratio」「升级攻线」），
+# 所以按同义词组匹配，不按字面。基线形态取 **7/23–7/24**（11 行 4 桶，框架成熟后的样子）；
+# 7/06–7/22 会被这条标出来，那是框架还在成形，不是漂移。
+SCOREBOARD_CORE = [
+    ("T2108",),
+    ("VIX",),
+    ("10日ratio", "10Dbreadthratio", "10日比值"),
+    ("进攻线", "升级攻线"),
+]
+
+# 今日动能温度打分的九个标签同样来自 7/22（7/06–7/28 稳定 17 个交易日）。
+# 7/29~8/03 之间被我逐步换成 Breadth / 买盘质量 / Whipsaw / Concentration /
+# 避险需求 / 持仓风控——那批全是漂移。
+RISK_LABELS = [
+    "S&P 500 overextension", "Increasing downward momentum", "Top range breakdown",
+    "Technical deterioration", "Market breadth worsening", "VIX >20 spike",
+    "利率外生冲击", "地缘外生冲击", "Theme momentum weakening",
 ]
 
 
-@check("攻守计分板固定六条（2026-08-10 Vic：「攻守积分版只有3个？」）")
+@check("攻守记分板骨架固定（2026-08-10 Vic：「攻守积分版只有3个？」+「7月随机2个报告比对」）")
 def _scoreboard_fixed(html, data):
     if data is None or data.get("report_type") != "premarket":
         return
-    rows = data.get("breadth_score_rows") or []
+    rows = data.get("scoreboard_rows") or []
     if not rows:
+        # 🔴 不能 return——8/03~8/07 那批正是「这个字段整个不存在」（被拆进
+        # gate_scoreboard_rows + breadth_score_rows），静默放过等于漏掉最严重的一种漂移。
+        if data.get("_phase") == 2 or "watchlist_abc" in data:
+            return ("**攻守记分板整块缺失**（scoreboard_rows 为空）"
+                    "——是不是又被拆进 gate/breadth 两张表了？口径见 2026-07-22")
         return
-    conds = [str(r.get("condition", "")) for r in rows if isinstance(r, dict)]
-    miss = [key for key, _ in SCOREBOARD_CONDITIONS
-            if not any(key in c for c in conds)]
-    extra = [c for c in conds
-             if not any(key in c for key, _ in SCOREBOARD_CONDITIONS)]
+    buckets = {r.get("type") for r in rows if isinstance(r, dict)}
+    conds = " ".join(str(r.get("condition", "")) for r in rows if isinstance(r, dict)).replace(" ", "")
     msg = []
-    if miss:
-        msg.append("缺条件 %s" % miss)
-    if extra:
-        msg.append("多了框架外的条件 %s" % extra)
-    if len(rows) != len(SCOREBOARD_CONDITIONS):
-        msg.append("共 %d 条，应为 %d 条" % (len(rows), len(SCOREBOARD_CONDITIONS)))
+    lost = SCOREBOARD_BUCKETS - buckets
+    if lost:
+        msg.append("**整桶缺失** %s（四桶：升级/降级/技术平价/久期防线）" % sorted(lost))
+    unknown = buckets - SCOREBOARD_BUCKETS
+    if unknown:
+        msg.append("出现未知 type %s" % sorted(unknown))
+    miss_core = [grp[0] for grp in SCOREBOARD_CORE
+                 if not any(alt.replace(" ", "") in conds for alt in grp)]
+    if miss_core:
+        msg.append("缺核心条件 %s（这四条从 7/06 起没缺过）" % miss_core)
+    if not (7 <= len(rows) <= 12):
+        msg.append("共 %d 行，历史区间是 7~11 行" % len(rows))
     if msg:
-        return "；".join(msg) + "——四降级（T2108/5日ratio/涨跌4%/VIX）+ 两升级（10日ratio/QQQ进攻线）"
+        return "；".join(msg) + "——**允许加行，不允许整桶消失**；口径见 2026-07-22 / 07-24"
 
 
 # 🔴 入口守卫必须放在文件最末。2026-08-10 发现它卡在中间，

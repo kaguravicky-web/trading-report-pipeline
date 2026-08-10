@@ -342,10 +342,15 @@ def _orphan_fields(html, data):
         return
     # 用「剥掉标签的正文」比对，且探针本身要去掉 markdown 记号——
     # 否则 `**IGV` 这种探针永远匹配不上（渲染后已变成 <strong>IGV），会误报一大片
-    plain = re.sub(r"\s+", "", _text(html))
+    # 2026-08-10：探针里含 < > & 的字段会误报——它们在 HTML 里是 &lt; &gt; &amp;，
+    # 剥标签之后仍是实体形式，跟原文对不上（stop_proximity_note 的「距止损 <0.7ATR」中过一次）。
+    # 两边都做实体反转义再比。
+    import html as _htmlmod
+    plain = re.sub(r"\s+", "", _htmlmod.unescape(_text(html)))
 
     def _probe(s):
-        s = re.sub(r"[*#`\s]|🔴|🟢|⚠️|🎯|⭐|️", "", str(s))
+        s = _htmlmod.unescape(str(s))
+        s = re.sub(r"[*#`\s]|🔴|🟢|⚠️|🎯|⭐|️", "", s)
         return s[:10]
 
     SKIP = {"report_type", "date", "generated_at", "_phase", "_phase1_at", "_phase1_note",
@@ -579,8 +584,6 @@ def main():
     return 1 if total else 0
 
 
-if __name__ == "__main__":
-    sys.exit(main())
 
 
 @check("报告里的价格必须等于口径日的收盘价（2026-08-09：8/6 盘后 17 行持仓有 9 行是 8/7 的价）")
@@ -624,3 +627,159 @@ def _price_matches_cache(html, data):
                 bad.append(f"{key}:{tk} 表内 {shown} ≠ {day} 收盘 {m['close']}")
     if bad:
         return "；".join(bad[:6]) + ("" if len(bad) <= 6 else f"（共{len(bad)}处）")
+
+
+SIGNAL_LIGHT_KEYS = ["bias", "bond", "dxy", "breadth", "discipline"]
+
+
+@check("信号灯必须五格齐（2026-08-10 Vic：「今天盘前的信号灯好少，少了几个呢」）")
+def _signal_light_full(html, data):
+    """build_signal_light 只认 bias/bond/dxy/breadth 四个块 + discipline 黄卡，
+    **写别的键会被静默丢掉**（8/10 我写了 'vol'，整格不见，同时漏了 breadth 和 discipline，
+    渲染出来只剩 3 格）。这类错误渲染不报错、QA 原来也不查，只有 Vic 肉眼数格子才发现。"""
+    if data is None or data.get("report_type") != "premarket":
+        return
+    sl = data.get("signal_light")
+    if not sl:
+        return
+    missing = [k for k in SIGNAL_LIGHT_KEYS if not sl.get(k)]
+    unknown = [k for k in sl if k not in SIGNAL_LIGHT_KEYS]
+    msg = []
+    if missing:
+        msg.append("缺 %s" % missing)
+    if unknown:
+        msg.append("写了渲染器不认的键 %s（会被静默丢掉）" % unknown)
+    if msg:
+        return "；".join(msg) + "——只认 " + "/".join(SIGNAL_LIGHT_KEYS)
+
+
+PHASE1_BADGE_MARKERS = ["段1", "盘前报价未取", "待段2", "段2待", "（盘后填）"]
+
+
+@check("段2定稿不能残留段1的占位（2026-08-10：徽章还写着「段1 · 盘前报价未取」）")
+def _no_phase1_leftover(html, data):
+    """两段式的固有风险：段1 建骨架时写的占位文字，段2 忘了删就直接发出去。
+    8/10 那次是徽章——报告里明明有完整盘前报价，顶部却写着「盘前报价未取」。
+    只查 badges 和标题区，不查表格正文（对账清单的「（盘后填）」是正常的）。"""
+    if data is None or data.get("report_type") != "premarket":
+        return
+    if data.get("_phase") != 2 and "watchlist_abc" not in data:
+        return          # 还在段1，占位是应该的
+    bad = [b.get("text", "") for b in (data.get("badges") or [])
+           if any(m in b.get("text", "") for m in PHASE1_BADGE_MARKERS)]
+    for f in ("title", "subtitle"):
+        v = data.get(f) or ""
+        if any(m in v for m in PHASE1_BADGE_MARKERS):
+            bad.append(f"{f}: {v[:40]}")
+    if bad:
+        return "段2 定稿里还留着段1 占位：%s" % bad
+
+
+# =========================================================================
+# 字段集固定（2026-08-10 Vic：「我的动能打分版，你改的我都不认识了！根本不是这些啊；
+# 攻守积分版只有3个？」「怎么会发生这种事情？能偏移这么大，还会乱编」）
+#
+# **根因**：盘前报告一直是「继承前一天的 JSON 再改」，8/10 我在草稿脚本里从零写了
+# `out = {...}`。结果是对称的两个方向的静默漂移：
+#   · 我没想到的字段 → **静默消失 15 个**（攻守计分板的 VIX 那条、cross_check、
+#     regime_triggers、stop_proximity、defensive_basket、breadth_table…）
+#   · 我想当然写的 → **静默多出来**（`scoreboard_rows` 这个字段框架里根本没有，是我造的），
+#     而且我把「QQQ 收在进攻线上方」这一条升级条件擅自扩成了 QQQ+VOO+IWM 三条
+#
+# REPORT_SPEC 本来就是为这件事建的（Vic 8/6「把格式固定下来，不要漂移」），
+# 但它的 required_fields 只列了 15 个，盘前实际 78 个——另外 63 个不在检查范围里，
+# **而且完全没有「不许多出字段」这一条**。下面两条补上。
+#
+# 新增字段不是不允许，是**必须显式登记**：加进 PREMARKET_FIELDS 并在这里留一行注释说明来源。
+# 这样「今天多了个字段」就变成一次有意的改动，而不是某个会话的副作用。
+# =========================================================================
+
+PREMARKET_FIELDS = {
+    # —— 基线：2026-08-07 那份已知良好的盘前，逐字段导出 ——
+    "report_type", "date", "title", "subtitle", "badges", "generated_at", "footer_sources",
+    "signal_light", "risk_checklist", "risk_checklist_note",
+    "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note", "scoreboard_note",
+    "cross_check", "regime_triggers", "breadth_table", "breadth_table_note",
+    "atr_extension_table", "atr_extension_note",
+    "other_assets_table", "joint_signal_lines", "macro_radar_table", "macro_radar_detail",
+    "unilateral_scan_table", "unilateral_scan_note",
+    "ml_leaders", "ml_leaders_note", "leader_vs_defensive_note",
+    "adanos_scan_table", "adanos_scan_note",
+    "x_sentiment_macro", "x_sentiment_macro_summary", "x_sentiment_stocks", "x_sentiment_note",
+    "x_watch_table", "x_watch_note",
+    "thirteen_dg_rows", "thirteen_dg_note", "squeeze_candidates", "squeeze_note",
+    "news_today", "news_week", "week_calendar", "industry_radar_table",
+    "etf_table", "etf_table_note", "sector_rs_tables", "sector_rs_note",
+    "defensive_basket", "premarket_movers", "premarket_movers_note",
+    "positions_moomoo_table", "positions_moomoo_note", "positions_longbridge_table",
+    "position_governance_table", "position_governance_note",
+    "stop_proximity_table", "stop_proximity_note",
+    "strong_sector_setups_table", "strong_sector_setups_permission",
+    "watchlist_abc", "setup_conclusion",
+    "playbook_scenarios", "key_takeaways", "today_position", "recon_ledger",
+    "ftd", "ftd_table", "dispersion", "dispersion_note",
+    # —— 2026-08-08~10 显式登记的新增 ——
+    "recon_prob_note",              # 08-08 对账事前概率的口径说明
+    "event_gap_candidates", "event_gap_note",   # 08-09 Vic 8/6 批的事件缺口延续品类
+    "bam", "bam_table", "bam_note",             # 08-10 Deemer Breakaway Momentum
+    "special_readthrough_table", "special_readthrough_note",   # 08-10 专题报告 read-through
+}
+
+
+@check("盘前字段集固定：不许少也不许自己造（2026-08-10 Vic：「我都不认识了！还会乱编」）")
+def _premarket_field_set(html, data):
+    if data is None or data.get("report_type") != "premarket":
+        return
+    have = {k for k in data if not k.startswith("_")}
+    unknown = sorted(have - PREMARKET_FIELDS)
+    # 段1 草稿本来就还没有段2 字段，只查「多出来的」；段2 定稿两头都查
+    is_final = data.get("_phase") == 2 or "watchlist_abc" in data
+    missing = sorted(PREMARKET_FIELDS - have) if is_final else []
+    msg = []
+    if unknown:
+        msg.append("🔴**自造字段** %s——新增字段必须先登记进 qa_report.PREMARKET_FIELDS" % unknown)
+    if missing:
+        msg.append("缺 %d 个字段：%s" % (len(missing), missing))
+    if msg:
+        return "；".join(msg)
+
+
+# 攻守计分板的六条是 Vic 的框架，不是我可以增删的。
+# 8/10 我删掉了 VIX<22、把「QQQ 收在进攻线上方」扩成三条、又加了框架里没有的「月度±25%」。
+SCOREBOARD_CONDITIONS = [
+    ("T2108", "downgrade"), ("5日 ratio", "downgrade"),
+    ("涨4%+", "downgrade"), ("VIX", "downgrade"),
+    ("10日 ratio", "upgrade"), ("进攻线", "upgrade"),
+]
+
+
+@check("攻守计分板固定六条（2026-08-10 Vic：「攻守积分版只有3个？」）")
+def _scoreboard_fixed(html, data):
+    if data is None or data.get("report_type") != "premarket":
+        return
+    rows = data.get("breadth_score_rows") or []
+    if not rows:
+        return
+    conds = [str(r.get("condition", "")) for r in rows if isinstance(r, dict)]
+    miss = [key for key, _ in SCOREBOARD_CONDITIONS
+            if not any(key in c for c in conds)]
+    extra = [c for c in conds
+             if not any(key in c for key, _ in SCOREBOARD_CONDITIONS)]
+    msg = []
+    if miss:
+        msg.append("缺条件 %s" % miss)
+    if extra:
+        msg.append("多了框架外的条件 %s" % extra)
+    if len(rows) != len(SCOREBOARD_CONDITIONS):
+        msg.append("共 %d 条，应为 %d 条" % (len(rows), len(SCOREBOARD_CONDITIONS)))
+    if msg:
+        return "；".join(msg) + "——四降级（T2108/5日ratio/涨跌4%/VIX）+ 两升级（10日ratio/QQQ进攻线）"
+
+
+# 🔴 入口守卫必须放在文件最末。2026-08-10 发现它卡在中间，
+# 结果**它后面注册的 5 条检查在 `python scripts/qa_report.py` 直跑时全部不生效**
+# （经 render_report.py import 时反而是生效的——同一份代码两种行为，最难查的那种）。
+# 其中包括 8/9 建的「报告里的价格必须等于口径日收盘价」——**它从建成起就没在直跑模式下跑过**。
+# 以后新增 @check 一律往这行**上面**加。
+if __name__ == "__main__":
+    sys.exit(main())

@@ -57,7 +57,16 @@ ML_LEADERS = ["MRVL", "NBIS", "SNDK", "NOK", "MU", "CRDO", "STM", "BB", "GLW", "
 DEFENSIVE = ["PM", "KO", "PG", "TLT", "XLU", "XLP"]
 LAODENG = ["BRK.B", "SCHD", "WMT", "WM", "MCD", "KO", "COR"]  # BRK.B单独试，MCP工具查不了但SDK可能行
 
-SECTOR_SCAN = list(dict.fromkeys(XL_SECTORS + GROUP2 + GROUP3))  # 单边扫描范围
+# 光通信/AI 网络层全链（2026-08-10 Vic：「加进扫描池」）。
+# 名单来自 sintszkay《光通信深度专题》v1.1（2026-08-10）盘点的 12 家，按它的质量排名注明：
+#   AVGO 1(4.80) / ANET 2(4.38) / CRDO 3(4.25) / GLW 4(4.13) / MTSI 5(4.10) / FN 6(4.03)
+#   ... COHR 10(3.50) / AAOI 11(2.83) / POET 12(1.93)
+# 加它的理由是**排名前列的 CRDO / MTSI / FN 此前都不在候选池里**，而排名倒数的 AAOI 在持仓里。
+# 🔴排名是「好公司」维度，不是「好价格」——专题自己说 12 家里 11 家估值偏热或极热。
+OPTICAL_CHAIN = ["AVGO", "ANET", "CRDO", "GLW", "MTSI", "FN", "LITE", "MRVL",
+                 "CIEN", "COHR", "AAOI", "POET"]
+
+SECTOR_SCAN = list(dict.fromkeys(XL_SECTORS + GROUP2 + GROUP3 + OPTICAL_CHAIN))  # 单边扫描范围
 BARS_NEEDED = 260  # 2026-07-15从220加到260：52周高点需要252根（200MA只要200根）
 
 def position_tickers():
@@ -70,7 +79,7 @@ def position_tickers():
 
 def universe(quick: bool):
     if quick:
-        tickers = INDICES + ML_LEADERS + DEFENSIVE + LAODENG
+        tickers = INDICES + ML_LEADERS + DEFENSIVE + LAODENG + OPTICAL_CHAIN
     else:
         tickers = INDICES + SECTOR_SCAN + ML_LEADERS + DEFENSIVE + LAODENG
     return list(dict.fromkeys(tickers + position_tickers()))

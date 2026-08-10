@@ -1248,11 +1248,15 @@ def render_premarket(data: dict) -> str:
             bs_body += build_split_callout(data["breadth_score_note"])
         bs_body += build_cross_check(data.get("cross_check", {}))
         # 2026-08-05：breadth_table/_note 在渲染器里一直零引用，写了就丢（QA「字段写了却没被渲染」抓到）
+        # 2026-08-10 再修：note 原来挂在「表有行」的条件下，**表空了连解释一起丢**——
+        # 而表为什么空（数据源 400 / 今天没扫出来）恰恰是空表时最该被看见的信息。
         bt = data.get("breadth_table") or {}
         if bt.get("rows"):
             bs_body += "<h3>广度明细</h3>" + build_table(bt)
-            if data.get("breadth_table_note"):
-                bs_body += build_split_callout(data["breadth_table_note"])
+        elif data.get("breadth_table_note"):
+            bs_body += "<h3>广度明细</h3>"
+        if data.get("breadth_table_note"):
+            bs_body += build_split_callout(data["breadth_table_note"])
         body_sections.append(section("breadthscore", "市宽打分", bs_body))
 
     # Follow-Through Day（2026-07-31 Vic带入O'Neil框架：「我们没有做反弹的框架…把反弹加入」）。
@@ -1390,9 +1394,10 @@ def render_premarket(data: dict) -> str:
     # 执行纪律 #8 说「盘前不留挂单」，但十几笔全撤不现实——把「撤哪些」变成按
     # 距止损/ATR 自动算的清单。放在持仓节末尾：看完持仓正好接着决定今晚撤哪几张单。
     sp_tbl = data.get("stop_proximity_table") or {}
-    if sp_tbl.get("rows"):
+    if sp_tbl.get("rows") or data.get("stop_proximity_note"):
         pos_body += "<h3>今晚撤单清单（距止损 &lt;0.7ATR 必撤）</h3>"
-        pos_body += build_table(sp_tbl)
+        if sp_tbl.get("rows"):
+            pos_body += build_table(sp_tbl)
         if data.get("stop_proximity_note"):
             pos_body += build_split_callout(data["stop_proximity_note"],
                                             label="", kind="co-warn")
@@ -1643,6 +1648,10 @@ def render_premarket(data: dict) -> str:
     wrapup_body = build_key_takeaways(data.get("key_takeaways", []))
     wrapup_body += '<h3 style="margin-top:24px">盘后对账清单</h3>'
     wrapup_body += build_recon_ledger(data.get("recon_ledger", []))
+    # 事前概率的口径说明（2026-08-08 建）。盘后一直有渲染，盘前漏了——
+    # 而盘前才是概率被**写下**的地方，说明放在这里比放盘后更重要。
+    if data.get("recon_prob_note"):
+        wrapup_body += f'<p class="brier-line">{rich(data["recon_prob_note"])}</p>'
     body_sections.append(section("wrapup", "今日定位", wrapup_body))
 
     # 2026-07-05：13F→13D/13G、轧空、国会交易、Polymarket全部已解决（13D/13G和轧空并进了机会扫描，

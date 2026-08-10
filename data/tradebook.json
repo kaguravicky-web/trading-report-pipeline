@@ -4303,7 +4303,7 @@
         {
           "date": "2026-07-31",
           "stop": 32,
-          "note": "止损上移（原30.80/90股 -> 32.00/60股，卖出30股后剩60股）"
+          "note": "止损上移"
         }
       ],
       "legs": [
@@ -4345,16 +4345,16 @@
           "qty": 30,
           "price": 34.2,
           "decision_score": null,
-          "note": ""
+          "note": "开盘打止损没有买回去"
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "被打止损以后暴涨，不可把止损上移到支撑位，也要及时买回去",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,

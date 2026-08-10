@@ -53,7 +53,12 @@ GROUP3 = ["NASA", "ITA", "AIRR", "XOP", "OIH", "TAN", "LIT", "COPX", "REMX", "SL
           # 把UUP纳入SDK universe后就有T-1%/5日/MA/ATR全套，DXY这一行不用再依赖
           # investing.com（长期被Cloudflare拦），也不用再写"抓取失败"。
           "UUP"]
-ML_LEADERS = ["MRVL", "NBIS", "SNDK", "NOK", "MU", "CRDO", "STM", "BB", "GLW", "INTC", "DELL", "PWR", "FIX", "ASX"]
+# ML Market Leader 名单。2026-08-05 Vic 加 ANET；2026-08-10 Vic 加 NET 和 PLTR
+# ——三只正好卡在两条主线的三个层：ANET=AI网络层硬件 / NET=网安+AI骨干 / PLTR=AI应用软件。
+# 🔴 这份名单的用途是**判断主线还在不在**，不是候选池；要买走 A/B/C 的止损距离门槛。
+ML_LEADERS = ["ANET", "NET", "PLTR",
+              "MRVL", "NBIS", "SNDK", "NOK", "MU", "CRDO", "STM", "BB", "GLW",
+              "INTC", "DELL", "PWR", "FIX", "ASX"]
 DEFENSIVE = ["PM", "KO", "PG", "TLT", "XLU", "XLP"]
 LAODENG = ["BRK.B", "SCHD", "WMT", "WM", "MCD", "KO", "COR"]  # BRK.B单独试，MCP工具查不了但SDK可能行
 

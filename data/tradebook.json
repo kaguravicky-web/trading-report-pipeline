@@ -57,9 +57,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6200877742250-AAOI",
@@ -147,9 +145,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6200877742266-WOLF",
@@ -321,9 +317,7 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6200877742278-CIEN",
@@ -371,9 +365,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407141-HPE",
@@ -447,9 +439,7 @@
         "提前恐慌砍"
       ],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407145-PWR",
@@ -513,9 +503,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407149-LRCX",
@@ -571,9 +559,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407152-NBIS",
@@ -631,9 +617,7 @@
         "破位不砍"
       ],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407155-INTC",
@@ -681,9 +665,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6077805407158-MSTR",
@@ -740,8 +722,7 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "横盘整理应该小仓，或者等突破再入",
-      "execution_states": []
+      "execution_note": "横盘整理应该小仓，或者等突破再入"
     },
     {
       "id": "NEW-6031213619619-SPCX",
@@ -797,9 +778,7 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6031213619704-BE",
@@ -871,9 +850,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6031213619716-TSM",
@@ -929,9 +906,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6031213619733-AAPL",
@@ -995,9 +970,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-6031213619742-WOLF",
@@ -1054,8 +1027,7 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "",
-      "execution_states": []
+      "execution_note": ""
     },
     {
       "id": "NEW-5985964687659-TMO",
@@ -1119,9 +1091,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985964687676-PURR",
@@ -1138,7 +1108,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "板块强势",
-      "exit_logic": "止损太紧",
+      "exit_logic": "止损太紧被止损，等突破再买入",
       "stop_history": [
         {
           "date": "2026-08-05",
@@ -1174,12 +1144,15 @@
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "execution_note": "",
+      "execution_states": [
+        "仓位太重睡不着",
+        "没信心/拿不住"
+      ]
     },
     {
       "id": "NEW-5985964687681-LABU",
@@ -1235,9 +1208,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985933995375-GOOG",
@@ -1375,9 +1346,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985933995407-CSCO",
@@ -1425,9 +1394,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985933995414-ANET",
@@ -1496,12 +1463,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985933995424-MU",
@@ -1554,12 +1519,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5985933995429-IOT",
@@ -1568,10 +1531,10 @@
       "status": "closed",
       "entry_date": "2026-08-05",
       "exit_date": "2026-08-06",
-      "setup_type": null,
+      "setup_type": "Base Breakout",
       "planned": null,
       "day_trade": false,
-      "mentor": false,
+      "mentor": true,
       "stop_initial": 36.7,
       "target": null,
       "thesis": "",
@@ -1603,21 +1566,19 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "突破",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5903678628955-VEEV",
@@ -1673,9 +1634,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5903678628973-WGMI",
@@ -1724,16 +1683,15 @@
         "chase_reentry": null,
         "breakdown_sell": true,
         "note": "go no where",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "execution_note": "无setup，没有及时砍仓"
     },
     {
       "id": "NEW-5903678628977-DRAM",
@@ -1749,7 +1707,7 @@
       "stop_initial": null,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "大市反弹，但没有setup不要买",
       "exit_logic": "减仓观望，nvda新机架减少了存储",
       "stop_history": [
         {
@@ -1782,15 +1740,16 @@
         "chase_reentry": null,
         "breakdown_sell": false,
         "note": "没有setup不要买",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "flawed",
+      "execution_flags": [
+        "计划外交易"
+      ],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
       "execution_note": ""
     },
     {
@@ -1846,12 +1805,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5903662297979-LITE",
@@ -1906,12 +1863,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5903662297988-AVPT",
@@ -1920,16 +1875,22 @@
       "status": "closed",
       "entry_date": "2026-08-04",
       "exit_date": "2026-08-04",
-      "setup_type": null,
+      "setup_type": "Base Breakout",
       "planned": null,
-      "day_trade": true,
-      "mentor": false,
+      "day_trade": false,
+      "mentor": true,
       "stop_initial": null,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
-      "exit_logic": "",
-      "stop_history": [],
+      "entry_logic": "突破buy point",
+      "exit_logic": "减仓观望",
+      "stop_history": [
+        {
+          "date": "2026-08-04",
+          "stop": 12.5,
+          "note": "初始止损"
+        }
+      ],
       "legs": [
         {
           "date": "2026-08-04",
@@ -1945,25 +1906,27 @@
           "qty": 300,
           "price": 13.625,
           "decision_score": null,
-          "note": ""
+          "note": "老师说忘记看财报日期"
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": true,
+        "note": "财报下跌",
+        "window": "1w"
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "execution_note": "",
+      "execution_states": [
+        "对这只不熟"
+      ]
     },
     {
       "id": "NEW-5903662297991-DYN",
@@ -1972,10 +1935,10 @@
       "status": "closed",
       "entry_date": "2026-08-04",
       "exit_date": "2026-08-06",
-      "setup_type": null,
+      "setup_type": "Base Breakout",
       "planned": null,
       "day_trade": false,
-      "mentor": false,
+      "mentor": true,
       "stop_initial": 24,
       "target": null,
       "thesis": "",
@@ -2032,9 +1995,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5903662297995-PLTR",
@@ -2042,10 +2003,10 @@
       "account": "moomoo",
       "status": "closed",
       "entry_date": "2026-08-04",
-      "exit_date": "2026-08-05",
+      "exit_date": "2026-08-04",
       "setup_type": null,
       "planned": null,
-      "day_trade": false,
+      "day_trade": true,
       "mentor": false,
       "stop_initial": 145,
       "target": null,
@@ -2077,7 +2038,7 @@
           "note": ""
         },
         {
-          "date": "2026-08-05",
+          "date": "2026-08-04",
           "action": "sell",
           "qty": 10,
           "price": 162.31,
@@ -2095,12 +2056,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803374923220-MRVL",
@@ -2201,9 +2160,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803374923241-SOXX",
@@ -2288,9 +2245,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803374923246-PANW",
@@ -2351,9 +2306,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803355279837-MU",
@@ -2362,18 +2315,18 @@
       "status": "closed",
       "entry_date": "2026-08-03",
       "exit_date": "2026-08-06",
-      "setup_type": null,
-      "planned": null,
+      "setup_type": "Pullback",
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": null,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
-      "exit_logic": "",
+      "entry_logic": "大市反弹",
+      "exit_logic": "均线rejection",
       "stop_history": [
         {
-          "date": "2026-08-04",
+          "date": "2026-08-03",
           "stop": 851,
           "note": "止损挂单中（保护剩余2股）"
         }
@@ -2430,12 +2383,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803355279853-NOW",
@@ -2444,15 +2395,15 @@
       "status": "closed",
       "entry_date": "2026-08-03",
       "exit_date": "2026-08-06",
-      "setup_type": null,
+      "setup_type": "Base Breakout",
       "planned": null,
       "day_trade": false,
-      "mentor": false,
+      "mentor": true,
       "stop_initial": 105,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
-      "exit_logic": "",
+      "entry_logic": "tight盘整",
+      "exit_logic": "大市不好",
       "stop_history": [
         {
           "date": "2026-08-03",
@@ -2487,21 +2438,19 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "突破，等站稳200ma再买入",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803355279858-IBM",
@@ -2549,9 +2498,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5803355279863-META",
@@ -2623,9 +2570,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785563859720",
@@ -2673,9 +2618,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562922225452-SNDK",
@@ -2692,7 +2635,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "买入，应该还会继续积累，不知道第二个Leg会不会lg",
-      "exit_logic": "",
+      "exit_logic": "板块转弱",
       "stop_history": [
         {
           "date": "2026-07-31",
@@ -2702,7 +2645,7 @@
         {
           "date": "2026-08-03",
           "stop": 1202.4,
-          "note": "LongBridge订单记录里查到的当前挂单止损（约等于成本价，保护剩余2股）"
+          "note": "止损上移"
         }
       ],
       "legs": [
@@ -2757,12 +2700,10 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682739-MU",
@@ -2826,9 +2767,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682758-MRVL",
@@ -2884,9 +2823,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682764-KOD",
@@ -2942,9 +2879,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682767-S",
@@ -3005,9 +2940,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682773-SOXL",
@@ -3087,9 +3020,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682777-AXTI",
@@ -3145,9 +3076,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5562901682779-META",
@@ -3227,9 +3156,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5471361335951-SKHY",
@@ -3246,7 +3173,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "等底部确认",
-      "exit_logic": "",
+      "exit_logic": "板块转弱",
       "stop_history": [
         {
           "date": "2026-07-30",
@@ -3327,12 +3254,10 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5471361335975-LITE",
@@ -3405,21 +3330,19 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "等回踩均线再买入",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5471361335980-XBI",
@@ -3475,9 +3398,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5470556914489-SPCX",
@@ -3500,11 +3421,6 @@
           "date": "2026-07-30",
           "stop": 117,
           "note": "当天多次进出用了不同止损，这里记第一次的；最后一笔(20@112.60)止损107挂单中未触发"
-        },
-        {
-          "date": "2026-07-31",
-          "stop": null,
-          "note": "⚠原107.00/30股止损单已撤销，没有新止损单顶上——当前30股仓位没有止损保护，需要你确认"
         }
       ],
       "legs": [
@@ -3622,21 +3538,23 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "等回踩不破底再买入",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "execution_note": "入场时候急了",
+      "execution_states": [
+        "仓位太重睡不着"
+      ]
     },
     {
       "id": "NEW-5470556914517-SOXL",
@@ -3740,9 +3658,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5470556914527-SNDK",
@@ -3822,9 +3738,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5465344555335-WAT",
@@ -3880,9 +3794,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5465344555352-BE",
@@ -3946,9 +3858,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5465344555356-TTAN",
@@ -3965,7 +3875,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "200ma支撑",
-      "exit_logic": "",
+      "exit_logic": "大市不好",
       "stop_history": [
         {
           "date": "2026-07-30",
@@ -4014,12 +3924,10 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5465344555395-SMH",
@@ -4083,9 +3991,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-5465344555398-WPM",
@@ -4141,9 +4047,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785384814760",
@@ -4207,9 +4111,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785384777955",
@@ -4265,9 +4167,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785384682232",
@@ -4376,9 +4276,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785384569110",
@@ -4463,9 +4361,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785383957768",
@@ -4553,9 +4449,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785297366991",
@@ -4627,9 +4521,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785297155385",
@@ -4685,9 +4577,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785296412879",
@@ -4743,9 +4633,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785296305079",
@@ -4817,9 +4705,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1785214398369",
@@ -4875,9 +4761,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784779159376",
@@ -4949,9 +4833,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784779055697",
@@ -5023,9 +4905,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784778920189",
@@ -5081,9 +4961,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784778778426",
@@ -5155,9 +5033,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784778677307",
@@ -5213,9 +5089,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784778562404",
@@ -5295,9 +5169,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784778462769",
@@ -5353,9 +5225,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784776926818",
@@ -5411,9 +5281,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693830239",
@@ -5469,9 +5337,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693718479",
@@ -5527,9 +5393,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693647118",
@@ -5585,9 +5449,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693595981",
@@ -5643,9 +5505,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693500502",
@@ -5701,9 +5561,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693443180",
@@ -5759,9 +5617,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693393728",
@@ -5817,9 +5673,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784693301836",
@@ -5875,9 +5729,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784358571156",
@@ -5933,9 +5785,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784245274376",
@@ -5991,9 +5841,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784245194967",
@@ -6049,9 +5897,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784245039522",
@@ -6107,9 +5953,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784244812160",
@@ -6173,9 +6017,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784244565206",
@@ -6231,9 +6073,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784244494669",
@@ -6289,9 +6129,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784244386546",
@@ -6347,9 +6185,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784175369556",
@@ -6405,9 +6241,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784175248839",
@@ -6463,9 +6297,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784174863846",
@@ -6521,9 +6353,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784173764331",
@@ -6579,9 +6409,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784173583604",
@@ -6637,9 +6465,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784173461294",
@@ -6703,9 +6529,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784173251570",
@@ -6761,9 +6585,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784050228853",
@@ -6819,9 +6641,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784042199305",
@@ -6885,9 +6705,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784042122920",
@@ -6943,9 +6761,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784042016887",
@@ -7033,9 +6849,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784003200686",
@@ -7091,9 +6905,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784003041317",
@@ -7157,9 +6969,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1784002898370",
@@ -7223,9 +7033,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783703824310",
@@ -7281,9 +7089,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783703764824",
@@ -7339,9 +7145,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783703561616",
@@ -7397,9 +7201,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783697360399",
@@ -7455,9 +7257,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783697256409",
@@ -7513,9 +7313,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783697125753",
@@ -7571,9 +7369,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783697006464",
@@ -7629,9 +7425,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783607129859",
@@ -7687,9 +7481,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783605541959",
@@ -7745,9 +7537,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "NEW-1783605384531",
@@ -7803,9 +7593,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "SPCX-20260702",
@@ -7861,9 +7649,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "WRBY-2026",
@@ -7919,9 +7705,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "BRKR-2026",
@@ -7970,16 +7754,15 @@
         "chase_reentry": null,
         "breakdown_sell": true,
         "note": "财报 -21.79%",
-        "window": null
+        "window": "2w"
       },
       "mentor": false,
       "execution_score": 1,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "execution_note": "没有突破"
     },
     {
       "id": "SYK-2026",
@@ -8040,9 +7823,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "XLV-2026",
@@ -8106,9 +7887,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "BB-20260707",
@@ -8164,9 +7943,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "ELV-20260707",
@@ -8222,9 +7999,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     },
     {
       "id": "UPS-20260707",
@@ -8280,9 +8055,7 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": "",
-      "execution_states": [],
-      "execution_note": ""
+      "catalyst": ""
     }
   ],
   "daily_summaries": [

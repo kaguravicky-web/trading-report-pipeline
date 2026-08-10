@@ -554,7 +554,11 @@ def build_ml_leaders(leaders: list) -> str:
             "</tr>"
         )
     return (
-        '<table><thead><tr><th>TICKER</th><th class="num">价格</th><th class="num">今日%</th>'
+        '<table class="fixed-cols"><colgroup>'
+        '<col style="width:9%"><col style="width:10%"><col style="width:10%">'
+        '<col style="width:14%"><col style="width:19%"><col style="width:19%">'
+        '<col style="width:19%"></colgroup>'
+        '<thead><tr><th>TICKER</th><th class="num">价格</th><th class="num">今日%</th>'
         "<th>结构</th><th>当日信号</th><th class=\"num\">入场点</th><th class=\"num\">失效线</th>"
         "</tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
     )
@@ -611,8 +615,10 @@ def build_recon_ledger(items: list) -> str:
         tr = ' class="ledger-disc"' if is_disc else ""
         body_rows.append(
             f"<tr{tr}>"
-            f"<td>{esc(it.get('claim',''))}</td>"
-            f"<td>{esc(it.get('trigger',''))}</td>"
+            # claim/trigger 是判断文本，走 rich()——esc() 会把 ** 渲染成字面星号
+            # （2026-08-10 QA 抓到）。
+            f"<td>{rich(it.get('claim',''))}</td>"
+            f"<td>{rich(it.get('trigger',''))}</td>"
             f'<td style="text-align:center">{prob_cell}</td>'
             f'<td class="pending">{esc(it.get("close_check","（盘后填）"))}</td>'
             "</tr>"
@@ -926,13 +932,19 @@ def build_squeeze_table(rows: list) -> str:
             f'<td class="num">{esc(r.get("short_pct_float",""))}</td>'
             f'<td class="num">{esc(r.get("days_to_cover",""))}</td>'
             f'<td class="num">{esc(r.get("borrow_fee",""))}</td>'
-            f"<td>{esc(r.get('short_volume_trend',''))}</td>"
-            f"<td>{esc(r.get('catalyst',''))}</td>"
-            f"<td>{esc(r.get('status',''))}</td>"
+            f"<td>{rich(r.get('short_volume_trend',''))}</td>"
+            f"<td>{rich(r.get('catalyst',''))}</td>"
+            f"<td>{rich(r.get('status',''))}</td>"
             "</tr>"
         )
+    # 2026-08-10：这张表是手写 HTML，此前既没 table_class 也没 colgroup，
+    # QA「表格列宽对齐」一直红着。补上，跟 build_table 的输出对齐。
     return (
-        '<table><thead><tr><th>TICKER</th><th class="num">做空比例%of Float</th>'
+        '<table class="fixed-cols"><colgroup>'
+        '<col style="width:8%"><col style="width:11%"><col style="width:11%">'
+        '<col style="width:10%"><col style="width:14%"><col style="width:22%">'
+        '<col style="width:24%"></colgroup>'
+        '<thead><tr><th>TICKER</th><th class="num">做空比例/DTC</th>'
         '<th class="num">Days to Cover</th><th class="num">借券费率</th>'
         "<th>近期做空成交趋势</th><th>催化剂</th><th>触发状态</th>"
         "</tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
@@ -955,8 +967,8 @@ def build_event_gap_table(rows: list) -> str:
             "<tr>"
             f"<td><b>{esc(r.get('ticker',''))}</b></td>"
             f"<td>{rich(r.get('catalyst',''))}</td>"
-            f"<td>{esc(r.get('narrative',''))}</td>"
-            f'<td class="num">{esc(r.get("gap_pct",""))}</td>'
+            f"<td>{rich(r.get('narrative',''))}</td>"
+            f'<td class="num">{rich(r.get("gap_pct",""))}</td>'
             f'<td class="ctr">{esc(r.get("extreme",""))}</td>'
             f'<td class="ctr">{esc(r.get("size",""))}</td>'
             f'<td class="ctr">{esc(r.get("stop",""))}</td>'
@@ -1099,7 +1111,11 @@ def build_premarket_movers(rows: list) -> str:
             "</tr>"
         )
     return (
-        '<table class="movers"><thead><tr><th>股票</th><th class="num">盘前变化</th>'
+        '<table class="movers fixed-cols"><colgroup>'
+        '<col style="width:8%"><col style="width:10%"><col style="width:9%">'
+        '<col style="width:8%"><col style="width:25%"><col style="width:16%">'
+        '<col style="width:24%"></colgroup>'
+        '<thead><tr><th>股票</th><th class="num">盘前变化</th>'
         '<th class="num">盘前量</th><th>量能</th>'
         "<th>催化/成交确认</th><th>板块read-through</th><th>交易判断</th>"
         "</tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
@@ -1291,12 +1307,19 @@ def render_premarket(data: dict) -> str:
         macro_parts.append(build_dispersion(dsp))
         if data.get("dispersion_note"):
             macro_parts.append(build_split_callout(data["dispersion_note"]))
+    # Deemer Breakaway Momentum（2026-08-10 Vic：「deemer 开始读」）——
+    # 它是**分母信号**（10日跌家数少到极值），跟 ATR 延伸度不是一类，单独一节。
+    if (data.get("bam_table") or {}).get("rows"):
+        macro_parts.append("<h3>B · Deemer Breakaway Momentum</h3>")
+        macro_parts.append(build_table(data["bam_table"]))
+        if data.get("bam_note"):
+            macro_parts.append(build_split_callout(data["bam_note"]))
     if atr_rows:
-        macro_parts.append("<h3>B · 指数</h3>")
+        macro_parts.append("<h3>C · 指数</h3>")
         macro_parts.append(build_atr_extension_table(atr_rows))
         if data.get("atr_extension_note"):
             macro_parts.append(build_split_callout(data["atr_extension_note"]))
-    macro_parts.append("<h3>C · 其他资产</h3>")
+    macro_parts.append("<h3>D · 其他资产</h3>")
     macro_parts.append(build_table(data.get("other_assets_table", {})))
     joint_lines = data.get("joint_signal_lines", [])
     if joint_lines:
@@ -1376,6 +1399,14 @@ def render_premarket(data: dict) -> str:
     body_sections.append(section("positions", "持仓", pos_body))
 
     news_body = ""
+    # 专题报告 read-through（2026-08-10 建）。Vic 会直接甩专题报告的链接过来
+    # （记忆：「你跑日报时候可以看一下专题报告（注意日期）」），
+    # 读完的结论必须落进当天的报告，不能只在对话里说一遍。
+    sp = data.get("special_readthrough_table") or {}
+    if sp.get("rows"):
+        news_body += "<h3>A · 专题报告 read-through</h3>" + build_table(sp)
+        if data.get("special_readthrough_note"):
+            news_body += build_split_callout(data["special_readthrough_note"])
     today_news = data.get("news_today", [])
     week_news = data.get("news_week", [])
     if today_news:
@@ -1383,7 +1414,7 @@ def render_premarket(data: dict) -> str:
         # news_tracking 同一种内容），之前被当成字符串列表用 rich() 渲染，
         # 结果整个 Python list literal 打在页面上。改成跟盘后完全同一张表：
         # 时间 / 内容 / 板块 / 市场反应 / 延续（「是」渲染成绿标签）。
-        news_body += "<h3>A · 今日盘前重点消息</h3>"
+        news_body += "<h3>B · 今日盘前重点消息</h3>"
         if today_news and isinstance(today_news[0], (list, tuple)):
             news_body += build_table({
                 "headers": ["时间", "内容", "板块", "市场反应", "延续"],
@@ -1431,6 +1462,9 @@ def render_premarket(data: dict) -> str:
             setup_parts.append(build_split_callout(data["ml_leaders_note"], label="", kind="co-method"))
     elif ml_leaders:
         setup_parts.append(build_ml_leaders(ml_leaders))
+        # 2026-08-10：note 此前只挂在 ml_leaders_table 分支上，走卡片格式时整段静默丢失
+        if data.get("ml_leaders_note"):
+            setup_parts.append(build_split_callout(data["ml_leaders_note"], label="", kind="co-method"))
     else:
         # 这里会写整段判断文字，必须用rich()——esc()会把**渲染成字面星号（QA第4条抓到的）
         setup_parts.append('<p class="placeholder">'
@@ -1614,7 +1648,12 @@ def render_premarket(data: dict) -> str:
     # 2026-07-05：13F→13D/13G、轧空、国会交易、Polymarket全部已解决（13D/13G和轧空并进了机会扫描，
     # 国会交易走X观点池），"待接入"暂时是空的，先不渲染这个section；等真出现新的没数据源的模块再加回来
 
+    # 2026-08-10：四处渲染器都直接 esc(footer)，而 assemble 侧一直写的是 list——
+    # 结果页脚被打印成 Python 的 list repr（['LongPort OpenAPI', ...]）。
+    # 四个报告类型全中，没人报过：页脚没人看，正是「无反馈回路」那类静默缺陷。
     footer = data.get("footer_sources", "")
+    if isinstance(footer, (list, tuple)):
+        footer = " · ".join(str(x) for x in footer)
 
     return f"""<!doctype html>
 <html lang="zh-Hans">
@@ -1857,7 +1896,12 @@ def render_postmarket(data: dict) -> str:
     ) if outlook_items else '<p class="placeholder">待补充。</p>'
     body_sections.append(section("outlook", "05 明日前瞻", outlook_body))
 
+    # 2026-08-10：四处渲染器都直接 esc(footer)，而 assemble 侧一直写的是 list——
+    # 结果页脚被打印成 Python 的 list repr（['LongPort OpenAPI', ...]）。
+    # 四个报告类型全中，没人报过：页脚没人看，正是「无反馈回路」那类静默缺陷。
     footer = data.get("footer_sources", "")
+    if isinstance(footer, (list, tuple)):
+        footer = " · ".join(str(x) for x in footer)
 
     return f"""<!doctype html>
 <html lang="zh-Hans">
@@ -2025,7 +2069,12 @@ def render_weekly(data: dict) -> str:
     if nx:
         sec("nextweek", "十、下周计划", nx)
 
+    # 2026-08-10：四处渲染器都直接 esc(footer)，而 assemble 侧一直写的是 list——
+    # 结果页脚被打印成 Python 的 list repr（['LongPort OpenAPI', ...]）。
+    # 四个报告类型全中，没人报过：页脚没人看，正是「无反馈回路」那类静默缺陷。
     footer = data.get("footer_sources", "")
+    if isinstance(footer, (list, tuple)):
+        footer = " · ".join(str(x) for x in footer)
     if isinstance(footer, list):
         footer = " · ".join(footer)
     return f"""<!doctype html>
@@ -2132,7 +2181,12 @@ def render_monthly(data: dict) -> str:
     if nx:
         sec("nextmonth", "六、下月计划", nx)
 
+    # 2026-08-10：四处渲染器都直接 esc(footer)，而 assemble 侧一直写的是 list——
+    # 结果页脚被打印成 Python 的 list repr（['LongPort OpenAPI', ...]）。
+    # 四个报告类型全中，没人报过：页脚没人看，正是「无反馈回路」那类静默缺陷。
     footer = data.get("footer_sources", "")
+    if isinstance(footer, (list, tuple)):
+        footer = " · ".join(str(x) for x in footer)
     if isinstance(footer, list):
         footer = " · ".join(footer)
     return f"""<!doctype html>

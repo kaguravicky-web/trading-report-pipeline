@@ -1219,6 +1219,10 @@ PHASE1_FIELDS = [
     "ftd", "ftd_table", "ftd_note",
     "position_governance_table", "position_governance_note",
     "bounce_table", "bounce_note",
+    # 2026-08-09 Vic 批的「事件缺口延续」8/6 就通过了，8/7 一个候选都没进报告——
+    # 因为字段名不在这张表里，keep() 直接过滤掉了。**新批准的类别必须当天就加进来。**
+    # 无条件生成：没有符合的就写「无」，「字段是空的」和「字段不存在」只有前者看得见。
+    "event_gap_candidates", "event_gap_note",
 ]
 
 # ②段1建骨架+写判断列，段2只把「盘前」那一列补进去（用patch_premarket_columns机械完成，
@@ -2283,3 +2287,160 @@ def squeeze_read(ticker: str, cache: dict = None, sv_series: list = None,
     return {"ticker": ticker, "dtc": dtc, "short_trend": short_trend, "fuel": fuel,
             "ignition": ignition, "persistence": persistence, "verdict": verdict,
             "sv_last": sv_series[-1][1] if sv_series else None}
+
+
+# --- 轧空面板：筛选方向必须是「先点火再查燃料」（2026-08-10 定）------------
+# 第一版按 DTC>=5 全市场筛，7/15 那期出来 384 只（日均量>=50万且空仓在增加），
+# 前 30 名全是 REIT（MPT/EPR/MAIN）、封闭式基金（CLM/CRF）和微盘生物（LCTX/IPSC）——
+# 这些标的的高空头比例是**结构性的**（分红套利、折价套利），不是有人在赌它跌。
+# 而 GRPN 已经证明：**燃料本身不是信号**（DTC 9.13 却放量往下）。
+# 所以顺序反过来：**先用价格找点火（大阳收在区间高位+放量），再回查它有没有燃料。**
+# 燃料表一期只变一次（双周结算），落盘缓存，不用每天拉。
+SQUEEZE_MIN_ADV = 1_000_000        # 日均量门槛，低于此的轧空追不进也出不来
+
+def squeeze_fuel_table(refresh: bool = False) -> dict:
+    """全市场 DTC 查询表 {ticker: {dtc, short, adv, chg_pct, date}}，落盘缓存。
+    双周结算，一期只变一次，所以默认读缓存。"""
+    from datetime import date, timedelta
+    p = ROOT / "data" / "cache" / "short_interest_latest.json"
+    if p.exists() and not refresh:
+        try:
+            return json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    # 🔴 FINRA 每次最多返回 5000 行且是**升序**——limit 给大没用，会被截在字母表前段
+    #    （8/10 第一次跑：limit=20000 只拿到 A–B 开头的票，WOLF/GRPN 全部 n/a）。
+    #    所以必须①先定位最新结算日 ②锁定那一天 ③用 offset 翻页。
+    # 探最新结算日必须用**单只票**过滤——不加符号过滤时首页是字母表前 5000 行，
+    # 它们的最新一期未必已发布，max() 会拿到上一期（8/10 踩到：拿成 6/30，真值 7/15，
+    # 结果全表 DTC 都是过期的，WOLF 读成 3.85 而不是 6.79）。
+    since = (date.today() - timedelta(days=60)).isoformat()
+    latest = ""
+    for probe_sym in ("AAPL", "MSFT", "F"):
+        try:
+            raw = json.loads(_http(FINRA_SI_URL, {"limit": 20, "compareFilters": [
+                {"fieldName": "symbolCode", "fieldValue": probe_sym, "compareType": "EQUAL"},
+                {"fieldName": "settlementDate", "fieldValue": since, "compareType": "GTE"}]}))
+        except Exception:
+            continue
+        latest = max([latest] + [(r.get("settlementDate") or "") for r in raw])
+    if not latest:
+        return {}
+    tbl, off = {}, 0
+    while True:
+        body = {"limit": 5000, "offset": off, "compareFilters": [
+            {"fieldName": "settlementDate", "fieldValue": latest, "compareType": "EQUAL"}]}
+        try:
+            page = json.loads(_http(FINRA_SI_URL, body, timeout=90))
+        except Exception:
+            break
+        if not page:
+            break
+        for r in page:
+            sym = r.get("symbolCode")
+            if not sym:
+                continue
+            tbl[sym] = {"dtc": r.get("daysToCoverQuantity"),
+                        "short": r.get("currentShortPositionQuantity"),
+                        "adv": r.get("averageDailyVolumeQuantity"),
+                        "chg_pct": r.get("changePercent"),
+                        "date": r.get("settlementDate"), "exchange": r.get("marketClassCode")}
+        off += len(page)
+        if len(page) < 5000:
+            break
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(tbl, ensure_ascii=False), encoding="utf-8")
+    return tbl
+
+
+def squeeze_rows(tickers, cache: dict, sv: dict = None, fuel: dict = None) -> dict:
+    """给盘前用的轧空表。tickers 是**已经点了火的候选**（涨幅/异动扫描出来的），
+    这里只回查燃料和续航——不要反过来用 DTC 去生成候选。"""
+    fuel = squeeze_fuel_table() if fuel is None else fuel
+    rows = []
+    for t in tickers:
+        f = fuel.get(t)
+        if not f or not f.get("dtc"):
+            continue
+        if (f.get("adv") or 0) < SQUEEZE_MIN_ADV:
+            continue
+        r = squeeze_read(t, cache=cache, sv_series=(sv or {}).get(t),
+                         si_series=[{"date": f["date"], "short": f["short"], "dtc": f["dtc"],
+                                     "adv": f["adv"], "chg_pct": f["chg_pct"]}])
+        m = (cache or {}).get("metrics", {}).get(t, {})
+        # 渲染层 build_squeeze_table 读的是 dict 键，不是位置列表——
+        # 键名对不上会在渲染时抛 AttributeError（2026-08-10 踩过一次）。
+        # 借券费率那一列没有免费源，统一写「无免费源」而不是留空或编数。
+        rows.append({
+            "ticker": t,
+            "short_pct_float": "DTC %.2f" % f["dtc"],
+            "days_to_cover": "%.2f" % f["dtc"],
+            "borrow_fee": "无免费源",
+            "short_volume_trend": ("做空占比 %.1f%%" % r["sv_last"]) if r.get("sv_last") is not None else "-",
+            "catalyst": ("T-1 %+.2f%% · 收盘位置 %d%% · 空仓%+.1f%%"
+                         % (m.get("t1_pct") or 0, m.get("range_pos") or 0, f.get("chg_pct") or 0)),
+            "status": r["verdict"],
+            "_dtc": f["dtc"]})
+    rows.sort(key=lambda x: -x["_dtc"])
+    for x in rows:
+        x.pop("_dtc", None)
+    return rows
+
+
+# =========================================================================
+# Deemer Breakaway Momentum（2026-08-10 上线，Vic：「deemer 开始读」）
+#
+# 定义：10 日 advances 之和 ÷ 10 日 declines 之和 > 1.97。
+# Deemer 本人的话是「重点不是涨的家数多，是跌的家数少」——所以它是**分母信号**，
+# 不是分子信号。这跟 FTD 那套「涨幅+放量」的分子逻辑正好互补，也是 Vic 8/6 停掉 FTD
+# 之后想试它的原因。
+#
+# 🔴数据口径的两个诚实说明（不要在报告里假装它是原版）：
+#   ① Deemer 的原始口径是 **NYSE** 涨跌家数。我们这个源是更宽的美股全市场
+#      （约 2400 只），家数基数不同，**1.97 这个阈值不能想当然照搬**。
+#      所以 bam_reading() 同时返回历史分位，用「这个读数在自己的历史里排第几」来读，
+#      而不是只看有没有过 1.97。
+#   ② 数据来自 combined_breadth.history（Vic 的 Google Sheet），只有约 23 天，
+#      **一年分位算不出来**，分位是在现有窗口内算的。窗口会随每天累积变长。
+# =========================================================================
+
+BAM_WINDOW = 10
+BAM_THRESHOLD = 1.97
+
+
+def bam_series(cache: dict, window: int = BAM_WINDOW) -> list:
+    """返回按日期升序的 [{date, adv10, dec10, ratio}]。不足 window 天则返回 []。"""
+    hist = ((cache or {}).get("combined_breadth") or {}).get("history") or []
+    rows = sorted([r for r in hist if r.get("advance") and r.get("decline")],
+                  key=lambda r: r["date"])
+    out = []
+    for i in range(window - 1, len(rows)):
+        w = rows[i - window + 1:i + 1]
+        a = sum(r["advance"] for r in w)
+        d = sum(r["decline"] for r in w)
+        out.append({"date": rows[i]["date"], "adv10": a, "dec10": d,
+                    "ratio": round(a / d, 3) if d else None})
+    return out
+
+
+def bam_reading(cache: dict) -> dict:
+    """当日 BAM 读数 + 在现有窗口里的分位 + 单向判语。"""
+    s = bam_series(cache)
+    if not s:
+        return {"ratio": None, "verdict": "**数据不足**（A/D 历史不满 %d 天）" % BAM_WINDOW}
+    cur = s[-1]
+    vals = sorted(x["ratio"] for x in s if x["ratio"] is not None)
+    pct = int(round(sum(1 for v in vals if v <= cur["ratio"]) / len(vals) * 100))
+    peak = max(vals)
+    if cur["ratio"] >= BAM_THRESHOLD:
+        verdict = ("🎯**BAM 触发**（%.2f ≥ %.2f）——10 日跌的家数少到极值，"
+                   "Deemer 口径的推力信号成立" % (cur["ratio"], BAM_THRESHOLD))
+    elif pct >= 80:
+        verdict = ("**未触发但在自身高位**（%.2f，样本内第 %d 分位，窗口峰值 %.2f）——"
+                   "分母在收缩，方向对，幅度不够" % (cur["ratio"], pct, peak))
+    else:
+        verdict = ("**未触发**（%.2f，样本内第 %d 分位）——跌的家数没有少到 Deemer 要的程度"
+                   % (cur["ratio"], pct))
+    return {"date": cur["date"], "ratio": cur["ratio"], "adv10": cur["adv10"],
+            "dec10": cur["dec10"], "pctile": pct, "peak": peak, "n": len(s),
+            "threshold": BAM_THRESHOLD, "verdict": verdict, "series": s}

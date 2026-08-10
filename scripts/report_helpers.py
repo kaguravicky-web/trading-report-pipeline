@@ -2007,6 +2007,11 @@ SECTOR_RS_GROUPS = [
 #    这套约束的作用是别把送分题递到他面前浪费他的时间。
 # =========================================================================
 
+# 2026-08-10 Vic：「盘后对账清单 最多写5条好吗？个股不用」
+#   · 上限 5 条——台账是给收盘后逐条核对用的，条数一多就没人逐条对
+#   · **不放个股**：个股的验证已经有两个更合适的地方（A/B/C 候选表的失效位、
+#     事件缺口表的 10% 止损位），放进台账等于同一件事记两遍，还挤掉市场级判断的名额
+RECON_MAX = 5
 RECON_PROB_MIN, RECON_PROB_MAX = 0.40, 0.80
 RECON_PROB_HIGH = 0.85     # >= 此值算「框架级防线」，每份限 1 条
 RECON_HIGH_MAX = 1
@@ -2023,10 +2028,34 @@ def _recon_split(items: list):
     return market, disc
 
 
+# 允许出现在台账里的标的：指数 + 板块/主题 ETF。其余一律视为个股。
+_RECON_OK_TICKERS = set(INDEX_ORDER) | {"SPY", "XBI", "IBIT", "TLT", "GLD", "SLV", "USO", "UUP"}
+for _g, _ts in SECTOR_RS_GROUPS:
+    _RECON_OK_TICKERS |= set(_ts)
+
+
+def _recon_names_single_stock(item: dict) -> bool:
+    """claim 里出现了不在 ETF 白名单里的大写代码 → 判定为押个股。"""
+    txt = (item.get("claim") or item.get("plan") or "")
+    cands = set(re.findall(r"(?<![A-Za-z])[A-Z]{2,5}(?![A-Za-z])", txt))
+    cands -= {"MA", "ATR", "RSI", "BAM", "FTD", "DTC", "VIX", "CPI", "AI", "EMA",
+              "QQQ", "VOO", "T", "Q", "SD"}
+    return bool(cands - _RECON_OK_TICKERS)
+
+
 def validate_recon_ledger(items: list, where: str = "recon_ledger") -> list:
     """返回错误列表，空=通过。assemble 和 qa_report 共用这一处定义。"""
     errs = []
     market, disc = _recon_split(items)
+    if len(items or []) > RECON_MAX:
+        errs.append("%s: 共 %d 条，**最多 %d 条**（Vic 2026-08-10）——"
+                    "条数一多收盘后就没人逐条核对了"
+                    % (where, len(items or []), RECON_MAX))
+    stock = [x for x in market if _recon_names_single_stock(x)]
+    if stock:
+        errs.append("%s: 这些条目押的是个股 %s——**个股不进对账台账**（Vic 2026-08-10），"
+                    "它们的验证走 A/B/C 的失效位和事件缺口表的止损位"
+                    % (where, [ (x.get("claim") or x.get("plan") or "")[:22] for x in stock ]))
     if len(market) < RECON_MIN_MARKET:
         errs.append("%s: 真预测只有 %d 条，至少 %d 条（纪律条目不算）"
                     % (where, len(market), RECON_MIN_MARKET))

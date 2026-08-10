@@ -681,6 +681,31 @@ def _risk_labels_fixed(html, data):
         return "；".join(msg) + "——口径见 2026-07-22 那份"
 
 
+@check("板块表必须是模板的七列（2026-08-10 Vic：「今天板块 判断故意都是空的吗」）")
+def _sector_rs_headers(html, data):
+    """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / 盘前 / **驱动·原因** / RS(1周)，
+    第 6 列注明「留空当天手写」。8/10 我写了 6 列表头配 7 列数据，
+    错位之后那一列在页面上就是一片空白——Vic 一眼看出来了。"""
+    if data is None or data.get("report_type") != "premarket":
+        return
+    want = ["TICKER", "T-1%", "5日%", "1月%", "盘前", "驱动/原因", "RS(1周)"]
+    bad = []
+    for t in data.get("sector_rs_tables") or []:
+        h = t.get("headers") or []
+        rows = t.get("rows") or []
+        if h != want:
+            bad.append("%s 表头是 %s" % (t.get("title"), h))
+            continue
+        if rows and len(rows[0]) != len(want):
+            bad.append("%s 表头%d列/数据%d列 错位" % (t.get("title"), len(want), len(rows[0])))
+            continue
+        blank = sum(1 for r in rows if not str(r[5]).strip())
+        if blank == len(rows) and rows:
+            bad.append("%s 的「驱动/原因」整列没写" % t.get("title"))
+    if bad:
+        return "；".join(bad[:4]) + "——列定义在 assemble_template.RS_HEADERS"
+
+
 @check("信号灯必须五格齐（2026-08-10 Vic：「今天盘前的信号灯好少，少了几个呢」）")
 def _signal_light_full(html, data):
     """build_signal_light 只认 bias/bond/dxy/breadth 四个块 + discipline 黄卡，

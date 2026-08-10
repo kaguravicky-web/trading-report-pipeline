@@ -500,8 +500,13 @@ def build_entry_legend() -> str:
       这正是Base Breakout实测胜率仅27%的来源。</div>
     <div class="co-item"><b>Setup E（shakeout+burst）</b>：等开盘后<b>第一根放量动量bar</b>，
       止损放洗盘低点下方；报告只给结构位，入场时机由盘中人工执行。</div>
-    <div class="co-item"><b>通用否决</b>：开盘跳空高开超过1.5%即视为追高，当日放弃；
-      触发bar量能低于0.8×20日均量视为无买盘跟进，不进。</div>
+    <div class="co-item"><b>通用否决</b>：<b>开盘跳空高开超过 1×ATR(14) 即视为追高</b>，当日放弃；
+      触发bar量能低于0.8×20日均量视为无买盘跟进，不进。<br>
+      <span class="muted">2026-08-10 Vic：「这条删了吧，要看atr的」——原来写的是固定 1.5%。
+      8/7 那天 9 只跳空样本里，固定 1.5% <b>把 9 只全部否决</b>，包括当天涨 19.14% 的 WOLF
+      （它的缺口只有 0.15ATR）。按 ATR 排开分界线很干净：缺口 ≥1.2ATR 的 AAOI(1.23) 和
+      NET(2.14) 收盘位置只有 27% 和 15%，是全天最差的两只；≤1.0ATR 那批除 FTNT 外都收在 68% 以上。
+      <b>n=9，一天的样本，不是回测结论</b>——但足以说明固定百分比在高波动票上是失效的。</span></div>
   </div>
 </div>"""
 
@@ -1010,28 +1015,75 @@ VOL_TAG_BADGE = {"高": "badge green", "低": "badge red",
 
 
 def build_dispersion(d: dict) -> str:
-    """A · 离散度（2026-08-06 Vic 要求单列进 01 宏观环境）。
+    """A · 离散度（2026-08-06 建；**2026-08-10 重做可读性**）。
 
-    比值 = 板块横截面标准差 ÷ |指数当日涨跌|，越高说明指数信号越没信息量。
-    分档见 report_helpers.dispersion_reading()：<1.5 指数主导 / 1.5-3 混合 / >3 选股主导。
+    Vic 2026-08-10：「这个表格我不会读」。原来只给四个数字（比值 / 标准差 / 指数涨跌 /
+    COR1M），没有一句话说这些数字意味着什么、今天该怎么做。四个数字里有三个是中间量，
+    只有「档位」是结论——但档位被放在最下面一行小字里。
+
+    重做：**先给一句人话，再给刻度条，最后才是原始数字**。
+    比值 = 板块横截面标准差 ÷ |指数当日涨跌|。<1.5 指数主导 / 1.5-3 混合 / >3 选股主导。
     """
     if not d or d.get("ratio") is None:
         return '<p class="placeholder">暂无离散度读数。</p>'
-    kind = {"指数主导": "green", "混合": "blue", "选股主导": "amber"}.get(d.get("regime", ""), "blue")
+    r = d["ratio"]
+    regime = d.get("regime", "")
+    kind = {"指数主导": "green", "混合": "blue", "选股主导": "amber"}.get(regime, "blue")
+
+    # ① 一句人话：把三个中间量翻译成「今天发生了什么」
+    if r < 1.5:
+        plain = ("**板块之间几乎没有分化。** 十一个板块的收益挤在一条窄带里"
+                 "（横截面标准差 %.2f），而指数自己动了 %.2f%%——"
+                 "**板块的差异比指数的动作还小。**" % (d["sd"], d["idx_move"]))
+        todo = ["**这种环境里，挑对板块赚不到多少超额收益，跟着指数走的性价比更高。**",
+                "**闸门 / 广度 / VIX 这类市场级信号现在是可用的**——"
+                "在「选股主导」档里它们的信息量极低。"]
+    elif r <= 3:
+        plain = ("**板块分化中等。** 横截面标准差 %.2f，指数动了 %.2f%%——"
+                 "既不是齐涨齐跌，也没有极端分化。" % (d["sd"], d["idx_move"]))
+        todo = ["**市场级信号和个股选择都只有一半权重。**",
+                "板块内部的强弱开始有意义，但还不到「指数怎么走无所谓」的程度。"]
+    else:
+        plain = ("**板块之间在剧烈分化。** 横截面标准差 %.2f 远大于指数的 %.2f%%——"
+                 "**指数今天走多少，跟你手里的票走多少几乎没关系。**" % (d["sd"], d["idx_move"]))
+        todo = ["🔴**这种环境里用闸门 / VIX 判风险是失效的**——"
+                "指数波动率量不到个股波动率（8/6 就是：个股跌 13~20%，VIX 反而更低）。",
+                "**该看的是持仓的单票波动和止损距离。**"]
+
+    # ② 刻度条：三档 + 今天的位置
+    pos = min(max(r / 4.5, 0.0), 1.0) * 100
+    scale = (
+        '<div class="disp-scale">'
+        '<div class="disp-bar">'
+        '<i class="seg s-idx" style="width:33.3%"></i>'
+        '<i class="seg s-mix" style="width:33.3%"></i>'
+        '<i class="seg s-stk" style="width:33.4%"></i>'
+        f'<b class="disp-pin" style="left:{pos:.1f}%"></b>'
+        '</div>'
+        '<div class="disp-ticks"><span>指数主导 &lt;1.5</span>'
+        '<span>混合 1.5–3</span><span>选股主导 &gt;3</span></div>'
+        '</div>')
+
+    # ③ 原始数字放最后，供核对
     cells = [
-        ("比值（离散度÷|指数|）", "%.2f" % d["ratio"], "一年 %d 分位" % d.get("ratio_pctile", 0)),
+        ("今天的比值", "%.2f" % r, "一年 %d 分位（中位 %.2f）"
+         % (d.get("ratio_pctile", 0), d.get("ratio_median_1y", 0))),
         ("板块横截面标准差", "%.2f" % d["sd"], "一年 %d 分位 · 中位 %.2f"
          % (d.get("sd_pctile", 0), d.get("sd_median_1y", 0))),
-        ("指数当日涨跌", "%.2f%%" % d["idx_move"], ""),
+        ("指数当日涨跌", "%.2f%%" % d["idx_move"], "比值的分母"),
         ("隐含相关性 COR1M", ("%.2f" % d["cor1m"]) if d.get("cor1m") else "—",
-         ("COR3M %.2f" % d["cor3m"]) if d.get("cor3m") else "越低=离散度越高"),
+         ("COR3M %.2f · 越低=个股越各走各的" % d["cor3m"]) if d.get("cor3m") else "越低=离散度越高"),
     ]
     tds = "".join(
         f'<td><div class="sub">{esc(k)}</div><div class="big">{esc(v)}</div>'
         f'<div class="sub">{esc(x)}</div></td>' for k, v, x in cells)
-    return (f'<table class="fixed-cols"><tbody><tr>{tds}</tr></tbody></table>'
-            f'<div class="callout co-{kind}"><strong>{esc(d.get("regime",""))}</strong>'
-            f'<div class="co-list"><div class="co-item">{rich(d.get("action",""))}</div></div></div>')
+
+    return (f'<div class="callout co-{kind}"><strong>{esc(regime)}（比值 {r:.2f}）</strong>'
+            f'<div class="co-list"><div class="co-item">{rich(plain)}</div>'
+            + "".join(f'<div class="co-item">{rich(x)}</div>' for x in todo)
+            + '</div></div>'
+            + scale
+            + f'<table class="fixed-cols"><tbody><tr>{tds}</tr></tbody></table>')
 
 
 def build_gate_etf_table(t: dict) -> str:

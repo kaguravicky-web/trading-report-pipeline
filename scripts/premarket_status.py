@@ -80,5 +80,24 @@ def main():
     print()
 
 
+# =========================================================================
+# 2026-08-10 加：Vic「但是我记得我们有 pre market builder，为什么格式会错呢」
+# ——因为我没用它。模板 scripts/assemble_template.py 只在 CONTEXT 第 2192 行的
+# 文件清单里被提到一次；而这个脚本（模板自己写着「每段开工先跑」）之前一个字都没提。
+# 把提醒放进唯一一个每天都会被执行到的地方。
+# =========================================================================
+TEMPLATE_REMINDER = "\n".join([
+    "=" * 64,
+    "盘前 JSON 必须从模板派生，不要从零手写 out = {...}",
+    r"   copy scripts\assemble_template.py  ->  scratchpad\assemble_YYYYMMDD.py",
+    "   只改标记 ### 手写 ### 的判断内容；骨架 / 字段名不要动。",
+    "   攻守记分板四桶必须齐：upgrade / downgrade / duration / techparity",
+    "   动能温度打分九项标签固定（见模板注释）。",
+    "   2026-08-10 就是因为绕过模板，攻守记分板、动能打分、futures 表全丢了。",
+    "=" * 64,
+])
+
+
 if __name__ == "__main__":
     main()
+    print(TEMPLATE_REMINDER)

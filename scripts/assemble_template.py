@@ -6,6 +6,28 @@
 只改标记为 ### 手写 ### 的判断内容；骨架/格式/字段名不要动——
 它们与render_report.py的期望严格对齐，改错会渲染报错。
 
+═══════════════════════════════════════════════════════════════════════════
+🔴 2026-08-10 Vic：「把模板修成最新的，然后以后每次用模板，格式不要再漂移了；
+   今天吓到我，以为做的修改都没了」
+
+**本文件是盘前报告字段集的唯一真源。** QA 的「盘前字段集 == 模板字段集」这条检查
+直接解析本文件的顶层 "key": 行来生成必备清单——
+  · 报告里出现模板没有的字段 → **自造字段**，红
+  · 模板里有的字段报告没写   → **缺字段**，红
+所以：**每新增一个字段，必须在同一次改动里加进本文件**；
+      **每退役一个字段，在本文件留空壳 + 注明退役日期**（例：futures_table 2026-07-11 退役），
+      不要直接删——否则以后分不清「主动退役」和「漂移丢失」。
+
+8/10 的事故就是绕过本文件从零手写 out = {...}：攻守记分板从 11 行 4 桶塌成自造的 4 行、
+动能温度打分九项标签全被换掉、15 个字段整块消失。而当时模板停更在 7/31，
+「模板残缺 → 用它反而丢字段 → 更不用 → 更过期」——这个循环已由上面那条检查斩断。
+
+**两个绝不能动的口径**（基线 = 2026-07-23~07-24）：
+  攻守记分板 scoreboard_rows：四桶 upgrade / downgrade / duration / techparity 必须齐，
+    行数 7~11 浮动正常，允许加行、不允许整桶消失
+  动能温度打分 risk_checklist：九项标签固定，见下方注释
+═══════════════════════════════════════════════════════════════════════════
+
 🔴**两段式（2026-07-22 Vic："盘前报告我想每次分两段跑，白天跑隔夜收盘和x账号，4点后跑盘前数据"）**
     python assemble_YYYYMMDD.py 1     # 段1·白天：隔夜收盘+X扫描 → 草稿_phase=1，不渲染
     python assemble_YYYYMMDD.py 2     # 段2·SGT16:00后：盘前报价 → 定稿_phase=2 → 再render
@@ -255,6 +277,40 @@ out = {
  "x_watch_table": {"headers": ["提及日", "账号", "TICKER", "提及时价", "最新收盘", "自提及%", "备注"],
                     "rows": H.x_watch_rows(cache, pm), "num_cols": [3, 4, 5]},
  "x_watch_note": "",
+ # ── 2026-08-10 回填：7/31 之后陆续加的字段，此前一直没回写进模板，
+ #    导致模板残缺 →「用它反而丢字段」→ 更不用 → 更过期。
+ #    这个循环是 8/10 格式大面积漂移的根因之一。
+ #    🔴**以后每加一个字段，必须在同一次改动里回填这里。**
+ "atr_extension_table": [],          ### H.atr_extension_rows(cache, H.INDEX_ORDER)
+ "atr_extension_note": "",
+ "dispersion": {},                   ### H.dispersion_reading(cache=cache, asof=...)
+ "dispersion_note": "",
+ "ftd": {},                          ### H.ftd_status()（已 parked，仍要出三态标记）
+ "ftd_table": {},                    ### H.ftd_table(...)
+ "position_governance_table": {},    ### H.position_governance_table(H.position_governance(pos))
+ "position_governance_note": "",
+ "stop_proximity_table": {},         ### H.stop_proximity_table(H.stop_proximity_rows(...))
+ "stop_proximity_note": "",
+ "week_calendar": {},                ### 六列日历：周一~周五 + 周末
+ "x_sentiment_macro_summary": "",
+ "adanos_scan_note": "",
+ "breadth_table_note": "",
+ "recon_prob_note": "",              ### 2026-08-08 对账事前概率的口径说明
+ "event_gap_candidates": [],         ### 2026-08-09 事件缺口延续（无条件生成，没有就写"无"）
+ "event_gap_note": "",
+ "bam": {},                          ### 2026-08-10 Deemer Breakaway Momentum
+ "bam_table": {},
+ "bam_note": "",
+ "special_readthrough_table": {},    ### 2026-08-10 专题报告 read-through
+ "special_readthrough_note": "",
+ # 🔴 gate_scoreboard_rows / breadth_score_rows / cross_check 是 7/27 那次漂移的产物，
+ #    **不是框架的一部分**。攻守记分板只有 scoreboard_rows 一张（四桶：
+ #    upgrade / downgrade / duration / techparity）。它们目前仍留在数据里供
+ #    cross_check_alignment 使用，但不算必备字段，也不要再往里搬条件。
+ "gate_scoreboard_rows": [],
+ "breadth_score_rows": [],
+ "breadth_score_note": "",
+ "cross_check": {},
  "footer_sources": "",
 }
 

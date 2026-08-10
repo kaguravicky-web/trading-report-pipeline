@@ -743,51 +743,54 @@ def _no_phase1_leftover(html, data):
 # 这样「今天多了个字段」就变成一次有意的改动，而不是某个会话的副作用。
 # =========================================================================
 
-PREMARKET_FIELDS = {
-    # —— 基线：2026-08-07 那份已知良好的盘前，逐字段导出 ——
-    "report_type", "date", "title", "subtitle", "badges", "generated_at", "footer_sources",
-    "signal_light", "risk_checklist", "risk_checklist_note",
-    "scoreboard_rows", "scoreboard_note",   # 攻守记分板本体（7/22 原版九行）
-    "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note",
-    "cross_check", "regime_triggers", "breadth_table", "breadth_table_note",
-    "atr_extension_table", "atr_extension_note",
-    "other_assets_table", "joint_signal_lines", "macro_radar_table", "macro_radar_detail",
-    "unilateral_scan_table", "unilateral_scan_note",
-    "ml_leaders", "ml_leaders_note", "leader_vs_defensive_note",
-    "adanos_scan_table", "adanos_scan_note",
-    "x_sentiment_macro", "x_sentiment_macro_summary", "x_sentiment_stocks", "x_sentiment_note",
-    "x_watch_table", "x_watch_note",
-    "thirteen_dg_rows", "thirteen_dg_note", "squeeze_candidates", "squeeze_note",
-    "news_today", "news_week", "week_calendar", "industry_radar_table",
-    "etf_table", "etf_table_note", "sector_rs_tables", "sector_rs_note",
-    "defensive_basket", "premarket_movers", "premarket_movers_note",
-    "positions_moomoo_table", "positions_moomoo_note", "positions_longbridge_table",
-    "position_governance_table", "position_governance_note",
-    "stop_proximity_table", "stop_proximity_note",
-    "strong_sector_setups_table", "strong_sector_setups_permission",
-    "watchlist_abc", "setup_conclusion",
-    "playbook_scenarios", "key_takeaways", "today_position", "recon_ledger",
-    "ftd", "ftd_table", "dispersion", "dispersion_note",
-    # —— 2026-08-08~10 显式登记的新增 ——
-    "recon_prob_note",              # 08-08 对账事前概率的口径说明
-    "event_gap_candidates", "event_gap_note",   # 08-09 Vic 8/6 批的事件缺口延续品类
-    "bam", "bam_table", "bam_note",             # 08-10 Deemer Breakaway Momentum
-    "special_readthrough_table", "special_readthrough_note",   # 08-10 专题报告 read-through
+def _template_fields():
+    """从 scripts/assemble_template.py 直接解析盘前字段名——**模板是唯一真源**。
+
+    🔴 2026-08-10 Vic：「把模板修成最新的，然后以后每次用模板，格式不要再漂移了」。
+    此前 PREMARKET_FIELDS 是我手抄的一份清单，模板停更在 7/31 也没人知道——
+    「模板残缺 → 用它反而丢字段 → 更不用 → 更过期」这个循环就是靠这里斩断的：
+    **字段清单直接从模板长出来，模板一旦漏字段，下面那条检查立刻红。**
+    """
+    import re
+    txt = (ROOT / "scripts" / "assemble_template.py").read_text(encoding="utf-8")
+    # 只取顶层字段（缩进 1~4 空格 + "key":），排除表格内部的结构键
+    # {3,} 而不是 {4,}：ftd 只有三个字符，8/10 第一版就把它漏掉了
+    keys = set(re.findall(r'^\s{1,4}"([a-z_0-9]{3,})":', txt, re.M))
+    return (keys - TABLE_INNER_KEYS) - RETIRED_FIELDS
+
+
+# 已退役的字段：模板里保留空壳作历史记录，但既不要求出现、出现也不算自造。
+# futures_table/_note —— 2026-07-11 主动删除（模板里写着「已删除，留空壳」），
+# 不是 7/27 那次漂移的牺牲品。**退役必须在模板里留痕，不能直接删掉字段**，
+# 否则以后没人分得清「主动退役」和「漂移丢失」。
+RETIRED_FIELDS = {"futures_table", "futures_note"}
+
+
+# 表格/条目内部的结构键，不是报告顶层字段
+TABLE_INNER_KEYS = {
+    "headers", "rows", "num_cols", "row_highlights", "ma_cols", "raw_cols", "center_cols",
+    "table_class", "col_widths", "badge_cols", "ticker", "price", "role", "label", "level",
+    "items", "rule", "upgrade", "downgrade", "bias", "bond", "breadth", "discipline",
+    "primary", "watch", "avoid", "invalidate", "condition", "type", "threshold", "current",
+    "dxy", "vol",   # signal_light 的内部键
+    "status", "distance_pct", "handle", "time", "summary", "note", "aligned", "grade",
+    "sector", "source", "setup", "entry", "invalid", "prob", "detail", "target", "action",
+    "desc", "cells",   # "title" 不能列进来——它同时是报告顶层字段
 }
 
-
-@check("盘前字段集固定：不许少也不许自己造（2026-08-10 Vic：「我都不认识了！还会乱编」）")
+@check("盘前字段集 == 模板字段集（2026-08-10 Vic：「以后每次用模板，格式不要再漂移了」）")
 def _premarket_field_set(html, data):
     if data is None or data.get("report_type") != "premarket":
         return
+    tpl = _template_fields()
     have = {k for k in data if not k.startswith("_")}
-    unknown = sorted(have - PREMARKET_FIELDS)
+    unknown = sorted(have - tpl)
     # 段1 草稿本来就还没有段2 字段，只查「多出来的」；段2 定稿两头都查
     is_final = data.get("_phase") == 2 or "watchlist_abc" in data
-    missing = sorted(PREMARKET_FIELDS - have) if is_final else []
+    missing = sorted(tpl - have) if is_final else []
     msg = []
     if unknown:
-        msg.append("🔴**自造字段** %s——新增字段必须先登记进 qa_report.PREMARKET_FIELDS" % unknown)
+        msg.append("🔴**自造字段** %s——新字段必须先加进 scripts/assemble_template.py（模板是唯一真源）" % unknown)
     if missing:
         msg.append("缺 %d 个字段：%s" % (len(missing), missing))
     if msg:

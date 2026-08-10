@@ -100,6 +100,9 @@ def pmp(tk, default="无盘前quote"):
 # ---------- RS三组（ticker列表沿用上一份报告，机械填充+判断列手写） ----------
 # 2026-07-15 Vic改版列：T-1% / 5日% / 1月% / 盘前 / 驱动 / RS(1周)——表头固定在这里，不再继承旧报告
 # （当天先试了RS(1日/5日)双值格式，Vic当天纠正"只看一周的，说过了"——全报告RS统一单值1周）
+# 🔴 RS = 对 QQQ 的 1 周(5日)超额收益，单位是**百分点，不带 %**（Vic 2026-08-10：
+#    「rs应该没有%的吧」）。H.rs_num() 输出 "+2.1" / "-1.6" 这种形式，不要自己加 %。
+#    第 6 列「驱动/原因」**留空当天手写**，整列空着会被 QA 打红。
 RS_HEADERS = ["TICKER", "T-1%", "5日%", "1月%", "盘前", "驱动/原因", "RS(1周)"]
 prev = sorted((ROOT / "data/daily").glob("*-premarket.json"))[-1]
 prev_json = json.load(open(prev, encoding="utf-8"))
@@ -202,7 +205,10 @@ out = {
    # 15项硬性checklist：①-⑥来自Vic Sheet「Maket breath」，⑦-⑮来自Stockbee表
  ], "num_cols": []},
  "other_assets_table": {"headers": ["资产", "现值", "日变动", "信号"], "rows": [
-   # 顺序：10Y / MOVE / VIX(信号列折VIX1D Contango判断) / DXY / F&G / 黄金 / 铜 / WTI / BTC / KOSPI / 日经 / 恒指 / 上证
+   # 顺序：10Y / VIX / DXY / 黄金 / 白银 / WTI / BTC
+   # 🔴 **VIX1D 不单列一行**（Vic 2026-08-10 再次确认「vix1d说过去掉了」）——
+   #    折进 VIX 那一行的「信号」列判断 Contango：VIX1D < VIX = 短端不紧张。
+   # 🔴 MOVE 2026-07-21 起整行删除。
  ], "num_cols": [2]},
  "joint_signal_lines": [],  ### 手写：联合信号+覆盖指令检查 ###
  "macro_radar_table": {"headers": ["事件", "日期(ET)", "预期/前值", "结果/现状", "市场解读"], "rows": []},
@@ -217,10 +223,10 @@ out = {
  "etf_table": {"headers": ["ETF", "收盘价", "T-1%（盘前%）", "进攻线(+1ATR)", "谨慎线(20MA)", "降级线(-1ATR)", "50MA", "距50MA", "判断"],
                 "rows": etf_rows, "num_cols": [1, 2]},
  "etf_table_note": "",  ### 四件套 ###
- "positions_moomoo_table": {"headers": ["TICKER", "现价", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
+ "positions_moomoo_table": {"headers": ["TICKER", "现价", "盘前", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
                              "rows": mm_rows, "num_cols": [], "row_highlights": mm_hl},
  "positions_moomoo_note": "",
- "positions_longbridge_table": {"headers": ["TICKER", "现价", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
+ "positions_longbridge_table": {"headers": ["TICKER", "现价", "盘前", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
                                   "rows": lb_rows, "num_cols": [], "row_highlights": lb_hl},
  "news_today": [],   ### Trump/战争第一优先级；重大消息必须WebSearch交叉核实 ###
  "news_week": [],

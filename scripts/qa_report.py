@@ -681,6 +681,43 @@ def _risk_labels_fixed(html, data):
         return "；".join(msg) + "——口径见 2026-07-22 那份"
 
 
+def _template_headers():
+    """从模板里解析每张表声明的 headers —— 表头也归模板管（2026-08-10）。"""
+    import re, json as _j
+    txt = (ROOT / "scripts" / "assemble_template.py").read_text(encoding="utf-8")
+    out = {}
+    for m in re.finditer(r'"([a-z_0-9]+)":\s*\{"headers":\s*(\[[^\]]*\])', txt):
+        try:
+            out[m.group(1)] = _j.loads(m.group(2).replace("'", '"'))
+        except Exception:
+            pass
+    m = re.search(r'RS_HEADERS\s*=\s*(\[[^\]]*\])', txt)
+    if m:
+        out["sector_rs_tables"] = _j.loads(m.group(1).replace("'", '"'))
+    return out
+
+
+@check("表头必须等于模板声明（2026-08-10 Vic：「直接改模板吧」——10 张表头曾各写各的）")
+def _headers_match_template(html, data):
+    """8/10 逐张比对发现 10 张表的表头跟模板不一致，其中单边榜整列 RS(1周) 被我换成了 RSI，
+    Vic 一眼看出「rs应该没有%的吧」。表头也是口径，一样归模板管。
+    模板过期的情况（例：持仓表的「盘前」列是 Vic 8/6 要求加的）**改模板不改报告**。"""
+    if data is None or data.get("report_type") != "premarket":
+        return
+    bad = []
+    for k, want in _template_headers().items():
+        if k in RETIRED_FIELDS:
+            continue
+        v = data.get(k)
+        got = (v[0].get("headers") if isinstance(v, list) and v and isinstance(v[0], dict)
+               else (v.get("headers") if isinstance(v, dict) else None))
+        if got is not None and got != want:
+            bad.append("%s\n       模板 %s\n       实际 %s" % (k, want, got))
+    if bad:
+        return (("这些表的表头跟模板不一致（%d 张）：\n     " % len(bad))
+                + "\n     ".join(bad[:4]))
+
+
 @check("板块表必须是模板的七列（2026-08-10 Vic：「今天板块 判断故意都是空的吗」）")
 def _sector_rs_headers(html, data):
     """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / 盘前 / **驱动·原因** / RS(1周)，

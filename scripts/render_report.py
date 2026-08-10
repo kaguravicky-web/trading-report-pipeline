@@ -1505,9 +1505,13 @@ def render_premarket(data: dict) -> str:
     # 分类器拦"的旧结论对现在的取数路径不适用**。空表只可能是 assemble 没去读 cache。
     if adanos.get("rows"):
         setup_parts.append(build_table(adanos))
-        if data.get("adanos_scan_note"):
-            setup_parts.append(build_split_callout(data["adanos_scan_note"]))
-    else:
+    if data.get("adanos_scan_note"):
+        # 2026-08-10：note 原来只挂在「表有行」的分支上，表空时连「今天为什么取不到、
+        # 依据哪一天」一起丢——而那正是空表时唯一有价值的信息（同 breadth_table/stop_proximity）。
+        setup_parts.append(build_split_callout(data["adanos_scan_note"]))
+    if not adanos.get("rows") and not data.get("adanos_scan_note"):
+        # 有 adanos_scan_note 时不再叠这段兜底文案——兜底里没有日期出处，
+        # 会被「陈旧结论必须带日期」那条 QA 打红（2026-08-10）。
         setup_parts.append(empty_body(
             "nodata", "cache['adanos_movers'] 为空——**先查 fetch_market_data 是否跑成功，"
                       "不要默认是接口被拦**（它走 urllib 不走 curl）。"))

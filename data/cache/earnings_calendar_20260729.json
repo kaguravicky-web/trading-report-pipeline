@@ -1,0 +1,313 @@
+{
+ "universe_size": 881,
+ "calendar": {
+  "2026-07-28": [
+   {
+    "symbol": "V",
+    "name": "Visa Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$3.23"
+   },
+   {
+    "symbol": "KO",
+    "name": "Coca-Cola Company (The)",
+    "time": "pre-market",
+    "eps_forecast": "$0.92"
+   },
+   {
+    "symbol": "KLAC",
+    "name": "KLA Corporation ",
+    "time": "after-hours",
+    "eps_forecast": "$1"
+   },
+   {
+    "symbol": "STX",
+    "name": "Seagate Technology Holdings PLC",
+    "time": "after-hours",
+    "eps_forecast": "$4.89"
+   },
+   {
+    "symbol": "BA",
+    "name": "Boeing Company (The)",
+    "time": "pre-market",
+    "eps_forecast": "($0.34)"
+   },
+   {
+    "symbol": "SPGI",
+    "name": "S&P Global Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$4.49"
+   },
+   {
+    "symbol": "GLW",
+    "name": "Corning Incorporated",
+    "time": "pre-market",
+    "eps_forecast": "$0.76"
+   },
+   {
+    "symbol": "UPS",
+    "name": "United Parcel Service, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.65"
+   },
+   {
+    "symbol": "WM",
+    "name": "Waste Management, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.99"
+   },
+   {
+    "symbol": "ITW",
+    "name": "Illinois Tool Works Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.80"
+   },
+   {
+    "symbol": "RCL",
+    "name": "Royal Caribbean Cruises Ltd.",
+    "time": "pre-market",
+    "eps_forecast": "$3.97"
+   },
+   {
+    "symbol": "SHW",
+    "name": "Sherwin-Williams Company (The)",
+    "time": "pre-market",
+    "eps_forecast": "$3.56"
+   },
+   {
+    "symbol": "MDLZ",
+    "name": "Mondelez International, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.67"
+   },
+   {
+    "symbol": "AMT",
+    "name": "American Tower Corporation (REIT)",
+    "time": "pre-market",
+    "eps_forecast": "$2.65"
+   },
+   {
+    "symbol": "ECL",
+    "name": "Ecolab Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.08"
+   },
+   {
+    "symbol": "HLT",
+    "name": "Hilton Worldwide Holdings Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.29"
+   },
+   {
+    "symbol": "PCAR",
+    "name": "PACCAR Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.33"
+   },
+   {
+    "symbol": "NXPI",
+    "name": "NXP Semiconductors N.V.",
+    "time": "after-hours",
+    "eps_forecast": "$3.20"
+   },
+   {
+    "symbol": "F",
+    "name": "Ford Motor Company",
+    "time": "after-hours",
+    "eps_forecast": "$0.33"
+   },
+   {
+    "symbol": "CARR",
+    "name": "Carrier Global Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.83"
+   },
+   {
+    "symbol": "BE",
+    "name": "Bloom Energy Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$0.23"
+   },
+   {
+    "symbol": "TER",
+    "name": "Teradyne, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.04"
+   },
+   {
+    "symbol": "PYPL",
+    "name": "PayPal Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.28"
+   },
+   {
+    "symbol": "ACGL",
+    "name": "Arch Capital Group Ltd.",
+    "time": "after-hours",
+    "eps_forecast": "$2.49"
+   },
+   {
+    "symbol": "IQV",
+    "name": "IQVIA Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.72"
+   },
+   {
+    "symbol": "CNC",
+    "name": "Centene Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.89"
+   },
+   {
+    "symbol": "EXR",
+    "name": "Extra Space Storage Inc",
+    "time": "after-hours",
+    "eps_forecast": "$2.06"
+   },
+   {
+    "symbol": "DTE",
+    "name": "DTE Energy Company",
+    "time": "pre-market",
+    "eps_forecast": "$1.13"
+   },
+   {
+    "symbol": "CNP",
+    "name": "CenterPoint Energy, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.37"
+   },
+   {
+    "symbol": "XYL",
+    "name": "Xylem Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.34"
+   },
+   {
+    "symbol": "FE",
+    "name": "FirstEnergy Corp.",
+    "time": "after-hours",
+    "eps_forecast": "$0.49"
+   },
+   {
+    "symbol": "PPG",
+    "name": "PPG Industries, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.26"
+   },
+   {
+    "symbol": "HUBB",
+    "name": "Hubbell Inc",
+    "time": "pre-market",
+    "eps_forecast": "$5.31"
+   },
+   {
+    "symbol": "INCY",
+    "name": "Incyte Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.76"
+   },
+   {
+    "symbol": "OMC",
+    "name": "Omnicom Group Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.64"
+   },
+   {
+    "symbol": "VLTO",
+    "name": "Veralto Corp.",
+    "time": "after-hours",
+    "eps_forecast": "$1"
+   },
+   {
+    "symbol": "CMS",
+    "name": "CMS Energy Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.37"
+   },
+   {
+    "symbol": "EXE",
+    "name": "Expand Energy Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$1.16"
+   },
+   {
+    "symbol": "TXT",
+    "name": "Textron Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.52"
+   },
+   {
+    "symbol": "DINO",
+    "name": "HF Sinclair Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$4.39"
+   },
+   {
+    "symbol": "IVZ",
+    "name": "Invesco Plc",
+    "time": "pre-market",
+    "eps_forecast": "$0.67"
+   },
+   {
+    "symbol": "CSGP",
+    "name": "CoStar Group, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.21"
+   },
+   {
+    "symbol": "BXP",
+    "name": "BXP, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.71"
+   },
+   {
+    "symbol": "UMBF",
+    "name": "UMB Financial Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$3.08"
+   },
+   {
+    "symbol": "PNR",
+    "name": "Pentair plc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.12"
+   },
+   {
+    "symbol": "SWKS",
+    "name": "Skyworks Solutions, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.65"
+   },
+   {
+    "symbol": "ALKS",
+    "name": "Alkermes plc",
+    "time": "pre-market",
+    "eps_forecast": "($0.04)"
+   },
+   {
+    "symbol": "CVLT",
+    "name": "Commvault Systems, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.61"
+   },
+   {
+    "symbol": "VRNS",
+    "name": "Varonis Systems, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.27)"
+   },
+   {
+    "symbol": "ABG",
+    "name": "Asbury Automotive Group Inc",
+    "time": "pre-market",
+    "eps_forecast": "$6.30"
+   },
+   {
+    "symbol": "JBLU",
+    "name": "JetBlue Airways Corporation",
+    "time": "pre-market",
+    "eps_forecast": "($0.70)"
+   }
+  ]
+ }
+}

@@ -2,15 +2,115 @@
   "_说明": "本地TradeBook数据（2026-07-08建，替代Google做的难用app）。trades[]每笔交易一条：legs[]记录多次buy/sell（peel and exit / 加仓都是往legs里加一条），stop_initial/target用于算R:R，execution_grade/execution_notes是Vic的执行评分（Vic在对话里说，Claude代录）。daily_summaries的每日总结由build_tradebook.py自动从data/daily/*-postmarket.json的tradebook_block导入，Vic的评分字段(vic_grade等)由Claude按Vic口述补录。金额字段全是每股价格；数量为股数。",
   "trades": [
     {
-      "id": "NEW-6200877742195-GLW",
-      "ticker": "GLW",
+      "id": "NEW-17865987564571-W",
+      "ticker": "W",
       "account": "longbridge",
       "status": "open",
-      "entry_date": "2026-08-07",
+      "entry_date": "2026-08-12",
       "exit_date": null,
       "setup_type": null,
       "planned": null,
       "day_trade": false,
+      "mentor": true,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 101,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 60,
+          "price": 104.6177,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865987564572-NET",
+      "ticker": "NET",
+      "account": "longbridge",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "应该是市场主线",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 295,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 7,
+          "price": 310.48,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998141-HD",
+      "ticker": "HD",
+      "account": "moomoo",
+      "status": "closed",
+      "entry_date": "2026-08-12",
+      "exit_date": "2026-08-12",
+      "setup_type": null,
+      "planned": null,
+      "day_trade": true,
       "mentor": false,
       "stop_initial": null,
       "target": null,
@@ -18,6 +118,950 @@
       "entry_logic": "",
       "exit_logic": "",
       "stop_history": [],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 10,
+          "price": 353.89,
+          "decision_score": null,
+          "note": "cpi后反应不好"
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 10,
+          "price": 351.78,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "clean",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998142-NWL",
+      "ticker": "NWL",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 5.78,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 5.78,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 650,
+          "price": 6.11,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998143-AMBP",
+      "ticker": "AMBP",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": "Base Breakout",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 4.7,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 4.7,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 500,
+          "price": 5.07,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998144-CRCL",
+      "ticker": "CRCL",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": "Base Breakout",
+      "planned": true,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 64.4,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "圆弧底，站稳ema20，朋友喊单",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 64.4,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 40,
+          "price": 69.6,
+          "decision_score": null,
+          "note": "回踩买入"
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "clean",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998145-FORM",
+      "ticker": "FORM",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": "Base Breakout",
+      "planned": null,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 114.67,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "买入时追高，因为同业封测都很强劲，有新叙事",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 114.67,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 20,
+          "price": 127.94,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "flawed",
+      "execution_flags": [
+        "追高进场"
+      ],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998146-BSY",
+      "ticker": "BSY",
+      "account": "longbridge",
+      "status": "open",
+      "entry_date": "2026-08-12",
+      "exit_date": null,
+      "setup_type": null,
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 34,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 140,
+          "price": 35.84,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865970998147-SOFI",
+      "ticker": "SOFI",
+      "account": "longbridge",
+      "status": "closed",
+      "entry_date": "2026-08-12",
+      "exit_date": "2026-08-12",
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-12",
+          "stop": 17.3,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 350,
+          "price": 17.84,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 350,
+          "price": 17.7313,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865037404671-TBBK",
+      "ticker": "TBBK",
+      "account": "moomoo",
+      "status": "closed",
+      "entry_date": "2026-08-11",
+      "exit_date": "2026-08-12",
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 64.9,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-11",
+          "stop": 64.9,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 65,
+          "price": 69.42,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 65,
+          "price": 69.3,
+          "decision_score": null,
+          "note": "老师说换仓到sofi"
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865037404672-OUST",
+      "ticker": "OUST",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-11",
+      "exit_date": null,
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 42,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-11",
+          "stop": 42,
+          "note": "初始止损"
+        },
+        {
+          "date": "2026-08-12",
+          "stop": 41.8,
+          "note": "加仓后止损微调（原42.00）"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 50,
+          "price": 45.61,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 50,
+          "price": 45.1794,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865037404673-LULU",
+      "ticker": "LULU",
+      "account": "moomoo",
+      "status": "closed",
+      "entry_date": "2026-08-11",
+      "exit_date": "2026-08-12",
+      "setup_type": "Pullback",
+      "planned": true,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 123.6,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "ema10均线支撑",
+      "exit_logic": "支撑破了",
+      "stop_history": [
+        {
+          "date": "2026-08-11",
+          "stop": 123.6,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 30,
+          "price": 125.27,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 30,
+          "price": 123.5973,
+          "decision_score": null,
+          "note": "止损单触发（8/11挂123.60，8/12开盘后成交）"
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "clean",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17865037404674-TER",
+      "ticker": "TER",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-11",
+      "exit_date": null,
+      "setup_type": null,
+      "planned": null,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 362,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-11",
+          "stop": 362,
+          "note": "初始止损"
+        },
+        {
+          "date": "2026-08-12",
+          "stop": 383,
+          "note": "止损上移（原362.00，已过成本382.65，接近保本）"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 11,
+          "price": 382.6456,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 3,
+          "price": 398.8,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268341-TER",
+      "ticker": "TER",
+      "account": "moomoo",
+      "status": "closed",
+      "entry_date": "2026-08-10",
+      "exit_date": "2026-08-10",
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 362,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 362,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 20,
+          "price": 375.17,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 20,
+          "price": 369.48,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "chaotic",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268342-ANET",
+      "ticker": "ANET",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-10",
+      "exit_date": null,
+      "setup_type": "Pullback",
+      "planned": true,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 187.5,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "主线；10ema回踩支撑",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 187.5,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 25,
+          "price": 195.33,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 5,
+          "price": 197.67,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "flawed",
+      "execution_flags": [
+        "追高进场"
+      ],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268343-LMT",
+      "ticker": "LMT",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-10",
+      "exit_date": null,
+      "setup_type": "Base Breakout",
+      "planned": true,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": 577,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "setup A",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 577,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 7,
+          "price": 601.68,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "clean",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268354-IOT",
+      "ticker": "IOT",
+      "account": "moomoo",
+      "status": "open",
+      "entry_date": "2026-08-10",
+      "exit_date": null,
+      "setup_type": "Base Breakout",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": 37,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 37,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 110,
+          "price": 39.3776,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "buy",
+          "qty": 10,
+          "price": 40.55,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268355-LITE",
+      "ticker": "LITE",
+      "account": "moomoo",
+      "status": "closed",
+      "entry_date": "2026-08-10",
+      "exit_date": "2026-08-11",
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": false,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "赌财报",
+      "exit_logic": "财报后没什么反应",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 787,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 1,
+          "price": 842.1,
+          "decision_score": null,
+          "note": "财报前大跌"
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 1,
+          "price": 833,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": true,
+        "undercut": false,
+        "chase_reentry": null,
+        "breakdown_sell": false,
+        "note": "财报后涨了13.63%",
+        "window": "3d"
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": "clean",
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-17864199268356-EME",
+      "ticker": "EME",
+      "account": "longbridge",
+      "status": "open",
+      "entry_date": "2026-08-10",
+      "exit_date": null,
+      "setup_type": "Pullback",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-10",
+          "stop": 790,
+          "note": "初始止损"
+        }
+      ],
+      "legs": [
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 7,
+          "price": 825.6,
+          "decision_score": null,
+          "note": ""
+        }
+      ],
+      "review": {
+        "sell_fly": null,
+        "undercut": null,
+        "chase_reentry": null,
+        "breakdown_sell": null,
+        "note": "",
+        "window": null
+      },
+      "execution_grade": null,
+      "execution_score": null,
+      "execution_quality": null,
+      "execution_flags": [],
+      "no_setup": false,
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
+    },
+    {
+      "id": "NEW-6200877742195-GLW",
+      "ticker": "GLW",
+      "account": "longbridge",
+      "status": "closed",
+      "entry_date": "2026-08-07",
+      "exit_date": "2026-08-11",
+      "setup_type": "Base Breakout",
+      "planned": null,
+      "day_trade": false,
+      "mentor": true,
+      "stop_initial": null,
+      "target": null,
+      "thesis": "",
+      "entry_logic": "",
+      "exit_logic": "",
+      "stop_history": [
+        {
+          "date": "2026-08-07",
+          "stop": 149.8,
+          "note": "初始止损"
+        }
+      ],
       "legs": [
         {
           "date": "2026-08-07",
@@ -42,44 +1086,67 @@
           "price": 165.08,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 5,
+          "price": 163.72,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 40,
+          "price": 158.5,
+          "decision_score": null,
+          "note": "ai叫我卖，老师也平仓"
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742250-AAOI",
       "ticker": "AAOI",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-07",
-      "exit_date": null,
-      "setup_type": null,
-      "planned": null,
+      "exit_date": "2026-08-11",
+      "setup_type": "No Setup",
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": 129.1,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
-      "exit_logic": "",
+      "entry_logic": "本来想做日内，但是没有及时卖出",
+      "exit_logic": "老师平了glw和mrvl",
       "stop_history": [
         {
           "date": "2026-08-07",
           "stop": 129.1,
           "note": "当天多次进出用了不同止损，这里记最后挂着的那个（保护剩余20股）"
+        },
+        {
+          "date": "2026-08-10",
+          "stop": 123,
+          "note": "⚠止损从129.10下调到123.00（放宽了，跟平时纪律相反，需你确认）"
         }
       ],
       "legs": [
@@ -130,6 +1197,38 @@
           "price": 137.98,
           "decision_score": null,
           "note": "止损单触发"
+        },
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 10,
+          "price": 132.67,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 10,
+          "price": 133.04,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 10,
+          "price": 134.01,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 10,
+          "price": 127.97,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -142,10 +1241,14 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "chaotic",
+      "execution_flags": [
+        "计划外交易"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742266-WOLF",
@@ -317,19 +1420,21 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6200877742278-CIEN",
       "ticker": "CIEN",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-07",
-      "exit_date": null,
-      "setup_type": null,
+      "exit_date": "2026-08-10",
+      "setup_type": "Pullback",
       "planned": null,
       "day_trade": false,
-      "mentor": false,
+      "mentor": true,
       "stop_initial": 389,
       "target": null,
       "thesis": "",
@@ -350,22 +1455,32 @@
           "price": 411.08,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 18,
+          "price": 398.41,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407141-HPE",
@@ -439,7 +1554,9 @@
         "提前恐慌砍"
       ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407145-PWR",
@@ -503,15 +1620,17 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407149-LRCX",
       "ticker": "LRCX",
       "account": "longbridge",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-06",
-      "exit_date": null,
+      "exit_date": "2026-08-10",
       "setup_type": "No Setup",
       "planned": null,
       "day_trade": false,
@@ -544,6 +1663,14 @@
           "price": 312.9067,
           "decision_score": null,
           "note": "R增加为1%"
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 22,
+          "price": 309.28,
+          "decision_score": null,
+          "note": "市价单"
         }
       ],
       "review": {
@@ -559,7 +1686,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407152-NBIS",
@@ -617,15 +1746,17 @@
         "破位不砍"
       ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407155-INTC",
       "ticker": "INTC",
       "account": "longbridge",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-06",
-      "exit_date": null,
+      "exit_date": "2026-08-11",
       "setup_type": "Pullback",
       "planned": true,
       "day_trade": false,
@@ -650,6 +1781,14 @@
           "price": 101.46,
           "decision_score": null,
           "note": "arm强势，跟随买入"
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 52,
+          "price": 96.36,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -662,10 +1801,12 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6077805407158-MSTR",
@@ -722,7 +1863,8 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "横盘整理应该小仓，或者等突破再入"
+      "execution_note": "横盘整理应该小仓，或者等突破再入",
+      "execution_states": []
     },
     {
       "id": "NEW-6031213619619-SPCX",
@@ -778,15 +1920,17 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619704-BE",
       "ticker": "BE",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-06",
-      "exit_date": null,
+      "exit_date": "2026-08-10",
       "setup_type": "Base Breakout",
       "planned": true,
       "day_trade": false,
@@ -795,7 +1939,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "站上20ma；日内突破",
-      "exit_logic": "",
+      "exit_logic": "向下突破",
       "stop_history": [
         {
           "date": "2026-08-06",
@@ -835,30 +1979,40 @@
           "price": 217.27,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 6,
+          "price": 213.3911,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619716-TSM",
       "ticker": "TSM",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-06",
-      "exit_date": null,
+      "exit_date": "2026-08-10",
       "setup_type": "No Setup",
       "planned": null,
       "day_trade": false,
@@ -891,6 +2045,14 @@
           "price": 422.53,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 19,
+          "price": 416.95,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -906,15 +2068,17 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619733-AAPL",
       "ticker": "AAPL",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-06",
-      "exit_date": null,
+      "exit_date": "2026-08-10",
       "setup_type": "Base Breakout",
       "planned": null,
       "day_trade": false,
@@ -955,6 +2119,14 @@
           "price": 312.145,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 30,
+          "price": 306.84,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -970,7 +2142,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-6031213619742-WOLF",
@@ -1027,7 +2201,8 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": ""
+      "execution_note": "",
+      "execution_states": []
     },
     {
       "id": "NEW-5985964687659-TMO",
@@ -1091,7 +2266,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985964687676-PURR",
@@ -1135,12 +2312,12 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 2,
@@ -1193,6 +2370,14 @@
           "price": 258.9,
           "decision_score": null,
           "note": "逆势上涨，盘中pullback买入"
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 5,
+          "price": 277.03,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -1208,7 +2393,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995375-GOOG",
@@ -1346,24 +2533,26 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995407-CSCO",
       "ticker": "CSCO",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-05",
-      "exit_date": null,
-      "setup_type": null,
-      "planned": null,
+      "exit_date": "2026-08-10",
+      "setup_type": "Base Breakout",
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": 118.6,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
-      "exit_logic": "",
+      "entry_logic": "主线",
+      "exit_logic": "近财报",
       "stop_history": [
         {
           "date": "2026-08-05",
@@ -1379,6 +2568,14 @@
           "price": 121.92,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 25,
+          "price": 123.23,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -1391,10 +2588,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995414-ANET",
@@ -1466,7 +2665,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995424-MU",
@@ -1522,7 +2723,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5985933995429-IOT",
@@ -1578,7 +2781,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903678628955-VEEV",
@@ -1634,7 +2839,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903678628973-WGMI",
@@ -1691,7 +2898,8 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "无setup，没有及时砍仓"
+      "execution_note": "无setup，没有及时砍仓",
+      "execution_states": []
     },
     {
       "id": "NEW-5903678628977-DRAM",
@@ -1750,7 +2958,8 @@
       ],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": ""
+      "execution_note": "",
+      "execution_states": []
     },
     {
       "id": "NEW-5903662297962-BE",
@@ -1808,7 +3017,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297979-LITE",
@@ -1866,7 +3077,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297988-AVPT",
@@ -1995,7 +3208,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5903662297995-PLTR",
@@ -2059,23 +3274,25 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803374923220-MRVL",
       "ticker": "MRVL",
       "account": "longbridge",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-07-31",
-      "exit_date": null,
-      "setup_type": "No Setup",
+      "exit_date": "2026-08-11",
+      "setup_type": "Base Breakout",
       "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": 162,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "赌反弹",
       "exit_logic": "",
       "stop_history": [
         {
@@ -2145,6 +3362,22 @@
           "price": 213.32,
           "decision_score": null,
           "note": "之前选出的深跌反弹候选"
+        },
+        {
+          "date": "2026-08-10",
+          "action": "buy",
+          "qty": 5,
+          "price": 216.51,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 19,
+          "price": 208.89,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -2157,20 +3390,25 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [
+        "没信心/拿不住",
+        "被别人观点影响"
+      ],
+      "execution_note": "老师卖了，我自己的也跟着卖了"
     },
     {
       "id": "NEW-5803374923241-SOXX",
       "ticker": "SOXX",
       "account": "longbridge",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-03",
-      "exit_date": null,
-      "setup_type": null,
-      "planned": null,
+      "exit_date": "2026-08-11",
+      "setup_type": "No Setup",
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": null,
@@ -2230,6 +3468,22 @@
           "price": 535.58,
           "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-08-07",
+          "action": "buy",
+          "qty": 1,
+          "price": 539.46,
+          "decision_score": null,
+          "note": "补录：券商成交记录里有、但订单导出漏掉的一笔"
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 18,
+          "price": 531.98,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -2242,10 +3496,14 @@
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [
+        "被别人观点影响"
+      ],
+      "execution_note": "老师平仓半导体，我也平了"
     },
     {
       "id": "NEW-5803374923246-PANW",
@@ -2303,10 +3561,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279837-MU",
@@ -2386,7 +3646,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279853-NOW",
@@ -2450,15 +3712,17 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279858-IBM",
       "ticker": "IBM",
       "account": "moomoo",
-      "status": "open",
+      "status": "closed",
       "entry_date": "2026-08-03",
-      "exit_date": null,
+      "exit_date": "2026-08-12",
       "setup_type": "Base Breakout",
       "planned": null,
       "day_trade": false,
@@ -2473,6 +3737,11 @@
           "date": "2026-08-03",
           "stop": 213,
           "note": "初始止损"
+        },
+        {
+          "date": "2026-08-10",
+          "stop": 227.1,
+          "note": "止损上移（原213.00，卖出7股后剩13股）"
         }
       ],
       "legs": [
@@ -2481,6 +3750,22 @@
           "action": "buy",
           "qty": 20,
           "price": 227.03,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 7,
+          "price": 240.485,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "sell",
+          "qty": 13,
+          "price": 233.33,
           "decision_score": null,
           "note": ""
         }
@@ -2498,7 +3783,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5803355279863-META",
@@ -2519,7 +3806,7 @@
       "stop_history": [
         {
           "date": "2026-08-03",
-          "stop": 0,
+          "stop": 524.49,
           "note": "初始止损"
         }
       ],
@@ -2558,27 +3845,29 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "META买入时对财报有异常price action，老师大仓位买入，我没有买大仓位，当时没理解为什么要买，时候看很对",
-        "window": null
+        "window": "1w"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785563859720",
       "ticker": "MRVL",
       "account": "moomoo",
-      "status": "open",
-      "entry_date": "2026-07-31",
-      "exit_date": null,
+      "status": "closed",
+      "entry_date": "2026-08-06",
+      "exit_date": "2026-08-11",
       "setup_type": "No Setup",
       "planned": null,
       "day_trade": false,
@@ -2590,18 +3879,34 @@
       "exit_logic": "",
       "stop_history": [
         {
-          "date": "2026-07-31",
-          "stop": 162,
-          "note": "初始止损"
+          "date": "2026-08-06",
+          "stop": 199.8,
+          "note": "初始止损（订正：原误录为162，那是LongBridge那笔的止损）"
         }
       ],
       "legs": [
         {
-          "date": "2026-07-31",
+          "date": "2026-08-06",
           "action": "buy",
-          "qty": 24,
-          "price": 193.297,
-          "decision_score": 3,
+          "qty": 25,
+          "price": 212.93,
+          "decision_score": null,
+          "note": "按券商记录订正：原误录为24股@193.297（那是LongBridge仓位的数字）"
+        },
+        {
+          "date": "2026-08-10",
+          "action": "sell",
+          "qty": 12,
+          "price": 214.27,
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-08-11",
+          "action": "sell",
+          "qty": 13,
+          "price": 208.8,
+          "decision_score": null,
           "note": ""
         }
       ],
@@ -2618,7 +3923,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562922225452-SNDK",
@@ -2691,19 +3998,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 3,
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682739-MU",
@@ -2711,10 +4020,10 @@
       "account": "moomoo",
       "status": "closed",
       "entry_date": "2026-07-31",
-      "exit_date": "2026-08-03",
+      "exit_date": "2026-07-31",
       "setup_type": null,
       "planned": null,
-      "day_trade": false,
+      "day_trade": true,
       "mentor": false,
       "stop_initial": 787,
       "target": null,
@@ -2746,7 +4055,7 @@
           "note": ""
         },
         {
-          "date": "2026-08-03",
+          "date": "2026-07-31",
           "action": "sell",
           "qty": 3,
           "price": 787,
@@ -2764,10 +4073,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682758-MRVL",
@@ -2820,10 +4131,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682764-KOD",
@@ -2879,7 +4192,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682767-S",
@@ -2940,7 +4255,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682773-SOXL",
@@ -3017,10 +4334,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682777-AXTI",
@@ -3073,10 +4392,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5562901682779-META",
@@ -3144,19 +4465,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335951-SKHY",
@@ -3245,19 +4568,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 3,
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335975-LITE",
@@ -3342,7 +4667,9 @@
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5471361335980-XBI",
@@ -3352,14 +4679,14 @@
       "entry_date": "2026-07-30",
       "exit_date": "2026-07-31",
       "setup_type": "No Setup",
-      "planned": null,
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": null,
       "target": null,
       "thesis": "",
-      "entry_logic": "等底部follow through",
-      "exit_logic": "",
+      "entry_logic": "等底部follow through；tight盘整",
+      "exit_logic": "破底",
       "stop_history": [
         {
           "date": "2026-07-30",
@@ -3374,7 +4701,7 @@
           "qty": 27,
           "price": 149.35,
           "decision_score": 3,
-          "note": ""
+          "note": "横盘买入"
         },
         {
           "date": "2026-07-31",
@@ -3386,19 +4713,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "没有底部的price action不要买入",
+        "window": "1w"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5470556914489-SPCX",
@@ -3655,10 +4984,12 @@
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "over trading",
+      "execution_states": []
     },
     {
       "id": "NEW-5470556914527-SNDK",
@@ -3735,10 +5066,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "第二次日内over trading",
+      "execution_states": []
     },
     {
       "id": "NEW-5465344555335-WAT",
@@ -3747,14 +5080,14 @@
       "status": "closed",
       "entry_date": "2026-07-30",
       "exit_date": "2026-07-31",
-      "setup_type": null,
-      "planned": null,
+      "setup_type": "Base Breakout",
+      "planned": true,
       "day_trade": false,
       "mentor": false,
       "stop_initial": 367,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "RS强",
       "exit_logic": "",
       "stop_history": [
         {
@@ -3782,19 +5115,23 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "财报后momentum burst",
+        "window": "1w"
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "太近财报了",
+      "execution_states": [
+        "赌财报/消息"
+      ]
     },
     {
       "id": "NEW-5465344555352-BE",
@@ -3805,12 +5142,12 @@
       "exit_date": "2026-07-30",
       "setup_type": null,
       "planned": null,
-      "day_trade": false,
+      "day_trade": true,
       "mentor": false,
       "stop_initial": 202.3,
       "target": null,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "追高",
       "exit_logic": "",
       "stop_history": [
         {
@@ -3826,7 +5163,7 @@
           "qty": 15,
           "price": 207.09,
           "decision_score": 3,
-          "note": ""
+          "note": "买入时追高了"
         },
         {
           "date": "2026-07-30",
@@ -3855,10 +5192,12 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "be这只真的很难赚到钱",
+      "execution_states": []
     },
     {
       "id": "NEW-5465344555356-TTAN",
@@ -3915,19 +5254,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-5465344555395-SMH",
@@ -3988,10 +5329,12 @@
       },
       "execution_grade": null,
       "execution_score": null,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "",
+      "execution_states": []
     },
     {
       "id": "NEW-5465344555398-WPM",
@@ -4035,19 +5378,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "财报和非农后快速拉升",
+        "window": "1w"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384814760",
@@ -4108,10 +5453,12 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384777955",
@@ -4155,19 +5502,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384682232",
@@ -4264,19 +5613,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "应该会成为领导股",
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": null,
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785384569110",
@@ -4361,7 +5712,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785383957768",
@@ -4392,7 +5745,7 @@
           "action": "buy",
           "qty": 8,
           "price": 670.61,
-          "decision_score": 3,
+          "decision_score": null,
           "note": ""
         },
         {
@@ -4400,7 +5753,7 @@
           "action": "buy",
           "qty": 4,
           "price": 674.05,
-          "decision_score": 3,
+          "decision_score": null,
           "note": ""
         },
         {
@@ -4408,15 +5761,23 @@
           "action": "sell",
           "qty": 5,
           "price": 678.14,
-          "decision_score": 3,
-          "note": "买入仓位应该很大，不应该卖出"
+          "decision_score": null,
+          "note": ""
+        },
+        {
+          "date": "2026-07-30",
+          "action": "sell",
+          "qty": 7,
+          "price": 667.5,
+          "decision_score": null,
+          "note": "补录：券商有此笔，原账面漏记"
         },
         {
           "date": "2026-07-30",
           "action": "buy",
           "qty": 5,
           "price": 678,
-          "decision_score": 4,
+          "decision_score": null,
           "note": ""
         },
         {
@@ -4424,8 +5785,24 @@
           "action": "buy",
           "qty": 2,
           "price": 681.82,
-          "decision_score": 4,
+          "decision_score": null,
           "note": ""
+        },
+        {
+          "date": "2026-07-31",
+          "action": "buy",
+          "qty": 3,
+          "price": 682.54,
+          "decision_score": null,
+          "note": "补录：原账面漏记"
+        },
+        {
+          "date": "2026-08-04",
+          "action": "sell",
+          "qty": 3,
+          "price": 718.45,
+          "decision_score": null,
+          "note": "补录：原账面漏记"
         },
         {
           "date": "2026-08-06",
@@ -4433,7 +5810,15 @@
           "qty": 4,
           "price": 718.21,
           "decision_score": null,
-          "note": "盘前暴跌拉回，市场比想的强劲"
+          "note": ""
+        },
+        {
+          "date": "2026-08-12",
+          "action": "buy",
+          "qty": 5,
+          "price": 725.03,
+          "decision_score": null,
+          "note": ""
         }
       ],
       "review": {
@@ -4449,7 +5834,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1785297366991",
@@ -4514,14 +5901,18 @@
         "chase_reentry": null,
         "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "",
+      "execution_states": [
+        "怕错过FOMO"
+      ]
     },
     {
       "id": "NEW-1785297155385",
@@ -4565,19 +5956,24 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "底部时候波动很大，等大阳线回踩",
+        "window": "2w"
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "",
+      "execution_states": [
+        "被别人观点影响",
+        "没信心/拿不住"
+      ]
     },
     {
       "id": "NEW-1785296412879",
@@ -4621,19 +6017,23 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_note": "",
+      "execution_states": [
+        "没信心/拿不住"
+      ]
     },
     {
       "id": "NEW-1785296305079",
@@ -4693,19 +6093,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "没有setup，200ma支撑破了以后止损不及时"
     },
     {
       "id": "NEW-1785214398369",
@@ -4749,19 +6151,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
+        "note": "突破失败退出",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784779159376",
@@ -4830,10 +6234,14 @@
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "chaotic",
+      "execution_flags": [
+        "追高进场"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784779055697",
@@ -4889,7 +6297,7 @@
           "qty": 7,
           "price": 225,
           "decision_score": 3,
-          "note": ""
+          "note": "均线rejection"
         }
       ],
       "review": {
@@ -4902,10 +6310,12 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778920189",
@@ -4945,7 +6355,7 @@
           "qty": 30,
           "price": 112.52,
           "decision_score": 1,
-          "note": ""
+          "note": "当日弱势"
         }
       ],
       "review": {
@@ -4958,10 +6368,12 @@
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778778426",
@@ -5030,10 +6442,12 @@
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "当日冲高回落，反复交易，一场空"
     },
     {
       "id": "NEW-1784778677307",
@@ -5042,9 +6456,9 @@
       "status": "closed",
       "entry_date": "2026-07-22",
       "exit_date": "2026-07-22",
-      "setup_type": "No Setup",
+      "setup_type": "Base Breakout",
       "planned": null,
-      "day_trade": true,
+      "day_trade": false,
       "mentor": false,
       "stop_initial": null,
       "target": null,
@@ -5077,19 +6491,25 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 1,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "chaotic",
+      "execution_flags": [
+        "追高进场"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [
+        "没信心/拿不住"
+      ],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784778562404",
@@ -5166,10 +6586,12 @@
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "胡乱交易"
     },
     {
       "id": "NEW-1784778462769",
@@ -5190,7 +6612,7 @@
       "stop_history": [
         {
           "date": "2026-07-22",
-          "stop": 0,
+          "stop": 1,
           "note": "初始止损"
         }
       ],
@@ -5213,19 +6635,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "忘记theta衰减，不应该赌财报"
     },
     {
       "id": "NEW-1784776926818",
@@ -5242,7 +6666,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "大市反弹，想长持KOID，但是接下来的走势感觉不太好，似乎是超跌反弹",
-      "exit_logic": "",
+      "exit_logic": "板块转弱",
       "stop_history": [
         {
           "date": "2026-07-22",
@@ -5269,19 +6693,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693830239",
@@ -5298,7 +6724,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "test 20ema, 小仓",
-      "exit_logic": "",
+      "exit_logic": "板块转弱",
       "stop_history": [
         {
           "date": "2026-07-22",
@@ -5325,19 +6751,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693718479",
@@ -5354,7 +6782,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "XSW本月跑赢大盘，retest 20ema",
-      "exit_logic": "",
+      "exit_logic": "大市不好",
       "stop_history": [
         {
           "date": "2026-07-22",
@@ -5381,19 +6809,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
+        "note": "软件似乎经常shakeout",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693647118",
@@ -5449,7 +6879,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693595981",
@@ -5505,7 +6937,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693500502",
@@ -5522,7 +6956,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "板块强势，加上站上20ema",
-      "exit_logic": "",
+      "exit_logic": "setup failed",
       "stop_history": [
         {
           "date": "2026-07-22",
@@ -5549,19 +6983,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693443180",
@@ -5617,7 +7053,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693393728",
@@ -5673,7 +7111,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784693301836",
@@ -5717,19 +7157,23 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "flawed",
+      "execution_flags": [
+        "计划外交易"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784358571156",
@@ -5782,10 +7226,14 @@
       },
       "execution_grade": null,
       "execution_score": 5,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "flawed",
+      "execution_flags": [
+        "追高进场"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245274376",
@@ -5829,19 +7277,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": true,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
         "window": null
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245194967",
@@ -5858,7 +7308,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "软件股强势，但分化很严重",
-      "exit_logic": "",
+      "exit_logic": "板块转弱",
       "stop_history": [
         {
           "date": "2026-07-14",
@@ -5885,19 +7335,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": null,
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784245039522",
@@ -5914,7 +7366,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "IBB强势，有很多setup，周线位置很好，前天低点止损",
-      "exit_logic": "",
+      "exit_logic": "setup failed",
       "stop_history": [
         {
           "date": "2026-07-16",
@@ -5941,19 +7393,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "breakdown_sell": false,
+        "note": "VRTX 8/10 涨 +5.61%：竞争对手临床失败",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244812160",
@@ -5970,7 +7424,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "英伟达表现大幅强于SMH，但大概率是横盘，所以小仓买入NVDY",
-      "exit_logic": "",
+      "exit_logic": "going nowhere",
       "stop_history": [
         {
           "date": "2026-07-16",
@@ -6005,19 +7459,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": null,
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244565206",
@@ -6073,7 +7529,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244494669",
@@ -6129,7 +7587,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784244386546",
@@ -6185,7 +7645,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784175369556",
@@ -6238,10 +7700,12 @@
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "这只波动太大，进场点不对"
     },
     {
       "id": "NEW-1784175248839",
@@ -6297,7 +7761,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784174863846",
@@ -6341,19 +7807,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": null,
-        "note": "",
-        "window": null
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
+        "note": "近业绩，依然横盘整理",
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173764331",
@@ -6409,7 +7877,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173583604",
@@ -6426,7 +7896,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "资金涌入大盘股几天，MAGS低位",
-      "exit_logic": "if fakeout",
+      "exit_logic": "if fakeout；大市不好",
       "stop_history": [
         {
           "date": "2026-07-15",
@@ -6453,19 +7923,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173461294",
@@ -6529,7 +8001,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784173251570",
@@ -6573,19 +8047,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784050228853",
@@ -6641,7 +8117,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042199305",
@@ -6705,7 +8183,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042122920",
@@ -6761,7 +8241,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784042016887",
@@ -6849,12 +8331,14 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784003200686",
       "ticker": "HAE",
-      "account": "moomoo",
+      "account": "longbridge",
       "status": "closed",
       "entry_date": "2026-07-14",
       "exit_date": "2026-07-14",
@@ -6865,7 +8349,7 @@
       "stop_initial": null,
       "target": 90,
       "thesis": "",
-      "entry_logic": "",
+      "entry_logic": "tight盘整",
       "exit_logic": "跟随SYK止损",
       "stop_history": [
         {
@@ -6894,18 +8378,20 @@
       ],
       "review": {
         "sell_fly": true,
-        "undercut": true,
-        "chase_reentry": false,
-        "breakdown_sell": null,
+        "undercut": false,
+        "chase_reentry": null,
+        "breakdown_sell": false,
         "note": "IHI应该是shakeout，第二天收复跌幅",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "横盘整理高位追入，横盘整理低位卖出"
     },
     {
       "id": "NEW-1784003041317",
@@ -6969,7 +8455,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1784002898370",
@@ -7021,19 +8509,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 5,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703824310",
@@ -7089,7 +8579,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703764824",
@@ -7145,7 +8637,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783703561616",
@@ -7189,19 +8683,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697360399",
@@ -7218,7 +8714,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "加息交易",
-      "exit_logic": "",
+      "exit_logic": "减仓观望",
       "stop_history": [
         {
           "date": "2026-07-10",
@@ -7245,19 +8741,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": true,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "flawed",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "横盘整理不要买"
     },
     {
       "id": "NEW-1783697256409",
@@ -7313,7 +8811,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697125753",
@@ -7369,7 +8869,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783697006464",
@@ -7386,7 +8888,7 @@
       "target": null,
       "thesis": "",
       "entry_logic": "突破后缩量回踩",
-      "exit_logic": "",
+      "exit_logic": "setup failed",
       "stop_history": [
         {
           "date": "2026-07-10",
@@ -7413,19 +8915,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "3d"
       },
       "execution_grade": null,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "Pullback没有等止跌"
     },
     {
       "id": "NEW-1783607129859",
@@ -7481,7 +8985,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783605541959",
@@ -7537,7 +9043,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "NEW-1783605384531",
@@ -7593,7 +9101,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "SPCX-20260702",
@@ -7637,19 +9147,23 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
-        "chase_reentry": null,
-        "breakdown_sell": true,
+        "sell_fly": false,
+        "undercut": true,
+        "chase_reentry": false,
+        "breakdown_sell": false,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "mentor": false,
       "execution_score": 3,
-      "execution_quality": null,
-      "execution_flags": [],
+      "execution_quality": "chaotic",
+      "execution_flags": [
+        "挪了止损"
+      ],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "止损晚了"
     },
     {
       "id": "WRBY-2026",
@@ -7705,7 +9219,9 @@
       "execution_quality": null,
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "BRKR-2026",
@@ -7762,14 +9278,15 @@
       "execution_flags": [],
       "no_setup": false,
       "catalyst": "",
-      "execution_note": "没有突破"
+      "execution_note": "没有突破",
+      "execution_states": []
     },
     {
       "id": "SYK-2026",
       "ticker": "SYK",
       "account": "longbridge",
       "status": "closed",
-      "entry_date": null,
+      "entry_date": "2026-07-02",
       "exit_date": "2026-07-14",
       "stop_initial": null,
       "target": 350,
@@ -7812,25 +9329,30 @@
       ],
       "review": {
         "sell_fly": true,
-        "undercut": null,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "IHI shakeout",
-        "window": null
+        "window": "3d"
       },
       "mentor": false,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [
+        "没信心/拿不住",
+        "对这只不熟"
+      ],
+      "execution_note": ""
     },
     {
       "id": "XLV-2026",
       "ticker": "XLV",
       "account": "longbridge",
       "status": "closed",
-      "entry_date": null,
+      "entry_date": "2026-07-02",
       "exit_date": "2026-07-08",
       "stop_initial": 158,
       "target": null,
@@ -7875,19 +9397,21 @@
         }
       ],
       "review": {
-        "sell_fly": null,
-        "undercut": null,
+        "sell_fly": false,
+        "undercut": false,
         "chase_reentry": null,
         "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "mentor": false,
       "execution_score": 3,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "BB-20260707",
@@ -7936,14 +9460,16 @@
         "chase_reentry": null,
         "breakdown_sell": true,
         "note": "",
-        "window": null
+        "window": "5d"
       },
       "mentor": false,
       "execution_score": 2,
-      "execution_quality": null,
+      "execution_quality": "chaotic",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": "没有setup买入"
     },
     {
       "id": "ELV-20260707",
@@ -7988,18 +9514,20 @@
       ],
       "review": {
         "sell_fly": true,
-        "undercut": null,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": true,
+        "breakdown_sell": false,
         "note": "IAK向下突破",
-        "window": null
+        "window": "3d"
       },
       "mentor": false,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     },
     {
       "id": "UPS-20260707",
@@ -8031,10 +9559,10 @@
       ],
       "execution_grade": null,
       "setup_type": "Base Breakout",
-      "planned": null,
+      "planned": false,
       "day_trade": false,
       "entry_logic": "109-110支撑区三次test成立（7/2低109.27/7/6低109.03/7/7低109.82）后向上脱离，7/7放量4.6M收111.96",
-      "exit_logic": "降仓防御， 买入点不对，应该等回踩买入，板块趋势也不明确",
+      "exit_logic": "没有setup买入；减仓观望",
       "stop_history": [
         {
           "date": "2026-07-07",
@@ -8044,18 +9572,20 @@
       ],
       "review": {
         "sell_fly": true,
-        "undercut": null,
+        "undercut": false,
         "chase_reentry": null,
-        "breakdown_sell": null,
+        "breakdown_sell": false,
         "note": "tight setup 似乎又要突破",
-        "window": null
+        "window": "5d"
       },
       "mentor": false,
       "execution_score": 4,
-      "execution_quality": null,
+      "execution_quality": "clean",
       "execution_flags": [],
       "no_setup": false,
-      "catalyst": ""
+      "catalyst": "",
+      "execution_states": [],
+      "execution_note": ""
     }
   ],
   "daily_summaries": [

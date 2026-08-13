@@ -1,0 +1,457 @@
+{
+ "universe_size": 882,
+ "calendar": {
+  "2026-08-06": [
+   {
+    "symbol": "COP",
+    "name": "ConocoPhillips",
+    "time": "pre-market",
+    "eps_forecast": "$2.96"
+   },
+   {
+    "symbol": "PH",
+    "name": "Parker-Hannifin Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$8.29"
+   },
+   {
+    "symbol": "HWM",
+    "name": "Howmet Aerospace Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.23"
+   },
+   {
+    "symbol": "NET",
+    "name": "Cloudflare, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.03)"
+   },
+   {
+    "symbol": "DDOG",
+    "name": "Datadog, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.13"
+   },
+   {
+    "symbol": "CEG",
+    "name": "Constellation Energy Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$2.36"
+   },
+   {
+    "symbol": "MNST",
+    "name": "Monster Beverage Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$0.59"
+   },
+   {
+    "symbol": "ABNB",
+    "name": "Airbnb, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.20"
+   },
+   {
+    "symbol": "WBD",
+    "name": "Warner Bros. Discovery, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.13)"
+   },
+   {
+    "symbol": "AFL",
+    "name": "Aflac Incorporated",
+    "time": "after-hours",
+    "eps_forecast": "$1.77"
+   },
+   {
+    "symbol": "RSG",
+    "name": "Republic Services, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.81"
+   },
+   {
+    "symbol": "TRGP",
+    "name": "Targa Resources, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.83"
+   },
+   {
+    "symbol": "SRE",
+    "name": "Sempra ",
+    "time": "pre-market",
+    "eps_forecast": "$1.01"
+   },
+   {
+    "symbol": "BDX",
+    "name": "Becton, Dickinson and Company",
+    "time": "pre-market",
+    "eps_forecast": "$3.14"
+   },
+   {
+    "symbol": "AIG",
+    "name": "American International Group, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.89"
+   },
+   {
+    "symbol": "MCHP",
+    "name": "Microchip Technology Incorporated",
+    "time": "after-hours",
+    "eps_forecast": "$0.59"
+   },
+   {
+    "symbol": "KDP",
+    "name": "Keurig Dr Pepper Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.55"
+   },
+   {
+    "symbol": "ED",
+    "name": "Consolidated Edison Inc",
+    "time": "after-hours",
+    "eps_forecast": "$0.74"
+   },
+   {
+    "symbol": "NTRA",
+    "name": "Natera, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.47)"
+   },
+   {
+    "symbol": "KVUE",
+    "name": "Kenvue Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.32"
+   },
+   {
+    "symbol": "RMD",
+    "name": "ResMed Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.90"
+   },
+   {
+    "symbol": "ZTS",
+    "name": "Zoetis Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.84"
+   },
+   {
+    "symbol": "TWLO",
+    "name": "Twilio Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.59"
+   },
+   {
+    "symbol": "FISV",
+    "name": "Fiserv, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.89"
+   },
+   {
+    "symbol": "ROIV",
+    "name": "Roivant Sciences Ltd.",
+    "time": "pre-market",
+    "eps_forecast": "($0.45)"
+   },
+   {
+    "symbol": "RL",
+    "name": "Ralph Lauren Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$4.30"
+   },
+   {
+    "symbol": "FOX",
+    "name": "Fox Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.15"
+   },
+   {
+    "symbol": "FOXA",
+    "name": "Fox Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.34"
+   },
+   {
+    "symbol": "INSM",
+    "name": "Insmed Incorporated",
+    "time": "pre-market",
+    "eps_forecast": "($0.69)"
+   },
+   {
+    "symbol": "VTRS",
+    "name": "Viatris Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.62"
+   },
+   {
+    "symbol": "EVRG",
+    "name": "Evergy, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.81"
+   },
+   {
+    "symbol": "AKAM",
+    "name": "Akamai Technologies, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.90"
+   },
+   {
+    "symbol": "GEN",
+    "name": "Gen Digital Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.62"
+   },
+   {
+    "symbol": "ASND",
+    "name": "Ascendis Pharma A/S",
+    "time": "not-supplied",
+    "eps_forecast": "$1.29"
+   },
+   {
+    "symbol": "SGI",
+    "name": "Somnigroup International Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.58"
+   },
+   {
+    "symbol": "ONTO",
+    "name": "Onto Innovation Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.68"
+   },
+   {
+    "symbol": "BMRN",
+    "name": "BioMarin Pharmaceutical Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.79"
+   },
+   {
+    "symbol": "WMS",
+    "name": "Advanced Drainage Systems, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.19"
+   },
+   {
+    "symbol": "CART",
+    "name": "Maplebear Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.55"
+   },
+   {
+    "symbol": "AES",
+    "name": "The AES Corporation",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "AAOI",
+    "name": "Applied Optoelectronics, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.02)"
+   },
+   {
+    "symbol": "FROG",
+    "name": "JFrog Ltd.",
+    "time": "after-hours",
+    "eps_forecast": "($0.04)"
+   },
+   {
+    "symbol": "CYTK",
+    "name": "Cytokinetics, Incorporated",
+    "time": "after-hours",
+    "eps_forecast": "($1.63)"
+   },
+   {
+    "symbol": "CTRE",
+    "name": "CareTrust REIT, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.51"
+   },
+   {
+    "symbol": "OSCR",
+    "name": "Oscar Health, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.43"
+   },
+   {
+    "symbol": "TTD",
+    "name": "The Trade Desk, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.22"
+   },
+   {
+    "symbol": "PRAX",
+    "name": "Praxis Precision Medicines, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($3.60)"
+   },
+   {
+    "symbol": "MP",
+    "name": "MP Materials Corp.",
+    "time": "after-hours",
+    "eps_forecast": "($0.02)"
+   },
+   {
+    "symbol": "ESE",
+    "name": "ESCO Technologies Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.12"
+   },
+   {
+    "symbol": "RHP",
+    "name": "Ryman Hospitality Properties, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.56"
+   },
+   {
+    "symbol": "TAP",
+    "name": "Molson Coors Beverage Company",
+    "time": "pre-market",
+    "eps_forecast": "$1.51"
+   },
+   {
+    "symbol": "QBTS",
+    "name": "D-Wave Quantum Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.12)"
+   },
+   {
+    "symbol": "IBP",
+    "name": "Installed Building Products, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.41"
+   },
+   {
+    "symbol": "TXG",
+    "name": "10x Genomics, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.23)"
+   },
+   {
+    "symbol": "RGTI",
+    "name": "Rigetti Computing, Inc. ",
+    "time": "after-hours",
+    "eps_forecast": "($0.05)"
+   },
+   {
+    "symbol": "MARA",
+    "name": "MARA Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.56)"
+   },
+   {
+    "symbol": "LASR",
+    "name": "nLIGHT, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.03)"
+   },
+   {
+    "symbol": "SYNA",
+    "name": "Synaptics Incorporated",
+    "time": "after-hours",
+    "eps_forecast": "$0.38"
+   },
+   {
+    "symbol": "HAE",
+    "name": "Haemonetics Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.07"
+   },
+   {
+    "symbol": "GMAB",
+    "name": "Genmab A/S",
+    "time": "pre-market",
+    "eps_forecast": "$0.37"
+   },
+   {
+    "symbol": "WRBY",
+    "name": "Warby Parker Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.05"
+   },
+   {
+    "symbol": "CLSK",
+    "name": "CleanSpark, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.30)"
+   },
+   {
+    "symbol": "OUST",
+    "name": "Ouster, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.31)"
+   },
+   {
+    "symbol": "NTCT",
+    "name": "NetScout Systems, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.20"
+   },
+   {
+    "symbol": "DNN",
+    "name": "Denison Mine Corp",
+    "time": "not-supplied",
+    "eps_forecast": "($0.01)"
+   },
+   {
+    "symbol": "HIMX",
+    "name": "Himax Technologies, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.10"
+   },
+   {
+    "symbol": "INOD",
+    "name": "Innodata Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.21"
+   },
+   {
+    "symbol": "ASTH",
+    "name": "Astrana Health Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.31"
+   },
+   {
+    "symbol": "ZD",
+    "name": "Ziff Davis, Inc.",
+    "time": "after-hours",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "SVV",
+    "name": "Savers Value Village, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.10"
+   },
+   {
+    "symbol": "NTLA",
+    "name": "Intellia Therapeutics, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.80)"
+   },
+   {
+    "symbol": "REAL",
+    "name": "The RealReal, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.08)"
+   },
+   {
+    "symbol": "UMAC",
+    "name": "Unusual Machines, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.20)"
+   },
+   {
+    "symbol": "RCAT",
+    "name": "Red Cat Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.21)"
+   },
+   {
+    "symbol": "BKSY",
+    "name": "BlackSky Technology Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.38)"
+   }
+  ]
+ }
+}

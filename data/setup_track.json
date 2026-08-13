@@ -550,8 +550,8 @@
    "entry": "盘中放量动量bar触发（不给自动买点）；参考8/3高点上方",
    "invalid": "跌回9EMA 193.91 下方且不收回",
    "target": "220（7月中枢下沿）",
-   "status": "tracking",
-   "verdict": null,
+   "status": "closed",
+   "verdict": "expired",
    "return_source": "setup"
   },
   {
@@ -564,8 +564,8 @@
    "entry": "回踩9EMA 113.99 缩量不破即可分批",
    "invalid": "跌破 110.28",
    "target": "132（前高）",
-   "status": "tracking",
-   "verdict": null,
+   "status": "closed",
+   "verdict": "expired",
    "return_source": "earnings",
    "note_source": "🔴涨幅来源=财报缺口（8/4 盘前公布），不是 setup 走出来的。2026-08-05 Vic 指出「ldos 是纯赌财报，你这都能算」——按新规则归入「事件缺口延续」品类，不计入 setup 方法命中率"
   },
@@ -579,8 +579,8 @@
    "entry": "回踩9EMA 173.88 缩量不破",
    "invalid": "跌破 171.50（9EMA 173.88 下方留 0.5ATR 缓冲）",
    "target": "200",
-   "status": "tracking",
-   "verdict": null,
+   "status": "closed",
+   "verdict": "expired",
    "return_source": "setup"
   },
   {
@@ -593,8 +593,8 @@
    "entry": "盘中放量动量bar触发",
    "invalid": "跌回9EMA 335.24 下方",
    "target": "395（前高）",
-   "status": "tracking",
-   "verdict": null,
+   "status": "closed",
+   "verdict": "expired",
    "return_source": "setup"
   },
   {
@@ -607,8 +607,8 @@
    "entry": "**等回踩**——现价距9EMA已 +6.41%，追高的risk/reward不成立",
    "invalid": "跌回9EMA 768.18 下方",
    "target": "900",
-   "status": "tracking",
-   "verdict": null,
+   "status": "closed",
+   "verdict": "expired",
    "return_source": "setup"
   },
   {
@@ -712,6 +712,97 @@
    "entry": "盘前 +0.17%，约 583.8",
    "invalid": "跌破 **568.60**（信号日低点 577.81 下方 0.5×ATR）",
    "target": "615",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-10",
+   "ticker": "AVGO",
+   "grade": "A",
+   "source": "方法2（机器扫描，止损距离最优的一只）",
+   "setup": "**Setup W**：三重底未破前低 374.61 / 410.76；5日 +9.88%、距50MA 2.16ATR、**量 0.77× 缩量**",
+   "sector": "半导体SMH+网安CIBR",
+   "entry": "盘前 +0.69%，约 430.7",
+   "invalid": "跌破 **413.31**（8/7 低点下方 0.5×ATR）",
+   "target": null,
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-10",
+   "ticker": "GOOGL",
+   "grade": "A",
+   "source": "方法2（8/7 A 级顺延）",
+   "setup": "**Setup A+E+W**：回踩9EMA；8/7 收 354.30 **收盘区间只有 10%**",
+   "sector": "通讯XLC",
+   "entry": "盘前 +0.72%，约 356.8",
+   "invalid": "跌破 **347.35**（8/7 低点下方 0.5×ATR）",
+   "target": null,
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-10",
+   "ticker": "FTNT",
+   "grade": "A",
+   "source": "方法2（8/7 B 级升档）",
+   "setup": "**Setup A（缩量回踩9EMA）**：8/7 收 159.64 **收盘区间 16%**，量 0.87×",
+   "sector": "网安CIBR",
+   "entry": "盘前 +0.19%，约 160.0",
+   "invalid": "跌破 **155.00**（8/7 低点下方 0.5×ATR）",
+   "target": null,
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-11",
+   "ticker": "GOOGL",
+   "grade": "A",
+   "source": "方法2（IGV/CIBR 下钻）",
+   "setup": "**Setup A · 缩量回踩9EMA**：距 9EMA +0.53%、量 0.58×、距20MA 仅 0.69ATR，8/10 收在区间 98%",
+   "sector": "XLC / 通信服务",
+   "entry": "盘前 -0.33%（357.52 → 约 356.3）。**回踩型不追**，开盘后在 9EMA 355.6 上方企稳再看",
+   "invalid": "**收盘跌破 9EMA 355.60**（回踩论点直接作废）",
+   "target": "前高 366.5 附近，R:R 约 1.9",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-12",
+   "ticker": "无",
+   "grade": "A",
+   "source": "方法2 全量扫描",
+   "setup": "**今天不出 A 级**",
+   "sector": "—",
+   "entry": "—",
+   "invalid": "—",
+   "target": "—",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-13",
+   "ticker": "ANET",
+   "grade": "A",
+   "source": "方法9·Vic 肉眼 + 结构复核",
+   "setup": "**Setup B 变体：5 日筑底后放量回攻前高**（不是单纯追高）",
+   "sector": "XLK / AI 网络层",
+   "entry": "🔴**触发：决定性收上 214.89**（8/05 高点）后进，约 215.00",
+   "invalid": "**跌破 197.90**（8/12 低点 203.76 下方 2.88% ≈ 0.54ATR，满足框架的最小缓冲）",
+   "target": "前高上方无阻力参照，先按 1:2 看约 237",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-13",
+   "ticker": "AVGO",
+   "grade": "A",
+   "source": "方法2·SMH 下钻",
+   "setup": "**Setup B + A**：tight 整理 + 回踩 9EMA（距 +0.90%）、缩量 0.87×",
+   "sector": "XLK / SMH（**刚解禁**）",
+   "entry": "突破 5 日高点确认后进",
+   "invalid": "跌破 5 日低点",
+   "target": "—",
    "status": "tracking",
    "verdict": null
   }

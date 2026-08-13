@@ -146,6 +146,12 @@ def _decimals(html, data):
     # Brier 分数天然需要 3 位（0.121 和 0.127 的差别有意义），单独豁免；
     # 豁免的是**带 brier-val 类的单元格**，不是"所有三位小数"，别开成通用口子。
     body = re.sub(r'<span class="brier-val[^"]*">[^<]*</span>', "", body)
+    # 2026-08-11 补两处同性质豁免（这条警告 8/03–8/10 每天都报、一次都没被修，
+    # 查下来剩的全是"本来就该多位"的数——按 CONTEXT「加提醒然后天天忽略 = 加了条不抓东西的检查」处理）：
+    # ① brier-line 那一行的 Brier 总分，跟 brier-val 是同一个理由，只是元素不同
+    body = re.sub(r'<p class="brier-line">.*?</p>', "", body, flags=re.S)
+    # ② 代理相对强弱表的比值/20日均值：0.9297 vs 0.9368 差 -0.75%，压到 2 位会变成两个 0.93
+    body = re.sub(r"<h3>代理相对强弱.*?</table>", "", body, flags=re.S)
     n = len(re.findall(r">\s*-?\d+\.\d{3,}\s*<", body))
     if n:
         return f"{n}处3位以上小数"
@@ -461,8 +467,9 @@ REPORT_SPEC = {
                             "etf_table", "positions_moomoo_table", "positions_longbridge_table",
                             "strong_sector_setups_table", "watchlist_abc", "playbook_scenarios",
                             "key_takeaways", "today_position", "recon_ledger"],
-        "phase1_exempt": ["premarket_movers", "watchlist_abc", "playbook_scenarios",
-                          "key_takeaways", "today_position", "recon_ledger"],
+        # 2026-08-12：两段式取消 → 不再有「段1 草稿可以缺这些」的豁免；
+        # premarket_movers 整块退役（已在 RETIRED_FIELDS）。
+        "phase1_exempt": [],
     },
     "postmarket": {
         "sections": ["recon", "hitrate", "lessons", "newswatch", "close", "breadth",
@@ -551,6 +558,23 @@ def run(html_path: Path, json_path: Path = None):
         data = json.loads(json_path.read_text(encoding="utf-8"))
 
     print(f"\n=== QA · {html_path.name} ===")
+    # 🔴 2026-08-11 Vic：「qa里面写问 有没有用builder」——**每次都要看得见答案，
+    #    不是只在失败时才报**。通过项默认不打印，所以这一条单独提到抬头来：
+    #    它回答的是「这份报告是怎么来的」，跟其他"格式对不对"的检查不是一类问题。
+    if data is not None:
+        _rt = data.get("report_type") or "?"
+        # 两份模板都从 2026-08-11 起盖戳，之前的报告一律豁免（回头补戳等于伪造记录）
+        _tpl, _cut = {"postmarket": ("assemble_template_postmarket.py", "2026-08-11"),
+                      "premarket": ("assemble_template.py", "2026-08-11")}.get(_rt, (None, None))
+        if _tpl:
+            _b = data.get("_builder")
+            if _b:
+                print(f"  builder: 用了 —— {_b}"
+                      + (f"（{data.get('_builder_at')}）" if data.get("_builder_at") else ""))
+            elif _cut and (data.get("date") or "") < _cut:
+                print(f"  builder: 无戳 —— {_cut} 之前没有盘后模板，豁免（不是违规）")
+            else:
+                print(f"  builder: **没用** —— 这份是手写的，应该从 scripts/{_tpl} 派生")
     fails = warns = 0
     for name, fn, fatal in CHECKS:
         try:
@@ -711,6 +735,7 @@ def _headers_match_template(html, data):
         v = data.get(k)
         got = (v[0].get("headers") if isinstance(v, list) and v and isinstance(v[0], dict)
                else (v.get("headers") if isinstance(v, dict) else None))
+        # 2026-08-12：「盘前」列整个退役，持仓表回到模板声明的 7 列，这里不再补列。
         if got is not None and got != want:
             bad.append("%s\n       模板 %s\n       实际 %s" % (k, want, got))
     if bad:
@@ -718,14 +743,15 @@ def _headers_match_template(html, data):
                 + "\n     ".join(bad[:4]))
 
 
-@check("板块表必须是模板的七列（2026-08-10 Vic：「今天板块 判断故意都是空的吗」）")
+@check("板块表必须是模板的六列（2026-08-12：「盘前」列退役后从七列变六列）")
 def _sector_rs_headers(html, data):
-    """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / 盘前 / **驱动·原因** / RS(1周)，
-    第 6 列注明「留空当天手写」。8/10 我写了 6 列表头配 7 列数据，
-    错位之后那一列在页面上就是一片空白——Vic 一眼看出来了。"""
+    """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / **驱动·原因** / RS(1周)。
+    第 5 列注明「留空当天手写」。8/10 我写过 6 列表头配 7 列数据，错位之后那一列
+    在页面上就是一片空白——Vic 一眼看出来了。
+    🔴 2026-08-12「盘前」列整列退役（Vic：「盘前数字没什么用」），七列 → 六列。"""
     if data is None or data.get("report_type") != "premarket":
         return
-    want = ["TICKER", "T-1%", "5日%", "1月%", "盘前", "驱动/原因", "RS(1周)"]
+    want = ["TICKER", "T-1%", "5日%", "1月%", "驱动/原因", "RS(1周)"]
     bad = []
     for t in data.get("sector_rs_tables") or []:
         h = t.get("headers") or []
@@ -736,7 +762,7 @@ def _sector_rs_headers(html, data):
         if rows and len(rows[0]) != len(want):
             bad.append("%s 表头%d列/数据%d列 错位" % (t.get("title"), len(want), len(rows[0])))
             continue
-        blank = sum(1 for r in rows if not str(r[5]).strip())
+        blank = sum(1 for r in rows if not str(r[4]).strip())
         if blank == len(rows) and rows:
             bad.append("%s 的「驱动/原因」整列没写" % t.get("title"))
     if bad:
@@ -805,27 +831,46 @@ def _no_phase1_leftover(html, data):
 # 这样「今天多了个字段」就变成一次有意的改动，而不是某个会话的副作用。
 # =========================================================================
 
-def _template_fields():
-    """从 scripts/assemble_template.py 直接解析盘前字段名——**模板是唯一真源**。
+def _template_fields(template="assemble_template.py", retired=None):
+    """从模板文件直接解析字段名——**模板是唯一真源**。
 
     🔴 2026-08-10 Vic：「把模板修成最新的，然后以后每次用模板，格式不要再漂移了」。
     此前 PREMARKET_FIELDS 是我手抄的一份清单，模板停更在 7/31 也没人知道——
     「模板残缺 → 用它反而丢字段 → 更不用 → 更过期」这个循环就是靠这里斩断的：
     **字段清单直接从模板长出来，模板一旦漏字段，下面那条检查立刻红。**
+
+    2026-08-11：加 template 参数，盘后模板 assemble_template_postmarket.py 共用同一套逻辑
+    （Vic：「现在做 assemble_template_postmarket.py 我们以后都用builder跑」）。
     """
     import re
-    txt = (ROOT / "scripts" / "assemble_template.py").read_text(encoding="utf-8")
+    txt = (ROOT / "scripts" / template).read_text(encoding="utf-8")
     # 只取顶层字段（缩进 1~4 空格 + "key":），排除表格内部的结构键
     # {3,} 而不是 {4,}：ftd 只有三个字符，8/10 第一版就把它漏掉了
     keys = set(re.findall(r'^\s{1,4}"([a-z_0-9]{3,})":', txt, re.M))
-    return (keys - TABLE_INNER_KEYS) - RETIRED_FIELDS
+    return (keys - TABLE_INNER_KEYS) - (RETIRED_FIELDS if retired is None else retired)
 
 
 # 已退役的字段：模板里保留空壳作历史记录，但既不要求出现、出现也不算自造。
 # futures_table/_note —— 2026-07-11 主动删除（模板里写着「已删除，留空壳」），
 # 不是 7/27 那次漂移的牺牲品。**退役必须在模板里留痕，不能直接删掉字段**，
 # 否则以后没人分得清「主动退役」和「漂移丢失」。
-RETIRED_FIELDS = {"futures_table", "futures_note"}
+# premarket_movers/_note —— 2026-08-12 整块退役（Vic：「我也不看盘前异动选股，关于盘前的全部删了吧」）。
+#   模板里留空壳作历史记录；既不要求出现、出现也不算自造。
+RETIRED_FIELDS = {"futures_table", "futures_note",
+                  "premarket_movers", "premarket_movers_note"}
+
+# 盘后已退役 / 已暂停的字段：模板里以注释形式留空壳，既不要求出现、出现也不算自造。
+# breadth_stage_table/_note —— 2026-08-11 Vic：「Weinstein 728 票全扫 用不着 stage 了，这个删除」
+# breadth_history_table/_note —— 2026-07-28 Vic：「整个表格删除」
+# ftd / ftd_table / ftd_note —— 2026-08-06 起 FTD 追踪暂停（park，不是退役；重启需 Vic 明确说）
+# tradebook_block —— 2026-07-28 Vic：「删除这个部分，你每次自己可以直接输入到tradebook」
+# lessons / corrections —— 2026-07-28 并入 iterations（旧字段仍能被 _iterations_from_legacy 折进去）
+RETIRED_POSTMARKET_FIELDS = {
+    "breadth_stage_table", "breadth_stage_note",
+    "breadth_history_table", "breadth_history_note",
+    "ftd", "ftd_table", "ftd_note",
+    "tradebook_block", "lessons", "corrections", "positions_note",
+}
 
 
 # 表格/条目内部的结构键，不是报告顶层字段
@@ -855,6 +900,113 @@ def _premarket_field_set(html, data):
         msg.append("🔴**自造字段** %s——新字段必须先加进 scripts/assemble_template.py（模板是唯一真源）" % unknown)
     if missing:
         msg.append("缺 %d 个字段：%s" % (len(missing), missing))
+    if msg:
+        return "；".join(msg)
+
+
+@check("每张表的行长度必须等于表头列数（2026-08-11：持仓表盘前列静默空了两天）")
+def _table_row_width(html, data):
+    """**这条抓的是一整类事故，不是一个字段。**
+
+    2026-08-11 实测：持仓两张表 headers 8 列、行只有 7 格——「盘前」那一列**从来没被填过**。
+    机制是两个格式撞车：模板在「现价」里塞 `（盘前x%）` 后缀（2026-08-06 之前的老格式）
+    **同时**表头又写了独立的「盘前」列（新格式）；而段2 的 `patch_premarket_columns()`
+    幂等判据是 `if "盘前" in headers: skip`，于是它每天直接跳过，**列永远填不上**。
+    8/06–8/07 是好的，8/10 手写那天起坏掉并被模板固化。
+
+    **为什么必须靠机器查**：渲染器对短行是容错的（缺的格子直接不渲染），
+    表面上看只是「盘前那一列是空的」，不会报错、不会变形——**跟「本来今天就没有盘前报价」
+    长得一模一样**。这正是「零反馈回路」那一类：读者不知道它本该有值。
+    """
+    if data is None:
+        return
+    bad = []
+    for k, v in data.items():
+        if k.startswith("_") or not isinstance(v, dict):
+            continue
+        hd, rows = v.get("headers"), v.get("rows")
+        if not (isinstance(hd, list) and isinstance(rows, list) and hd and rows):
+            continue
+        for i, r in enumerate(rows):
+            if isinstance(r, list) and len(r) != len(hd):
+                bad.append("%s 第%d行 %d格 vs 表头 %d列" % (k, i + 1, len(r), len(hd)))
+                break        # 每张表只报第一处，避免刷屏
+    if bad:
+        return ("；".join(bad) + "——**列数对不上时渲染器会静默少渲染一格**，"
+                "看起来只是「那一列是空的」")
+
+
+@check("phase 桶必须恰好覆盖盘前模板字段集（2026-08-11，同一个坑第三次）")
+def _phase_buckets_cover_template(html, data):
+    """**这条查的不是某一份报告，是流水线本身。**
+
+    为什么必须有：两段式下段1 用 `keep = PHASE1|PHASE2_PATCH` 过滤、段2 只补 PHASE2_FIELDS。
+    **模板里有、三个桶里都没有的字段 = 段1 丢掉、段2 不补回 → 永久消失，而报告照样渲染得出来。**
+    已发生三次：8/3（ftd / 仓位治理，靠手动往 keep 里塞才保住）、8/7（事件缺口候选一个没进报告）、
+    8/11（bam / dispersion / stop_proximity / special_readthrough / adanos_scan_note /
+    recon_prob_note 等 11 个，是 Vic 问「用了 builder 对吗」时顺手查出来的）。
+
+    前两次都只在注释里写了「以后新字段必须加进来」——**写了三次，漏了三次。**
+    """
+    import report_helpers as _H
+    tpl = set(_template_fields())
+    buckets = (set(_H.PHASE1_FIELDS) | set(_H.PHASE2_PATCH_FIELDS) | set(_H.PHASE2_FIELDS))
+    orphan = sorted(tpl - buckets)
+    extra = sorted(buckets - tpl)
+    msg = []
+    if orphan:
+        msg.append("🔴**模板有、phase 桶没有** %s——两段式下会永久丢失，"
+                   "去 report_helpers.py 归到三个桶之一" % orphan)
+    if extra:
+        msg.append("phase 桶有、模板没有 %s——去 assemble_template.py 补上空壳" % extra)
+    if msg:
+        return "；".join(msg)
+
+
+@check("报告必须由 builder 生成 · 盘前盘后（2026-08-11 Vic：「qa里面写问 有没有用builder」）")
+def _builder_stamp(html, data):
+    """上面那条只查**字段名**——手写 out = {...} 把 46 个键抄齐了照样能过。
+    这条查 `_builder` 戳：**只有真的跑 assemble_template_postmarket.py 才会有。**
+
+    为什么必须加：盘前模板 2026-08-10 失效的三个机械原因里，
+    「没有任何入口会在开工时提醒用模板」那一条，盘后一开始也没堵——
+    文档写得再清楚，新会话不读到就等于没有。**戳是唯一不依赖"记得"的那道锁。**
+
+    只对 2026-08-11（模板建成日）及之后的报告生效——之前的报告是手写的，
+    回头补戳等于伪造记录（同「对账 prob 对 2026-08-08 前降级为提醒」的处理方式）。
+    """
+    if data is None or data.get("report_type") not in ("postmarket", "premarket"):
+        return
+    if (data.get("date") or "") < "2026-08-11":     # 模板盖戳之前的报告豁免
+        return
+    if not data.get("_builder"):
+        tpl = ("assemble_template_postmarket.py" if data["report_type"] == "postmarket"
+               else "assemble_template.py")
+        return (f"这份 JSON 没有 `_builder` 戳 = 没走模板。\n"
+                f"      改法：copy scripts\\{tpl} -> scratchpad\\，只填 ### 手写 ###。\n"
+                f"      不要手写 out = {{...}}——字段名抄齐能骗过字段集检查，但骨架和口径会静默走样。")
+
+
+@check("盘后字段集 == 模板字段集（2026-08-11 Vic：「我们以后都用 builder 跑」）")
+def _postmarket_field_set(html, data):
+    """跟盘前那条同源。**盘后此前没有模板**，靠的是「继承前一天的 JSON」——
+    那条只防得住「少字段」，防不住「前一天本身就是错的」：
+    `breadth_stage_table` 从 2026-07-28 起断了 12 个交易日没人发现，
+    就是因为每天都在继承一份已经缺了它的 JSON。**模板 + 本检查才是闭环。**
+    """
+    if data is None or data.get("report_type") != "postmarket":
+        return
+    tpl = _template_fields("assemble_template_postmarket.py", RETIRED_POSTMARKET_FIELDS)
+    have = {k for k in data if not k.startswith("_")} - RETIRED_POSTMARKET_FIELDS
+    unknown = sorted(have - tpl)
+    missing = sorted(tpl - have)
+    msg = []
+    if unknown:
+        msg.append("🔴**自造字段** %s——新字段必须先加进 scripts/assemble_template_postmarket.py"
+                   "（模板是唯一真源）" % unknown)
+    if missing:
+        msg.append("缺 %d 个字段：%s——模板里有的字段报告必须写"
+                   "（真要退役请加进 RETIRED_POSTMARKET_FIELDS 并注明日期）" % (len(missing), missing))
     if msg:
         return "；".join(msg)
 

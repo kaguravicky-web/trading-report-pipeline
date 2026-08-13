@@ -1,0 +1,43 @@
+{
+ "universe_size": 882,
+ "calendar": {
+  "2026-08-07": [
+   {
+    "symbol": "VST",
+    "name": "Vistra Corp.",
+    "time": "pre-market",
+    "eps_forecast": "$1.54"
+   },
+   {
+    "symbol": "TTWO",
+    "name": "Take-Two Interactive Software, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$0.08"
+   },
+   {
+    "symbol": "PPL",
+    "name": "PPL Corporation",
+    "time": "not-supplied",
+    "eps_forecast": "$0.35"
+   },
+   {
+    "symbol": "OKLO",
+    "name": "Oklo Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "($0.17)"
+   },
+   {
+    "symbol": "BZH",
+    "name": "Beazer Homes USA, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "($0.34)"
+   },
+   {
+    "symbol": "ARKO",
+    "name": "ARKO Corp.",
+    "time": "not-supplied",
+    "eps_forecast": "$0.15"
+   }
+  ]
+ }
+}

@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-08-06T09:30:00+08:00",
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "08-06 约7h前", "summary": "突发：SanDisk(SNDK)财报超预期但股价大跌超10%（该账号发布时点跌幅口径，与后续-5.4%收盘/盘后再跌口径不同，可能是盘后瞬时跌幅），配图播报，互动量远超其他条目(44.7万浏览)，是当日全网热议话题"},
+    {"handle": "@KobeissiLetter", "time": "08-06 约8h前", "summary": "中国投资者重新买入黄金：中国黄金ETF连续14日净流入，与GLD+4.14%放量形成呼应，显示全球避险/黄金买盘不止美股一端"},
+    {"handle": "@KobeissiLetter", "time": "08-06 约9h前", "summary": "美国6月职位空缺(JOLTS)骤降17.8万至736万，为3月以来最低"},
+    {"handle": "@KobeissiLetter", "time": "08-06 约55min前/2h前/5h前", "summary": "被动权益基金流入创纪录、美国上市ETF年内流入超1.2万亿美元创历史新高、油企盈利飙升——延续'资金持续涌入被动/大盘'的叙事，未提网安/AI网络层"},
+    {"handle": "@zerohedge", "time": "08-06 近1小时内", "summary": "当日发帖高频但绝大多数为地缘政治/韩国政局/霍尔木兹海峡/粮价等非交易相关内容，扫描约3小时窗口未发现SNDK/APP/网安相关原创内容；唯一有市场关联性的是'JPMorgan被检察官调查反欺诈项目'(WSJ)和一条转发提及'Situational Awareness量化基金以8倍杠杆重返、4亿美元下注'（AI相关但语焉不详），信噪比低，符合CONTEXT.md历史记录中该账号被高频地缘内容淹没市场信号的已知模式"},
+    {"handle": "@spotgamma", "time": "08-06 3-14h前", "summary": "当日多为对话式回复片段，缺乏独立上下文：'vol pricing从需要跳空转为更温和'(回复期权定价正常化话题)、'大量short在往上滚仓'(回复zerohedge帖)、对冲基金遭网络攻击浪潮的转发评论。无完整的Gamma水平/翻转点独立播报，内容单薄"},
+    {"handle": "@NickTimiraos", "time": "08-06 约2h前", "summary": "WSJ独家：特朗普自Warsh任Fed主席以来多次频繁致电Warsh（'一阵一阵地打，然后安静一段时间'），显示白宫持续向Fed施压；Timiraos本人多条回复在与网友辩论Fed票委表态细节，无新增数据类快讯"},
+    {"handle": "@charliebilello", "time": "08-05 12-13h前(即8/5盘中)", "summary": "S&P500昨日(8/5)首次站上7700点，年内第8个百年整数关口；S&P500昨日创6/2以来新高收盘，年内第25次刷新历史高点；另有'标普500二季度净利率飙升至16.7%创历史新高'(8/3)、'二季度盈利同比+47%为2021Q2以来最高增速'(8/3)——纯多头叙事，与WalterDeemer'涨势全靠AI、广度未跟上'形成对照"}
+  ],
+  "stocks": [
+    {"handle": "@WalterDeemer", "time": "08-05 08:04", "ticker": "SPX/QQQ", "note": "关键帖：'tl/dr 完全看不到Thrust信号。这轮反弹全靠AI。四天+5.74%涨幅本该触发Thrust Watch，但Thrust基于广度(Breadth)，Breakaway Momentum门槛意味着获得广度型Thrust的概率跟获得普通Breadth Thrust一样渺茫'——直接呼应昨日(8/5)全场收在当日区间最低+GLD放量避险的内部结构疑虑，延续其此前'看不到Thrust'的判断并给出量化解释(广度未跟上价格)"},
+    {"handle": "@WalterDeemer", "time": "08-05", "ticker": "大盘", "note": "'Fidelity客户今天不买个股，只买指数基金'——与'涨势全靠AI/广度弱'为同一主线，暗示散户参与也在向被动化收窄，非个股精选行为；另有NASDAQ走势图与'Bob Farrell称这类行情为Buying Stampede(抢购踩踏)'配图评论，未展开文字论述"},
+    {"handle": "@ohiain", "time": "08-06 03:18", "ticker": "大盘/轮动", "note": "'未来4个月可能有改变人生的机会，但我完全不想强求。让震荡发生，弱手被洗出，新的领涨股显现，让基座形成。等市场真正给出甜蜜球时，狠狠挥棒'——今日凌晨发布的轮动/耐心等待新龙头浮现的宏观交易心态帖，与Vic当前'网安+AI网络层'找新主线的思路方向一致"},
+    {"handle": "@ohiain", "time": "08-05 约8h前(即8/6凌晨)", "ticker": "ARM", "note": "'ARM...是时候再见面了吗？关注本周末的9周线+50EMA收复'——ARM技术位观察，非本日主线持仓相关"},
+    {"handle": "@RichardMoglen", "time": "08-03", "ticker": "SNDK", "note": "财报前瞻：'喜欢半导体和半导体硬件开盘后的反应，它们需要收复均线并企稳...$SNDK财报即将公布'——SNDK财报前的板块观察，早于8/5财报暴跌，说明该账号财报前已在跟踪该股"},
+    {"handle": "@RichardMoglen", "time": "08-03", "ticker": "NBIS", "note": "'$NBIS 强势K线收复21[周/日]线'，配Deepvue图表标签，纯技术形态记录，无网安/AI网络层标的提及"},
+    {"handle": "@spluscollective", "time": "08-06 约27min前", "ticker": "FLNC", "note": "'难看！大幅miss且下调指引'——呼应今日热搜'Fluence Energy Stock Drops 20% After Weak Q3 Results'，属实时财报反应播报"},
+    {"handle": "@spluscollective", "time": "08-06 约28min前", "ticker": "SOUN", "note": "'带来了Agentic AI订单，指引非常好'——SoundHound财报后正面评价，AI应用层个股"},
+    {"handle": "@spluscollective", "time": "08-06 约16min前", "ticker": "ZETA", "note": "'继续做多，目标价不变'，配图，延续其7/13'ZETA仍被低估、不要被AI概念噪音带偏'的立场"},
+    {"handle": "@aleabitoreddit", "time": "08-06 约2h前", "ticker": "VIAV/CPO", "note": "【降权处理，该账号历史偏多头喊单】转发VIAV关于CPO(共封装光学)交付时间表被业界质疑'找借口拖延'的犀利吐槽，涉及光互连供应链话题，与Vic关注的AI网络层(LITE/COHR/AAOI/CRDO)主线相关但未直接提及这几个标的"},
+    {"handle": "@aleabitoreddit", "time": "08-05", "ticker": "RKLB/OE Solutions", "note": "【降权处理】RKLB获3.97亿美元太空军合同（建造Flatellite卫星）；回复中提及韩国OE Solutions正自主研发垂直整合的1.6T光收发器(自有EML/CW方案)——光模块供应链信息，AI网络层主线的边缘参考"}
+  ],
+  "congress": [
+    {"handle": "@unusual_whales", "time": "08-06 约2h前", "note": "Michael Burry(空头基金经理)已清仓MSFT多头、并将NVDA与QQQ空头看跌期权仓位展期至2027年到期（新行权价在100出头区间），显示其继续持有对AI龙头/纳指的看空押注并拉长期限——与Vic当前'网安+半导体反弹'仓位形成对照信号，值得留意"},
+    {"handle": "@unusual_whales", "time": "08-06 约5h前", "note": "转发称'美银预测今年还有三次加息'——表述存疑(与当前降息预期主线矛盾，可能是误读或反讽性传播，未核实原始来源，建议不采信)"},
+    {"handle": "@unusual_whales", "time": "08-06", "note": "扫描约3小时窗口内未发现国会议员交易披露的具体播报（无参众议员姓名+标的+金额区间的常规格式内容），今日该账号内容以宏观数据快讯(信用卡拖欠率、陆军征兵)、突发新闻(特朗普直升机险相撞、Meta AI模型入侵他方系统)、SpaceX财务数据为主，国会交易类今日无实质内容"}
+  ],
+  "empty_groups": ["@BillAckman（今日仅纽约税收政治话题，无个股/setup内容）"],
+  "x_sentiment_note_draft": "今日X观点池最值得注意的是三条互相印证的'广度弱于价格'信号：WalterDeemer明确指出'完全看不到Thrust信号，这轮反弹全靠AI'且给出量化解释(广度型Thrust门槛与普通Breadth Thrust一样难达到)，同时提到'Fidelity客户只买指数不买个股'；ohiain凌晨发文呼吁耐心等待'新龙头显现、基座形成'而非强求；这两条与08-05大盘收在当日区间最低+GLD+4.14%放量的价格行为一致，形成'指数创新高但内部结构在收窄/避险资金在跑'的交叉验证。个股层面，SNDK财报'全面超预期却大跌'是全网热议焦点(Kobeissi该条互动量远超其他条目)，RichardMoglen财报前已在观察该股，但扫描窗口内暂无账号对'超预期反跌'给出具体解读文本；spluscollective实时播报了FLNC(财报大烂)/SOUN(财报强，Agentic AI订单)两组分化案例，本身就是当前财报季'同为超预期或不及预期、股价反应两极'的缩影。国会交易类今日无实质披露，但unusual_whales提到Burry清仓MSFT+NVDA/QQQ空头展期至2027，是唯一的显著持仓类信号。网安/AI网络层主线(CRWD/PANW/ZS/S/QLYS/ANET/LITE/COHR/AAOI/CRDO)本身在13账号扫描中均未被直接点名，仅aleabitoreddit的VIAV/OE Solutions光模块相关内容算边缘关联，说明该主线今日更多是Vic自身持仓框架的延续，X观点池未提供额外确认或证伪。",
+  "scan_log": [
+    {"handle": "@KobeissiLetter", "tool_calls": 4, "chars_est": 16000, "posts_found": 8},
+    {"handle": "@zerohedge", "tool_calls": 6, "chars_est": 25000, "posts_found": 13},
+    {"handle": "@spotgamma", "tool_calls": 2, "chars_est": 6500, "posts_found": 5},
+    {"handle": "@NickTimiraos", "tool_calls": 2, "chars_est": 6500, "posts_found": 5},
+    {"handle": "@charliebilello", "tool_calls": 2, "chars_est": 6000, "posts_found": 5},
+    {"handle": "@bluechipdaily", "tool_calls": 2, "chars_est": 6500, "posts_found": 5},
+    {"handle": "@WalterDeemer", "tool_calls": 4, "chars_est": 7500, "posts_found": 5},
+    {"handle": "@BillAckman", "tool_calls": 2, "chars_est": 6000, "posts_found": 5},
+    {"handle": "@RichardMoglen", "tool_calls": 2, "chars_est": 6000, "posts_found": 5},
+    {"handle": "@ohiain", "tool_calls": 4, "chars_est": 7000, "posts_found": 5},
+    {"handle": "@spluscollective", "tool_calls": 2, "chars_est": 6000, "posts_found": 5},
+    {"handle": "@aleabitoreddit", "tool_calls": 2, "chars_est": 6000, "posts_found": 5},
+    {"handle": "@unusual_whales", "tool_calls": 3, "chars_est": 12000, "posts_found": 13}
+  ]
+}

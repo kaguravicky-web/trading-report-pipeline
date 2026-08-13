@@ -12,8 +12,24 @@
 
 你是Vic的交易助理。Vic是新加坡的主动零售交易者，前投行背景，采用机构风格分析框架。
 两个账户：LongBridge + Moomoo（短线保证金账户）。
-**节奏（2026-07-22改为盘前两段式）：盘前拆成「盘前A」（白天，跑隔夜收盘+X扫描）和
-「盘前B」（SGT 16:00后，跑盘前报价+定稿渲染）两次触发；盘后照旧一次跑完。**
+**🔴节奏（2026-08-12 改回一次跑完，两段式取消）：盘前一次触发、一次跑完，
+Vic 的触发时点是 SGT 15:00-16:00。盘后照旧一次跑完。**
+
+原因是 Vic 2026-08-12 的决定：「我觉得盘前数字没什么用，我也不看盘前异动选股，
+关于盘前的全部删了吧，我打算以后3-4点就触发盘前」。**3-4 点（SGT）在美股盘前数据
+可得（16:00）之前**——两段式里段2 唯一的机械产出就是「补盘前那一列」，没有盘前数据
+它就没有存在理由。
+
+**随之退役的（全部留空壳+注明日期，没有硬删）：** `snap_premarket.py`、
+`H.patch_premarket_columns()`、`PHASE2_FIELDS` / `PHASE2_PATCH_FIELDS`、
+RS 表与持仓表的「盘前」列、ETF 表 T-1% 的「（盘前x%）」后缀、**Premarket Movers 整节**、
+`position_pm_alert` 的盘前警报。
+
+**触发它的实例（值得记住的那种）：** 2026-08-11 段2 用盘前弱势（XLE -0.25% / XOP -0.42%）
+判「更硬的消息、更弱的反应＝利多出尽」，把 OIH 从评分 4 降到 C 级——**收盘 XLE +1.25%
+是当日最强板块**。而「盘前经常是假的拉高出货」和 7/13「盘前在歇，不写成风格定性」
+**两条规则都是我们自己写进本文件的**。盘前数据的问题不是不准，是**它诱导正向推论**。
+
 详见「Claude Code 使用说明与盘前工作流」。
 
 **LongBridge不再定位"长持账户"（2026-07-15 Vic定，IHI教训）：** SYK周线形态很好、突然暴跌，
@@ -268,10 +284,13 @@ Vic本来就有LongBridge/LongPort的API Key/Secret/Access Token（之前接MCP�
 - 若目录为空或找不到当天更新的文件，标注「等待Moomoo CSV」并跳过该部分，不阻塞其他模块
 
 ### Adanos API（2026-07-04已实测确认，取代人工每日贴100条的做法）
-- API Key：<REDACTED_ROTATED_2026-08-13>
+- 🔴**API Key 不写在这里**（2026-08-13 仓库转公开时移出）。放仓库根的 `.secrets.json`（已 gitignore）
+  或环境变量 `ADANOS_API_KEY`；`scripts/fetch_market_data.py` 的 `_load_secret()` 按这个顺序取，
+  两个都没有就跳过 Adanos 并在报告里标「未取到」，**不影响整条管线**。
+  **原来的 key 曾明文写在本文件和 fetch_market_data.py 里、并进过 10 个提交的历史——已按泄露处理，务必换新的。**
 - 认证方式是 `X-API-Key` header，不是 Bearer token（OpenAPI spec: https://api.adanos.org/openapi.json 已确认）
 - 盘前触发时直接用 Bash curl：
-  `curl -s -H "X-API-Key: <REDACTED_ROTATED_2026-08-13>" "https://api.adanos.org/x/stocks/v1/trending?limit=100"`
+  `curl -s -H "X-API-Key: $ADANOS_API_KEY" "https://api.adanos.org/x/stocks/v1/trending?limit=100"`
 - 返回字段：ticker · company_name · buzz_score(0-100，热度排名依据) · trend(rising/falling) · mentions · sentiment_score · bullish_pct · bearish_pct · total_upvotes · unique_tweets · trend_history(近7天buzz_score)
 - 可选参数：`from`/`to`(YYYY-MM-DD)指定日期区间、`type`筛选资产类型，默认取最新
 - 其他相关endpoint（暂不用于选股规则，备查）：`/x/stocks/v1/market-sentiment`、`/x/stocks/v1/stock/{ticker}`、`/x/stocks/v1/trending/sectors`
@@ -325,9 +344,9 @@ gviz会丢列。已由`fetch_market_data.fetch_sp500_breadth()`自动抓进`cach
 - **live**：5项指标（新高vs新低 / 涨vs跌 / 高开走强vs走弱 / 放量涨vs放量跌 / 涨4%vs跌4%），
   每项含正向/负向/正向%/净值/信号(Strong-Positive-Neutral-Mixed-Weak)，外加 **MARKET SCORE(0-100)
   / REGIME / RISK MODE** 三个汇总判断
-- **stages**：Weinstein四阶段全量分类（Stage 1筑底 / **Stage 2上升趋势** / Stage 3顶部派发 /
-  **Stage 4下降趋势**）的只数与占比——Stage 2占比是"可买池子有多大"的直接度量，
-  Stage 3增厚=滚动派发型态（区别于Stage 4增厚的崩盘型态）
+- ~~**stages**：Weinstein四阶段全量分类~~ —— **2026-08-11 Vic 决定不要这一节了**
+  （「Weinstein 728 票全扫 用不着 stage 了，这个删除」）。helper 里
+  `sp500_breadth_tables()` 仍然返回 stage_table，但**报告不再消费**，`scan_weinstein.py` 不再每日跑。
 - **history**：近1个月逐日（newest first），含Daily Score与Stage2%/Stage4%趋势，可做广度趋势线
 **渲染**：`report_helpers.sp500_breadth_tables(cache, history_days=10)` 返回
 `(live_table, stage_table, history_table, meta)`，盘后JSON字段=`breadth_live_table`/
@@ -701,7 +720,7 @@ TICKER / 价格 / 今日% / 结构（整理中/突破中/延伸过度/系统性�
 
 ## 板块与主题RS表（自动读取，用于宏观环境模块）
 
-来源：fetch_market_data.py的cache（LongPort SDK日K计算）+ snap_premarket.py盘前快照
+来源：fetch_market_data.py的cache（LongPort SDK日K计算）。~~snap_premarket.py盘前快照~~ 2026-08-12 退役
 RS计算：RS超额 = 该标的5日% - QQQ 5日%，**表里RS列只显示1周(5日)单值**（2026-07-15 Vic两次定案：
 第一次要求"是RS不是RSI"，当天先做成"1日/5日"双值格式，同一天Vic又纠正"只看一周的，说过了"——
 全报告的RS展示统一简化为1周单值，不再显示1日）。按T-1%（当日涨跌）降序排列，选股参考RS(1周)。
@@ -887,7 +906,7 @@ LongBridge账户（**2026-07-15起不再叫"长持账户"，IHI教训见"身份�
    其余ETF那三列写"-"。🔴**Ticker顺序和成员由唯一常量 `report_helpers.INDEX_ORDER` 决定
    = `["VOO","QQQ","DIA","IWM","SMH","RSP","QQQE"]`（2026-07-28 Vic定，旧的
    SPY/RSP/QQQ/QQQE/DIA/IWM/SMH 顺序作废，SPY已全面换成VOO）。任何涉及这组ticker的表格
-   （盘前B·指数、盘前E·指数基准、盘后01收盘总结）都必须引用这个常量，不要各表各排——
+   （盘前·指数、盘前·指数基准、盘后01收盘总结）都必须引用这个常量，不要各表各排——
    QA第9条会逐表比对。（2026-07-11 Vic：AIQ从本表删除，保留在第二组RS表里跟踪即可。）
    **50MA延伸2026-07-07起改回原框架的ATR倍数口径**（fetch脚本`dist_ma50_atr`字段，真ATR14终于可算，
    之前"距50MA距离%"只是接口调不通时期的将就）——ATR倍数才能跨标的比较延伸程度：同样距50MA约4%，
@@ -900,7 +919,13 @@ LongBridge账户（**2026-07-15起不再叫"长持账户"，IHI教训见"身份�
 6. **【持仓监控（风控优先）】**：短线Moomoo + LongBridge两个账户（LB不再叫长持，同一套论点核对纪律）。
    放在宏观之后、机会扫描之前，因为「先做好风控再看机会」——Vic要先看已有仓位的风险，再看新机会
 7. **【04 盘前消息 + 本周大事】** — A今日消息·B本周大事·C行业雷达
-8. **【Premarket Movers】**（2026-07-06扩大扫描范围——之前只扫watchlist+持仓+ML Leader名单，
+8. ~~**【Premarket Movers】**~~ **🔴 2026-08-12 整节退役**（Vic：「我也不看盘前异动选股，
+    关于盘前的全部删了吧」）。字段 `premarket_movers` / `premarket_movers_note` 在模板里留空壳、
+    已进 `qa_report.RETIRED_FIELDS`；渲染层不再输出该节。
+    **选股改走方法2 setup 扫描——那本来就是选股引擎，Premarket Movers 只是个异动看板。**
+    以下为退役前的说明，保留作历史记录：
+
+    （2026-07-06扩大扫描范围——之前只扫watchlist+持仓+ML Leader名单，
     Vic指出他很多IWM小盘股是"没听过的"、不在任何预设名单里，会漏掉）：盘前最大异动标的表格
     （股票/价格/盘前变化/催化确认/板块read-through/交易判断）。**扫描范围=LongBridge全量watchlist
     （约220只）+ `reference/ETF_Holdings.csv`全部成分股（2026-07-15 Vic扩大——snap_premarket.py
@@ -1815,7 +1840,12 @@ Setup A专项对账 → X trader台账 → 03财报复盘 → 04持仓跟踪 →
    - MA列用▲（绿）/▼（红）三角，顺序=20/50/200，由`tri3()`产出、`build_ma_cell()`渲染。
    - 板块表后必须跟「强势/可持有 · 修复/需确认 · 弱势/暂避 · 小结」四件套callout（`sector_table_note`）。
 6. **【02市场广度】**（原名「02 市场广度（S&P 500 全量）」，2026-07-28 Vic改名）
-   - 「Weinstein 阶段分析（S&P 500 全量分类）」→ **改名「Weinstein 阶段分析」**。
+   - 🔴**「Weinstein 阶段分析」整节已删**（2026-08-11 Vic：「Weinstein 728 票全扫 用不着 stage 了，
+     这个删除」）。`breadth_stage_table`/`breadth_stage_note` 主动退役，渲染块已从
+     `render_postmarket` 移除，模板里留空壳带退役日期，`qa_report.RETIRED_POSTMARKET_FIELDS` 登记。
+     配套：**`scripts/scan_weinstein.py` 不再进盘后流程**（文件保留，不再每日跑）。
+     背景：这一节 7/28 起因老师那张 tab 变 400 而断了 12 个交易日，8/10 我用自建脚本补回来一次——
+     Vic 看完当天就决定不要了。**不要因为"它以前在"又把它加回来。**
    - **「近期逐日走势（newest first）」整表已删**（Vic：「整个表格删除」），
      `breadth_history_table`字段不再渲染。
    - 🔴**数据源现状（2026-07-29）**：Vic老师维护的「S&P 500 LIVE MARKET BREADTH」tab
@@ -2115,10 +2145,9 @@ Vic需要给什么会自己贴。（7/8 Vic曾问"你可以读吗"，随后自�
 
 | 触发词 | 动作 |
 |-------|------|
-| **盘前A**（或"白天那段"/"隔夜"） | 两段式第1段：隔夜收盘数据+X扫描+setup初筛，判断落进`data/daily/YYYY-MM-DD-premarket.json`草稿（`_phase:1`），**不渲染HTML**，只在对话里给Vic一段隔夜结论 |
-| **盘前B**（或"盘前数据"/"第二段"） | 两段式第2段：SGT 16:00后跑盘前报价，读段1草稿续写→`_phase:2`→渲染HTML |
-| 盘前 | 未指明段号时：先跑`python scripts/premarket_status.py`看今天跑到哪一步，再决定当作A还是B（**不要默认整份重做**） |
-| 盘后 | 收盘总结+闭环对账（**不分段，一次跑完**） |
+| **盘前** | **一次跑完**（2026-08-12 起；Vic 的触发时点 SGT 15:00-16:00）。隔夜收盘 + X扫描 + setup 扫描 + 判断 + 渲染，全部一趟做完。从 `scripts/assemble_template.py` 派生——QA 查 `_builder` 戳，手写过不了 |
+| ~~盘前A / 盘前B~~ | **2026-08-12 退役。** 两段式随盘前数据模块一起取消（原因见文件开头「节奏」）。旧报告里的 `_phase:1/2` 是历史记录，不要据此以为现在还分段 |
+| 盘后 | 收盘总结+闭环对账（**不分段，一次跑完**）。**开工第一件事跑 `python scripts/postmarket_status.py`**，然后从 `scripts/assemble_template_postmarket.py` 派生——QA 会查 `_builder` 戳，手写过不了。见「盘后也必须从模板派生」章节 |
 | 下周 | 本周回顾+下周前瞻（精简版） |
 | 一周复盘 | 深度周度复盘+下周门槛建议 |
 | 选股 | 确认最强2个单边板块，扫描LB+Adanos，输出Setup A/B候选 |
@@ -2186,13 +2215,21 @@ D:\交易为生\
                                     #   全部从cache自动填充；Claude只手写"为什么"列和判断类模块，禁止再手写整套格式化代码
   scripts\quick_quote.py            # 省token实时报价：python scripts/quick_quote.py SPY QQQ [--premarket]
                                     #   一行一只票；日常查价用它，不用MCP quote-realtime-info（那个JSON太啰嗦）
-  scripts\snap_premarket.py         # 盘前快照（2026-07-13建）：watchlist全量盘前quote→data/cache/premarket_YYYYMMDD.json
+  scripts\snap_premarket.py         # ~~盘前快照~~ **2026-08-12 退役**（盘前数据模块整体下线），脚本留档不进流程
                                     #   含pm_stale时间戳校验+|7%|MOVER标注，盘前必跑（Premarket Movers+各表盘前列都吃它）
   scripts\fetch_earnings_calendar.py # 财报日历扫描（2026-07-15建，"不要偷懒"修复）：Nasdaq公开API×followed
                                     #   universe取交集，盘前跑（不带--date，看未来7天）+盘后跑（--date当天，
                                     #   03财报复盘强制核对清单）→data/cache/earnings_calendar_YYYYMMDD.json
   scripts\premarket_status.py       # 🔴盘前两段式体检表（2026-07-22建）：每天开工第一件事跑它——
-                                    #   段1五个产物齐了没/草稿_phase是几/段2还缺哪些字段/pm_stale比例/下一步
+                                    #   2026-08-12 起只回答「今天的前置数据齐了没」；段2/pm_stale 那几段是历史残留
+  scripts\postmarket_status.py      # 🔴盘后开工体检表（2026-08-11建）：**盘后会话第一件事跑它**——
+                                    #   cache口径日/前置脚本/当天盘前ledger几条/台账待评定/无止损仓位，
+                                    #   末尾固定打印模板提醒（盘前模板失效的第②个原因就是没有这样一个入口）
+  scripts\assemble_template_postmarket.py  # 🔴盘后JSON组装模板（2026-08-11建，Vic："我们以后都用builder跑"）：
+                                    #   每天复制到scratchpad改名assemble_post_YYYYMMDD.py，改DAY/CACHE_KEY，
+                                    #   只填"### 手写 ###"；骨架（指数/板块/软件三表、50MA距离、市宽、SetupA台账、
+                                    #   X台账、持仓+拆账户、仓位治理、代理RS、对账plan/prob）全部机械生成。
+                                    #   **它是盘后字段集的唯一真源**，QA第29条「盘后字段集==模板字段集」直接解析它
   scripts\assemble_template.py      # 盘前JSON组装模板（2026-07-13沉淀）：每天复制到scratchpad改名assemble_YYYYMMDD.py，
                                     #   只填"### 手写 ###"判断区；骨架/字段格式已与渲染器对齐（badges必须[]、
                                     #   x_sentiment必须dict等gotcha写在文件头注释）——不要每天从旧JSON反查格式
@@ -2276,7 +2313,7 @@ FTD 8/6 暂停后 `ftd_table` 变空表，把整个「02 市场广度」连同 n
 - A/B/C候选**必须**写进 `watchlist_abc`（每条带 `grade: A/B/C`），不要再用
   `watchlist_a` / `watchlist_b_table` / `watchlist_c`——那三个字段现在会直接抛异常
 - **指数一律用 `report_helpers.INDEX_ORDER`**（VOO/QQQ/DIA/IWM/SMH/RSP/QQQE），
-  **全报告用VOO不用SPY**；三处指数表（盘前B·指数、盘前E·指数基准、盘后01收盘总结）必须一致
+  **全报告用VOO不用SPY**；三处指数表（盘前·指数、盘前·指数基准、盘后01收盘总结）必须一致
 - **红绿灯emoji不用自己收着**：`esc()`会在渲染层统一剥掉。严重度用CSS表达
   （badge配色／callout kind／sign_class涨跌色／色条），不要再往文本里塞🔴🟢✅❌
 - **配色语义**：**黄** = 怎么做/规则（核心纪律、今日定位、核心结论、Market Leader方法论）；
@@ -2330,7 +2367,8 @@ Vic明确喜欢这套淡雅色，不要换回鲜艳的原色。**黄色已彻底
 ## 🔴 盘前两段式工作流（2026-07-22 Vic定：「盘前报告我想每次分两段跑，白天跑隔夜收盘和x账号，4点后跑盘前数据」）
 
 **为什么要分：** 美股盘前报价 **SGT 16:00 之后才有**（16:00 SGT = 04:00 ET，美股premarket开始）。
-16:00之前跑`snap_premarket.py`拿到的是上一时段的残留数据，涨跌方向都可能算反（2026-07-11踩过）。
+~~16:00之前跑`snap_premarket.py`拿到的是上一时段的残留数据，涨跌方向都可能算反（2026-07-11踩过）。~~
+**2026-08-12 起这条不再适用**——盘前数据模块整体退役，报告不再取盘前报价，所以也不存在「跑早了拿到残留数据」这个失败模式。
 而隔夜收盘数据（美股04:00 SGT收盘）和X账号的隔夜发帖，白天就已经全部就绪——早跑早看，
 不用堆在晚上一次做完。
 
@@ -2349,134 +2387,56 @@ pm_stale比例（16:00前跑必然全是残留）/ 下一步该干嘛。**Vic说
 
 ---
 
-### 段1「盘前A」——白天（SGT 09:00-15:00），跑隔夜收盘 + X扫描
+### 盘前工作流（2026-08-12 起一次跑完；触发时点 SGT 15:00-16:00）
 
-1. 读CONTEXT.md确认框架有无更新
-2. `python scripts/fetch_market_data.py`（禁止心算；**校验输出的`data_date`必须是上一交易日，
+**为什么不再分段**：见本文件开头「节奏」。一句话——Vic 3-4 点触发，那时没有美股盘前数据，
+段2 唯一的机械产出（补盘前列）不存在了。**旧报告里的 `_phase:1/2` 是历史记录。**
+
+1. 读 CONTEXT.md 确认框架有无更新
+2. `python scripts/fetch_market_data.py`（禁止心算；**校验 `data_date` 必须是上一交易日，
    不能等于今天**——等于今天说明跑在美股收盘前，拿到的不是完整收盘数据），
-   然后`H.load_tradebook_positions()`拿当前持仓；周一另外用`gate_reference`重算本周闸门线请Vic确认
-3. `python scripts/fetch_earnings_calendar.py`（不带--date，看今天+未来6天）
-4. `python scripts/scan_semis_rsi.py`（每次盘前/盘后都要重跑，池子随RSI滚动）
-5. `python scripts/scan_setups.py --sectors XL?,XL?`（方法2引擎，先看单边榜挑2个最强板块）
-6. curl Adanos Top100（失败则WebFetch公开页）
-7. curl FRED（10Y/2Y/VIX）+ Vic主Google Sheet 5个tab + S&P500全量市宽tab(gid=90181001)
-   + Stockbee公开表(T2108/5日10日ratio) + investing.com(DXY) + CNN Fear&Greed
-   + Vic自建宏观Sheet；WebSearch补本周宏观日历
-8. curl SEC官方13D/13G atom订阅（type=13D和type=13G各一次）
-   🔴**13F 不在这一步——它是季度性的，按日历扫（2026-08-07 Vic：「13F是季节性的，本来就是定日子扫」）：**
-   - **申报截止 = 季度末 + 45天**：Q1→**5/15**、Q2→**8/14**、Q3→**11/14**、Q4→**2/14**
-   - **机构不会都卡在截止日报**，实测 2026-08-07（截止前 5 个交易日）11:59 EDT 已有多家在报
-     → **截止日前一周到后三天是密集期，这几天每天扫；其余时间不扫**
-   - 接口：`browse-edgar?action=getcurrent&type=13F-HR&output=atom`（UA 要带邮箱，实测可用）
-   - **这四个日子要主动进宏观雷达/周历**，不要等到那天才想起来
-   - **跟 13D/13G 不是同一类东西，不要混**：13D/13G 是事件驱动（5%持股变动10天内申报），
-     没有固定日子、每天扫成本低但**产出稀疏是常态**，返回「无」不代表流程有问题；
-     13F 是定期快照，**只在那几个日子附近才有东西**，平时天天扫是浪费
-9. ~~curl FINRA做空成交量 + 做空比例API + iborrowdesk借券费率~~ **这个步骤 2026-08-07 起删除**——
-   轧空每日扫描已暂停（见「轧空扫描」节），报告里渲染成「暂停」标记。
-   **只在 Vic 点名某只票时才查**，用 FINRA 两个源现算（iborrowdesk 已死，不要再试）
-10. **X扫描**（方案A：派`model:"sonnet"`子代理读「X 观点池」章节方法论执行，13个账号逐个
-    `from:账号名`单独搜索，组合搜索已退休），结果写`data/cache/x_scan_YYYYMMDD.json`；
-    本session读cache组装`x_sentiment_macro`/`x_sentiment_stocks`并写`x_sentiment_note`
-11. X扫描中被点名的票补录进`data/x_watch.json`（**`ref_price`必填，用提及日前最后收盘**——
-    2026-07-22发现有6条一直是空的，导致"自提及%"整列开天窗、也不参与"去弱留强"过滤，等于从没计过分）
-12. **把段1能定稿的字段写进草稿并落盘**：
-    ```python
-    H.save_premarket_draft(DAY, out, phase=1, note="给Vic的隔夜结论摘要")
+   然后 `H.load_tradebook_positions()` 拿当前持仓；
+   周一另外用 `gate_reference` 重算本周闸门线请 Vic 确认
+3. `python scripts/fetch_earnings_calendar.py`（不带 --date，看今天+未来 6 天）
+4. `python scripts/scan_semis_rsi.py`（每次盘前/盘后都要重跑，池子随 RSI 滚动）
+5. `python scripts/scan_setups.py --sectors XX,YY`（方法2 引擎，先看单边榜挑 2 个最强板块）
+6. curl Adanos Top100（失败则 WebFetch 公开页）
+7. curl FRED（10Y/2Y/VIX）+ Vic 主 Google Sheet 5 个 tab + S&P500 全量市宽 tab
+   + Stockbee 公开表 + investing.com（DXY）+ CNN Fear&Greed + Vic 自建宏观 Sheet；
+   WebSearch 补本周宏观日历
+8. curl SEC 官方 13D/13G atom 订阅（各一次）。
+   **13F 按日历扫**：申报截止 = 季度末+45 天（5/15、8/14、11/14、2/14），
+   截止日前一周到后三天每天扫，其余时间不扫
+9. ~~FINRA 做空数据~~ 2026-08-07 起删除（轧空每日扫描已暂停，只在 Vic 点名时现查）
+10. **X 扫描**（派 `model:"sonnet"` 子代理读「X 观点池」章节方法论执行，13 个账号逐个
+    `from:账号名` 单独搜索），结果写 `data/cache/x_scan_YYYYMMDD.json`；
+    本 session 读 cache 组装 `x_sentiment_macro` / `x_sentiment_stocks` / `x_sentiment_note`
+11. X 扫描中被点名的票补录进 `data/x_watch.json`（**`ref_price` 必填**，用提及日前最后收盘）
+12. **从模板派生、一次跑完**：
     ```
-    **段1不渲染HTML**（缺盘前列的半成品报告没有阅读价值，还会覆盖掉索引）。
-13. 在对话里给Vic一段**隔夜结论**（不是完整报告）：收盘定性 / 记分板与档位有无变化 /
-    X扫描的关键点名和分歧 / 机器筛出的候选池初稿 / 今晚要盯的财报和宏观事件。
-    这是段1的实际交付物，Vic白天就能读。
+    copy scripts\assemble_template.py  ->  scratchpad\assemble_YYYYMMDD.py
+    python assemble_YYYYMMDD.py                      # 只填 ### 手写 ### 的判断区
+    python scripts/render_report.py data/daily/YYYY-MM-DD-premarket.json
+    ```
+    **QA 会查 `_builder` 戳，手写 out = {...} 过不了。**
+13. 把文件路径给 Vic + 对话里给一段精简摘要（**不要贴整份报告**）
 
-### 段2「盘前B」——SGT 16:00之后（**建议18:00-20:00**），跑盘前报价 + 定稿
+**🔴 没有盘前数据之后，哪些判断要换依据：**
 
-⚠️**16:00只是数据可得的下限，不是推荐时点。** 16:00的美股盘前流动性极薄、报价噪音大，
-离21:30开盘还有5.5小时，结论到开盘时大概率已经变了。建议18:00-20:00跑，既有足够的
-盘前成交、又给Vic留出开盘前的准备时间。
+| 原来靠盘前的 | 现在靠什么 |
+|---|---|
+| 信号灯 bias 那格写「盘前动向」 | 写**隔夜收盘定性**（收盘区间 / 量比 / 板块分化） |
+| Premarket Movers 选异动 | **退役**。选股走方法2 setup 扫描（Vic：「我也不看盘前异动选股」） |
+| 持仓盘前警报（|盘前%|≥3 或量比≥10%） | **距止损 <0.7ATR 的撤单清单**（已有，`stop_proximity`） |
+| 退出执行表的「盘前判定」 | **时间驱动的分批计划**（v4，2026-08-11 定，无价格条件） |
+| 「段1 判 X → 段2 见 Y」的时间戳 | 不再需要——判断只有一个时点 |
 
-1. `python scripts/premarket_status.py` 确认段1齐了、且现在确实过了16:00
-2. `python scripts/snap_premarket.py`（**先看输出里的pm_stale比例**——过半stale就是跑早了，
-   等一等重跑，不要硬着头皮往下做）；个别缺失的标的（SPY等）才用`quote-realtime-info`单独补
-3. `draft, warns = H.load_premarket_draft(DAY)` 读段1草稿，**把warns念给Vic听**
-4. **不要重跑`fetch_market_data.py`**——收盘数已定，重跑只是浪费，而且会往
-   `signal_history.json`里塞重复条目
-5. WebSearch补段1之后新增的新闻（`news_today`），Trump帖子/重大宏观优先
-6. 填`PHASE2_FIELDS`：信号灯bias格的盘前动向、RS表和ETF表的「盘前」列、持仓盘前雷达、
-   Premarket Movers、setup许可与A/B/C分级、情景分析（带prob）、核心结论、今日定位、
-   **`recon_ledger`（5-8条可证伪claim，这是盘后对账的唯一依据）**
-7. `H.sync_candidate_track(DAY, out.get("watchlist_abc"), out.get("watchlist_a"))` 写Setup台账
-8. `H.save_premarket_draft(DAY, out, phase=2)` → `python scripts/render_report.py data/daily/YYYY-MM-DD-premarket.json`
-9. 把文件路径告诉Vic + 对话里给精简文字摘要
+**仍然有效、不要因为这次改动一起丢掉的：**
+- **「盘前抢跑不改档位」**（7/21 立，至今 3/3）——它现在管的是 **Vic 自己盘中看盘**的纪律，
+  不再是报告模块。解禁/降级**都要收盘信号**。
+- **「盘前经常是假的拉高出货」**（7/13）——这条现在更重要了：**Vic 盘中会看到盘前和开盘，
+  报告不看不等于他不看。**
 
-**段1和段2的判断冲突怎么办：** 以段2为准，但**必须在报告里写出来哪里变了、为什么**
-（例：段1判"半导体待确认"、段2盘前+3%——不是直接改口，要写"段1基于收盘的判断是X，
-段2盘前出现Y，据此调整为Z"）。这是两段式相对一次跑完唯一多出来的成本，也是它的价值：
-判断的时间戳变得可追溯了。
-
----
-
-**（历史参考）2026-07-22之前的一次性盘前流程，步骤如下：**
-
-1. 读取本文件（CONTEXT.md）确认框架与规则是否有更新
-2. **先跑 `python scripts/fetch_market_data.py`**（全部数字指标一次算好，禁止心算），
-   然后调`H.load_tradebook_positions()`拿当前持仓（2026-07-16起只扫描`data/tradebook.json`，
-   见「持仓论点跟踪」——不再读data/positions.json、不再查LongBridge MCP持仓、不再读moomoo CSV）；
-   周一另外用cache里的`gate_reference`重算本周闸门线并请Vic确认
-2b. **跑 `python scripts/snap_premarket.py`**（2026-07-13起替代MCP批量盘前quote：全watchlist盘前价一次写进cache，
-   自带stale校验和MOVER标注）；个别snap缺失的标的（SPY等）才用 `quote-realtime-info` 单独补
-2d. **跑 `python scripts/fetch_earnings_calendar.py`**（2026-07-15新增，不要偷懒——见「财报日历扫描」）：
-   拿今天+未来6天followed universe里谁要报财报，命中的名单写进「04盘前消息」B·本周大事，
-   今天pre-market就报的额外提醒"开盘前有财报催化剂"
-3. Bash curl Adanos API 取 Top100（失败则 WebFetch 公开页面）
-4. Bash curl FRED 取 10Y/2Y/VIX；curl 导出 Google Sheet 5个tab（Market/Thematic Sectors/Macro/Maket breath/Weekly Expected Move）+ Stockbee公开表（T2108/5日10日ratio）；curl investing.com 取 DXY/VIX9D（核对lastUpdateTime，MOVE已删除不用再抓）；curl CNN官方接口取Fear & Greed；WebSearch 补本周宏观日历；如遇具体宏观事件（Fed/CPI等）顺手curl Polymarket Gamma API查相关市场概率作交叉验证
-5. Bash curl SEC官方13D/13G atom订阅（type=13D和type=13G各curl一次），筛出与持仓/ML Leader/Watchlist相关的filer
-6. Bash curl FINRA做空成交量文件 + FINRA做空比例API + iborrowdesk借券费率（只查ML Leader名单+Watchlist候选+持仓相关标的，不做全市场扫描），凑齐轧空扫描三要素
-7. **X扫描（「扫描/判断分工方案A」，见「X 观点池」章节末尾，2026-07-16正式采用）：** 用Agent工具派一个
-   `model:"sonnet"`子代理去读CONTEXT.md「X 观点池」章节方法论并执行完整扫描（**13个账号
-   （2026-07-21 @congresstrading移出后从14减为13）全部逐个单独`from:账号名`搜索，组合搜索已退休**，
-   2026-07-16修正——连宏观类5账号组合搜索也不可靠），
-   结果写`data/cache/x_scan_YYYYMMDD.json`；本session（判断层）读这个cache组装`x_sentiment_macro`/
-   `x_sentiment_stocks`（补`aligned`判断）并写`x_sentiment_note`综合判断，不重新驱动浏览器。
-7b. X扫描中被点名的票补录进 `data/x_watch.json`（日期/账号/ticker/提及前最后收盘价），并默认列为当日B级候选
-8. 向用户确认无法自动获取的数据（国会议员交易继续标「待接入」；其余广度/利率/情绪指标目前均已有自动来源）
-9. 按 `templates/data_schema.md` 的字段整理成 `data/daily/YYYY-MM-DD-premarket.json`（含单边扫描排行榜、
-    带论点检查列的持仓表）
-10. 执行 `python scripts/render_report.py data/daily/YYYY-MM-DD-premarket.json`，生成 `output/premarket/YYYY-MM-DD-premarket.html`
-11. 把生成文件路径告诉用户，同时在对话里给出精简文字版摘要
-
-**每次触发「盘后」时，Claude Code按以下步骤执行：**
-
-1. 读取本文件确认框架
-1b. **先跑 `python scripts/fetch_market_data.py`**——收盘位置%/index_table（合体盘中区间表）、5日/1月、
-    命中率滚动统计、X台账定价、信号灯结果回填全部由它算好，从cache取数
-1c. **跑 `python scripts/fetch_earnings_calendar.py --date YYYY-MM-DD`**（当天日期，2026-07-15新增，
-    不要偷懒——见「财报日历扫描」）：拿followed universe里今天真的报了财报的名单，这是03财报复盘的
-    **强制核对清单**，命中的每一只都要WebSearch确认实际EPS/营收/涨跌，不能只写"恰好发现"的那几只，
-    也不能凭印象假设某只"应该报了"（2026-07-14 ISRG教训：记错成已经报了财报，实际排在7/16）
-2. 同上数据源（Google Sheet/Stockbee/FRED/investing.com/CNN）取当日收盘版本的广度与利率数据
-2a. **S&P500全量市宽**（2026-07-21新增）：fetch脚本已自动写进`cache["sp500_breadth"]`，
-    调`H.sp500_breadth_tables(cache)`拿三张表填进`breadth_live_table`/`breadth_stage_table`/
-    `breadth_history_table`，渲染成「02 市场广度」节。三条note要自己写判断（综合分趋势/Stage 2缩放
-    的选股含义/快照vs结算行的口径分歧），见「S&P 500 全量市宽仪表盘」章节
-2b. **调`H.load_tradebook_positions()`拿当前持仓**（2026-07-16起只扫描`data/tradebook.json`，
-    不再调LongBridge MCP查positions/executions、不再读moomoo CSV、不再做"盘前快照vs盘后CSV"的
-    新仓侦测——Vic自己在TradeBook里同步记录，Claude不再承担"发现漏录仓位"这个角色，代价和已知
-    缺口见「持仓论点跟踪」章节）。对tradebook里的ticker，现价优先查`cache["metrics"]`，查不到
-    （不在~88只窄universe里的个股）就用quick_quote.py/LongPort SDK现查一遍传进`extra_price_lookup`
-    （跟Setup A专项对账现价修复同一个模式，见「Setup A专项对账」章节）。逐仓核对论点/失效条件
-    （尤其事件驱动仓的事件是否已过期兑现）
-3. 找到当天对应的 `data/daily/YYYY-MM-DD-premarket.json`（若存在），逐条对比盘前预判与收盘实况，生成 `recon_rows`（result取 hit/partial/miss/not_triggered/unplanned五选一，unplanned专指「计划外建仓」；
-   **TradeBook里`mentor:true`的交易不计入unplanned/零新仓类判定，见"关键执行纪律"第3条例外**）
-4. 命中率直接用cache里的`hit_stats`（fetch脚本已扫全部历史postmarket JSON算好本周/30日滚动）
-5. 按 `templates/data_schema_postmarket.md` 的字段整理成 `data/daily/YYYY-MM-DD-postmarket.json`
-6. 执行 `python scripts/render_report.py data/daily/YYYY-MM-DD-postmarket.json`，生成 `output/postmarket/YYYY-MM-DD-postmarket.html`
-7. `tradebook_block` 字段照旧生成（现在它会被build_tradebook.py自动导入本地TradeBook的每日总结，Vic无需再复制）
-7b. 跑 `python scripts/build_tradebook.py` 刷新 `output/tradebook.html`（自动导入当日总结+更新交易legs后的R统计）；
-    当日若有新成交（LB executions/Moomoo CSV对比发现），先把legs更新进`data/tradebook.json`再跑
-8. 把生成文件路径告诉用户，同时在对话里给出精简文字版摘要
-
----
 
 ## 对账必须带事前概率（2026-08-08 定，8/10 起前瞻生效）
 
@@ -2683,6 +2643,52 @@ QA 的「盘前字段集 == 模板字段集」直接解析 `assemble_template.py
 · **退役字段在模板里留空壳 + 注明退役日期**，不要直接删——
   否则分不清「主动退役」和「漂移丢失」（`futures_table` 就是 2026-07-11 主动退役的，
   我一度误判成漂移牺牲品）
+
+## 🔴 盘后也必须从模板派生（2026-08-11 Vic 定：「我们以后都用 builder 跑」）
+
+**模板 = `scripts/assemble_template_postmarket.py`。** 每天复制到 scratchpad 改名
+`assemble_post_YYYYMMDD.py`，改 `DAY` / `CACHE_KEY`，只填 `### 手写 ###`。
+
+**为什么盘前有了还要给盘后单独建一个**：盘后此前用的是另一条规则「继承前一天的 JSON」——
+**它只防得住「少字段」，防不住「前一天本身就是错的」**。`breadth_stage_table` 从 2026-07-28 起
+断了 12 个交易日没人发现，正是因为每天都在继承一份已经缺了它的 JSON。
+**模板 + 「盘后字段集 == 模板字段集」这条检查才是闭环。**
+
+**Vic 记得做过 postmarket builder，核查结果：没有。** 真实情况是同一套骨架
+（`TBL` + `row()` + 手填判断）在 scratchpad 里被**逐日重写**过至少四次
+（8/6 两份、8/7、8/10），从来没有被提升进 `scripts/`——
+所以"感觉做过"是真的，"有一份能复用的"是假的。这正是盘前那个
+「模板残缺 → 用它反而丢字段 → 更不用 → 更过期」循环的盘后版本。
+
+**模板机械生成的部分**（不用手写，也就不会写错）：指数/板块/软件三张七列表、50MA距离、
+Stockbee 市宽五行、Setup A 台账（含 helper→报告的列序转换）、X 台账、持仓两表 + 按账户拆分、
+仓位治理、代理相对强弱、**对账 plan/prob 从当天盘前 `recon_ledger` 机械复制**（prob 盘后不许改）。
+
+**模板自带的硬闸**：`cache["data_date"] != DAY` 直接退出（价格必须来自口径日的 cache）；
+盘前 B 漏跑 `sync_candidate_track` 时自动补录并打印警告，提醒手工按真正的信号日复核失效位。
+
+**踩到的坑（已修）**：模板用 `Path(__file__).parent.parent` 推 ROOT，一复制到 scratchpad 就
+`ModuleNotFoundError`——盘前模板至今是这个毛病，所以每天都得手改路径。两份模板现在都写死
+`ROOT = Path(r"D:\交易为生")`。
+
+### 🔴 三道锁：回答「这次不会丢了吗」（2026-08-11 Vic 问）
+
+**光有一个文件保不住它。** 盘前模板 2026-08-10 失效有三个机械原因，逐条对上：
+
+| 盘前当时的失效原因 | 盘后这次怎么堵的 |
+|---|---|
+| ①模板只在文件清单里被提到一次（那是目录说明不是流程规则） | 写进流程章节（本节）+ 触发词表「盘后」那一行 |
+| ②`premarket_status.py` 自己写着"开工先跑"却一个字不提模板 | 新建 **`scripts/postmarket_status.py`**，**盘后开工第一件事跑它**，末尾固定打印模板提醒；顺带体检 cache 口径日/前置脚本/盘前 ledger/台账待评定/无止损仓位 |
+| ③模板停更 → 用它反而丢字段 → 更不用 → 更过期 | QA「盘后字段集 == 模板字段集」双向查：多字段=自造（红）、少字段=缺失（红）。**模板一漏字段第二天就红** |
+
+**外加一道盘前当时没有的**：字段集检查只查**字段名**，手写 `out = {...}` 把 46 个键抄齐照样能过。
+所以两份模板都往 JSON 盖 **`_builder` 戳**（`_` 开头，不进字段集检查），QA：
+- **抬头每次固定打印一行 `builder: 用了 / 没用 / 无戳豁免`**（2026-08-11 Vic：「qa里面写问 有没有用builder」）
+  ——通过项默认不打印，所以这条必须提到抬头，它回答的是「这份报告是怎么来的」，不是「格式对不对」
+- 2026-08-11 及之后的盘前/盘后报告**没戳直接判失败**；之前的报告豁免（回头补戳等于伪造记录）
+
+**反例测试在 `scripts/test_qa_checks.py`**（现在 3 组 17 例）——新加 `@check` 必须配至少一个
+「该抓」和一个「不该抓」，否则就是又加了一条自我感觉良好的检查。
 
 ## 盘后对账清单：最多 5 条，不放个股（2026-08-10 Vic 定）
 

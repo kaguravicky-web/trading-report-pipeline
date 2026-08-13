@@ -685,12 +685,17 @@ function tradeForm(t){
 }
 
 // 复盘（2026-08-08合并：原来"卖后复盘"标题下面还有个"卖后结果"标签，同一件事写了两行，Vic抓到了）。
-// 复盘周期：Vic定"3天/1周/2周，过了2周任何复盘数据就没有意义了"。
-const REVIEW_WINDOWS = [["3d","3天"],["1w","1周"],["2w","2周"]];
+// 复盘周期：原为3天/1周/2周；2026-08-11 Vic改成**只看3天和5天**。
+// 旧的1w/2w已有7笔选过（5笔1周、2笔2周），不删也不硬改成新值——把旧标签当成额外一个按钮
+// 显示出来（灰色标"旧"），数据看得见、点一下能取消，不至于变成看不见的孤儿。
+const REVIEW_WINDOWS = [["3d","3天"],["5d","5天"]];
+const LEGACY_WINDOWS = {"1w":"1周","2w":"2周"};
 function reviewBlock(t){
   const oc = outcomeFromReview(t.review);
   const win = t.review.window || "";
-  const winSeg = '<div class="seg">'+REVIEW_WINDOWS.map(([v,l])=>
+  const opts = REVIEW_WINDOWS.slice();
+  if(LEGACY_WINDOWS[win]) opts.push([win, LEGACY_WINDOWS[win]+"·旧"]);
+  const winSeg = '<div class="seg">'+opts.map(([v,l])=>
     '<button type="button" class="segbtn'+(v===win?' on':'')+'" onclick="setReviewWindow(\''+t.id+'\',\''+v+'\')">'+l+'</button>').join('')+'</div>';
   return '<div class="dslabel" style="margin-top:12px">复盘</div>'
     +'<div class="frow">'
@@ -1304,8 +1309,6 @@ function render(){
     // （2026-08-07 Vic："每次补完一笔就跳回已平仓，又要再回去待补齐"）
     const editingTrade = editing ? state.trades.find(x=>x.id===editing) : null;
     body = '<h2>待补齐</h2>'
-      +'<p class="placeholder" style="margin:0 0 10px">已平仓但还缺主观字段的交易，行内直接选，改完点顶栏「💾保存」。'
-      +'日内不要求setup/逻辑/复盘，跟单不要求逻辑和执行质量。复盘只在平仓后第'+REVIEW_DUE_DAYS+'~'+REVIEW_DEAD_DAYS+'天之间催，过了'+REVIEW_DEAD_DAYS+'天就不再算欠账。实在不知道的就留空，别硬填。</p>'
       +(editingTrade ? tradeForm(editingTrade) : '')
       // 正在编辑的那笔从表格里摘掉——否则同一笔会有两套输入控件（表单里的和行内的），
       // commitEdit和updateTodoField会互相覆盖

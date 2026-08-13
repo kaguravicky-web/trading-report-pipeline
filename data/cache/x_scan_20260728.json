@@ -1,0 +1,261 @@
+{
+  "generated_at": "2026-07-28T13:51:22.048602+08:00",
+  "macro": [
+    {
+      "handle": "KobeissiLetter",
+      "time": "Jul 27",
+      "summary": "US and Iran halt strikes: S&P 500 futures +0.7%, Nasdaq futures up on ceasefire headlines; WTI oil crashes over -8% same day amid new negotiation reports"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "Jul 27",
+      "summary": "S&P 500 net profit margin on track to surge to 15.7% for Q2 2026, the highest in years"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "Jul 27",
+      "summary": "NVDA in talks with OpenAI to guarantee $250B in financing for an Ohio data center (SoftBank SB Energy also involved)"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "Jul 27",
+      "summary": "China's chip exports hit a record ~$29B over the last 12 months; AI demand becoming a key driver of China's economy"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "Jul 27 (16h ago)",
+      "summary": "Chinese memory chipmaker CXMT closed +465% on its IPO first day, market cap jumped from $85.5B (IPO) to near $500B"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "14h ago",
+      "summary": "S&P 500 erased all gains and turned red on the day as chip stocks fell (7/27 session reversal)"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "15h ago",
+      "summary": "Global investors have never been this heavily invested in the equity market - equity allocations at record highs"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "13h ago",
+      "summary": "Trump says he is ready for 'strong military action' if Iran talks fail, per Axios"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "12h ago",
+      "summary": "China now accounts for ~28% of global manufacturing value-add, more than any other country/economy"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "10h ago",
+      "summary": "SNDK extends losses to over -14% on the day, now down -47% from its June 22 record high"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "10h ago",
+      "summary": "Saudi Arabia's East-West oil pipeline becoming a critical route for Asian oil supply, bypassing the Strait of Hormuz"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "8h ago",
+      "summary": "China's crude oil imports estimated +26% MoM in July to ~7.8M barrels/day, rebounding from June's post-Iran-war slump"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "4h ago",
+      "summary": "South Korea's stock market (KOSPI) falls nearly -8% as the global chip stock selloff accelerates"
+    },
+    {
+      "handle": "KobeissiLetter",
+      "time": "3h ago",
+      "summary": "Asian private credit industry struggling - Asian private credit funds raised just $1.2B (weak fundraising)"
+    },
+    {
+      "handle": "zerohedge",
+      "time": "~3-4h ago",
+      "summary": "Goldman trading desk note: 'continued unwind price action to start the week with pressure on Momentum Factor -7%'"
+    },
+    {
+      "handle": "zerohedge",
+      "time": "4h ago",
+      "summary": "Snark at Nvidia over 'circular financing' deals blowing up the bond market; quoting own earlier post: 'hyperscaler bond meltdown' continues, unprecedented carnage in AI investment-grade CDS, another ~3bps sweep wider"
+    },
+    {
+      "handle": "zerohedge",
+      "time": "4-5h ago",
+      "summary": "Japan's Nikkei and South Korea's KOSPI tumble as chip shares slump; KOSPI trading halted 20 minutes after an 8% decline, later reported down 7% to 6281.46 (earlier -6.1% to 6343.87)"
+    },
+    {
+      "handle": "zerohedge",
+      "time": "3h ago",
+      "summary": "Headline: 'Utility Profits In The Crosshairs Amid Affordability Concerns'"
+    },
+    {
+      "handle": "spotgamma",
+      "time": "Jul 27",
+      "summary": "Thursday's selloff was a 'warning shot' - FOMC meeting and Big Tech earnings collide this week (linked article 'Big Tech Earnings and FOMC Collide'); flagged as a notable-events pileup ahead"
+    },
+    {
+      "handle": "NickTimiraos",
+      "time": "4h ago",
+      "summary": "NEW (WSJ scoop): At dinner after day one of his first FOMC meeting as Fed chair, Kevin Warsh told his 18 colleagues he is launching five task forces to rethink how the Fed reads the economy; when Chris Waller asked the point, Warsh said 'name who's on them and I'll tell you what they'll say'"
+    },
+    {
+      "handle": "NickTimiraos",
+      "time": "4h ago",
+      "summary": "Warsh had to persuade the most rate-cut-hungry president in modern memory to give him the Fed chair job; now must convince the 18 FOMC members to abandon old intellectual habits he thinks led them astray - 'the first test comes Wednesday' (i.e. 7/29 FOMC). From WSJ piece 'Kevin Warsh Wanted a Good Family Fight at the Fed. He's Getting One.'"
+    },
+    {
+      "handle": "charliebilello",
+      "time": "9h ago",
+      "summary": "Google (GOOGL) earned $112B in Q2, the highest quarterly net income for any company in history, but posted negative free cash flow of -$5.9B driven by massive capex"
+    },
+    {
+      "handle": "charliebilello",
+      "time": "11h ago",
+      "summary": "CXMT IPO called 'one of the biggest mispricings in market history' at the 8.66 yuan offer price"
+    },
+    {
+      "handle": "charliebilello",
+      "time": "11h ago",
+      "summary": "After a 466% first-day pop, CXMT is worth $484B - most valuable memory-chip maker"
+    },
+    {
+      "handle": "charliebilello",
+      "time": "14h ago",
+      "summary": "Chipmaker valuations are now higher than they were at the peak of the dot-com bubble"
+    },
+    {
+      "handle": "charliebilello",
+      "time": "14h ago",
+      "summary": "SK Hynix US-listed ADR ($SKHY) ended last week trading at a 29% premium to the same shares in Korea - flagged as a notable dislocation (cross-check: contradicts aleabitoreddit's earlier bullish 'SK Hynix ADR arbitrage' framing - premium looks stretched, not cheap)"
+    }
+  ],
+  "stocks": [
+    {
+      "handle": "bluechipdaily",
+      "time": "12h ago",
+      "ticker": "GEV/CAT/QQQ",
+      "note": "Booked partial gains: GEV +44% (high as +64%), CAT +20% (high as +26%); took a loss on QQQ -8.7%; made 4 new buys on members site"
+    },
+    {
+      "handle": "bluechipdaily",
+      "time": "15h ago",
+      "ticker": "GLW",
+      "note": "Fully closed GLW position (sold at $268 = +83% on 6/30, closed remainder this AM); notes stock now putting in a lower low"
+    },
+    {
+      "handle": "bluechipdaily",
+      "time": "15h ago",
+      "ticker": "SNDK",
+      "note": "SNDK putting in a lower pullback low, sitting on the 100-SMA; had sold at $2167/$2005 in June and closed the rest out at $1411 in July on members site - locked in gains well before the deeper collapse Kobeissi flagged same day"
+    },
+    {
+      "handle": "WalterDeemer",
+      "time": "12h ago",
+      "ticker": "",
+      "note": "Warns about AI 'circular funding' chatter; draws analogy to 2007-08 credit default swaps as an early warning signal, says CDS need to be watched carefully now, cites @zerohedge as a good source for this - directly echoes zerohedge's same-day 'hyperscaler bond meltdown / AI IG CDS widening' post (cross-confirmation between two macro/setup accounts)"
+    },
+    {
+      "handle": "WalterDeemer",
+      "time": "Jul 26",
+      "ticker": "QQQ",
+      "note": "Thursday's (7/23) QQQ gap at 703.62 will remain unfilled over the weekend; notes no urgency to fill it yet"
+    },
+    {
+      "handle": "WalterDeemer",
+      "time": "Jul 23-24",
+      "ticker": "SPY/QQQ",
+      "note": "SPY would need to rally to 746.37 and QQQ to 703.62 to fill the morning gaps; how quickly (or whether) the gaps get filled is his tell for market direction"
+    },
+    {
+      "handle": "BillAckman",
+      "time": "Jul 27",
+      "ticker": "FNMA/FMCC",
+      "note": "'On Fannie Freddie, an important read. Bullish.' - endorsing a thread arguing a D.C. Circuit affirmance effectively cancels the SPS (senior preferred stock) conversion overhang"
+    },
+    {
+      "handle": "ohiain",
+      "time": "2h ago",
+      "ticker": "HPE/NTAP/DELL/ABBV/MRK/LLY",
+      "note": "'Only weekly names really holding my attention' - HPE, NTAP, DELL plus healthcare ABBV, MRK, LLY; all building tight, constructive weekly bases he likes to stalk"
+    },
+    {
+      "handle": "ohiain",
+      "time": "2h ago",
+      "ticker": "UMAC",
+      "note": "UMAC reclaimed the 9-week EMA today - 'first little sign of life,' waiting for follow-through"
+    },
+    {
+      "handle": "ohiain",
+      "time": "3h ago",
+      "ticker": "NTAP",
+      "note": "Follow-up idea: is NTAP the next AI-powered intelligent data infrastructure leader? Multi-week PEG setup + DataPelago acquisition catalyst; NTAP and HPE both building tight multi-week higher-timeframe bases right on the 9-week EMA with double inside weeks"
+    },
+    {
+      "handle": "ohiain",
+      "time": "2h ago",
+      "ticker": "ANET/CTAS/TXRH/ELF",
+      "note": "ANET needs more time, CTAS needs more tightness, TXRH = no tightness on daily + low ADR% (i.e. not a qualifying setup), ELF entry was sub-$80"
+    },
+    {
+      "handle": "spluscollective",
+      "time": "1h ago",
+      "ticker": "",
+      "note": "FOMC meeting starts tomorrow (7/29). Market has been flirting with a 'July hike' narrative (note: hike, not cut - contrarian framing). Growth stocks already bruised. The statement day after tomorrow (7/30) matters more than any earnings call this month, in his view"
+    },
+    {
+      "handle": "spluscollective",
+      "time": "3h ago",
+      "ticker": "DVA",
+      "note": "'DVA is still a fantastic idea.' Setup: Long on funding headlines. Entry: 235-240, Stop: 231, T1: 300, R/R: ~2 to T1"
+    },
+    {
+      "handle": "spluscollective",
+      "time": "1m ago",
+      "ticker": "KOSPI (index)",
+      "note": "Sarcastic remark on KOSPI crashing -7.5%: 'How is this silly KOSPI still afloat? Take those two companies private and call it a day'"
+    },
+    {
+      "handle": "aleabitoreddit",
+      "time": "Jul 27",
+      "ticker": "CPO-related (unspecified)",
+      "note": "[Promoter-flagged account, downweight per house rule] Says he personally wants to wait for existing bullish thesis on CPO (co-packaged optics) names to play out after the recent broad pullback; not opening new positions right now, plans to share individual stock ideas later"
+    },
+    {
+      "handle": "aleabitoreddit",
+      "time": "Jul 27",
+      "ticker": "CXMT/CMXT",
+      "note": "Relays CXMT up +469.98% on IPO day, valuing it at ~$487B"
+    },
+    {
+      "handle": "aleabitoreddit",
+      "time": "Jul 27",
+      "ticker": "NVDA",
+      "note": "Relays NVDA backstopping $250B of OpenAI data-center financing; OpenAI separately discussing buying up to $350B of Nvidia chips"
+    },
+    {
+      "handle": "aleabitoreddit",
+      "time": "Jul 27",
+      "ticker": "AVGO",
+      "note": "TLDR relay: CXMT IPO, Samsung reportedly struggling to secure large memory contracts vs. AVGO"
+    },
+    {
+      "handle": "aleabitoreddit",
+      "time": "Jul 25",
+      "ticker": "UBER/LYFT",
+      "note": "Long-term bearish on UBER/LYFT in the US due to Waymo autonomous-vehicle competition ('every other car in SF is a Waymo')"
+    }
+  ],
+  "congress": [
+    {
+      "handle": "unusual_whales",
+      "time": "Jul 25-28 window",
+      "note": "No actual congressional stock-trade disclosures found in the past 2 days (scanned with combined from:unusual_whales + Rep./Senator/Congress filter). Only tangential Congress-adjacent content: (1) Jul 25 - critique that the 'Stop Insider Trading Act' doesn't actually stop insider trading, members of Congress can still own/sell stocks per Citizens for Responsibility and Ethics in Washington; (2) Jul 25 - AOC comment on Sen. McConnell's health transparency; (3) Jul 26 - product post touting their own API's congress-trades data feature (not a specific trade disclosure); (4) Jul 27 (12h ago) - Fauci diary/COVID testimony story mentioning Congress in passing. General market content found instead: 'FOMC IS THIS WEDNESDAY' reminder post with a Twitter Spaces link (4h ago), and a Polymarket odds post - 70% chance AAPL is the largest company by end of July (4h ago, flagged paid partnership)."
+    }
+  ],
+  "empty_groups": [
+    "RichardMoglen"
+  ]
+}

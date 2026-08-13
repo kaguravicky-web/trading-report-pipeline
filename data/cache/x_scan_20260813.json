@@ -1,0 +1,42 @@
+{
+  "scan_date": "2026-08-13",
+  "accounts_scanned": ["KobeissiLetter", "zerohedge", "spotgamma", "NickTimiraos", "charliebilello", "bluechipdaily", "WalterDeemer", "BillAckman", "RichardMoglen", "ohiain", "spluscollective", "aleabitoreddit", "unusual_whales"],
+  "accounts_no_content": ["bluechipdaily", "WalterDeemer", "BillAckman", "spotgamma", "unusual_whales"],
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "8/13 02:23 SGT", "summary": "SpaceX(SPCX)股价单日涨幅扩大至10%以上，过去5个交易日累计涨近40%，自8月6日以来市值增加5500亿美元。"},
+    {"handle": "@KobeissiLetter", "time": "8/13 03:42 SGT", "summary": "特朗普宣布白宫新闻秘书Karoline Leavitt辞职（后被@unusual_whales在04:03 SGT同步确认，两账号信息一致）。"},
+    {"handle": "@KobeissiLetter", "time": "8/13 05:03 SGT", "summary": "据高盛，机构投资者（对冲基金/资管）在截至8月4日当周抛售216亿美元纳斯达克期货，为有记录以来最大单周抛售，空头主导。"},
+    {"handle": "@KobeissiLetter", "time": "8/13 06:31 SGT", "summary": "美国金融行业7月裁员1.4万人至909万人，为2022年7月以来最低，连续第5个月下滑，累计减少5.9万人。"},
+    {"handle": "@KobeissiLetter", "time": "8/13 07:43 SGT", "summary": "美国联邦债务年化利息支出达到创纪录1.38万亿美元，相当于GDP的4.2%，为1997年以来最高比例（2020年Q4仅2.3%）。"},
+    {"handle": "@zerohedge", "time": "8/12 22:05 SGT", "summary": "继摩根士丹利之后，美银宣布将\"动员部署\"2500亿美元投入美国基建超级周期。"},
+    {"handle": "@zerohedge", "time": "8/12 22:36 SGT", "summary": "美国原油库存暴增1742.3万桶（预期为-180万桶），为2023年1月以来最大单周增幅；库欣+161.1万桶，产量1380.5万桶/日；WTI承压下跌。"},
+    {"handle": "@zerohedge", "time": "8/12 22:42 SGT", "summary": "特朗普称\"美国控制霍尔木兹海峡，我认为我们会保住它\"——与伊朗战争石油供应中断预期延长至2027年底的叙事呼应。"},
+    {"handle": "@zerohedge", "time": "8/13 01:02-01:27 SGT", "summary": "10年期美债标售遇冷出现\"tail\"（需求疲软），收益率创2007年以来新高。"},
+    {"handle": "@zerohedge", "time": "8/13 01:06 SGT", "summary": "标题《信贷市场对AI基建扩张的疑虑上升》——与8/12报告披露的AI超大规模云厂商CDS(信用违约互换)成本升至历史最高的主线直接延续。"},
+    {"handle": "@zerohedge", "time": "8/13 01:20 SGT", "summary": "美国现预计伊朗战争导致的石油供应中断将持续至2027年底。"},
+    {"handle": "@zerohedge", "time": "8/13 02:20 SGT", "summary": "转引高盛策略师Pasquariello观点：标普500\"阻力最小的路径是走高\"，但附带保留意见（原文未展开具体但书内容）。"},
+    {"handle": "@zerohedge", "time": "8/13 02:40 SGT", "summary": "据IEA预测，本季度全球石油短缺将达到180万桶/日。"},
+    {"handle": "@zerohedge", "time": "8/13 03:00 SGT", "summary": "AI超大规模云厂商正把比特币矿工挤出电网供电资源，称这是\"双赢\"局面——AI电力需求挤压其他行业用电的延续信号。"},
+    {"handle": "@zerohedge", "time": "8/13 03:40 SGT", "summary": "油轮数据与美方\"中东石油流已恢复正常\"的说法相矛盾。"},
+    {"handle": "@zerohedge", "time": "8/13 08:48 SGT", "summary": "Fed理事Kent表态：AI活动意味着短期内利率需要更高。"},
+    {"handle": "@zerohedge", "time": "8/13 09:26 SGT", "summary": "据悉Anthropic正洽谈以60亿美元收购AI初创公司Decart。"},
+    {"handle": "@zerohedge", "time": "8/13 10:12 SGT", "summary": "今日CPI符合预期公布后，9月加息概率降至一个月最低（从此前65%降至31%），与SOFR之间的套利空间正在收窄。"},
+    {"handle": "@zerohedge", "time": "8/13 10:16 SGT", "summary": "回应自己此前\"两周内美债将达40万亿\"倒计时贴：\"这周能到吗？\""},
+    {"handle": "@zerohedge", "time": "8/13 10:30 SGT", "summary": "黄金六个月来首次突破阻力位，中国持续以接近纪录速度增持，ETF资金流也转为净买入。"},
+    {"handle": "@NickTimiraos", "time": "8/12 23:59 SGT", "summary": "7月CPI数据基本符合预期，缓解了美联储下月加息压力，但未消除更长期通胀路径的不确定性；引用自己WSJ文章标题《In-Line Inflation Reading Buys the Fed More Time to Defend Its Forecast》。"},
+    {"handle": "@NickTimiraos", "time": "8/13 00:02-02:03 SGT", "summary": "与多位网友连续辩论CPI数据是否足以让FOMC官员重新评估\"当前需收紧政策以达2%通胀\"的预测，核心争论\"数据是否需要令人失望才能证明加息合理，还是只需'进展不够'即可\"——未给出明确结论，倾向于认为数据本身不足以改变既有立场，仅与其他信号（如资本开支公告）共同影响判断。"},
+    {"handle": "@charliebilello", "time": "8/12 21:25 SGT", "summary": "自2020年1月以来，CPI以年化4.0%的速度上涨，目前较2%通胀趋势线高出13%——\"这不是价格稳定，是货币政策的重大失败\"。"},
+    {"handle": "@charliebilello", "time": "8/13 00:46 SGT", "summary": "过去7年价格涨幅：新车+22%、二手车+29%、食品杂货+33%、住房+35%、家庭医保+38%、餐饮+39%、交通+42%、汽油+43%、电费+43%、车险+50%、燃油+56%、房价+60%、燃气+62%。"},
+    {"handle": "@charliebilello", "time": "8/13 03:03 SGT", "summary": "7月联邦政府收入3340亿美元，支出7660亿美元，单月赤字达4320亿美元。"},
+    {"handle": "@charliebilello", "time": "8/13 03:35 SGT", "summary": "过去12个月美国公共债务利息支出达到创纪录1.37万亿美元，若按当前速度继续增长，很快将超过社保成为联邦预算最大单项支出（与Kobeissi同日披露的1.38万亿美元/4.2% GDP数据互相印证）。"}
+  ],
+  "stocks": [
+    {"handle": "@ohiain", "time": "8/12 23:45 SGT", "ticker": "AAOI", "note": "较低点反弹超100%，7日窄幅整理后wedge突破，重新站上50日均线（50EMA），正测试下降趋势线(DTL)阻力，若突破则关注入场——与今日背景AI光通信链暴涨主线相关(AAOI亦为@aleabitoreddit此前推荐标的)。"},
+    {"handle": "@spluscollective", "time": "8/13 04:29 SGT", "ticker": "COHR", "note": "财报：营收20.5亿美元 vs 预期20.3亿(超预期1%)，EPS 1.74美元 vs 预期1.65美元(超预期6%)，同比+37%，盘后-4%（注：与今日背景COHR当日收盘+8.24%方向相反，财报即时盘后反应与次日实际交易日表现出现反转，需交叉核实）。"},
+    {"handle": "@aleabitoreddit", "time": "8/13 05:38 SGT", "ticker": "NBIS/LITE", "note": "【promoter降权】看到NBIS到LITE等一系列AI财报后，\"空头正重新进入冬眠\"。"},
+    {"handle": "@aleabitoreddit", "time": "8/13 05:41-06:59 SGT", "ticker": "COHR", "note": "【promoter降权】COHR财报显示CW(连续波)激光器供应商地位变得极为重要；管理层表示鉴于数据中心业务对收发器的需求，近期不会出售磷化铟(indium phosphide)产能。"},
+    {"handle": "@spluscollective", "time": "8/13 10:14 SGT", "ticker": "CAVA", "note": "看多表态\"谁不喜欢法拉费\"，希望看到股价到100+。"},
+    {"handle": "@RichardMoglen", "time": "8/13 09:41 SGT", "ticker": "多标的观察名单", "note": "\"今日更大的名单\"：BLZE/CDNA/CORT/RBRK/FIGS/GCT/GH/GRMN/INSM/KNSA/MGNI/NTRA/NUE/OII/OUST/PAY/PAYC/QLYS/TENB/TVTX/ARXS，无个股具体点评，仅为筛选结果罗列。"}
+  ],
+  "notes": "【扫描窗口】本次覆盖2026-08-12 21:20 SGT至2026-08-13约14:05 SGT(扫描执行时刻)，与上一份(x_scan_20260812.json，截至8/12 21:17 SGT)无缝衔接。13个账号全部逐一单独查(from:账号名&f=live)，全程纯文本读取(javascript_tool直接抓取<article> innerText + <time datetime>精确UTC时间戳)，未截图。\n\n【本窗口最大主线——CPI后续发酵+AI信贷风险主线延续】8/12 20:30 SGT公布的CPI(符合预期)持续发酵：zerohedge披露9月加息概率降至31%(为一个月最低，此前一度报65%)；NickTimiraos与网友连续辩论\"数据是否足以让Fed重新评估收紧路径\"，未有定论，倾向于\"数据本身不改变既有立场\"。同时zerohedge以《信贷市场对AI基建扩张的疑虑上升》为题发文，与8/12报告披露的\"AI超大规模云厂商CDS成本升至历史最高\"主线直接延续，AI capex信用风险信号未消退。Fed理事Kent同期表态\"AI活动意味着短期内利率需要更高\"——三条信号共同指向：CPI平淡不改变市场对Fed偏鹰路径/AI信贷风险的关注。\n\n【光通信/AI网络层财报后续——与今日背景高度吻合】今日背景已知CIEN/FN/COHR/ANET等在8/12暴涨，本窗口内spluscollective和aleabitoreddit(promoter降权)分别从数据(营收/EPS明细)和产业逻辑(CW激光器供应吃紧、磷化铟产能不外售)两个角度确认了COHR财报，ohiain同时发现AAOI技术面突破(wedge突破+站上50EMA)——三条信号方向一致，指向光通信/AI网络层这条主线在财报季继续获得基本面确认，值得作为【07 Watchlist】候选交叉核实。\n\n【COHR财报盘后反应与背景数据出现口径差异，需人工核实】spluscollective披露COHR财报盘后-4%，但今日背景注明COHR当日收盘+8.24%——两者时间点不同(盘后即时反应 vs 次日实际收盘)，方向相反，符合\"财报后剧烈分歧、次日反转\"的常见模式(类似上一份报告CRWV财报盘后+12%、次日收盘+20.43%的案例)，非数据矛盾，仅提醒主session注意区分两个时间点。\n\n【债务/通胀数据双源交叉印证】Kobeissi(1.38万亿美元/GDP占比4.2%)与charliebilello(1.37万亿美元，即将超过社保成为最大预算单项)同日各自披露美国联邦债务利息支出数据，数字接近、结论一致，属于独立信号交叉确认。\n\n【promoter降权说明】@aleabitoreddit本窗口内容集中在COHR财报解读+NBIS/LITE财报后AI板块情绪判断(\"空头冬眠\")，均标注降权，未见此前Taiyo Yuden(6976)持仓追踪的后续更新。\n\n【accounts_no_content，共5个账号，逐一说明原因】① bluechipdaries(原文@bluechipdaily)：本窗口无新贴，最新一条仍是上一份报告已收录的8/12 09:45 SGT AMD死叉分析，未见AMAT财报前瞻更新；② @WalterDeemer：本窗口无新贴，最新一条(8/11 17:01 UTC即8/12 01:01 SGT)已被上一份报告收录；③ @BillAckman：本窗口无新贴，最新一条为8/9的UBER相关内容，已早于窗口起点；④ @spotgamma：本窗口内仅2条无实质信息的简短回复(\"why\"、\"all i said was puts were at their lowest IV of the year\")，无可提取的gamma水平/期权流数据；⑤ @unusual_whales：本窗口内9条内容均为自我推广(收益平台广告)、与Kobeissi重复的Leavitt辞职新闻、或与交易无关的花边内容(Barron Trump身家)，未见unusual_whales常见的国会交易/期权异动实质披露，故记为无实质内容。\n\n【已知覆盖缺口，供主session评估是否需要补扫】@spluscollective滚动到2026-08-12T20:29:59Z(即8/13 04:29 SGT)后触及X搜索\"Latest\"结果流自身的分页/加载上限(反复验证article数量停留在2条不再增加)，窗口起点8/12 21:20 SGT到8/13 04:29 SGT之间约7小时区间未能抓取，本次仅覆盖04:16-04:29 SGT及20:34 SGT左右的少量内容；@unusual_whales同样在2026-08-12T18:39:00Z(即8/13 02:39 SGT)触及分页上限，8/12 21:20 SGT至8/13 02:39 SGT之间约5小时区间未覆盖，但鉴于该账号本窗口已抓取内容全为噪音/自我推广，实质信息遗漏风险较低。以上均为X\"Latest\"结果流自身的分页/加载上限导致，非人为遗漏，符合规则要求的\"抓不到就诚实记录\"。\n\n【单账号重试次数】除spluscollective/unusual_whales因触及分页上限额外做了2-3次滚动验证外，其余11个账号均在1轮(单次多滚动脚本)内取得可用且confirmed覆盖完整(reachedBoundary=true)的结果。"
+}

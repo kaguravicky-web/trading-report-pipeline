@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-07-30 SGT",
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "3小时前", "summary": "美国企业五年存活率图表，呼吁「要在美国建厂」——本土制造业韧性论点。"},
+    {"handle": "@KobeissiLetter", "time": "5小时前", "summary": "突发：等权重纳斯达克100指数跑输等权重标普500指数达6.8个百分点，科技股内部广度明显走弱。"},
+    {"handle": "@KobeissiLetter", "time": "6小时前", "summary": "突发：微软MSFT财报超预期后盘后飙升逾8%。"},
+    {"handle": "@KobeissiLetter", "time": "7小时前", "summary": "链上代币化资产持有人数暴增图表（9月约7万到7月75.9万），代币化资产采用率快速扩张。"},
+    {"handle": "@KobeissiLetter", "time": "9小时前", "summary": "突发：Meta财报不及预期，股价重挫逾9%。"},
+    {"handle": "@KobeissiLetter", "time": "9小时前", "summary": "美国长期借贷成本升至2007年以来最高水平。"},
+    {"handle": "@zerohedge", "time": "5小时前", "summary": "美国对伊朗发动新一轮空袭，此前特朗普警告伊朗要挨顿打——与昨夜伊朗弹道导弹袭击美军基地、油价走强的主线一致。"},
+    {"handle": "@zerohedge", "time": "7小时前", "summary": "微软MSFT财报后跳涨：云业务营收超预期，资本开支指引维持不变（符合预期）。"},
+    {"handle": "@spotgamma", "time": "4小时前", "summary": "DSPX（CBOE离散度指数）高点出现在7/22 VIX到期日，作者判断宏观因素影响力正在上升，AI叙事已无法掩盖宏观问题（伊朗到通胀到利率）；同时相关性指数COR1M走高，说明期权交易者开始同步交易，这通常发生在熊市阶段，此时市场关心的不是哪只股票跑赢，而是要不要持有股票。属于风险偏好走弱的信号。"},
+    {"handle": "@NickTimiraos", "time": "2小时前", "summary": "Warsh记者会引发超乎寻常的市场反应，焦点在于他没说什么——援引WSJ文章《Kevin Warsh Asked the Market to Speak. It Answered.》，前Fed票委Loretta Mester评论：这样什么都不说是不可持续的，她其实希望从Fed那里听到更多，想确信Fed知道自己在做什么。与背景中Warsh声明异常简短不给指引互相印证。"},
+    {"handle": "@NickTimiraos", "time": "1小时前", "summary": "回复讨论前瞻指引与反应函数两个概念被混淆的问题（回复@biancoresearch），延续对Warsh沟通方式的技术性质疑，非独立新信息。"},
+    {"handle": "@charliebilello", "time": "1小时前", "summary": "微软历年营收柱状图：2026预估360、2025年305、2024年262（单位十亿美元，逐年增长趋势明显）。"},
+    {"handle": "@charliebilello", "time": "2小时前", "summary": "距历史高点跌幅排行：可口可乐0%、苹果-2%、标普500-4%、谷歌-18%、亚马逊-19%、英伟达-20%、微软-23%、黄金-28%、Meta-32%、特斯拉-40%、Palantir-41%、比特币-49%、SpaceX-50%、白银-53%、甲骨文-66%、MicroStrategy-83%、Trump币-98%、Melania币-99%。反映风险资产与迷因资产大幅跑输防御性龙头的分化格局。"},
+    {"handle": "@charliebilello", "time": "7小时前", "summary": "Meta季度资本开支（AI基建）同比增长82%，配合引用的另一条数据：Meta自由现金流暴跌91%至7.84亿美元，为多年来最低水平，是AI资本开支挤压现金流的直观数据佐证。"},
+    {"handle": "@unusual_whales", "time": "4小时前", "summary": "伊朗官方否认与美方进行和谈，油价因暂停消息回落——与背景中伊朗导弹袭击推升油价、XLE逆势上涨的主线相关。"},
+    {"handle": "@unusual_whales", "time": "3小时前", "summary": "特朗普警告，若关税政策持续，美国有沦为第三世界地位的风险，该表态发生在联邦上诉法院裁定总统紧急权力使用方式存疑之后。"},
+    {"handle": "@unusual_whales", "time": "2小时前", "summary": "援引Michael Burry警告：Apollo、KKR、Blackstone等私募巨头大量收购寿险公司，并将难以被监管方核实定价的私募信贷资产装入其资产负债表，形同纳税人兜底。"}
+  ],
+  "stocks": [
+    {"handle": "@bluechipdaily", "time": "4小时前", "ticker": "EWY", "note": "南韩7/16时隔三年半首次加息当日EWY约166点，今日收于144点，符合作者引用的Marty Zweig法则第6条（加息后市场滞后走弱的历史规律）。"},
+    {"handle": "@bluechipdaily", "time": "5小时前", "ticker": "VRT", "note": "单日-17%、10周内-41%，为2025年5月以来首次收盘跌破200日均线；作者提醒VRT在2025年也曾一度跌破200日均线约40%后走出6倍涨幅，图表破位不代表趋势终结，但应观望等待新趋势买点再介入。"},
+    {"handle": "@bluechipdaily", "time": "9小时前", "ticker": "QQQ", "note": "QQQ创出更低低点；作者提出反向观点，市场本可能更欢迎一次真实加息，通胀高于目标已持续近5年不会自愈，Fed越拖延后续手段可能越极端，属于鹰派立场评论而非做多做空建议。"},
+    {"handle": "@WalterDeemer", "time": "13小时前", "ticker": "QQQ", "note": "引用两个经典技术形态——没叫的狗、没补的缺口，指QQQ上周留下的跳空缺口（此前帖子提示需涨到703.62才能补齐）迟迟未回补，作者认为现在的大问题是这次异常是否有超出短期的意义，静观其变，态度中性偏观察。"},
+    {"handle": "@RichardMoglen", "time": "3小时前", "ticker": "TTAN", "note": "提示关注TTAN周线图（原文a weekly to monitor），未给出具体触发位或理由，仅作观察名单式点名。"},
+    {"handle": "@spluscollective", "time": "57分钟前", "ticker": "AAOI", "note": "重申此前技术位判断——不能跌破98，200日均线在80，若80失守则IPO缺口（Avwap）一路下方无阻力，属于既有setup的滚动更新，非新论点。"},
+    {"handle": "@spluscollective", "time": "1小时前", "ticker": "SPY", "note": "回复中表态个人会等SPY站上50日均线再考虑新的多头机会，属于谨慎观望立场。"},
+    {"handle": "@aleabitoreddit", "time": "6小时前", "ticker": "MSFT/META", "note": "【降权账号，历史上偏多头喊单倾向，需其他信号交叉确认】整理MSFT/META财报电话会要点——微软：预计2027年自由现金流转正（尽管资本开支增加，因由营业收入支持）；Q2自由现金流196亿美元；季度资本开支410亿美元，约2/3为短生命周期资产（主要是CPU/GPU）；预计下季度资本开支超500亿美元；全年资本开支指引约1750亿美元，2027年大致持平；数据中心预计使用寿命从15年延长至25年；将成为首批部署基于AMD Helios与NVDA Vera Rubin机架级AI基础设施的云厂商之一；客户需求持续超过可用产能。Meta：资本开支区间收窄至130至145亿美元（此前125至145亿）；Meta正以显著溢价收到算力收购要约，作者认为对IREN、NBIS等neocloud标的构成利好。"},
+    {"handle": "@aleabitoreddit", "time": "7小时前", "ticker": "AXTI/COHR/LITE", "note": "【降权账号】AXTI此前已与COHR达成长期供货协议(LTA)并收取2230万美元预留款，今日再与LITE签订LTA，两笔合计8700万美元（4350万加4350万）预留产能款，指向光通信/AI数据中心供应链需求旺盛。"}
+  ],
+  "congress": [
+    {"handle": "@unusual_whales", "time": "N/A", "note": "24小时窗口内未搜索到具体国会议员交易披露（用关键词congress复核，命中的3条均为7/25至7/28旧帖，超出本次窗口）。该账号今日窗口内的内容以宏观/政治新闻为主（伊朗和谈、关税警告、私募寿险预警、戴蒙谈财富不平等，已归入宏观类），无国会交易信息。"}
+  ],
+  "empty_groups": ["@BillAckman（24小时窗口内仅政治类内容，Mamdani/以色列社区袭击评论，Fannie Freddie旧帖已超窗口，无实质交易相关帖）", "@ohiain（24小时窗口内仅Impressed／我现在不舒服，谢谢／我很想念Yousuf等短回复，无股票代码或setup信息）"]
+}

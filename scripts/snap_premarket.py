@@ -1,6 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """盘前快照：LongBridge watchlist全量US标的 + reference/ETF_Holdings.csv全部成分股 + 持仓票的盘前价，
+
+# ============================================================================
+# 🔴 退役 2026-08-12：盘前数据模块整体下线（Vic：「关于盘前的全部删了吧」）。
+#    盘前报告改为 SGT 15:00-16:00 触发，那个时点根本没有美股盘前数据。
+#    脚本保留不删（本仓库无 git，硬删不可逆），但**不再进任何日常流程**。
+#    若将来 Vic 要恢复：把它加回 CONTEXT 的盘前工作流，并恢复 report_helpers
+#    的 PHASE2_PATCH_FIELDS / patch_premarket_columns。
+# ============================================================================
+import sys as _sys
+print("⚠️ snap_premarket.py 已于 2026-08-12 退役（盘前数据模块下线）。"
+      "如果你是被某个脚本自动调到这里的，说明那个脚本还没跟上改动。")
+_sys.exit(0)
+
 写 data/cache/premarket_YYYYMMDD.json。（2026-07-15 Vic：Premarket movers扫描范围加上ETF holdings持仓；
 同日再加：持仓票强制并入+专属低门槛警报——SYK教训：盘前量很大但价格没到7%门槛，完全静默，当天暴跌）
 

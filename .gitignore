@@ -1,14 +1,21 @@
-# output/ 是独立仓库（kaguravicky-web/trading-reports，PUBLIC），不并进来
-output/
-
-# 行情缓存：9MB 且可重新拉取，不进版本控制
-data/cache/
-
-# 凭据与券商账户导出——**这两项永远不进仓库**
-deepvue/.env.local
-moomoo/
-
 # Python
 __pycache__/
-*.pyc
-.venv/
+*.py[cod]
+*.egg-info/
+
+# 🔴 凭证：绝不进仓库（2026-08-13 建，仓库转公开时）
+.secrets.json
+.env
+
+# 系统
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# 🔴 2026-08-13：deepvue/.env.local 里是 LongBridge 券商 API 凭证
+# （APP_KEY / APP_SECRET / ACCESS_TOKEN）——绝不能进公开仓库
+deepvue/.env.local
+*.env.local
+
+# output/ 是独立 git 仓库（自带历史），不作为 gitlink 混进主仓库
+output/

@@ -1,0 +1,333 @@
+{
+ "universe_size": 880,
+ "calendar": {
+  "2026-07-15": [
+   {
+    "symbol": "ASML",
+    "name": "ASML Holding N.V.",
+    "time": "pre-market",
+    "eps_forecast": "$7.98"
+   },
+   {
+    "symbol": "JNJ",
+    "name": "Johnson & Johnson",
+    "time": "pre-market",
+    "eps_forecast": "$2.85"
+   },
+   {
+    "symbol": "MS",
+    "name": "Morgan Stanley",
+    "time": "pre-market",
+    "eps_forecast": "$2.89"
+   },
+   {
+    "symbol": "BLK",
+    "name": "BlackRock, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$12.72"
+   },
+   {
+    "symbol": "PGR",
+    "name": "Progressive Corporation (The)",
+    "time": "pre-market",
+    "eps_forecast": "$4.58"
+   },
+   {
+    "symbol": "BNY",
+    "name": "The Bank Of New York Mellon Corporation ",
+    "time": "pre-market",
+    "eps_forecast": "$2.20"
+   },
+   {
+    "symbol": "PNC",
+    "name": "PNC Financial Services Group, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": "$4.51"
+   },
+   {
+    "symbol": "ELV",
+    "name": "Elevance Health, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$6.18"
+   },
+   {
+    "symbol": "CTAS",
+    "name": "Cintas Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.24"
+   },
+   {
+    "symbol": "KMI",
+    "name": "Kinder Morgan, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$0.31"
+   },
+   {
+    "symbol": "UAL",
+    "name": "United Airlines Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.89"
+   },
+   {
+    "symbol": "MTB",
+    "name": "M&T Bank Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$4.66"
+   },
+   {
+    "symbol": "JBHT",
+    "name": "J.B. Hunt Transport Services, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.71"
+   }
+  ],
+  "2026-07-16": [
+   {
+    "symbol": "TSM",
+    "name": "Taiwan Semiconductor Manufacturing Company Ltd.",
+    "time": "pre-market",
+    "eps_forecast": "$3.87"
+   },
+   {
+    "symbol": "UNH",
+    "name": "UnitedHealth Group Incorporated",
+    "time": "pre-market",
+    "eps_forecast": "$4.84"
+   },
+   {
+    "symbol": "GE",
+    "name": "GE Aerospace",
+    "time": "pre-market",
+    "eps_forecast": "$1.86"
+   },
+   {
+    "symbol": "NFLX",
+    "name": "Netflix, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.79"
+   },
+   {
+    "symbol": "ABT",
+    "name": "Abbott Laboratories",
+    "time": "pre-market",
+    "eps_forecast": "$1.28"
+   },
+   {
+    "symbol": "PLD",
+    "name": "Prologis, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.53"
+   },
+   {
+    "symbol": "USB",
+    "name": "U.S. Bancorp",
+    "time": "pre-market",
+    "eps_forecast": "$1.28"
+   },
+   {
+    "symbol": "STT",
+    "name": "State Street Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$3.30"
+   },
+   {
+    "symbol": "CFG",
+    "name": "Citizens Financial Group, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.25"
+   }
+  ],
+  "2026-07-17": [
+   {
+    "symbol": "TRV",
+    "name": "The Travelers Companies, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$5.14"
+   },
+   {
+    "symbol": "TFC",
+    "name": "Truist Financial Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.08"
+   },
+   {
+    "symbol": "FITB",
+    "name": "Fifth Third Bancorp",
+    "time": "pre-market",
+    "eps_forecast": "$0.98"
+   },
+   {
+    "symbol": "RF",
+    "name": "Regions Financial Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.64"
+   }
+  ],
+  "2026-07-20": [
+   {
+    "symbol": "STLD",
+    "name": "Steel Dynamics, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$3.62"
+   },
+   {
+    "symbol": "WRB",
+    "name": "W.R. Berkley Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$1.09"
+   },
+   {
+    "symbol": "DPZ",
+    "name": "Domino's Pizza Inc",
+    "time": "pre-market",
+    "eps_forecast": "$4.10"
+   }
+  ],
+  "2026-07-21": [
+   {
+    "symbol": "SCHW",
+    "name": "The Charles Schwab Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.52"
+   },
+   {
+    "symbol": "IBKR",
+    "name": "Interactive Brokers Group, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.58"
+   },
+   {
+    "symbol": "DHR",
+    "name": "Danaher Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$1.83"
+   },
+   {
+    "symbol": "CB",
+    "name": "Chubb Limited",
+    "time": "after-hours",
+    "eps_forecast": "$6.60"
+   },
+   {
+    "symbol": "COF",
+    "name": "Capital One Financial Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$4.89"
+   },
+   {
+    "symbol": "MRSH",
+    "name": "Marsh",
+    "time": "pre-market",
+    "eps_forecast": "$2.88"
+   },
+   {
+    "symbol": "MMM",
+    "name": "3M Company",
+    "time": "pre-market",
+    "eps_forecast": "$2.27"
+   },
+   {
+    "symbol": "NOC",
+    "name": "Northrop Grumman Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$6.84"
+   },
+   {
+    "symbol": "GM",
+    "name": "General Motors Company",
+    "time": "pre-market",
+    "eps_forecast": "$3.11"
+   },
+   {
+    "symbol": "MSCI",
+    "name": "MSCI Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$4.89"
+   },
+   {
+    "symbol": "DHI",
+    "name": "D.R. Horton, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.99"
+   },
+   {
+    "symbol": "EQT",
+    "name": "EQT Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$0.41"
+   },
+   {
+    "symbol": "HAL",
+    "name": "Halliburton Company",
+    "time": "pre-market",
+    "eps_forecast": "$0.54"
+   },
+   {
+    "symbol": "KEY",
+    "name": "KeyCorp",
+    "time": "pre-market",
+    "eps_forecast": "$0.42"
+   },
+   {
+    "symbol": "SYF",
+    "name": "Synchrony Financial",
+    "time": "pre-market",
+    "eps_forecast": "$1.99"
+   },
+   {
+    "symbol": "EFX",
+    "name": "Equifax, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.21"
+   },
+   {
+    "symbol": "GPC",
+    "name": "Genuine Parts Company",
+    "time": "pre-market",
+    "eps_forecast": "$2.10"
+   },
+   {
+    "symbol": "WBS",
+    "name": "Webster Financial Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$1.61"
+   },
+   {
+    "symbol": "VICR",
+    "name": "Vicor Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.62"
+   },
+   {
+    "symbol": "HAS",
+    "name": "Hasbro, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.13"
+   },
+   {
+    "symbol": "VMI",
+    "name": "Valmont Industries, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$5.76"
+   },
+   {
+    "symbol": "AUB",
+    "name": "Atlantic Union Bankshares Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.92"
+   },
+   {
+    "symbol": "ALK",
+    "name": "Alaska Air Group, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.97)"
+   },
+   {
+    "symbol": "WINA",
+    "name": "Winmark Corporation",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   }
+  ]
+ }
+}

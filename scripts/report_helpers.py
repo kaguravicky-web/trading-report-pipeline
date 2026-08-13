@@ -71,19 +71,20 @@ def rs_num(v) -> str:
 
 
 def sector_rs_rows(cache: dict, tickers: list, pm_cache: dict = None) -> list:
-    """板块RS表骨架：[ticker, T-1%, 5日%, 1月%, 盘前, ""(驱动), RS(1周)]。
-    驱动列留空当天手写。已按T-1%降序。"""
+    """板块RS表骨架：[ticker, T-1%, 5日%, 1月%, ""(驱动), RS(1周)]——**六列**。
+    驱动列留空当天手写。已按T-1%降序。
+
+    🔴 2026-08-12：「盘前」列删除（Vic：「我觉得盘前数字没什么用…关于盘前的全部删了吧」）。
+    `pm_cache` 参数保留但被忽略，只为旧调用点不报 TypeError。"""
     M = cache["metrics"]
     data = []
     for tk in tickers:
         m = M.get(tk) or {}
-        pmv = (pm_cache.get(tk) or {}).get("pm_pct") if pm_cache else None
-        data.append((tk, m.get("t1_pct"), m.get("d5_pct"), m.get("d21_pct"), pmv))
+        data.append((tk, m.get("t1_pct"), m.get("d5_pct"), m.get("d21_pct")))
     data.sort(key=lambda x: (x[1] is None, -(x[1] or -999)))
     rows = []
-    for tk, t1, d5, d21, pmv in data:
-        rows.append([tk, fpct(t1), fpct(d5), fpct(d21), fpct(pmv, "无盘前quote"),
-                     "", rs_num(rs_week(cache, tk))])
+    for tk, t1, d5, d21 in data:
+        rows.append([tk, fpct(t1), fpct(d5), fpct(d21), "", rs_num(rs_week(cache, tk))])
     return rows
 
 
@@ -427,8 +428,13 @@ def positions_rows(positions: list, cache: dict, extra_price_lookup: dict = None
         dist = None
         if px is not None and stop:
             dist = round((px - stop) / px * 100, 1)
-        rows.append([tk, str(px if px is not None else "-"), str(p.get("cost", "-")),
-                     ("止损%s距%s%%" % (stop, ("%+.1f" % dist) if dist is not None else "-")) if stop else "无止损",
+        # 2026-08-11：成本/止损一律 2 位小数。QA 的「小数位统一2位」原来天天报警没人改——
+        # tradebook 里的成本是加权平均，天生带 4~6 位，之前直接 str() 就漏进报告了
+        cost = p.get("cost", "-")
+        cost_s = ("%.2f" % cost) if isinstance(cost, (int, float)) else str(cost)
+        stop_s = ("%.2f" % stop) if isinstance(stop, (int, float)) else str(stop)
+        rows.append([tk, str(px if px is not None else "-"), cost_s,
+                     ("止损%s距%s%%" % (stop_s, ("%+.1f" % dist) if dist is not None else "-")) if stop else "无止损",
                      p.get("thesis", ""), p.get("invalidation", ""), ""])
     return rows
 
@@ -1223,21 +1229,49 @@ PHASE1_FIELDS = [
     # 因为字段名不在这张表里，keep() 直接过滤掉了。**新批准的类别必须当天就加进来。**
     # 无条件生成：没有符合的就写「无」，「字段是空的」和「字段不存在」只有前者看得见。
     "event_gap_candidates", "event_gap_note",
+    # 🔴 2026-08-11 补：**同一个坑第三次**（前两次是 8/3 的 ftd/仓位治理、8/7 的事件缺口）。
+    #    8/07–8/10 陆续加的这一批字段进了 assemble_template.py，却没人把它们加进三个 phase 桶——
+    #    后果比前两次更隐蔽：**段1 的 keep() 过滤掉它们，段2 只补 PHASE2_FIELDS，所以它们
+    #    在两段式跑法下会永久消失**，而报告照样渲染得出来。8/10 那份之所以有这些内容，
+    #    是因为它绕过模板一次性手写的（正是模板头部记的那次事故）。
+    #    已加 qa_report「phase 桶必须覆盖模板字段集」防止再犯。
+    "bam", "bam_table", "bam_note",
+    "dispersion", "dispersion_note",
+    "special_readthrough_table", "special_readthrough_note",
+    "adanos_scan_note", "recon_prob_note",
+    # ── 2026-08-12 从已退役的 PHASE2_FIELDS / PHASE2_PATCH_FIELDS 并进来（两段式取消）──
+    "signal_light", "sector_rs_note", "etf_table_note", "positions_moomoo_note",
+    "news_today", "strong_sector_setups_permission",
+    "watchlist_abc", "setup_conclusion", "playbook_scenarios",
+    "key_takeaways", "today_position", "recon_ledger", "generated_at",
+    "sector_rs_tables", "etf_table",
+    "positions_moomoo_table", "positions_longbridge_table",
+    "defensive_basket", "strong_sector_setups_table",
+    "stop_proximity_table", "stop_proximity_note",
+    "exit_plan_table", "exit_plan_note",
+    # premarket_movers / premarket_movers_note 2026-08-12 整块退役（Vic：「我也不看盘前异动选股」），
+    # 模板里留空壳、不进本清单——它们不该再出现在报告里。
 ]
 
 # ②段1建骨架+写判断列，段2只把「盘前」那一列补进去（用patch_premarket_columns机械完成，
 #   段2**不要**重写这几张表的判断文字，除非盘前数据真的推翻了段1的判断——那要在报告里明写）
-PHASE2_PATCH_FIELDS = [
-    "sector_rs_tables",             # 每行第4列(idx 4)=盘前
-    "etf_table",                    # T-1%列(idx 2)后缀"（盘前x%）"
-    "positions_moomoo_table", "positions_longbridge_table",   # 现价列(idx 1)后缀盘前+警报
-    "defensive_basket",             # pct字段="盘前x%"
-    "strong_sector_setups_table",   # 机器初筛骨架，段2按盘前动向重排/删减
-]
+# 🔴 2026-08-12 退役：**两段式取消，盘前数据模块整体下线。**
+# Vic：「我觉得盘前数字没什么用，我也不看盘前异动选股，关于盘前的全部删了吧，
+#        我打算以后 3-4 点就触发盘前」
+# 3-4 点（SGT）在盘前数据可得（16:00）之前 —— 段2 唯一的机械产出就是补盘前列，
+# 没有盘前数据，段2 就没有存在理由。**所有字段回到一个桶（PHASE1_FIELDS）。**
+# 触发它的实例：2026-08-11 段2 用盘前弱势判「利多出尽」把 OIH 从 4 分降到 C，
+# 收盘 XLE +1.25% 是当日最强板块 —— 而「盘前经常是假的」这条规则是我们自己写的。
+PHASE2_PATCH_FIELDS = []   # 退役 2026-08-12，留空壳
+
+# 2026-08-12 起只有一个桶。保留 PHASE1_FIELDS 这个名字是为了不改动所有调用点，
+# 但它现在的语义是「盘前报告的全部字段」，所以给一个诚实的别名。
+ALL_FIELDS = PHASE1_FIELDS
 
 # ③段2才能定稿：需要盘前报价，或必须等到最后统一决策
-PHASE2_FIELDS = [
-    "signal_light",            # bias那格的label要写盘前动向
+PHASE2_FIELDS = []         # 退役 2026-08-12，见上方注释；原内容已并入 PHASE1_FIELDS
+_RETIRED_PHASE2_FIELDS = [   # 留档：这些字段现在全部在 PHASE1_FIELDS 里
+    "signal_light",            # bias 那格原本写盘前动向，现在写隔夜收盘定性
     "sector_rs_note", "etf_table_note", "positions_moomoo_note",
     "premarket_movers", "premarket_movers_note",
     "news_today",              # 段1之后新增的新闻
@@ -1247,7 +1281,18 @@ PHASE2_FIELDS = [
     "watchlist_abc", "setup_conclusion",
     "playbook_scenarios", "key_takeaways", "today_position", "recon_ledger",
     "generated_at",
+    # 🔴 2026-08-11 补（同上那一批漏网字段，但这两个归段2）：止损贴近度表要吃盘前报价
+    #    才能判「今晚撤单 / 看盘前动向」，段1 跑出来那一列只会是 "-"。
+    "stop_proximity_table", "stop_proximity_note",
+    # 2026-08-11 Vic 点名要退出 GLW/MRVL/SOXX/AAOI 后要求「单独拉一张」——
+    # 同样吃盘前报价（要判「盘前破没破昨日低/止损」），归段2。
+    "exit_plan_table", "exit_plan_note",
 ]
+
+# 🔴 2026-08-11：三个桶必须**恰好**覆盖 assemble_template.py 的字段集，不多不少。
+#    少了 → 段1 keep() 过滤掉、段2 不补回 → 字段永久消失且报告照样渲染（已发生三次）。
+#    多了 → QA 会把它报成「自造字段」。
+#    这条不写成注释，写成 qa_report 里会失败的检查（见「phase 桶覆盖模板字段集」）。
 
 DRAFT_DIR = ROOT / "data" / "daily"
 
@@ -1297,7 +1342,12 @@ def load_premarket_draft(day: str):
 
 
 def patch_premarket_columns(draft: dict, pm: dict) -> list:
-    """段2把盘前列机械地补进段1建好的表（PHASE2_PATCH_FIELDS）。返回改动说明列表。
+    """**退役 2026-08-12**（两段式取消，盘前数据模块整体下线）。
+
+    保留函数体是为了让旧的 scratchpad 脚本不会 ImportError，但它现在什么都不做、
+    并且会喊一声——如果哪天有人又调到它，说明有个地方还在按两段式跑。
+
+    原文档：段2把盘前列机械地补进段1建好的表（PHASE2_PATCH_FIELDS）。返回改动说明列表。
 
     这个函数存在的意义：段1已经把「驱动/原因」「判断」「论点检查」这些判断列写好了，
     段2如果整表重建就会把那些判断冲掉——两段式就退化成"跑两遍"。所以段2只补数据列，
@@ -1305,7 +1355,9 @@ def patch_premarket_columns(draft: dict, pm: dict) -> list:
 
     幂等：重复调用不会叠加"（盘前x%）"后缀（靠已含"盘前"字样判断跳过）。
     """
-    changes = []
+    return ["⚠️ patch_premarket_columns 已于 2026-08-12 退役（盘前数据模块下线），本次未做任何改动"]
+
+    changes = []           # ↓ 以下为退役前的实现，保留作历史记录，不再执行
 
     def pmp(tk):
         v = (pm.get(tk) or {}).get("pm_pct")
@@ -1760,6 +1812,117 @@ def stop_proximity_table(sp: dict) -> dict:
             "rows": sp.get("rows", []), "num_cols": [4, 5, 6], "center_cols": [1, 7],
             "table_class": "fixed-cols",
             "col_widths": ["9%", "11%", "10%", "10%", "11%", "12%", "9%", "28%"]}
+
+
+# =========================================================================
+# 今日退出执行表 exit_plan（2026-08-11 建，Vic：「我想盘前止损 glw mrvl soxx aaoi 这几个」
+# → 「单独拉一张」）
+#
+# 跟上面的撤单清单 stop_proximity 不是一回事，**别合并**：
+#   · stop_proximity 回答「今晚哪几张挂单要撤」——全仓扫描，按距止损/ATR 自动入选
+#   · exit_plan     回答「我已经决定要出的这几笔，今晚怎么出」——**Vic 点名，我不代选**
+#
+# 🔴 这张表的核心作用是把「盘前挂单」翻译成执行纪律 #8 的动作序列。
+# #8（2026-07-08 BRKR 那笔沉淀的）：盘前盘后不留止损单，薄流动性专门洗单；
+# **撤掉 ORDER 不等于撤掉 LEVEL** —— SOP = 开盘后等 5-15 分钟，30 分钟内没收回就无条件出。
+# 所以「观察位」按三种情况给，不是一个数：
+#   · 盘前价已破止损 → 观察位 = **止损价**（#8 原文场景）
+#   · 昨天收在区间 ≤20%（收盘就在当日最低区）→ 观察位 = **昨日中点（收回位）**
+#     🔴 这一档是 2026-08-11 首日试跑当场发现的：GLW / SOXX / MRVL 昨天全收在区间 0–1%，
+#     **昨日低点几乎等于收盘价**（SOXX 低点 529.39 = 收盘价），拿它当观察位等于零缓冲、
+#     任何一个红 tick 都算「破位延续」。而且问法本身就错了——**收在最低意味着破位已经发生**，
+#     该问的不是「会不会破」而是「能不能收回来」。所以这一档给收回位，方向反过来。
+#   · 其余（昨天收在区间 >20%）→ 观察位 = **昨日低点**（破了才叫延续，没破就是噪音）
+EXIT_LOW_CLOSE_RANGE = 20      # 收盘区间 ≤ 这个百分位 = 破位已确认，改看收回位
+#
+# 🔴 判定列只描述价格在哪一侧，**不写「该卖/该留」** —— 出不出是 Vic 已经决定的事，
+#    这张表只负责让他执行得准。Claude 不代下单、不代记录。
+# 🔴 v4（2026-08-11 当天第三次改，Vic：「但是如果一直向下的话，我会恐慌止损吧。。」）
+# 前三版都给「价格观察位」，Vic 一句话点破根本问题：**任何价格条件都会在开盘那一刻
+# 把「要不要出」这个已经做完的决定重新打开一次**，而那正是他最容易恐慌的时刻。
+# 而且我把纪律 #8 用错了场景——#8 的锚点是**前一晚就定死的止损位**，那 5-15 分钟只是
+# 躲开盘噪音；我却把锚点换成「开盘 15 分钟自己走出来的区间」= 盘中才成形的数。
+# **前一晚定死的数不会被恐慌移动，盘中形成的数会。**
+# 支持这个改法的自有数据：0 天持有胜率 8%／平均 -2.82%（所有分桶最差）、
+# 有卖在当日区间最低 15% 的记录（DUOL/TTAN）、机械跟单 R:R 1.00 vs 自主 0.12。
+# **所以 v4 用时间条件，不用价格条件**：分批定时出，唯一的价格条件是早就写下的止损。
+EXIT_PLAN_HEADERS = ["TICKER", "账户/股数", "成本", "昨收（盘前）", "自成本",
+                     "止损（不改）", "分批计划", "备注"]
+
+
+def exit_plan_rows(cache: dict, tickers, positions: list = None,
+                   pm_cache: dict = None, reasons: dict = None) -> dict:
+    """Vic 点名要退出的标的 → 可执行的退出表。
+
+    tickers 可以是 ["GLW", ...]，也可以是 [("MRVL","longbridge"), ...] 精确到账户
+    （同一只票在两个账户各有一笔时必须指定，否则两笔都出——MRVL 2026-08-11 就是这个情况）。
+    reasons: {ticker 或 (ticker,account): "退出理由"}，写进 note 不占列。
+    """
+    positions = positions if positions is not None else load_tradebook_positions()
+    metrics = cache.get("metrics", {})
+    want = []
+    for t in tickers:
+        want.append(t if isinstance(t, (tuple, list)) else (t, None))
+
+    rows, warnings = [], []
+    for tk, acct in want:
+        lots = [p for p in positions if p.get("ticker") == tk
+                and (acct is None or p.get("account") == acct)]
+        if not lots:
+            warnings.append("%s%s 在 tradebook 里找不到持仓" % (tk, "/" + acct if acct else ""))
+            continue
+        if acct is None and len(lots) > 1:
+            warnings.append("🔴**%s 在 %d 个账户各有一笔**（%s）——没指定账户，两笔都列出来了，"
+                            "下单前确认你要出的是哪一笔"
+                            % (tk, len(lots), " / ".join(p.get("account", "?") for p in lots)))
+        for p in lots:
+            m = metrics.get(tk) or {}
+            px, t1 = m.get("close"), m.get("t1_pct")
+            low_pct, high_pct, rp = m.get("low_pct"), m.get("high_pct"), m.get("range_pos")
+            cost, stop = p.get("cost"), p.get("stop")
+            pm_pct = ((pm_cache or {}).get(tk) or {}).get("pm_pct")
+            # 昨日高低点：low_pct/high_pct 是相对前收的百分比，先还原前收
+            prev_close = (px / (1 + t1 / 100)) if (px and t1 is not None) else None
+            day_low = (prev_close * (1 + low_pct / 100)) if (prev_close and low_pct is not None) else None
+            day_high = (prev_close * (1 + high_pct / 100)) if (prev_close and high_pct is not None) else None
+            day_mid = ((day_high + day_low) / 2) if (day_high and day_low) else None
+            pm_px = (px * (1 + pm_pct / 100)) if (px and pm_pct is not None) else None
+
+            close_cell = "%.2f" % px if px else "-"
+            close_cell += "（%s）" % (("%+.2f%%" % pm_pct) if pm_pct is not None else "无盘前quote")
+            pl = ("%+.2f%%" % ((px / cost - 1) * 100)) if (px and cost) else "-"
+            if stop and px:
+                stop_cell = "%.2f / %+.2f%%" % (stop, (px / stop - 1) * 100)
+            else:
+                stop_cell = "**无止损**"
+
+            # v4：分批计划（时间条件）+ 备注（价格只作参照）
+            plan = ("1/2 市价 @22:30–23:00 SGT<br>1/2 挂 **MOC**（收盘价成交）"
+                    if (p.get("qty") or 0) >= 10 else "**一次性** @22:30–23:00 SGT<br>（不足 10 股不拆）")
+            if pm_pct is not None and stop and pm_px is not None and pm_px < stop:
+                memo = ("🔴**盘前已跌破止损 %.2f** —— 不用等时点，"
+                        "按纪律#8：开盘后 5–15 分钟内没收回就整笔出" % stop)
+            elif pm_pct is not None and pm_pct > 0:
+                memo = ("**盘前 %+.2f%%，比昨收好** —— 这是更好的出场价，"
+                        "**不是重新考虑的理由**（要不要出昨晚已决定）" % pm_pct)
+            elif pm_pct is not None:
+                memo = "盘前 %+.2f%%，按计划执行" % pm_pct
+            else:
+                memo = "无盘前 quote，按计划执行"
+            rows.append([tk, "%s / %s股" % (p.get("account", "-"), p.get("qty", "-")),
+                         "%.2f" % cost if cost else "-", close_cell, pl,
+                         stop_cell, plan, memo])
+            continue
+
+    return {"rows": rows, "warnings": warnings,
+            "reasons": reasons or {}, "n": len(rows)}
+
+
+def exit_plan_table(ep: dict) -> dict:
+    return {"headers": EXIT_PLAN_HEADERS, "rows": ep.get("rows", []),
+            "num_cols": [4], "center_cols": [1],
+            "table_class": "fixed-cols",
+            "col_widths": ["8%", "12%", "8%", "13%", "8%", "12%", "13%", "26%"]}
 
 
 # =========================================================================

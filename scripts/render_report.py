@@ -876,12 +876,20 @@ def build_ml_leaders_postmarket(rows: list) -> str:
             f'<td class="num {sign_class(r.get("excess",""))}">{esc(r.get("excess",""))}</td>'
             f'<td class="nowrap">{esc(r.get("regime",""))}</td>'
             f'<td class="nowrap">{esc(mark)}</td>'
-            f"<td>{esc(r.get('setup_triggered',''))}</td>"
-            f"<td>{esc(r.get('structure_change',''))}</td>"
+            # 2026-08-11：这两列会写整段判断文字，必须走 rich()，否则 ** 变字面星号
+            # （CONTEXT「会写整段判断文字的字段一律用 rich()」）。ML Leader 名单 7/17–8/07 是空的，
+            # 这张表从没真渲染过，所以这个缺陷到 8/10 名单恢复三只时才第一次暴露。
+            f"<td>{rich(r.get('setup_triggered',''))}</td>"
+            f"<td>{rich(r.get('structure_change',''))}</td>"
             "</tr>"
         )
+    # 同日补 colgroup + table_class：QA「表格列宽对齐」要求每张表都有，手写 HTML 的表最容易漏
     return (
-        '<table><thead><tr><th>TICKER</th><th class="num">今日%</th><th class="num">QQQ今日%</th>'
+        '<table class="fixed-cols"><colgroup>'
+        '<col style="width:9%"><col style="width:9%"><col style="width:10%"><col style="width:9%">'
+        '<col style="width:12%"><col style="width:10%"><col style="width:17%"><col style="width:24%">'
+        "</colgroup>"
+        '<thead><tr><th>TICKER</th><th class="num">今日%</th><th class="num">QQQ今日%</th>'
         '<th class="num">超额</th><th>大盘性质</th><th>领袖行为</th><th>Setup触发</th><th>结构变化</th>'
         "</tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
     )
@@ -1462,6 +1470,21 @@ def render_premarket(data: dict) -> str:
         if data.get("stop_proximity_note"):
             pos_body += build_split_callout(data["stop_proximity_note"],
                                             label="", kind="co-warn")
+    # 今日退出执行表（2026-08-11 新增，Vic：「我想盘前止损 glw mrvl soxx aaoi 这几个」
+    # →「单独拉一张」）。跟上面的撤单清单**不是一回事，不要合并**：
+    #   · 撤单清单 = 全仓自动扫，按距止损/ATR 入选，回答「今晚撤哪几张单」
+    #   · 退出执行表 = **Vic 点名的那几笔**，回答「已经决定要出的，今晚怎么出」
+    # 放在撤单清单之后：先看撤哪些单，再看已决定要出的怎么执行。
+    # 🔴 2026-08-12：Premarket Movers 整节退役（Vic：「我也不看盘前异动选股」）。
+    #    渲染层不再输出该节；字段在模板里留空壳，QA 已把它列入 RETIRED_FIELDS。
+    ep_tbl = data.get("exit_plan_table") or {}
+    if ep_tbl.get("rows") or data.get("exit_plan_note"):
+        pos_body += '<h3 class="exit-head">今日退出执行表（你点名的标的）</h3>'
+        if ep_tbl.get("rows"):
+            pos_body += build_table(ep_tbl)
+        if data.get("exit_plan_note"):
+            pos_body += build_split_callout(data["exit_plan_note"],
+                                            label="", kind="co-warn")
     body_sections.append(section("positions", "持仓", pos_body))
 
     news_body = ""
@@ -1634,10 +1657,14 @@ def render_premarket(data: dict) -> str:
             squeeze_body += build_split_callout(data["squeeze_note"])
         setup_parts.append(squeeze_body)
     else:
-        setup_parts.append(empty_body(
+        _sq = empty_body(
             "parked",
             "每日扫描 2026-08-07 起暂停（iborrowdesk 借券费率源连续三周不可用；"
-            "24 个交易日只产出过 1 次候选）。**改为按需查证**——你点名哪只，用 FINRA 短仓 + 做空成交量现算。"))
+            "24 个交易日只产出过 1 次候选）。**改为按需查证**——你点名哪只，用 FINRA 短仓 + 做空成交量现算。")
+        # 2026-08-12：parked 时也允许当天补一段 note（此前 note 写了会被静默丢掉）
+        if data.get("squeeze_note"):
+            _sq += build_split_callout(data["squeeze_note"])
+        setup_parts.append(_sq)
     # 事件缺口延续（2026-08-05 建）：独立品类，紧跟轧空之后、A/B/C 之前
     egc = data.get("event_gap_candidates", [])
     if egc:
@@ -1647,8 +1674,15 @@ def render_premarket(data: dict) -> str:
             eg_body += build_split_callout(data["event_gap_note"])
         setup_parts.append(eg_body)
     else:
-        setup_parts.append('<p class="placeholder">暂停使用——FINRA做空比例/借券费率三源拼接成本高，'
-                           '待Vic确认恢复。</p>')
+        # 🔴 2026-08-12 修：这里原来贴的是**轧空模块的暂停理由**（FINRA/借券费率），
+        #    复制粘贴串了——事件缺口延续**根本没有 parked**，它是「今天没有符合口径的候选」。
+        #    两者含义完全相反：一个是「不跑了」，一个是「跑了、没有」。
+        #    按「空节三态」规则出 none 标记，并把当天的 note 渲染出来（**表空了更需要说明为什么空**）。
+        eg_body = '<h3>事件缺口延续（独立品类 · 不进 A/B/C）</h3>'
+        eg_body += empty_body("none", "今日无符合口径的候选（缺口 ≤5% + 具体催化 + 止损能放进 10%）。")
+        if data.get("event_gap_note"):
+            eg_body += build_split_callout(data["event_gap_note"])
+        setup_parts.append(eg_body)
 
     # 八种方法扫完，汇总成A/B/C候选（最多5个A级 / 7个B级，每天看不了太多）
     # 2026-08-06 Vic：「综合候选·A/B/C分级 这几个字应该是正常标题大小，很重要的板块」
@@ -1879,12 +1913,10 @@ def render_postmarket(data: dict) -> str:
             br_body += empty_body("parked", "2026-08-06 起暂停追踪。重置线 QQQ 673.30 / VOO 675.21 留档。")
         elif data.get("ftd_note"):
             br_body += build_split_callout(data["ftd_note"])
-        st = data.get("breadth_stage_table", {})
-        if st.get("rows"):
-            br_body += "<h3>Weinstein 阶段分析</h3>"
-            br_body += build_table(st)
-            if data.get("breadth_stage_note"):
-                br_body += build_split_callout(data["breadth_stage_note"])
+        # 2026-08-11 Vic：「Weinstein 728 票全扫 用不着 stage 了，这个删除」——
+        # breadth_stage_table / breadth_stage_note 主动退役，渲染块删除（同 breadth_history_table
+        # 2026-07-28 的处理方式）。两个字段在 assemble_template_postmarket.py 里留空壳带退役日期，
+        # qa_report.RETIRED_POSTMARKET_FIELDS 也登记了——**是主动退役，不是漂移丢失**。
         # 2026-07-28 Vic：「近期逐日走势（newest first）整个表格删除」
         body_sections.append(section("breadth", "02 市场广度", br_body))
 
@@ -1908,9 +1940,12 @@ def render_postmarket(data: dict) -> str:
             xw_body += build_split_callout(data["x_watch_note"])
         body_sections.append(section("xwatch", "X trader台账跟踪", xw_body))
 
+    # 🔴 2026-08-12：note 不能挂在「表有行」上——2026-08-11 盘后 earnings_note 写了整段
+    #    却因为表是空的被整块丢掉（QA「字段写了却没被渲染」抓到）。这是「空节三态」那条规则的
+    #    同一个失败模式：**表空了更需要说明为什么空**。
     earnings_table = data.get("earnings_table", {})
-    if earnings_table.get("rows"):
-        _eb = build_table(earnings_table)
+    if earnings_table.get("rows") or data.get("earnings_note"):
+        _eb = build_table(earnings_table) if earnings_table.get("rows") else ""
         if data.get("earnings_note"):
             _eb += build_split_callout(data["earnings_note"])
         body_sections.append(section("earnings", "03 财报复盘", _eb))

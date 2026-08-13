@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-07-23T10:30:00",
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "7/23 (3h前)", "summary": "BREAKING: 美油价突破$88/桶，伊朗战争持续升级"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (5h前)", "summary": "中国投资者抄底：中国最大科技基金Star 50 ETF吸引创纪录资金流入"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (6h前)", "summary": "全球投资者罕见看多：美银Bull & Bear Indicator升至9（接近极度贪婪阈值）"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (9h前)", "summary": "$GOOGL上调FY2026资本支出指引至最高$205B，称正处于'现代史上最大技术革命'中"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (11h前)", "summary": "10年期美债收益率逼近4.70%，创52周新高"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (12h前)", "summary": "BREAKING: 伊朗外长Araghchi称'防御原则明确：以眼还眼'"},
+    {"handle": "@KobeissiLetter", "time": "7/23 (12h前)", "summary": "伊朗议会议长Ghalibaf称霍尔木兹海峡不会恢复到战前状态"},
+    {"handle": "@charliebilello", "time": "7/23 (3h前)", "summary": "$GOOGL Q2营收同比+24%创$120B新高，净利润同比+298%"},
+    {"handle": "@charliebilello", "time": "7/22 (17h前)", "summary": "伊朗战争爆发以来大宗商品涨幅：硫+142%、欧洲天然气+97%、取暖油(数据被截断)——能源/化工链条冲击量化"},
+    {"handle": "@charliebilello", "time": "7/21", "summary": "$IBM单日-25%是这家115年老牌公司历史上最大单日跌幅"},
+    {"handle": "@NickTimiraos", "time": "7/23 02:09", "summary": "'鉴于外界对此存疑，Fed主席已为下周FOMC会议安排了新闻发布会'——暗示市场对Fed独立性/会议安排有疑虑，官方出面澄清"},
+    {"handle": "@NickTimiraos", "time": "7/20", "summary": "6月核心PCE预测+0.18%（由PPI/CPI转算），温和读数"},
+    {"handle": "@NickTimiraos", "time": "7/18", "summary": "克利夫兰联储Hammack（票委）立场未变：通胀仍过高，鹰派"},
+    {"handle": "@spotgamma", "time": "7/22", "summary": "转发tastylive：'大家都在抢memory chip的底部时'，Brent Kochuba用$SKHY(SK海力士ADR) 1月到期put ratio策略吃权利金——put skew极高，双向都能赚"},
+    {"handle": "@spotgamma", "time": "7/23 (10h前)", "summary": "Space股期权在6月大涨后仍偏贵——'超跌反弹还是继续起飞'待验证"},
+    {"handle": "@unusual_whales", "time": "7/23 (1h前)", "summary": "转发BofA报告《Summer Pullback, Then Year-End Rally》：对冲基金momentum仓位已拉伸，杠杆率接近历史区间高位"},
+    {"handle": "@unusual_whales", "time": "7/23 (6h前)", "summary": "IRGC宣称对AWS巴林数据中心发射导弹（伊朗战事外溢到云基础设施，需核实真实性）"},
+    {"handle": "@unusual_whales", "time": "7/23 (5h前)", "summary": "科威特拦截伊朗导弹和无人机——美军空袭伊朗阵地以削弱其威胁能力"},
+    {"handle": "@zerohedge", "time": "7/23 (1h前)", "summary": "*STMICRO预告3Q营收$3.70B，低于预期$3.79B（欧洲车用/工业半导体走弱信号）"},
+    {"handle": "@zerohedge", "time": "7/23 (5-6h前)", "summary": "众议院通过《国会交易禁令》(Congressional Stock Trading Ban)；另通过含SAVE America Act的国防政策法案"}
+  ],
+  "stocks": [
+    {"handle": "@bluechipdaily", "time": "7/21", "ticker": "$SOXX", "note": "Larry Tentarelli：半导体ETF早减仓4.5%损失止损，避开后续再跌13%——强调风险管理优先于择时精确"},
+    {"handle": "@bluechipdaily", "time": "7/21", "ticker": "$XME", "note": "金属矿业ETF早减仓4.2%损失止损，避开后续再跌19%"},
+    {"handle": "@bluechipdaily", "time": "7/20", "ticker": "$SNDK", "note": "7/7-7/10反弹+31%，7/10-7/17又回撤31%——双向剧烈震荡，提示SanDisk/存储链高波动"},
+    {"handle": "@WalterDeemer", "time": "7/21", "ticker": "$SPY/$QQQ", "note": "7/17早盘留下大跳空缺口（SPY需涨到747.88/QQQ需涨到702.61才能补齐），7/21确认两个缺口均已回补"},
+    {"handle": "@spluscollective", "time": "7/23 (5h前)", "ticker": "$LQDA", "note": "'按计划运行'，XBI(生物科技)板块正需要的一次喘息回调；此前(7/6)将其列为Idea#4，PT1看90，类比HIMS走势"},
+    {"handle": "@spluscollective", "time": "7/23 (6h前)", "ticker": "$URI", "note": "回复称'一直在看但没下手，标的太多顾不过来'——此前(6/26)称URI是被低估的数据中心概念交易，现在终于被市场注意到"},
+    {"handle": "@aleabitoreddit", "time": "7/23 (2h前)", "ticker": "$INTC/$AMD", "note": "【promoter类账号，看多论调降权】援引路透：INTC/AMD将与中国客户签订AI数据中心CPU长期协议(LTA)，部分CPU产品价格已上涨"},
+    {"handle": "@aleabitoreddit", "time": "7/23 (2h前)", "ticker": "$TSLA", "note": "【promoter类账号】摘录Q2财报会Musk发言：'Optimus将是史上最大产品'"},
+    {"handle": "@aleabitoreddit", "time": "7/23 (9h前)", "ticker": "$GOOGL", "note": "【promoter类账号】GOOGL FY2026资本支出指引上调至$195B-$205B(原$180B-$190B)；作者称超大规模厂商上调AI capex将率先体现在光通信(optical networking)板块财报——其一贯的AI capex乐观论调"},
+    {"handle": "@ohiain", "time": "7/23 09:03", "ticker": "无具体标的", "note": "方法论帖：'context永远优先，chart只负责择时'——举例'若软件板块整体被买入，我自然会更倾向买软件股'，未给出具体代码，本周该账号其余内容均为无标的的简短回复"},
+    {"handle": "@RichardMoglen", "time": "7/23 (1h前)", "note": "明确说明'今天除了拍到虎鲸照片外没有交易'——本周该账号其余内容为无标的上下文的RS(相对强度)讨论回复，判定为空转/观察期"}
+  ],
+  "congress": [
+    {"handle": "@unusual_whales", "time": "7/23 09:31", "note": "BREAKING：俄克拉荷马州新任参议员Alan Armstrong（Williams Companies前CEO，$WMB）7/21一次性披露703笔交易共$10M+成交量（654买/49卖，可追溯至2026年3月），其中701笔延迟112-119天申报，远超STOCK Act规定的45天披露期限——早期买入包括$AAPL($250K-$500K)、$NVDA、$GOOG、$ASML等"}
+  ],
+  "empty_groups": ["@BillAckman"]
+}

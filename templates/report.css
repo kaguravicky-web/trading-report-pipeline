@@ -406,6 +406,11 @@ table.movers td:nth-child(n+5){font-size:12.8px;line-height:1.6}
 /* 2026-08-01：仓位治理标题（缺持有理由/止损的仓位单列一节，硬性规则） */
 .gov-head{color:#c0392b}
 
+/* 2026-08-11：今日退出执行表标题（Vic 点名要出的标的，「单独拉一张」）。
+   跟 .gov-head 同色系但用较浅那档红——它是「已决定要出」不是「缺东西」，
+   不该跟仓位治理抢注意力。配色沿用 --amber（2026-07-06 起 = 浅红，不是黄）。 */
+.exit-head{color:#b5574a}
+
 
 /* 2026-08-06：离散度卡片 + 闸门表副行（Vic：「（盘前+0.33%）字样直接换一行」）*/
 td .sub{font-size:11.5px;color:var(--muted);line-height:1.5;margin-top:2px}

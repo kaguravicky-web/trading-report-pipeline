@@ -1,0 +1,37 @@
+{
+  "generated_at": "2026-07-29 15:30 SGT",
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "1小时前", "summary": "南韩股市单日暴跌8%，全球芯片股抛售仍在持续蔓延"},
+    {"handle": "@KobeissiLetter", "time": "4小时前", "summary": "大盘波动率处于历史高位，标普500成分股表现分化的离散度明显扩大"},
+    {"handle": "@KobeissiLetter", "time": "5小时前", "summary": "伊朗发射弹道导弹发动突袭后，美油价单日暴涨超5%"},
+    {"handle": "@KobeissiLetter", "time": "6小时前", "summary": "散户风险偏好爆表，大科技股看涨期权成交占比创新高"},
+    {"handle": "@KobeissiLetter", "time": "8小时前", "summary": "特朗普政府计划取消一项此前用于压低医保保费的补贴项目"},
+    {"handle": "@zerohedge", "time": "3小时前", "summary": "美国、沙特联合打击伊拉克境内伊朗支持的武装据点"},
+    {"handle": "@zerohedge", "time": "4小时前", "summary": "对冲基金遭遇新冠疫情以来最惨烈单日回撤"},
+    {"handle": "@zerohedge", "time": "4小时前", "summary": "事实核查确认：7月是有史以来动量因子表现最差的月份之一（新冠除外）"},
+    {"handle": "@spotgamma", "time": "15小时前", "summary": "发布季度总结报告，偏营销性质，未给出具体点位判断"},
+    {"handle": "@spotgamma", "time": "7/27", "summary": "周四的抛售是预警信号，本周FOMC决议撞上大科技财报密集期，波动风险叠加"},
+    {"handle": "@NickTimiraos", "time": "11小时前", "summary": "前亚特兰大联储主席Bostic在NABE研讨会上谈及新设的Fed特别工作组"},
+    {"handle": "@NickTimiraos", "time": "7/28", "summary": "WSJ报道：Warsh曾说服\"史上最渴望降息的总统\"给他Fed主席这份工作，如今他要面对\"家族内斗\""},
+    {"handle": "@NickTimiraos", "time": "7/28", "summary": "独家：Warsh首次主持FOMC会议第一天晚宴上向18位同事表态（原帖内容被截断，需留意后续报道细节，今日FOMC决议高度相关）"},
+    {"handle": "@charliebilello", "time": "7小时前", "summary": "调侃体\"明日新闻今日知\"帖：戏称Fed将维持利率3.50%-3.75%不变——注意这是调侃语气，非官方确认结果"},
+    {"handle": "@charliebilello", "time": "7/28", "summary": "Google Q2净利润1120亿美元，创单季历史新高，但自由现金流转负，资本开支拖累明显"},
+    {"handle": "@unusual_whales", "time": "1小时前", "summary": "南韩KOSPI指数单日暴跌超7.5%，本月累计跌幅超30%"}
+  ],
+  "stocks": [
+    {"handle": "@bluechipdaily", "time": "1小时前", "ticker": "EWY", "note": "图形转弱：跌破下行均线，50日均线走平，与此前买入时的形态相反；同时晒出EWY 151.43均价买入、分别在187/203/166卖出的历史交易记录"},
+    {"handle": "@bluechipdaily", "time": "10小时前", "ticker": "SOXX", "note": "此前市场对\"Warsh不加息\"的乐观预期已price in，SOXX曾在Warsh首次记者会后的周一见到近期高点，暗示利好出尽风险"},
+    {"handle": "@bluechipdaily", "time": "10小时前", "ticker": "", "note": "无具体代码，AI主题表态：\"AI交易没有终结，但目前维持最低仓位暴露\"，呼应资本开支需求转弱的担忧主线"},
+    {"handle": "@WalterDeemer", "time": "4小时前", "ticker": "QQQ", "note": "需要回补上周留下的跳空缺口，目标价703.62"},
+    {"handle": "@WalterDeemer", "time": "12小时前", "ticker": "NFLX", "note": "缺口终于回补"},
+    {"handle": "@WalterDeemer", "time": "7/28", "ticker": "", "note": "无具体代码，重申警惕AI循环融资风险，类比2007-08年信用违约互换(CDS)级别的系统性预警信号"},
+    {"handle": "@spluscollective", "time": "11小时前", "ticker": "MU/STX/WDC/SNDK", "note": "原帖转述朋友想抄底存储链个股的提问；53分钟前引用回复调侃\"买高卖低、接飞刀\"，暗示对存储股抄底冲动持谨慎/讽刺态度"},
+    {"handle": "@aleabitoreddit（promoter类账号，按框架规则降权，不作为独立信号源）", "time": "6小时前", "ticker": "BE/TER", "note": "认为近期抛售是\"超调的短期去杠杆\"，点名Bloom Energy财报同比营收增长166%、利润率扩张、上调2026年指引"},
+    {"handle": "@aleabitoreddit（promoter类账号，按框架规则降权）", "time": "10小时前", "ticker": "GOOGL", "note": "认为GOOGL上周上调资本开支指引后的股价下跌只是去杠杆所致，非基本面恶化"},
+    {"handle": "@aleabitoreddit（promoter类账号，按框架规则降权）", "time": "10小时前", "ticker": "CCXI", "note": "FCC拟禁止中国人形/四足机器人进口（路透社消息），利好美国本土人形机器人产业链标的"}
+  ],
+  "congress": [
+    {"handle": "@unusual_whales", "time": "近1小时内多条", "note": "扫描窗口内未见任何国会议员交易披露内容，该账号今日全部为常规新闻转发（特朗普家族财富估算、Z世代饮酒数据、美国最富34人财富占比、KOSPI暴跌快讯、婴儿潮世代购房趋势、约会成本上涨等），无国会交易相关信号"}
+  ],
+  "empty_groups": ["BillAckman", "RichardMoglen", "ohiain"]
+}

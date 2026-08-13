@@ -404,7 +404,26 @@ def load_json(path, default):
     return default
 
 
-ADANOS_KEY = "<REDACTED_ROTATED_2026-08-13>"  # 简单HTTP接口，key本来就明文记在CONTEXT.md
+# 🔴 2026-08-13：仓库转公开 GitHub 仓库，凭证从代码里移出。
+#    这里原本是明文 key，注释还写着「key本来就明文记在CONTEXT.md」——
+#    **公开仓库里那等于把 key 送人**，而且它已经进过 10 个提交的历史，所以当天做了历史清洗。
+#    取值顺序：环境变量 ADANOS_API_KEY → 仓库根 .secrets.json（已在 .gitignore）。
+#    两个都没有就返回 None，fetch_adanos() 跳过并在报告里标「未取到」，不会让整条管线挂掉。
+def _load_secret(name: str):
+    import os
+    v = os.environ.get(name)
+    if v:
+        return v
+    p = ROOT / ".secrets.json"
+    if p.exists():
+        try:
+            return json.loads(p.read_text(encoding="utf-8")).get(name)
+        except Exception:
+            return None
+    return None
+
+
+ADANOS_KEY = _load_secret("ADANOS_API_KEY")
 
 # Vic自建的宏观数据表（2026-07-12，GOOGLEFINANCE实时公式，链接共享只读）——替代大部分WebFetch宏观查询。
 # 当前行：VIX短期期货(VIXY代理)/VIX(INDEXCBOE:VIX本体!)/USO(油代理)/BTCUSD/美元指数ETF(UUP代理)
@@ -723,6 +742,10 @@ def fetch_adanos(metrics_by_ticker):
     不再输出静态Top100，改算每只的buzz_score相对自己近7日均值的变化率，只报『热度暴增』的：
     新面孔进榜、或buzz较基线+50%以上。再join价格数据（若在监控范围内）看是否伴随真实涨跌异动。"""
     import urllib.request
+    if not ADANOS_KEY:
+        # 2026-08-13：凭证移出仓库后，没配 key 时安静跳过而不是抛异常——
+        # 报告里会渲染成「未取到」，整条管线不受影响。
+        return {"error": "未配置 ADANOS_API_KEY（环境变量或 .secrets.json），本次跳过"}
     try:
         req = urllib.request.Request(
             "https://api.adanos.org/x/stocks/v1/trending?limit=100",

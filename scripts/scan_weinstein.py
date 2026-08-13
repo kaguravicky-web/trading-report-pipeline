@@ -2,6 +2,12 @@
 # -*- coding: utf-8 -*-
 """Weinstein 四阶段全量分布——自己算，不再依赖老师的 Google Sheet。
 
+🔴 **2026-08-11 起退出盘后流程**（Vic：「Weinstein 728 票全扫 用不着 stage 了，这个删除」）。
+   脚本保留、仍可手动跑，但**不再是每日盘后的前置步骤**；盘后报告也不再有「Weinstein 阶段分析」
+   这一节（`breadth_stage_table` / `breadth_stage_note` 已退役，见
+   assemble_template_postmarket.py 的空壳与 qa_report.RETIRED_POSTMARKET_FIELDS）。
+   要重新启用需要 Vic 明确说——不要因为"它以前在"自己加回去。
+
 背景（2026-08-07）：老师维护的「S&P 500 LIVE MARKET BREADTH」tab(gid=90181001) 返回 HTTP 400，
 COMBINED tab(gid=90181401) 能取但**表内时间戳停在 2026-07-31**。Vic 确认：「w stages 我老师是
 停止维护了，我也不知道哪里拿」。

@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-07-20T00:00:00+08:00",
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "Jul20 3h-12h ago", "summary": "外资净买入美股+352亿美元(MoM)；30年期美债周二拍卖融资成本快速上升；科技股回报率逼近2000年互联网泡沫水平；半导体ETF杠杆正在去化(AUM占比~31%)；2026上半年美国大公司破产372起,创纪录;美中AI模型token使用占比竞争加剧;半导体ETF年内流入$460亿,创年度纪录"},
+    {"handle": "@KobeissiLetter", "time": "Jul18", "summary": "美国企业高管2026上半年卖出自家股票同比+20%至$776亿,20年来第二高;6月保证金债务暴增$865亿至历史新高$1.5万亿(连续多月新高)"},
+    {"handle": "@KobeissiLetter", "time": "Jul17", "summary": "日本散户做空美元仓位增加;道指盘中翻红;苹果市值超越英伟达成全球第一;Netflix财报不及预期暴跌;纳指期货因内存股抛售+伊朗战事跌超2%;中国Q2 GDP同比+4.3%,增速最慢;标普500自2022年底以来涨95%,历史级牛市"},
+    {"handle": "@zerohedge", "time": "Jul20 2-3h ago", "summary": "高盛衍生品部门警告AI信贷问题扩散至全市场(\"恐慌迹象\");CTA阈值在纳指已突破,SPX\"近在眼前\"(高盛);摩根士丹利评论Gamma vs Theta;中国月之暗面(Moonshot)寻求IPO,再引发针对美国AI股的\"DeepSeek时刻\"式冲击。其余多为非交易相关时政新闻(边境执法、台湾政治、无家可归者等),已过滤"},
+    {"handle": "@spotgamma", "time": "Jul17-20", "summary": "QQQ隐含/实现波动率价差评论;GLD看跌/看涨期权skew评论(黄金对冲脚本);Jul19核心观察: memory→SMH→XLK→NDX\"手风琴\"式联动——HBM炒作阶段涨到极致(板上最大vol spike)后正在最猛烈回落"},
+    {"handle": "@NickTimiraos", "time": "Jul16-18", "summary": "多位Fed官员偏鹰派表态密集出现: Cleveland Fed Hammack坚持通胀过高论调;Fed副主席Jefferson考虑年内可能加息;Dallas Fed Logan听起来已准备投票加息;Trump对Fox Business谈油价\"会上下拉锯\";Fed的Cook演讲被解读为FOMC鹰派转向不是石油/战争叙事;AI基建对物价影响成FOMC潜在分歧点(Warsh警告AI会推高物价)"},
+    {"handle": "@charliebilello", "time": "Jul15-20", "summary": "比特币(-27%)和黄金(-7%)是2026年迄今表现最差的两个主要资产;美国通胀连续64个月高于Fed目标,月均4%;美国战略石油储备降至1983年4月以来最低;全球央行动态更新——韩国自2023年以来首次加息25bp"}
+  ],
+  "stocks": [
+    {"handle": "@bluechipdaily", "time": "Jul18", "ticker": "$SPCX", "note": "SPCX较高点回落44%(4周内),媒体炒作过度,作者无持仓,对比$AMZN/$MSFT盈利能力反衬SPCX估值脱离基本面"},
+    {"handle": "@WalterDeemer", "time": "Jul17-18", "ticker": "$SPY/$QQQ", "note": "持续跟踪SPY/QQQ跳空缺口是否回补(经典技术分析);Jul16对$SPCX评论\"Oops...\"(呼应bluechipdaily的SPCX暴跌观察);Jul10 $MU\"已离岛\"(岛型反转信号,方向未明确说明,需结合图看)"},
+    {"handle": "@BillAckman", "time": "Jul17-20", "ticker": "", "note": "连续转发/评论中国AI模型(Kimi K3)冲击美股AI叙事的内容,用词\"scary\"\"concerning\";呼吁放宽移民政策留住AI人才;无具体个股买卖表态,但情绪上对中国AI竞争表达明显担忧,呼应当日AI供应链主线"},
+    {"handle": "@RichardMoglen", "time": "Jul19-20", "ticker": "", "note": "本周内容以交易心理(过度交易/严守小亏损)+TraderLion交易大会宣传为主,无具体setup;唯一市场相关反应: Jul19对\"SpaceX过去一个月市值蒸发$1万亿\"新闻回复\"Oy vey\",与SPCX主题呼应;账号内投票\"市场下一步怎么走\"56.9%选跌10% vs 43.1%选涨10%(635票,情绪读数)"},
+    {"handle": "@ohiain", "time": "Jul18-20", "ticker": "", "note": "本周无实质setup/个股内容,几乎全部为社交闲聊(雅典见交易好友、回复寒暄);唯一擦边内容\"刷到几个大V账号最近栽得很惨\"未点名具体标的,信息量不足以计入"},
+    {"handle": "@spluscollective", "time": "Jul20 (~1-3h ago)", "ticker": "$NVDA $AMD $AVGO $MU $SNPS $CDNS $GOOGL $MSFT $META $AMZN", "note": "标普493在2026上半年跑赢Mag7,但Q3开始Mag7转强;比特币ETF流入上升同时\"芯片资金\"开始轮动流出;列出中国Kimi K3冲击\"爆炸半径\"内标的分组(芯片/内存HBM/EDA/超大规模AI资本支出),定性为\"AI交易的压力测试,不是死刑\"(类比DeepSeek时刻);当日AI供应链主线的最集中个股清单"},
+    {"handle": "@aleabitoreddit", "time": "Jul18-20", "ticker": "$SKHY", "note": "Jul20\"周日就有AI资本支出的味道\"(对AI capex持续性偏乐观);Jul18详细解释SK海力士美股ADR($SKHY)相对韩股~25%溢价,7/29 ADR与本地股份可互换(套利关注点),ADR流通盘仅~2.5%;账号自曝-49%回撤引发跟随者讨论,视为正常回调"}
+  ],
+  "congress": [
+    {"handle": "@congresstrading", "time": "最新帖仍为Jan 9", "note": "确认已连续停更超6个月(2026-07-16已观察到同样状态,本次2026-07-20再次核实仍停在1月9日)。按CONTEXT.md既定规则:建议与Vic确认是否从固定扫描列表移除,否则将持续做无用功"},
+    {"handle": "@unusual_whales", "time": "Jul19-20 (~24h窗口)", "note": "本次24小时窗口内未扫到国会议员交易申报类内容,多为宏观新闻聚合(中国减持美债、DRAM价格因AI需求飙升、非农就业变化、失业率3.8%超2008危机水平、伊朗IRGC言论、住房负担能力/让利数据);DRAM涨价与当日AI供应链主线呼应。国会交易本身这次没有实质内容"}
+  ],
+  "empty_groups": ["@congresstrading(连续两次扫描确认停更超6个月,建议评估是否移出固定列表)"],
+  "scan_log": [
+    {"handle": "@KobeissiLetter", "tool_calls": 17, "chars_read_approx": 32000, "note": "首个账号,因排查get_page_text在多帖时间线页面只抓取单条<article>的bug而多耗费2次尝试(该bug此后全程改用read_page规避);另加2轮滚动以覆盖到Jul17"},
+    {"handle": "@zerohedge", "tool_calls": 8, "chars_read_approx": 19000, "note": "高发帖量账号,仅覆盖约8小时;多为政治/社会新闻噪音,过滤后市场相关内容很少"},
+    {"handle": "@spotgamma", "tool_calls": 5, "chars_read_approx": 12000, "note": "首次加载较慢多等待一轮"},
+    {"handle": "@NickTimiraos", "tool_calls": 5, "chars_read_approx": 14000, "note": "首次加载较慢多等待一轮"},
+    {"handle": "@charliebilello", "tool_calls": 3, "chars_read_approx": 9000, "note": "一次读取即覆盖Jul15-20"},
+    {"handle": "@bluechipdaily", "tool_calls": 3, "chars_read_approx": 9000, "note": "低频账号,一次读取覆盖Jul17-20"},
+    {"handle": "@WalterDeemer", "tool_calls": 5, "chars_read_approx": 13500, "note": "首次加载较慢多等待一轮,覆盖Jul8-18"},
+    {"handle": "@BillAckman", "tool_calls": 3, "chars_read_approx": 9500, "note": "一次读取覆盖Jul17-20"},
+    {"handle": "@RichardMoglen", "tool_calls": 8, "chars_read_approx": 24000, "note": "加载慢+额外一轮滚动排查是否有具体setup,结果仍以心理/会议内容为主"},
+    {"handle": "@ohiain", "tool_calls": 6, "chars_read_approx": 20000, "note": "额外滚动一轮专门排查历史上曾漏帖的账号,本周确认无setup内容"},
+    {"handle": "@spluscollective", "tool_calls": 3, "chars_read_approx": 9000, "note": "一次读取即拿到当日最集中的AI供应链个股清单"},
+    {"handle": "@aleabitoreddit", "tool_calls": 3, "chars_read_approx": 9000, "note": "一次读取覆盖Jul18-20"},
+    {"handle": "@congresstrading", "tool_calls": 3, "chars_read_approx": 7500, "note": "确认停更,内容量小"},
+    {"handle": "@unusual_whales", "tool_calls": 6, "chars_read_approx": 20000, "note": "额外滚动一轮专门排查国会交易类内容,24小时窗口内未找到,仅为宏观新闻聚合"}
+  ]
+}

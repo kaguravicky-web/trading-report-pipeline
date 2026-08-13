@@ -54,5 +54,33 @@
   "action": "闸门/FTD 权重高，可按市场级信号行动",
   "sd_median_1y": 0.807,
   "ratio_median_1y": 1.64
+ },
+ {
+  "date": "2026-08-10",
+  "sd": 1.587,
+  "idx_move": 0.008,
+  "ratio": 31.74,
+  "sd_pctile": 96,
+  "ratio_pctile": 100,
+  "cor1m": 8.07,
+  "cor3m": 11.14,
+  "regime": "选股主导",
+  "action": "指数信号基本无信息量——当天不做基于大盘判断的仓位动作，只做个股结构",
+  "sd_median_1y": 0.807,
+  "ratio_median_1y": 1.64
+ },
+ {
+  "date": "2026-08-12",
+  "sd": 0.811,
+  "idx_move": 0.247,
+  "ratio": 3.28,
+  "sd_pctile": 51,
+  "ratio_pctile": 75,
+  "cor1m": 7.79,
+  "cor3m": 10.79,
+  "regime": "选股主导",
+  "action": "指数信号基本无信息量——当天不做基于大盘判断的仓位动作，只做个股结构",
+  "sd_median_1y": 0.807,
+  "ratio_median_1y": 1.64
  }
 ]

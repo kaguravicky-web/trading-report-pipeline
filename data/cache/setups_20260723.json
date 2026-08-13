@@ -1,0 +1,4634 @@
+{
+ "scanned": 333,
+ "hits": {
+  "AAPL": {
+   "sector_etfs": [
+    "DIA",
+    "XLK"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.92%/1.59ATR，RSI62.5"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.66%，缩量0.59×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=311.91 L2=322.22"
+    }
+   ],
+   "close": 325.89,
+   "t1_pct": -0.56,
+   "d5_pct": -0.49,
+   "rsi14": 62.5,
+   "dist_ema9_pct": 0.66,
+   "dist_ma20_atr": 1.97,
+   "dist_ma50_pct": 6.89,
+   "vol_ratio": 0.59,
+   "range_pos": 45,
+   "atr14": 8.024,
+   "range5_pct": 3.92,
+   "double_bottom": {
+    "low1": 311.91,
+    "low1_date": "2026-07-14",
+    "low2": 322.22,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ABBNY": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回98.49(深2.62%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 98.87,
+   "t1_pct": -0.93,
+   "d5_pct": -4.45,
+   "rsi14": 43.1,
+   "dist_ema9_pct": -1.38,
+   "dist_ma20_atr": -1.47,
+   "dist_ma50_pct": -5.35,
+   "vol_ratio": 0.3,
+   "range_pos": 7,
+   "atr14": 2.972,
+   "range5_pct": 4.01,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ABBV": {
+   "sector_etfs": [
+    "XLV"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.47%，缩量0.54×"
+    }
+   ],
+   "close": 253.3,
+   "t1_pct": -1.09,
+   "d5_pct": 3.76,
+   "rsi14": 60.9,
+   "dist_ema9_pct": 0.47,
+   "dist_ma20_atr": 0.39,
+   "dist_ma50_pct": 9.57,
+   "vol_ratio": 0.54,
+   "range_pos": 19,
+   "atr14": 6.201,
+   "range5_pct": 6.89,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ACGL": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.71%，缩量0.95×"
+    }
+   ],
+   "close": 98.63,
+   "t1_pct": -1.91,
+   "d5_pct": 0.09,
+   "rsi14": 50.5,
+   "dist_ema9_pct": -1.71,
+   "dist_ma20_atr": -0.57,
+   "dist_ma50_pct": 3.47,
+   "vol_ratio": 0.95,
+   "range_pos": 20,
+   "atr14": 2.187,
+   "range5_pct": 5.26,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ADI": {
+   "sector_etfs": [
+    "XLK",
+    "SMH"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回381.22(深3.8%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 386.73,
+   "t1_pct": 1.02,
+   "d5_pct": -1.08,
+   "rsi14": 47.3,
+   "dist_ema9_pct": 0.68,
+   "dist_ma20_atr": -0.15,
+   "dist_ma50_pct": -4.53,
+   "vol_ratio": 0.66,
+   "range_pos": 92,
+   "atr14": 15.778,
+   "range5_pct": 5.5,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "AEHR": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "E",
+     "note": "shakeout收回76.76(深17.51%/8天下方)+burst 2026-07-21 +27.86%量1.71×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=67.23 L2=75.2"
+    }
+   ],
+   "close": 93.54,
+   "t1_pct": -5.43,
+   "d5_pct": 6.55,
+   "rsi14": 53.8,
+   "dist_ema9_pct": 9.91,
+   "dist_ma20_atr": 0.89,
+   "dist_ma50_pct": -0.38,
+   "vol_ratio": 0.89,
+   "range_pos": 3,
+   "atr14": 12.353,
+   "range5_pct": 27.82,
+   "double_bottom": {
+    "low1": 67.23,
+    "low1_date": "2026-07-13",
+    "low2": 75.2,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "AFL": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.5%，缩量0.74×"
+    },
+    {
+     "type": "D",
+     "note": "突破124.0(2026-07-17,量1.91×)后缩量回踩"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=120.55 L2=122.42"
+    }
+   ],
+   "close": 123.58,
+   "t1_pct": -0.01,
+   "d5_pct": 2.12,
+   "rsi14": 61.2,
+   "dist_ema9_pct": 0.5,
+   "dist_ma20_atr": 1.1,
+   "dist_ma50_pct": 4.55,
+   "vol_ratio": 0.74,
+   "range_pos": 40,
+   "atr14": 2.09,
+   "range5_pct": 3.99,
+   "double_bottom": {
+    "low1": 120.55,
+    "low1_date": "2026-07-15",
+    "low2": 122.42,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "AIZ": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.82%，缩量0.98×"
+    }
+   ],
+   "close": 273.15,
+   "t1_pct": -0.98,
+   "d5_pct": -0.28,
+   "rsi14": 55.3,
+   "dist_ema9_pct": -0.82,
+   "dist_ma20_atr": -0.19,
+   "dist_ma50_pct": 4.19,
+   "vol_ratio": 0.98,
+   "range_pos": 37,
+   "atr14": 5.092,
+   "range5_pct": 3.59,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ALL": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.97%，缩量0.71×"
+    }
+   ],
+   "close": 251.83,
+   "t1_pct": 0.04,
+   "d5_pct": 5.16,
+   "rsi14": 61.0,
+   "dist_ema9_pct": 0.97,
+   "dist_ma20_atr": 0.93,
+   "dist_ma50_pct": 10.12,
+   "vol_ratio": 0.71,
+   "range_pos": 79,
+   "atr14": 6.044,
+   "range5_pct": 6.13,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "AMP": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.58%/1.52ATR，RSI68.4"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.15%，缩量0.82×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=488.78 L2=522.96"
+    }
+   ],
+   "close": 526.82,
+   "t1_pct": -0.29,
+   "d5_pct": -0.09,
+   "rsi14": 68.4,
+   "dist_ema9_pct": 1.15,
+   "dist_ma20_atr": 2.31,
+   "dist_ma50_pct": 11.16,
+   "vol_ratio": 0.82,
+   "range_pos": 26,
+   "atr14": 12.451,
+   "range5_pct": 3.58,
+   "double_bottom": {
+    "low1": 488.78,
+    "low1_date": "2026-07-08",
+    "low2": 522.96,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "AMZN": {
+   "sector_etfs": [
+    "DIA",
+    "ARKK",
+    "XRT"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=243.8 L2=243.59"
+    }
+   ],
+   "close": 244.85,
+   "t1_pct": -1.09,
+   "d5_pct": -3.97,
+   "rsi14": 48.4,
+   "dist_ema9_pct": -0.97,
+   "dist_ma20_atr": 0.17,
+   "dist_ma50_pct": -2.3,
+   "vol_ratio": 0.6,
+   "range_pos": 40,
+   "atr14": 7.093,
+   "range5_pct": 6.38,
+   "double_bottom": {
+    "low1": 243.8,
+    "low1_date": "2026-07-14",
+    "low2": 243.59,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ANET": {
+   "sector_etfs": [
+    "XLK",
+    "CIBR"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.8%，缩量0.39×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=156.65 L2=157.13"
+    }
+   ],
+   "close": 174.87,
+   "t1_pct": 0.17,
+   "d5_pct": 1.72,
+   "rsi14": 54.0,
+   "dist_ema9_pct": 0.8,
+   "dist_ma20_atr": 0.35,
+   "dist_ma50_pct": 7.66,
+   "vol_ratio": 0.39,
+   "range_pos": 76,
+   "atr14": 9.76,
+   "range5_pct": 11.87,
+   "double_bottom": {
+    "low1": 156.65,
+    "low1_date": "2026-07-02",
+    "low2": 157.13,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "AON": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=353.1 L2=350.45"
+    }
+   ],
+   "close": 352.33,
+   "t1_pct": -1.97,
+   "d5_pct": -0.79,
+   "rsi14": 53.2,
+   "dist_ema9_pct": -1.7,
+   "dist_ma20_atr": 0.21,
+   "dist_ma50_pct": 5.6,
+   "vol_ratio": 1.16,
+   "range_pos": 15,
+   "atr14": 9.07,
+   "range5_pct": 7.08,
+   "double_bottom": {
+    "low1": 353.1,
+    "low1_date": "2026-07-09",
+    "low2": 350.45,
+    "low2_date": "2026-07-15",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "APA": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回32.48(深2.2%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=32.92 L2=33.38"
+    }
+   ],
+   "close": 36.18,
+   "t1_pct": 1.15,
+   "d5_pct": 5.57,
+   "rsi14": 58.2,
+   "dist_ema9_pct": 3.49,
+   "dist_ma20_atr": 1.98,
+   "dist_ma50_pct": 1.17,
+   "vol_ratio": 0.69,
+   "range_pos": 42,
+   "atr14": 1.162,
+   "range5_pct": 6.77,
+   "double_bottom": {
+    "low1": 32.92,
+    "low1_date": "2026-07-10",
+    "low2": 33.38,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "APO": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=118.21 L2=118.87"
+    }
+   ],
+   "close": 119.04,
+   "t1_pct": 0.54,
+   "d5_pct": -2.29,
+   "rsi14": 42.9,
+   "dist_ema9_pct": -0.63,
+   "dist_ma20_atr": -0.14,
+   "dist_ma50_pct": -6.19,
+   "vol_ratio": 0.67,
+   "range_pos": 36,
+   "atr14": 4.049,
+   "range5_pct": 7.03,
+   "double_bottom": {
+    "low1": 118.21,
+    "low1_date": "2026-07-13",
+    "low2": 118.87,
+    "low2_date": "2026-07-16",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ARES": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=116.5 L2=119.28"
+    }
+   ],
+   "close": 119.57,
+   "t1_pct": -1.0,
+   "d5_pct": -4.18,
+   "rsi14": 46.7,
+   "dist_ema9_pct": -1.55,
+   "dist_ma20_atr": 0.25,
+   "dist_ma50_pct": -3.21,
+   "vol_ratio": 0.58,
+   "range_pos": 21,
+   "atr14": 4.779,
+   "range5_pct": 7.22,
+   "double_bottom": {
+    "low1": 116.5,
+    "low1_date": "2026-07-08",
+    "low2": 119.28,
+    "low2_date": "2026-07-14",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ASHR": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回34.4(深2.91%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 34.97,
+   "t1_pct": -0.17,
+   "d5_pct": -1.24,
+   "rsi14": 48.2,
+   "dist_ema9_pct": 0.42,
+   "dist_ma20_atr": -0.57,
+   "dist_ma50_pct": -1.77,
+   "vol_ratio": 0.55,
+   "range_pos": 76,
+   "atr14": 0.683,
+   "range5_pct": 4.75,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ASX": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=38.81 L2=39.05"
+    }
+   ],
+   "close": 40.49,
+   "t1_pct": 1.2,
+   "d5_pct": -0.56,
+   "rsi14": 51.9,
+   "dist_ema9_pct": 1.48,
+   "dist_ma20_atr": -0.22,
+   "dist_ma50_pct": 5.42,
+   "vol_ratio": 0.41,
+   "range_pos": 81,
+   "atr14": 2.644,
+   "range5_pct": 12.09,
+   "double_bottom": {
+    "low1": 38.81,
+    "low1_date": "2026-07-08",
+    "low2": 39.05,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "AVAV": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=141.15 L2=140.01"
+    }
+   ],
+   "close": 150.35,
+   "t1_pct": 1.01,
+   "d5_pct": 6.47,
+   "rsi14": 46.5,
+   "dist_ema9_pct": 1.52,
+   "dist_ma20_atr": -0.12,
+   "dist_ma50_pct": -9.6,
+   "vol_ratio": 0.75,
+   "range_pos": 18,
+   "atr14": 10.854,
+   "range5_pct": 11.55,
+   "double_bottom": {
+    "low1": 141.15,
+    "low1_date": "2026-07-13",
+    "low2": 140.01,
+    "low2_date": "2026-07-20",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "AXP": {
+   "sector_etfs": [
+    "XLF",
+    "DIA"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.9%，缩量0.8×"
+    }
+   ],
+   "close": 348.74,
+   "t1_pct": -0.58,
+   "d5_pct": -2.71,
+   "rsi14": 54.2,
+   "dist_ema9_pct": -0.9,
+   "dist_ma20_atr": -0.03,
+   "dist_ma50_pct": 5.57,
+   "vol_ratio": 0.8,
+   "range_pos": 79,
+   "atr14": 7.94,
+   "range5_pct": 5.19,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "BAC": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.33%/1.67ATR，RSI68.0"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=58.67 L2=60.06"
+    }
+   ],
+   "close": 61.62,
+   "t1_pct": 0.65,
+   "d5_pct": 0.05,
+   "rsi14": 68.0,
+   "dist_ema9_pct": 1.45,
+   "dist_ma20_atr": 1.71,
+   "dist_ma50_pct": 10.76,
+   "vol_ratio": 1.5,
+   "range_pos": 63,
+   "atr14": 1.228,
+   "range5_pct": 3.33,
+   "double_bottom": {
+    "low1": 58.67,
+    "low1_date": "2026-07-14",
+    "low2": 60.06,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "BCRX": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.43%，缩量0.42×"
+    }
+   ],
+   "close": 9.51,
+   "t1_pct": 0.96,
+   "d5_pct": 1.06,
+   "rsi14": 49.3,
+   "dist_ema9_pct": -0.43,
+   "dist_ma20_atr": -0.79,
+   "dist_ma50_pct": 3.22,
+   "vol_ratio": 0.42,
+   "range_pos": 45,
+   "atr14": 0.481,
+   "range5_pct": 7.78,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "BEN": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑32.14，假破深度1.28%"
+    }
+   ],
+   "close": 32.38,
+   "t1_pct": -0.77,
+   "d5_pct": -3.72,
+   "rsi14": 45.8,
+   "dist_ema9_pct": -1.46,
+   "dist_ma20_atr": -0.96,
+   "dist_ma50_pct": -0.05,
+   "vol_ratio": 0.61,
+   "range_pos": 26,
+   "atr14": 0.919,
+   "range5_pct": 6.05,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "BKR": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回55.39(深5.63%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 56.6,
+   "t1_pct": 0.39,
+   "d5_pct": -1.14,
+   "rsi14": 45.0,
+   "dist_ema9_pct": 0.33,
+   "dist_ma20_atr": 0.3,
+   "dist_ma50_pct": -6.7,
+   "vol_ratio": 1.0,
+   "range_pos": 21,
+   "atr14": 1.714,
+   "range5_pct": 5.67,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "BLK": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.74%，缩量0.76×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=1015.97 L2=1030.93"
+    }
+   ],
+   "close": 1056.63,
+   "t1_pct": 1.77,
+   "d5_pct": -3.36,
+   "rsi14": 55.5,
+   "dist_ema9_pct": 0.74,
+   "dist_ma20_atr": 1.34,
+   "dist_ma50_pct": 2.14,
+   "vol_ratio": 0.76,
+   "range_pos": 98,
+   "atr14": 29.751,
+   "range5_pct": 8.9,
+   "double_bottom": {
+    "low1": 1015.97,
+    "low1_date": "2026-07-13",
+    "low2": 1030.93,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "BNY": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=149.95 L2=156.02"
+    }
+   ],
+   "close": 160.39,
+   "t1_pct": 0.94,
+   "d5_pct": -1.21,
+   "rsi14": 67.0,
+   "dist_ema9_pct": 2.15,
+   "dist_ma20_atr": 2.33,
+   "dist_ma50_pct": 10.78,
+   "vol_ratio": 0.86,
+   "range_pos": 90,
+   "atr14": 3.746,
+   "range5_pct": 4.83,
+   "double_bottom": {
+    "low1": 149.95,
+    "low1_date": "2026-07-13",
+    "low2": 156.02,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "BOAT": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=39.65 L2=41.02"
+    }
+   ],
+   "close": 42.558,
+   "t1_pct": -0.12,
+   "d5_pct": 1.54,
+   "rsi14": 61.4,
+   "dist_ema9_pct": 2.17,
+   "dist_ma20_atr": 2.48,
+   "dist_ma50_pct": 3.42,
+   "vol_ratio": 1.07,
+   "range_pos": 5,
+   "atr14": 0.849,
+   "range5_pct": 4.57,
+   "double_bottom": {
+    "low1": 39.65,
+    "low1_date": "2026-07-09",
+    "low2": 41.02,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "BRK.B": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=486.17 L2=487.38"
+    }
+   ],
+   "close": 489.39,
+   "t1_pct": -0.05,
+   "d5_pct": 0.21,
+   "rsi14": 46.6,
+   "dist_ema9_pct": -0.5,
+   "dist_ma20_atr": -0.93,
+   "dist_ma50_pct": 0.17,
+   "vol_ratio": 0.69,
+   "range_pos": 35,
+   "atr14": 6.581,
+   "range5_pct": 3.44,
+   "double_bottom": {
+    "low1": 486.17,
+    "low1_date": "2026-07-16",
+    "low2": 487.38,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "BRKR": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.14%，缩量0.64×"
+    },
+    {
+     "type": "C",
+     "note": "undercut收回：支撑55.93，假破深度2.02%"
+    }
+   ],
+   "close": 59.74,
+   "t1_pct": -1.14,
+   "d5_pct": 1.84,
+   "rsi14": 54.8,
+   "dist_ema9_pct": 1.14,
+   "dist_ma20_atr": 0.07,
+   "dist_ma50_pct": 8.71,
+   "vol_ratio": 0.64,
+   "range_pos": 44,
+   "atr14": 2.734,
+   "range5_pct": 10.33,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "BUD": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=78.44 L2=78.94"
+    }
+   ],
+   "close": 83.08,
+   "t1_pct": 1.88,
+   "d5_pct": 3.97,
+   "rsi14": 59.6,
+   "dist_ema9_pct": 2.39,
+   "dist_ma20_atr": 1.12,
+   "dist_ma50_pct": 2.36,
+   "vol_ratio": 0.79,
+   "range_pos": 27,
+   "atr14": 1.641,
+   "range5_pct": 5.42,
+   "double_bottom": {
+    "low1": 78.44,
+    "low1_date": "2026-07-09",
+    "low2": 78.94,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "BX": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.0%，缩量0.83×"
+    }
+   ],
+   "close": 122.82,
+   "t1_pct": -1.07,
+   "d5_pct": -3.33,
+   "rsi14": 51.2,
+   "dist_ema9_pct": -1.0,
+   "dist_ma20_atr": 0.38,
+   "dist_ma50_pct": 2.32,
+   "vol_ratio": 0.83,
+   "range_pos": 18,
+   "atr14": 4.016,
+   "range5_pct": 7.12,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "CBOE": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间7.39%/1.81ATR，RSI55.9"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=242.02 L2=270.21"
+    }
+   ],
+   "close": 281.8,
+   "t1_pct": 2.7,
+   "d5_pct": 1.69,
+   "rsi14": 55.9,
+   "dist_ema9_pct": 2.75,
+   "dist_ma20_atr": 1.78,
+   "dist_ma50_pct": -3.95,
+   "vol_ratio": 0.81,
+   "range_pos": 42,
+   "atr14": 11.486,
+   "range5_pct": 7.39,
+   "double_bottom": {
+    "low1": 242.02,
+    "low1_date": "2026-07-06",
+    "low2": 270.21,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "CFG": {
+   "sector_etfs": [
+    "XLF",
+    "KRE"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.97%，缩量0.66×"
+    },
+    {
+     "type": "D",
+     "note": "突破72.94(2026-07-16,量1.85×)后缩量回踩"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=69.54 L2=70.8"
+    }
+   ],
+   "close": 72.44,
+   "t1_pct": 0.61,
+   "d5_pct": 1.86,
+   "rsi14": 60.0,
+   "dist_ema9_pct": 0.97,
+   "dist_ma20_atr": 0.79,
+   "dist_ma50_pct": 8.56,
+   "vol_ratio": 0.66,
+   "range_pos": 86,
+   "atr14": 1.765,
+   "range5_pct": 5.38,
+   "double_bottom": {
+    "low1": 69.54,
+    "low1_date": "2026-07-13",
+    "low2": 70.8,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "CHRN": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=15.74 L2=22.25"
+    }
+   ],
+   "close": 25.54,
+   "t1_pct": 0.63,
+   "d5_pct": -13.8,
+   "rsi14": 56.7,
+   "dist_ema9_pct": 2.32,
+   "dist_ma20_atr": 0.93,
+   "dist_ma50_pct": 28.6,
+   "vol_ratio": 0.42,
+   "range_pos": 56,
+   "atr14": 3.532,
+   "range5_pct": 28.39,
+   "double_bottom": {
+    "low1": 15.74,
+    "low1_date": "2026-07-02",
+    "low2": 22.25,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "CINF": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.26%，缩量0.54×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=172.07 L2=177.33"
+    }
+   ],
+   "close": 179.23,
+   "t1_pct": -0.71,
+   "d5_pct": 3.94,
+   "rsi14": 52.0,
+   "dist_ema9_pct": -0.26,
+   "dist_ma20_atr": -0.62,
+   "dist_ma50_pct": 4.11,
+   "vol_ratio": 0.54,
+   "range_pos": 49,
+   "atr14": 4.287,
+   "range5_pct": 5.36,
+   "double_bottom": {
+    "low1": 172.07,
+    "low1_date": "2026-07-15",
+    "low2": 177.33,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "CLS": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "E",
+     "note": "shakeout收回322.25(深12.43%/3天下方)+burst 2026-07-21 +10.49%量1.69×"
+    }
+   ],
+   "close": 335.5,
+   "t1_pct": -1.2,
+   "d5_pct": 0.22,
+   "rsi14": 46.5,
+   "dist_ema9_pct": 1.45,
+   "dist_ma20_atr": -0.29,
+   "dist_ma50_pct": -8.1,
+   "vol_ratio": 0.72,
+   "range_pos": 41,
+   "atr14": 24.032,
+   "range5_pct": 17.86,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "CLSK": {
+   "sector_etfs": [
+    "WGMI"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=12.02 L2=12.15"
+    }
+   ],
+   "close": 15.325,
+   "t1_pct": -0.36,
+   "d5_pct": 8.46,
+   "rsi14": 55.3,
+   "dist_ema9_pct": 8.1,
+   "dist_ma20_atr": 0.97,
+   "dist_ma50_pct": 0.27,
+   "vol_ratio": 0.7,
+   "range_pos": 56,
+   "atr14": 1.384,
+   "range5_pct": 23.13,
+   "double_bottom": {
+    "low1": 12.02,
+    "low1_date": "2026-07-13",
+    "low2": 12.15,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "COHR": {
+   "sector_etfs": [
+    "XLK",
+    "EUV"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回308.17(深17.21%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 312.19,
+   "t1_pct": -1.59,
+   "d5_pct": 4.28,
+   "rsi14": 44.4,
+   "dist_ema9_pct": 1.74,
+   "dist_ma20_atr": -0.75,
+   "dist_ma50_pct": -14.18,
+   "vol_ratio": 0.57,
+   "range_pos": 46,
+   "atr14": 28.738,
+   "range5_pct": 20.76,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "COP": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回103.66(深0.94%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=109.55 L2=113.26"
+    }
+   ],
+   "close": 118.79,
+   "t1_pct": 1.1,
+   "d5_pct": 6.58,
+   "rsi14": 64.6,
+   "dist_ema9_pct": 3.91,
+   "dist_ma20_atr": 3.27,
+   "dist_ma50_pct": 4.3,
+   "vol_ratio": 0.68,
+   "range_pos": 25,
+   "atr14": 2.829,
+   "range5_pct": 6.68,
+   "double_bottom": {
+    "low1": 109.55,
+    "low1_date": "2026-07-15",
+    "low2": 113.26,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "COPX": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回74.04(深4.04%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 79.99,
+   "t1_pct": 2.24,
+   "d5_pct": 3.53,
+   "rsi14": 53.2,
+   "dist_ema9_pct": 4.27,
+   "dist_ma20_atr": 1.29,
+   "dist_ma50_pct": -2.29,
+   "vol_ratio": 0.98,
+   "range_pos": 64,
+   "atr14": 3.042,
+   "range5_pct": 10.85,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "CPAY": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.22%/1.37ATR，RSI53.1"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.77%，缩量0.67×"
+    }
+   ],
+   "close": 359.0,
+   "t1_pct": -1.95,
+   "d5_pct": -1.15,
+   "rsi14": 53.1,
+   "dist_ema9_pct": -0.77,
+   "dist_ma20_atr": 0.62,
+   "dist_ma50_pct": 2.53,
+   "vol_ratio": 0.67,
+   "range_pos": 1,
+   "atr14": 11.022,
+   "range5_pct": 4.22,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "CRI": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑37.46，假破深度0.13%"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=37.49 L2=37.41"
+    }
+   ],
+   "close": 38.29,
+   "t1_pct": -1.14,
+   "d5_pct": 0.05,
+   "rsi14": 45.5,
+   "dist_ema9_pct": -0.99,
+   "dist_ma20_atr": -0.91,
+   "dist_ma50_pct": -1.89,
+   "vol_ratio": 0.51,
+   "range_pos": 3,
+   "atr14": 1.77,
+   "range5_pct": 8.02,
+   "double_bottom": {
+    "low1": 37.49,
+    "low1_date": "2026-07-14",
+    "low2": 37.41,
+    "low2_date": "2026-07-20",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "CVX": {
+   "sector_etfs": [
+    "XLE",
+    "DIA"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=173.51 L2=178.57"
+    }
+   ],
+   "close": 192.98,
+   "t1_pct": 1.0,
+   "d5_pct": 6.27,
+   "rsi14": 69.6,
+   "dist_ema9_pct": 3.85,
+   "dist_ma20_atr": 4.26,
+   "dist_ma50_pct": 5.83,
+   "vol_ratio": 0.7,
+   "range_pos": 59,
+   "atr14": 3.718,
+   "range5_pct": 6.09,
+   "double_bottom": {
+    "low1": 173.51,
+    "low1_date": "2026-07-10",
+    "low2": 178.57,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "DIA": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.16%，缩量0.84×"
+    }
+   ],
+   "close": 521.47,
+   "t1_pct": -0.01,
+   "d5_pct": -0.85,
+   "rsi14": 52.6,
+   "dist_ema9_pct": -0.16,
+   "dist_ma20_atr": -0.31,
+   "dist_ma50_pct": 1.5,
+   "vol_ratio": 0.84,
+   "range_pos": 14,
+   "atr14": 5.387,
+   "range5_pct": 2.07,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "DVN": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间5.2%/1.84ATR，RSI58.4"
+    },
+    {
+     "type": "E",
+     "note": "shakeout收回41.27(深3.08%/3天下方)+burst 2026-07-07 +5.08%量1.37×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=41.8 L2=42.2"
+    }
+   ],
+   "close": 44.88,
+   "t1_pct": 1.77,
+   "d5_pct": 4.54,
+   "rsi14": 58.4,
+   "dist_ema9_pct": 2.88,
+   "dist_ma20_atr": 1.82,
+   "dist_ma50_pct": 1.03,
+   "vol_ratio": 0.63,
+   "range_pos": 38,
+   "atr14": 1.267,
+   "range5_pct": 5.2,
+   "double_bottom": {
+    "low1": 41.8,
+    "low1_date": "2026-07-10",
+    "low2": 42.2,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "EG": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.21%，缩量0.99×"
+    }
+   ],
+   "close": 373.07,
+   "t1_pct": -1.07,
+   "d5_pct": 2.46,
+   "rsi14": 58.4,
+   "dist_ema9_pct": -0.21,
+   "dist_ma20_atr": 0.72,
+   "dist_ma50_pct": 6.23,
+   "vol_ratio": 0.99,
+   "range_pos": 15,
+   "atr14": 7.69,
+   "range5_pct": 5.71,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "ELVA": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "E",
+     "note": "shakeout收回8.79(深13.2%/3天下方)+burst 2026-07-15 +49.05%量14.3×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=7.63 L2=8.91"
+    }
+   ],
+   "close": 9.09,
+   "t1_pct": -10.79,
+   "d5_pct": -22.7,
+   "rsi14": 47.1,
+   "dist_ema9_pct": -3.81,
+   "dist_ma20_atr": -0.39,
+   "dist_ma50_pct": -10.11,
+   "vol_ratio": 0.28,
+   "range_pos": 3,
+   "atr14": 1.069,
+   "range5_pct": 33.99,
+   "double_bottom": {
+    "low1": 7.63,
+    "low1_date": "2026-07-13",
+    "low2": 8.91,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "EOG": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=135.21 L2=138.49"
+    }
+   ],
+   "close": 144.0,
+   "t1_pct": 0.39,
+   "d5_pct": 4.75,
+   "rsi14": 64.1,
+   "dist_ema9_pct": 2.9,
+   "dist_ma20_atr": 2.43,
+   "dist_ma50_pct": 5.55,
+   "vol_ratio": 0.8,
+   "range_pos": 3,
+   "atr14": 3.446,
+   "range5_pct": 5.57,
+   "double_bottom": {
+    "low1": 135.21,
+    "low1_date": "2026-07-15",
+    "low2": 138.49,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "EQT": {
+   "sector_etfs": [
+    "XLE",
+    "XOP"
+   ],
+   "setups": [
+    {
+     "type": "E",
+     "note": "shakeout收回50.25(深4.6%/9天下方)+burst 2026-07-22 +8.45%量2.27×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=47.94 L2=48.56"
+    }
+   ],
+   "close": 54.01,
+   "t1_pct": 8.45,
+   "d5_pct": 9.66,
+   "rsi14": 61.6,
+   "dist_ema9_pct": 6.62,
+   "dist_ma20_atr": 2.11,
+   "dist_ma50_pct": 1.68,
+   "vol_ratio": 2.27,
+   "range_pos": 98,
+   "atr14": 1.42,
+   "range5_pct": 10.18,
+   "double_bottom": {
+    "low1": 47.94,
+    "low1_date": "2026-07-10",
+    "low2": 48.56,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "ETHB": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=22.5 L2=23.19"
+    }
+   ],
+   "close": 24.77,
+   "t1_pct": 0.08,
+   "d5_pct": 0.12,
+   "rsi14": 59.4,
+   "dist_ema9_pct": 3.12,
+   "dist_ma20_atr": 2.41,
+   "dist_ma50_pct": 3.42,
+   "vol_ratio": 0.5,
+   "range_pos": 14,
+   "atr14": 0.899,
+   "range5_pct": 7.93,
+   "double_bottom": {
+    "low1": 22.5,
+    "low1_date": "2026-07-13",
+    "low2": 23.19,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "EXE": {
+   "sector_etfs": [
+    "XLE",
+    "XOP"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=84.98 L2=86.41"
+    }
+   ],
+   "close": 93.17,
+   "t1_pct": 5.18,
+   "d5_pct": 6.32,
+   "rsi14": 61.7,
+   "dist_ema9_pct": 4.56,
+   "dist_ma20_atr": 1.83,
+   "dist_ma50_pct": 2.2,
+   "vol_ratio": 1.21,
+   "range_pos": 93,
+   "atr14": 2.361,
+   "range5_pct": 7.51,
+   "double_bottom": {
+    "low1": 84.98,
+    "low1_date": "2026-07-10",
+    "low2": 86.41,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "FANG": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回175.27(深2.95%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=180.74 L2=187.42"
+    }
+   ],
+   "close": 203.02,
+   "t1_pct": 1.61,
+   "d5_pct": 6.99,
+   "rsi14": 66.3,
+   "dist_ema9_pct": 4.64,
+   "dist_ma20_atr": 3.21,
+   "dist_ma50_pct": 5.7,
+   "vol_ratio": 0.73,
+   "range_pos": 29,
+   "atr14": 5.485,
+   "range5_pct": 7.48,
+   "double_bottom": {
+    "low1": 180.74,
+    "low1_date": "2026-07-10",
+    "low2": 187.42,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "FDS": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.26%，缩量0.45×"
+    }
+   ],
+   "close": 245.21,
+   "t1_pct": -0.7,
+   "d5_pct": -2.38,
+   "rsi14": 50.0,
+   "dist_ema9_pct": -2.26,
+   "dist_ma20_atr": 0.02,
+   "dist_ma50_pct": 3.06,
+   "vol_ratio": 0.45,
+   "range_pos": 7,
+   "atr14": 12.032,
+   "range5_pct": 11.11,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "FISV": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=49.48 L2=49.99"
+    }
+   ],
+   "close": 50.22,
+   "t1_pct": -0.77,
+   "d5_pct": -0.28,
+   "rsi14": 46.7,
+   "dist_ema9_pct": -1.05,
+   "dist_ma20_atr": -0.12,
+   "dist_ma50_pct": -4.24,
+   "vol_ratio": 0.51,
+   "range_pos": 25,
+   "atr14": 1.984,
+   "range5_pct": 4.54,
+   "double_bottom": {
+    "low1": 49.48,
+    "low1_date": "2026-07-14",
+    "low2": 49.99,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "FITB": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.13%，缩量0.59×"
+    }
+   ],
+   "close": 57.67,
+   "t1_pct": 0.02,
+   "d5_pct": -0.47,
+   "rsi14": 59.1,
+   "dist_ema9_pct": 0.13,
+   "dist_ma20_atr": 0.39,
+   "dist_ma50_pct": 8.29,
+   "vol_ratio": 0.59,
+   "range_pos": 56,
+   "atr14": 1.354,
+   "range5_pct": 7.8,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "FIX": {
+   "sector_etfs": [
+    "XLI"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回1705.0(深8.72%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 1791.06,
+   "t1_pct": 0.99,
+   "d5_pct": 3.13,
+   "rsi14": 49.7,
+   "dist_ema9_pct": 2.33,
+   "dist_ma20_atr": -0.06,
+   "dist_ma50_pct": -3.51,
+   "vol_ratio": 0.75,
+   "range_pos": 84,
+   "atr14": 100.615,
+   "range5_pct": 13.95,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "FXI": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=33.17 L2=33.88"
+    }
+   ],
+   "close": 34.43,
+   "t1_pct": -0.58,
+   "d5_pct": 0.44,
+   "rsi14": 56.0,
+   "dist_ema9_pct": 0.75,
+   "dist_ma20_atr": 2.32,
+   "dist_ma50_pct": -0.19,
+   "vol_ratio": 0.59,
+   "range_pos": 25,
+   "atr14": 0.565,
+   "range5_pct": 4.1,
+   "double_bottom": {
+    "low1": 33.17,
+    "low1_date": "2026-07-09",
+    "low2": 33.88,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "GH": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.39%，缩量0.31×"
+    }
+   ],
+   "close": 150.75,
+   "t1_pct": -1.01,
+   "d5_pct": -7.49,
+   "rsi14": 51.9,
+   "dist_ema9_pct": -2.39,
+   "dist_ma20_atr": -0.73,
+   "dist_ma50_pct": 11.79,
+   "vol_ratio": 0.31,
+   "range_pos": 68,
+   "atr14": 7.695,
+   "range5_pct": 13.27,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "GL": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=176.32 L2=183.35"
+    }
+   ],
+   "close": 184.0,
+   "t1_pct": -0.18,
+   "d5_pct": 1.37,
+   "rsi14": 74.6,
+   "dist_ema9_pct": 0.82,
+   "dist_ma20_atr": 1.11,
+   "dist_ma50_pct": 9.94,
+   "vol_ratio": 1.46,
+   "range_pos": 53,
+   "atr14": 3.613,
+   "range5_pct": 5.46,
+   "double_bottom": {
+    "low1": 176.32,
+    "low1_date": "2026-07-13",
+    "low2": 183.35,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "GPN": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间6.7%/1.7ATR，RSI58.2"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.59%，缩量0.67×"
+    },
+    {
+     "type": "D",
+     "note": "突破79.31(2026-07-20,量1.66×)后缩量回踩"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=74.69 L2=77.74"
+    }
+   ],
+   "close": 78.97,
+   "t1_pct": -1.37,
+   "d5_pct": 0.96,
+   "rsi14": 58.2,
+   "dist_ema9_pct": 0.59,
+   "dist_ma20_atr": 1.09,
+   "dist_ma50_pct": 10.47,
+   "vol_ratio": 0.67,
+   "range_pos": 20,
+   "atr14": 3.108,
+   "range5_pct": 6.7,
+   "double_bottom": {
+    "low1": 74.69,
+    "low1_date": "2026-07-14",
+    "low2": 77.74,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "GRAL": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.0%，缩量0.58×"
+    }
+   ],
+   "close": 70.66,
+   "t1_pct": -2.82,
+   "d5_pct": -4.98,
+   "rsi14": 53.7,
+   "dist_ema9_pct": -1.0,
+   "dist_ma20_atr": 0.13,
+   "dist_ma50_pct": 7.25,
+   "vol_ratio": 0.58,
+   "range_pos": 18,
+   "atr14": 4.144,
+   "range5_pct": 9.98,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "GS": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=1036.84 L2=1047.15"
+    }
+   ],
+   "close": 1098.2,
+   "t1_pct": 1.16,
+   "d5_pct": -4.68,
+   "rsi14": 56.3,
+   "dist_ema9_pct": 1.53,
+   "dist_ma20_atr": 1.03,
+   "dist_ma50_pct": 5.87,
+   "vol_ratio": 0.73,
+   "range_pos": 70,
+   "atr14": 36.559,
+   "range5_pct": 9.59,
+   "double_bottom": {
+    "low1": 1036.84,
+    "low1_date": "2026-07-13",
+    "low2": 1047.15,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "HAE": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.84%/1.47ATR，RSI61.1"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.0%，缩量0.54×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=73.22 L2=77.11"
+    }
+   ],
+   "close": 78.03,
+   "t1_pct": -0.05,
+   "d5_pct": 1.76,
+   "rsi14": 61.1,
+   "dist_ema9_pct": 1.0,
+   "dist_ma20_atr": 0.76,
+   "dist_ma50_pct": 10.13,
+   "vol_ratio": 0.54,
+   "range_pos": 84,
+   "atr14": 2.579,
+   "range5_pct": 4.84,
+   "double_bottom": {
+    "low1": 73.22,
+    "low1_date": "2026-07-14",
+    "low2": 77.11,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "HBAN": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=17.76 L2=17.71"
+    }
+   ],
+   "close": 18.27,
+   "t1_pct": 0.55,
+   "d5_pct": 0.83,
+   "rsi14": 60.3,
+   "dist_ema9_pct": 0.85,
+   "dist_ma20_atr": 0.83,
+   "dist_ma50_pct": 7.61,
+   "vol_ratio": 1.64,
+   "range_pos": 56,
+   "atr14": 0.386,
+   "range5_pct": 4.73,
+   "double_bottom": {
+    "low1": 17.76,
+    "low1_date": "2026-07-14",
+    "low2": 17.71,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "HIG": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.06%，缩量0.94×"
+    }
+   ],
+   "close": 140.84,
+   "t1_pct": -0.8,
+   "d5_pct": 4.71,
+   "rsi14": 60.3,
+   "dist_ema9_pct": 1.06,
+   "dist_ma20_atr": 1.32,
+   "dist_ma50_pct": 5.52,
+   "vol_ratio": 0.94,
+   "range_pos": 62,
+   "atr14": 2.856,
+   "range5_pct": 5.64,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "HXL": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=97.34 L2=99.2"
+    }
+   ],
+   "close": 106.62,
+   "t1_pct": -1.89,
+   "d5_pct": 3.79,
+   "rsi14": 66.0,
+   "dist_ema9_pct": 2.46,
+   "dist_ma20_atr": 1.86,
+   "dist_ma50_pct": 11.82,
+   "vol_ratio": 1.0,
+   "range_pos": 1,
+   "atr14": 3.191,
+   "range5_pct": 9.96,
+   "double_bottom": {
+    "low1": 97.34,
+    "low1_date": "2026-07-10",
+    "low2": 99.2,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "IAK": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.46%，缩量0.64×"
+    }
+   ],
+   "close": 144.21,
+   "t1_pct": -1.01,
+   "d5_pct": 2.39,
+   "rsi14": 54.9,
+   "dist_ema9_pct": -0.46,
+   "dist_ma20_atr": 0.03,
+   "dist_ma50_pct": 5.04,
+   "vol_ratio": 0.64,
+   "range_pos": 46,
+   "atr14": 2.402,
+   "range5_pct": 4.17,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "IBIT": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=34.96 L2=35.36"
+    }
+   ],
+   "close": 37.34,
+   "t1_pct": -0.88,
+   "d5_pct": 1.44,
+   "rsi14": 54.5,
+   "dist_ema9_pct": 1.8,
+   "dist_ma20_atr": 1.64,
+   "dist_ma50_pct": -2.15,
+   "vol_ratio": 0.51,
+   "range_pos": 45,
+   "atr14": 1.11,
+   "range5_pct": 6.88,
+   "double_bottom": {
+    "low1": 34.96,
+    "low1_date": "2026-07-13",
+    "low2": 35.36,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ICE": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.76%/1.67ATR，RSI58.3"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=135.48 L2=137.76"
+    }
+   ],
+   "close": 142.53,
+   "t1_pct": 2.78,
+   "d5_pct": 1.92,
+   "rsi14": 58.3,
+   "dist_ema9_pct": 2.33,
+   "dist_ma20_atr": 2.07,
+   "dist_ma50_pct": 1.12,
+   "vol_ratio": 0.77,
+   "range_pos": 73,
+   "atr14": 4.057,
+   "range5_pct": 4.76,
+   "double_bottom": {
+    "low1": 135.48,
+    "low1_date": "2026-07-14",
+    "low2": 137.76,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "IVZ": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间5.61%/1.79ATR，RSI64.9"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=28.16 L2=29.31"
+    }
+   ],
+   "close": 30.5,
+   "t1_pct": 1.33,
+   "d5_pct": 0.66,
+   "rsi14": 64.9,
+   "dist_ema9_pct": 3.17,
+   "dist_ma20_atr": 2.51,
+   "dist_ma50_pct": 9.18,
+   "vol_ratio": 1.09,
+   "range_pos": 78,
+   "atr14": 0.956,
+   "range5_pct": 5.61,
+   "double_bottom": {
+    "low1": 28.16,
+    "low1_date": "2026-07-13",
+    "low2": 29.31,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "IWM": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.36%，缩量0.84×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=292.6 L2=291.64"
+    }
+   ],
+   "close": 293.79,
+   "t1_pct": -0.93,
+   "d5_pct": -0.67,
+   "rsi14": 49.7,
+   "dist_ema9_pct": -0.36,
+   "dist_ma20_atr": -0.6,
+   "dist_ma50_pct": 1.0,
+   "vol_ratio": 0.84,
+   "range_pos": 13,
+   "atr14": 4.458,
+   "range5_pct": 2.1,
+   "double_bottom": {
+    "low1": 292.6,
+    "low1_date": "2026-07-13",
+    "low2": 291.64,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "JKHY": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.74%，缩量0.61×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=143.34 L2=145.26"
+    }
+   ],
+   "close": 146.155,
+   "t1_pct": -1.84,
+   "d5_pct": -1.56,
+   "rsi14": 53.7,
+   "dist_ema9_pct": -1.74,
+   "dist_ma20_atr": 0.29,
+   "dist_ma50_pct": 5.83,
+   "vol_ratio": 0.61,
+   "range_pos": 9,
+   "atr14": 4.872,
+   "range5_pct": 6.86,
+   "double_bottom": {
+    "low1": 143.34,
+    "low1_date": "2026-07-09",
+    "low2": 145.26,
+    "low2_date": "2026-07-14",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "JPM": {
+   "sector_etfs": [
+    "XLF",
+    "DIA"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.1%/1.85ATR，RSI64.8"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=325.75 L2=335.05"
+    }
+   ],
+   "close": 348.21,
+   "t1_pct": 0.86,
+   "d5_pct": 0.37,
+   "rsi14": 64.8,
+   "dist_ema9_pct": 1.79,
+   "dist_ma20_atr": 1.43,
+   "dist_ma50_pct": 8.68,
+   "vol_ratio": 0.78,
+   "range_pos": 82,
+   "atr14": 7.728,
+   "range5_pct": 4.1,
+   "double_bottom": {
+    "low1": 325.75,
+    "low1_date": "2026-07-14",
+    "low2": 335.05,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "KMI": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.15%/1.51ATR，RSI52.9"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=32.06 L2=32.05"
+    }
+   ],
+   "close": 32.49,
+   "t1_pct": 0.34,
+   "d5_pct": 0.9,
+   "rsi14": 52.9,
+   "dist_ema9_pct": 0.29,
+   "dist_ma20_atr": 0.19,
+   "dist_ma50_pct": 0.63,
+   "vol_ratio": 1.05,
+   "range_pos": 44,
+   "atr14": 0.68,
+   "range5_pct": 3.15,
+   "double_bottom": {
+    "low1": 32.06,
+    "low1_date": "2026-07-15",
+    "low2": 32.05,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "KOID": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回37.06(深3.67%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 37.64,
+   "t1_pct": 0.72,
+   "d5_pct": -1.83,
+   "rsi14": 43.0,
+   "dist_ema9_pct": -0.47,
+   "dist_ma20_atr": -1.24,
+   "dist_ma50_pct": -6.8,
+   "vol_ratio": 0.57,
+   "range_pos": 68,
+   "atr14": 1.17,
+   "range5_pct": 5.9,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "KRE": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.26%，缩量0.66×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=72.92 L2=74.98"
+    }
+   ],
+   "close": 75.6,
+   "t1_pct": -0.5,
+   "d5_pct": -0.24,
+   "rsi14": 55.9,
+   "dist_ema9_pct": -0.26,
+   "dist_ma20_atr": 0.22,
+   "dist_ma50_pct": 4.86,
+   "vol_ratio": 0.66,
+   "range_pos": 65,
+   "atr14": 1.307,
+   "range5_pct": 4.12,
+   "double_bottom": {
+    "low1": 72.92,
+    "low1_date": "2026-07-08",
+    "low2": 74.98,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "L": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.19%，缩量0.92×"
+    }
+   ],
+   "close": 114.7,
+   "t1_pct": 0.1,
+   "d5_pct": 1.94,
+   "rsi14": 57.6,
+   "dist_ema9_pct": 0.19,
+   "dist_ma20_atr": 0.15,
+   "dist_ma50_pct": 4.44,
+   "vol_ratio": 0.92,
+   "range_pos": 82,
+   "atr14": 2.013,
+   "range5_pct": 3.64,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "LITE": {
+   "sector_etfs": [
+    "XLK",
+    "EUV"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回754.0(深13.68%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 829.7,
+   "t1_pct": -0.94,
+   "d5_pct": 10.33,
+   "rsi14": 52.4,
+   "dist_ema9_pct": 5.63,
+   "dist_ma20_atr": 0.63,
+   "dist_ma50_pct": -3.88,
+   "vol_ratio": 0.86,
+   "range_pos": 41,
+   "atr14": 71.543,
+   "range5_pct": 25.2,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "LLY": {
+   "sector_etfs": [
+    "ARKK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.68%，缩量0.52×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=1134.4 L2=1139.0"
+    }
+   ],
+   "close": 1163.01,
+   "t1_pct": -1.05,
+   "d5_pct": 0.55,
+   "rsi14": 51.0,
+   "dist_ema9_pct": -0.68,
+   "dist_ma20_atr": -0.55,
+   "dist_ma50_pct": 3.76,
+   "vol_ratio": 0.52,
+   "range_pos": 44,
+   "atr14": 37.281,
+   "range5_pct": 4.31,
+   "double_bottom": {
+    "low1": 1134.4,
+    "low1_date": "2026-07-15",
+    "low2": 1139.0,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "MA": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.95%/1.75ATR，RSI55.3"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.88%，缩量0.63×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=515.11 L2=529.08"
+    }
+   ],
+   "close": 531.98,
+   "t1_pct": -1.17,
+   "d5_pct": -0.6,
+   "rsi14": 55.3,
+   "dist_ema9_pct": -0.88,
+   "dist_ma20_atr": 0.48,
+   "dist_ma50_pct": 5.19,
+   "vol_ratio": 0.63,
+   "range_pos": 13,
+   "atr14": 11.983,
+   "range5_pct": 3.95,
+   "double_bottom": {
+    "low1": 515.11,
+    "low1_date": "2026-07-09",
+    "low2": 529.08,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "MCO": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=480.0 L2=482.69"
+    }
+   ],
+   "close": 489.7,
+   "t1_pct": -0.22,
+   "d5_pct": -2.93,
+   "rsi14": 54.4,
+   "dist_ema9_pct": -1.35,
+   "dist_ma20_atr": 0.44,
+   "dist_ma50_pct": 5.92,
+   "vol_ratio": 1.29,
+   "range_pos": 61,
+   "atr14": 13.91,
+   "range5_pct": 8.29,
+   "double_bottom": {
+    "low1": 480.0,
+    "low1_date": "2026-07-14",
+    "low2": 482.69,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "MET": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间2.89%/1.5ATR，RSI64.5"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.68%，缩量0.93×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=91.64 L2=92.16"
+    }
+   ],
+   "close": 93.27,
+   "t1_pct": -0.11,
+   "d5_pct": 1.16,
+   "rsi14": 64.5,
+   "dist_ema9_pct": 0.68,
+   "dist_ma20_atr": 1.73,
+   "dist_ma50_pct": 8.22,
+   "vol_ratio": 0.93,
+   "range_pos": 33,
+   "atr14": 1.798,
+   "range5_pct": 2.89,
+   "double_bottom": {
+    "low1": 91.64,
+    "low1_date": "2026-07-15",
+    "low2": 92.16,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "META": {
+   "sector_etfs": [
+    "ARKK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.21%，缩量0.56×"
+    }
+   ],
+   "close": 627.17,
+   "t1_pct": -2.58,
+   "d5_pct": -7.95,
+   "rsi14": 51.5,
+   "dist_ema9_pct": -2.21,
+   "dist_ma20_atr": 0.45,
+   "dist_ma50_pct": 3.48,
+   "vol_ratio": 0.56,
+   "range_pos": 13,
+   "atr14": 24.781,
+   "range5_pct": 9.23,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "MO": {
+   "sector_etfs": [
+    "XLP"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.69%，缩量0.92×"
+    }
+   ],
+   "close": 72.17,
+   "t1_pct": -1.12,
+   "d5_pct": 2.34,
+   "rsi14": 50.3,
+   "dist_ema9_pct": -0.69,
+   "dist_ma20_atr": -0.19,
+   "dist_ma50_pct": 0.53,
+   "vol_ratio": 0.92,
+   "range_pos": 0,
+   "atr14": 1.749,
+   "range5_pct": 6.02,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "MOD": {
+   "sector_etfs": [
+    "XHB"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回232.31(深9.17%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 249.64,
+   "t1_pct": 1.03,
+   "d5_pct": 7.62,
+   "rsi14": 50.4,
+   "dist_ema9_pct": 4.44,
+   "dist_ma20_atr": 0.33,
+   "dist_ma50_pct": -5.64,
+   "vol_ratio": 0.56,
+   "range_pos": 87,
+   "atr14": 16.897,
+   "range5_pct": 16.01,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "MPC": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=277.55 L2=295.21"
+    }
+   ],
+   "close": 315.82,
+   "t1_pct": -1.23,
+   "d5_pct": 5.56,
+   "rsi14": 75.3,
+   "dist_ema9_pct": 3.44,
+   "dist_ma20_atr": 3.85,
+   "dist_ma50_pct": 18.7,
+   "vol_ratio": 1.17,
+   "range_pos": 1,
+   "atr14": 8.629,
+   "range5_pct": 8.2,
+   "double_bottom": {
+    "low1": 277.55,
+    "low1_date": "2026-07-10",
+    "low2": 295.21,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "MRSH": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.7%，缩量0.91×"
+    }
+   ],
+   "close": 175.99,
+   "t1_pct": -3.08,
+   "d5_pct": -0.13,
+   "rsi14": 52.3,
+   "dist_ema9_pct": -1.7,
+   "dist_ma20_atr": 0.1,
+   "dist_ma50_pct": 4.69,
+   "vol_ratio": 0.91,
+   "range_pos": 11,
+   "atr14": 4.632,
+   "range5_pct": 7.76,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "MSFT": {
+   "sector_etfs": [
+    "DIA",
+    "XLK",
+    "IGV",
+    "CIBR"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=378.65 L2=389.39"
+    }
+   ],
+   "close": 390.34,
+   "t1_pct": -1.86,
+   "d5_pct": -1.34,
+   "rsi14": 49.2,
+   "dist_ema9_pct": -0.73,
+   "dist_ma20_atr": 0.48,
+   "dist_ma50_pct": -2.49,
+   "vol_ratio": 0.64,
+   "range_pos": 24,
+   "atr14": 11.921,
+   "range5_pct": 4.88,
+   "double_bottom": {
+    "low1": 378.65,
+    "low1_date": "2026-07-14",
+    "low2": 389.39,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "MTB": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.5%/1.85ATR，RSI66.9"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=240.74 L2=246.23"
+    }
+   ],
+   "close": 250.73,
+   "t1_pct": 0.83,
+   "d5_pct": 0.89,
+   "rsi14": 66.9,
+   "dist_ema9_pct": 1.39,
+   "dist_ma20_atr": 1.79,
+   "dist_ma50_pct": 10.27,
+   "vol_ratio": 1.03,
+   "range_pos": 92,
+   "atr14": 4.749,
+   "range5_pct": 3.5,
+   "double_bottom": {
+    "low1": 240.74,
+    "low1_date": "2026-07-14",
+    "low2": 246.23,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "NDAQ": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.9%，缩量0.71×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=87.35 L2=89.51"
+    }
+   ],
+   "close": 90.9,
+   "t1_pct": 0.73,
+   "d5_pct": -0.5,
+   "rsi14": 57.3,
+   "dist_ema9_pct": 0.9,
+   "dist_ma20_atr": 1.87,
+   "dist_ma50_pct": 3.74,
+   "vol_ratio": 0.71,
+   "range_pos": 40,
+   "atr14": 2.645,
+   "range5_pct": 6.33,
+   "double_bottom": {
+    "low1": 87.35,
+    "low1_date": "2026-07-14",
+    "low2": 89.51,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "NET": {
+   "sector_etfs": [
+    "CIBR"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间7.53%/1.55ATR，RSI58.4"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.51%，缩量0.79×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=263.37 L2=261.73"
+    }
+   ],
+   "close": 268.98,
+   "t1_pct": -1.22,
+   "d5_pct": -1.49,
+   "rsi14": 58.4,
+   "dist_ema9_pct": -0.51,
+   "dist_ma20_atr": 0.74,
+   "dist_ma50_pct": 12.55,
+   "vol_ratio": 0.79,
+   "range_pos": 53,
+   "atr14": 13.082,
+   "range5_pct": 7.53,
+   "double_bottom": {
+    "low1": 263.37,
+    "low1_date": "2026-07-13",
+    "low2": 261.73,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "NVDA": {
+   "sector_etfs": [
+    "DIA",
+    "SMH",
+    "WGMI",
+    "ARKK"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=192.35 L2=197.97"
+    }
+   ],
+   "close": 212.06,
+   "t1_pct": 2.3,
+   "d5_pct": -0.21,
+   "rsi14": 56.2,
+   "dist_ema9_pct": 2.54,
+   "dist_ma20_atr": 1.33,
+   "dist_ma50_pct": 1.14,
+   "vol_ratio": 1.01,
+   "range_pos": 75,
+   "atr14": 7.356,
+   "range5_pct": 7.74,
+   "double_bottom": {
+    "low1": 192.35,
+    "low1_date": "2026-07-02",
+    "low2": 197.97,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "NVDY": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=12.0 L2=12.05"
+    }
+   ],
+   "close": 12.79,
+   "t1_pct": 1.35,
+   "d5_pct": -0.31,
+   "rsi14": 51.9,
+   "dist_ema9_pct": 1.61,
+   "dist_ma20_atr": 0.99,
+   "dist_ma50_pct": -2.68,
+   "vol_ratio": 0.63,
+   "range_pos": 78,
+   "atr14": 0.348,
+   "range5_pct": 6.4,
+   "double_bottom": {
+    "low1": 12.0,
+    "low1_date": "2026-07-02",
+    "low2": 12.05,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "OIH": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回367.39(深2.89%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 388.48,
+   "t1_pct": 1.3,
+   "d5_pct": 1.68,
+   "rsi14": 51.7,
+   "dist_ema9_pct": 2.0,
+   "dist_ma20_atr": 1.32,
+   "dist_ma50_pct": -4.25,
+   "vol_ratio": 0.66,
+   "range_pos": 25,
+   "atr14": 10.066,
+   "range5_pct": 6.25,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "OKE": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.41%/1.81ATR，RSI55.1"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=88.33 L2=90.2"
+    }
+   ],
+   "close": 91.75,
+   "t1_pct": -0.09,
+   "d5_pct": 0.79,
+   "rsi14": 55.1,
+   "dist_ema9_pct": -0.07,
+   "dist_ma20_atr": 0.72,
+   "dist_ma50_pct": 2.65,
+   "vol_ratio": 1.05,
+   "range_pos": 13,
+   "atr14": 2.24,
+   "range5_pct": 4.41,
+   "double_bottom": {
+    "low1": 88.33,
+    "low1_date": "2026-07-10",
+    "low2": 90.2,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "ONDS": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "E",
+     "note": "shakeout收回7.31(深14.91%/6天下方)+burst 2026-07-21 +11.5%量2.71×"
+    }
+   ],
+   "close": 8.0,
+   "t1_pct": 4.44,
+   "d5_pct": 13.48,
+   "rsi14": 50.4,
+   "dist_ema9_pct": 8.86,
+   "dist_ma20_atr": 0.76,
+   "dist_ma50_pct": -12.29,
+   "vol_ratio": 1.68,
+   "range_pos": 31,
+   "atr14": 0.691,
+   "range5_pct": 29.5,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "OSCR": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.85%，缩量0.76×"
+    }
+   ],
+   "close": 29.5,
+   "t1_pct": -4.13,
+   "d5_pct": -3.63,
+   "rsi14": 51.6,
+   "dist_ema9_pct": -1.85,
+   "dist_ma20_atr": -0.47,
+   "dist_ma50_pct": 8.99,
+   "vol_ratio": 0.76,
+   "range_pos": 6,
+   "atr14": 1.705,
+   "range5_pct": 13.22,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "OXY": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=52.95 L2=54.0"
+    }
+   ],
+   "close": 57.5,
+   "t1_pct": 1.77,
+   "d5_pct": 6.94,
+   "rsi14": 64.4,
+   "dist_ema9_pct": 4.65,
+   "dist_ma20_atr": 3.23,
+   "dist_ma50_pct": 4.55,
+   "vol_ratio": 0.79,
+   "range_pos": 56,
+   "atr14": 1.598,
+   "range5_pct": 7.46,
+   "double_bottom": {
+    "low1": 52.95,
+    "low1_date": "2026-07-15",
+    "low2": 54.0,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "PANW": {
+   "sector_etfs": [
+    "XLK",
+    "IGV",
+    "CIBR"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.26%，缩量0.86×"
+    }
+   ],
+   "close": 335.28,
+   "t1_pct": -2.01,
+   "d5_pct": -5.29,
+   "rsi14": 55.5,
+   "dist_ema9_pct": -2.26,
+   "dist_ma20_atr": -0.02,
+   "dist_ma50_pct": 14.57,
+   "vol_ratio": 0.86,
+   "range_pos": 43,
+   "atr14": 16.634,
+   "range5_pct": 11.98,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "PG": {
+   "sector_etfs": [
+    "XLP",
+    "DIA"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=144.66 L2=146.88"
+    }
+   ],
+   "close": 149.13,
+   "t1_pct": 0.7,
+   "d5_pct": 0.73,
+   "rsi14": 51.5,
+   "dist_ema9_pct": 0.16,
+   "dist_ma20_atr": 0.07,
+   "dist_ma50_pct": 1.62,
+   "vol_ratio": 0.59,
+   "range_pos": 19,
+   "atr14": 3.117,
+   "range5_pct": 4.99,
+   "double_bottom": {
+    "low1": 144.66,
+    "low1_date": "2026-07-15",
+    "low2": 146.88,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "PNC": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.59%/1.84ATR，RSI61.3"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.35%，缩量0.77×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=248.09 L2=247.43"
+    }
+   ],
+   "close": 252.51,
+   "t1_pct": 0.85,
+   "d5_pct": -0.65,
+   "rsi14": 61.3,
+   "dist_ema9_pct": 0.35,
+   "dist_ma20_atr": 0.5,
+   "dist_ma50_pct": 7.83,
+   "vol_ratio": 0.77,
+   "range_pos": 84,
+   "atr14": 4.936,
+   "range5_pct": 3.59,
+   "double_bottom": {
+    "low1": 248.09,
+    "low1_date": "2026-07-15",
+    "low2": 247.43,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "POWL": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=222.93 L2=223.51"
+    }
+   ],
+   "close": 240.68,
+   "t1_pct": -1.52,
+   "d5_pct": -2.56,
+   "rsi14": 43.5,
+   "dist_ema9_pct": 0.55,
+   "dist_ma20_atr": -0.67,
+   "dist_ma50_pct": -12.47,
+   "vol_ratio": 0.44,
+   "range_pos": 46,
+   "atr14": 16.469,
+   "range5_pct": 10.19,
+   "double_bottom": {
+    "low1": 222.93,
+    "low1_date": "2026-07-13",
+    "low2": 223.51,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "PPH": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.22%，缩量0.3×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=106.68 L2=107.8"
+    }
+   ],
+   "close": 108.622,
+   "t1_pct": -0.68,
+   "d5_pct": 1.02,
+   "rsi14": 52.2,
+   "dist_ema9_pct": -0.22,
+   "dist_ma20_atr": -0.21,
+   "dist_ma50_pct": 2.63,
+   "vol_ratio": 0.3,
+   "range_pos": 18,
+   "atr14": 1.89,
+   "range5_pct": 3.5,
+   "double_bottom": {
+    "low1": 106.68,
+    "low1_date": "2026-07-14",
+    "low2": 107.8,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "PRU": {
+   "sector_etfs": [
+    "XLF",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=113.64 L2=117.01"
+    }
+   ],
+   "close": 118.85,
+   "t1_pct": 0.22,
+   "d5_pct": 3.31,
+   "rsi14": 68.8,
+   "dist_ema9_pct": 1.5,
+   "dist_ma20_atr": 2.26,
+   "dist_ma50_pct": 10.17,
+   "vol_ratio": 1.0,
+   "range_pos": 26,
+   "atr14": 2.27,
+   "range5_pct": 4.4,
+   "double_bottom": {
+    "low1": 113.64,
+    "low1_date": "2026-07-15",
+    "low2": 117.01,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "PSX": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=186.09 L2=194.2"
+    }
+   ],
+   "close": 211.41,
+   "t1_pct": -0.41,
+   "d5_pct": 7.77,
+   "rsi14": 74.4,
+   "dist_ema9_pct": 4.22,
+   "dist_ma20_atr": 4.08,
+   "dist_ma50_pct": 16.63,
+   "vol_ratio": 0.95,
+   "range_pos": 20,
+   "atr14": 5.684,
+   "range5_pct": 8.73,
+   "double_bottom": {
+    "low1": 186.09,
+    "low1_date": "2026-07-10",
+    "low2": 194.2,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "PWR": {
+   "sector_etfs": [
+    "XLI"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回642.11(深5.19%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 643.14,
+   "t1_pct": 0.62,
+   "d5_pct": -0.88,
+   "rsi14": 42.1,
+   "dist_ema9_pct": -0.37,
+   "dist_ma20_atr": -0.97,
+   "dist_ma50_pct": -8.09,
+   "vol_ratio": 0.43,
+   "range_pos": 85,
+   "atr14": 25.402,
+   "range5_pct": 5.94,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "PYPL": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.81%/1.42ATR，RSI74.2"
+    },
+    {
+     "type": "D",
+     "note": "突破48.43(2026-07-15,量4.46×)后缩量回踩"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=43.78 L2=55.0"
+    }
+   ],
+   "close": 55.51,
+   "t1_pct": -0.61,
+   "d5_pct": -0.02,
+   "rsi14": 74.2,
+   "dist_ema9_pct": 3.94,
+   "dist_ma20_atr": 3.85,
+   "dist_ma50_pct": 22.49,
+   "vol_ratio": 0.55,
+   "range_pos": 24,
+   "atr14": 1.882,
+   "range5_pct": 4.81,
+   "double_bottom": {
+    "low1": 43.78,
+    "low1_date": "2026-07-06",
+    "low2": 55.0,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "RCL": {
+   "sector_etfs": [
+    "XLY"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=282.63 L2=281.35"
+    }
+   ],
+   "close": 285.85,
+   "t1_pct": -0.71,
+   "d5_pct": -2.16,
+   "rsi14": 45.9,
+   "dist_ema9_pct": -0.94,
+   "dist_ma20_atr": -0.99,
+   "dist_ma50_pct": -0.24,
+   "vol_ratio": 0.67,
+   "range_pos": 46,
+   "atr14": 10.888,
+   "range5_pct": 4.78,
+   "double_bottom": {
+    "low1": 282.63,
+    "low1_date": "2026-07-14",
+    "low2": 281.35,
+    "low2_date": "2026-07-20",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "RF": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=29.55 L2=30.78"
+    }
+   ],
+   "close": 30.86,
+   "t1_pct": 0.13,
+   "d5_pct": -1.97,
+   "rsi14": 55.5,
+   "dist_ema9_pct": -0.65,
+   "dist_ma20_atr": 0.25,
+   "dist_ma50_pct": 6.15,
+   "vol_ratio": 1.11,
+   "range_pos": 70,
+   "atr14": 0.671,
+   "range5_pct": 5.96,
+   "double_bottom": {
+    "low1": 29.55,
+    "low1_date": "2026-07-08",
+    "low2": 30.78,
+    "low2_date": "2026-07-14",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "RIG": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=4.91 L2=4.98"
+    }
+   ],
+   "close": 5.3,
+   "t1_pct": 1.15,
+   "d5_pct": 1.92,
+   "rsi14": 48.5,
+   "dist_ema9_pct": 2.08,
+   "dist_ma20_atr": 0.81,
+   "dist_ma50_pct": -8.99,
+   "vol_ratio": 1.11,
+   "range_pos": 38,
+   "atr14": 0.22,
+   "range5_pct": 7.55,
+   "double_bottom": {
+    "low1": 4.91,
+    "low1_date": "2026-07-07",
+    "low2": 4.98,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "RJF": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.22%/1.83ATR，RSI63.1"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.29%，缩量0.98×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=165.59 L2=166.2"
+    }
+   ],
+   "close": 168.01,
+   "t1_pct": 0.05,
+   "d5_pct": -1.34,
+   "rsi14": 63.1,
+   "dist_ema9_pct": 0.29,
+   "dist_ma20_atr": 1.29,
+   "dist_ma50_pct": 7.55,
+   "vol_ratio": 0.98,
+   "range_pos": 81,
+   "atr14": 3.875,
+   "range5_pct": 4.22,
+   "double_bottom": {
+    "low1": 165.59,
+    "low1_date": "2026-07-14",
+    "low2": 166.2,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "RL": {
+   "sector_etfs": [
+    "XLY"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=367.0 L2=374.55"
+    }
+   ],
+   "close": 387.14,
+   "t1_pct": 1.1,
+   "d5_pct": 3.49,
+   "rsi14": 50.6,
+   "dist_ema9_pct": 0.98,
+   "dist_ma20_atr": -0.3,
+   "dist_ma50_pct": 2.28,
+   "vol_ratio": 0.76,
+   "range_pos": 84,
+   "atr14": 12.567,
+   "range5_pct": 4.83,
+   "double_bottom": {
+    "low1": 367.0,
+    "low1_date": "2026-07-14",
+    "low2": 374.55,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "SCHW": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.26%，缩量0.77×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=100.51 L2=100.75"
+    }
+   ],
+   "close": 100.8,
+   "t1_pct": 0.84,
+   "d5_pct": -1.94,
+   "rsi14": 58.9,
+   "dist_ema9_pct": -0.26,
+   "dist_ma20_atr": 0.92,
+   "dist_ma50_pct": 8.06,
+   "vol_ratio": 0.77,
+   "range_pos": 72,
+   "atr14": 2.49,
+   "range5_pct": 5.02,
+   "double_bottom": {
+    "low1": 100.51,
+    "low1_date": "2026-07-09",
+    "low2": 100.75,
+    "low2_date": "2026-07-14",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "SLB": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回45.87(深2.78%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 47.67,
+   "t1_pct": 2.32,
+   "d5_pct": 0.25,
+   "rsi14": 45.2,
+   "dist_ema9_pct": 1.23,
+   "dist_ma20_atr": 0.68,
+   "dist_ma50_pct": -7.79,
+   "vol_ratio": 0.91,
+   "range_pos": 72,
+   "atr14": 1.294,
+   "range5_pct": 5.64,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "SLX": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回98.31(深2.15%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=96.2 L2=98.72"
+    }
+   ],
+   "close": 101.67,
+   "t1_pct": 1.26,
+   "d5_pct": -0.18,
+   "rsi14": 50.9,
+   "dist_ema9_pct": 1.37,
+   "dist_ma20_atr": 1.14,
+   "dist_ma50_pct": -2.87,
+   "vol_ratio": 0.8,
+   "range_pos": 67,
+   "atr14": 1.936,
+   "range5_pct": 3.29,
+   "double_bottom": {
+    "low1": 96.2,
+    "low1_date": "2026-07-08",
+    "low2": 98.72,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "SNOW": {
+   "sector_etfs": [
+    "ARKK"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间7.47%/1.55ATR，RSI61.1"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.33%，缩量0.52×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=261.0 L2=259.48"
+    }
+   ],
+   "close": 267.8,
+   "t1_pct": -1.45,
+   "d5_pct": -1.5,
+   "rsi14": 61.1,
+   "dist_ema9_pct": -0.33,
+   "dist_ma20_atr": 0.55,
+   "dist_ma50_pct": 16.18,
+   "vol_ratio": 0.52,
+   "range_pos": 70,
+   "atr14": 12.894,
+   "range5_pct": 7.47,
+   "double_bottom": {
+    "low1": 261.0,
+    "low1_date": "2026-07-14",
+    "low2": 259.48,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "SPGI": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.1%，缩量0.49×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=425.74 L2=427.63"
+    }
+   ],
+   "close": 429.06,
+   "t1_pct": -0.51,
+   "d5_pct": -3.47,
+   "rsi14": 48.9,
+   "dist_ema9_pct": -2.1,
+   "dist_ma20_atr": -0.07,
+   "dist_ma50_pct": 1.66,
+   "vol_ratio": 0.49,
+   "range_pos": 7,
+   "atr14": 13.154,
+   "range5_pct": 8.02,
+   "double_bottom": {
+    "low1": 425.74,
+    "low1_date": "2026-07-14",
+    "low2": 427.63,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "STT": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.5%，缩量0.88×"
+    },
+    {
+     "type": "D",
+     "note": "突破184.59(2026-07-16,量2.07×)后缩量回踩"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=177.03 L2=179.35"
+    }
+   ],
+   "close": 185.24,
+   "t1_pct": 1.06,
+   "d5_pct": -0.72,
+   "rsi14": 68.0,
+   "dist_ema9_pct": 1.5,
+   "dist_ma20_atr": 1.61,
+   "dist_ma50_pct": 10.93,
+   "vol_ratio": 0.88,
+   "range_pos": 95,
+   "atr14": 4.864,
+   "range5_pct": 7.11,
+   "double_bottom": {
+    "low1": 177.03,
+    "low1_date": "2026-07-13",
+    "low2": 179.35,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "SYF": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=68.05 L2=71.98"
+    }
+   ],
+   "close": 72.81,
+   "t1_pct": 0.83,
+   "d5_pct": -1.66,
+   "rsi14": 46.8,
+   "dist_ema9_pct": -0.67,
+   "dist_ma20_atr": -0.82,
+   "dist_ma50_pct": -0.27,
+   "vol_ratio": 1.03,
+   "range_pos": 90,
+   "atr14": 2.26,
+   "range5_pct": 5.6,
+   "double_bottom": {
+    "low1": 68.05,
+    "low1_date": "2026-07-08",
+    "low2": 71.98,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "TAN": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=52.81 L2=52.6"
+    }
+   ],
+   "close": 53.72,
+   "t1_pct": -0.04,
+   "d5_pct": -3.73,
+   "rsi14": 40.1,
+   "dist_ema9_pct": -0.96,
+   "dist_ma20_atr": -0.91,
+   "dist_ma50_pct": -12.04,
+   "vol_ratio": 0.54,
+   "range_pos": 7,
+   "atr14": 2.091,
+   "range5_pct": 4.88,
+   "double_bottom": {
+    "low1": 52.81,
+    "low1_date": "2026-07-13",
+    "low2": 52.6,
+    "low2_date": "2026-07-20",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TENX": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=13.22 L2=14.55"
+    }
+   ],
+   "close": 14.79,
+   "t1_pct": -5.92,
+   "d5_pct": -3.59,
+   "rsi14": 50.3,
+   "dist_ema9_pct": -4.96,
+   "dist_ma20_atr": -0.48,
+   "dist_ma50_pct": 12.66,
+   "vol_ratio": 1.15,
+   "range_pos": 35,
+   "atr14": 1.208,
+   "range5_pct": 15.28,
+   "double_bottom": {
+    "low1": 13.22,
+    "low1_date": "2026-07-01",
+    "low2": 14.55,
+    "low2_date": "2026-07-17",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TFC": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.0%，缩量0.83×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=51.19 L2=50.69"
+    }
+   ],
+   "close": 51.73,
+   "t1_pct": 0.68,
+   "d5_pct": -2.03,
+   "rsi14": 54.8,
+   "dist_ema9_pct": 0.0,
+   "dist_ma20_atr": 0.39,
+   "dist_ma50_pct": 4.44,
+   "vol_ratio": 0.83,
+   "range_pos": 78,
+   "atr14": 1.184,
+   "range5_pct": 6.81,
+   "double_bottom": {
+    "low1": 51.19,
+    "low1_date": "2026-07-13",
+    "low2": 50.69,
+    "low2_date": "2026-07-20",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TMO": {
+   "sector_etfs": [
+    "XLV"
+   ],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑495.1，假破深度0.01%"
+    }
+   ],
+   "close": 526.46,
+   "t1_pct": 0.57,
+   "d5_pct": -1.65,
+   "rsi14": 58.6,
+   "dist_ema9_pct": -0.1,
+   "dist_ma20_atr": 0.44,
+   "dist_ma50_pct": 8.01,
+   "vol_ratio": 1.1,
+   "range_pos": 79,
+   "atr14": 14.388,
+   "range5_pct": 9.39,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "TPL": {
+   "sector_etfs": [
+    "XLE",
+    "XOP"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间7.19%/1.83ATR，RSI63.0"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=401.99 L2=405.39"
+    }
+   ],
+   "close": 433.1,
+   "t1_pct": 3.39,
+   "d5_pct": 4.76,
+   "rsi14": 63.0,
+   "dist_ema9_pct": 4.32,
+   "dist_ma20_atr": 1.47,
+   "dist_ma50_pct": 9.86,
+   "vol_ratio": 0.87,
+   "range_pos": 86,
+   "atr14": 17.001,
+   "range5_pct": 7.19,
+   "double_bottom": {
+    "low1": 401.99,
+    "low1_date": "2026-07-14",
+    "low2": 405.39,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TRGP": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.19%/1.37ATR，RSI62.1"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=275.24 L2=277.18"
+    }
+   ],
+   "close": 284.45,
+   "t1_pct": 1.51,
+   "d5_pct": 2.26,
+   "rsi14": 62.1,
+   "dist_ema9_pct": 1.64,
+   "dist_ma20_atr": 1.58,
+   "dist_ma50_pct": 5.79,
+   "vol_ratio": 0.65,
+   "range_pos": 89,
+   "atr14": 6.63,
+   "range5_pct": 3.19,
+   "double_bottom": {
+    "low1": 275.24,
+    "low1_date": "2026-07-15",
+    "low2": 277.18,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TROW": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.74%/1.57ATR，RSI55.1"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.72%，缩量0.6×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=113.06 L2=115.95"
+    }
+   ],
+   "close": 116.01,
+   "t1_pct": -1.36,
+   "d5_pct": -2.17,
+   "rsi14": 55.1,
+   "dist_ema9_pct": -0.72,
+   "dist_ma20_atr": 0.15,
+   "dist_ma50_pct": 6.18,
+   "vol_ratio": 0.6,
+   "range_pos": 17,
+   "atr14": 2.759,
+   "range5_pct": 3.74,
+   "double_bottom": {
+    "low1": 113.06,
+    "low1_date": "2026-07-13",
+    "low2": 115.95,
+    "low2_date": "2026-07-20",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "TRV": {
+   "sector_etfs": [
+    "XLF",
+    "DIA",
+    "IAK"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=333.53 L2=362.33"
+    }
+   ],
+   "close": 372.08,
+   "t1_pct": 0.66,
+   "d5_pct": 13.03,
+   "rsi14": 76.2,
+   "dist_ema9_pct": 4.52,
+   "dist_ma20_atr": 3.38,
+   "dist_ma50_pct": 17.23,
+   "vol_ratio": 1.22,
+   "range_pos": 74,
+   "atr14": 9.096,
+   "range5_pct": 12.09,
+   "double_bottom": {
+    "low1": 333.53,
+    "low1_date": "2026-07-13",
+    "low2": 362.33,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "TS": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回54.99(深2.83%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=55.59 L2=55.24"
+    }
+   ],
+   "close": 58.31,
+   "t1_pct": 2.33,
+   "d5_pct": 2.44,
+   "rsi14": 55.2,
+   "dist_ema9_pct": 2.87,
+   "dist_ma20_atr": 1.86,
+   "dist_ma50_pct": -1.54,
+   "vol_ratio": 0.71,
+   "range_pos": 51,
+   "atr14": 1.331,
+   "range5_pct": 5.97,
+   "double_bottom": {
+    "low1": 55.59,
+    "low1_date": "2026-07-16",
+    "low2": 55.24,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TSEM": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=212.77 L2=211.46"
+    }
+   ],
+   "close": 249.53,
+   "t1_pct": -0.55,
+   "d5_pct": -0.59,
+   "rsi14": 51.9,
+   "dist_ema9_pct": 3.59,
+   "dist_ma20_atr": 0.41,
+   "dist_ma50_pct": -2.01,
+   "vol_ratio": 0.57,
+   "range_pos": 61,
+   "atr14": 22.019,
+   "range5_pct": 16.98,
+   "double_bottom": {
+    "low1": 212.77,
+    "low1_date": "2026-07-13",
+    "low2": 211.46,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "TTWO": {
+   "sector_etfs": [
+    "XLC",
+    "IGV"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.32%，缩量0.52×"
+    }
+   ],
+   "close": 233.58,
+   "t1_pct": -1.0,
+   "d5_pct": -4.19,
+   "rsi14": 45.0,
+   "dist_ema9_pct": -2.32,
+   "dist_ma20_atr": -1.44,
+   "dist_ma50_pct": 0.2,
+   "vol_ratio": 0.52,
+   "range_pos": 26,
+   "atr14": 7.308,
+   "range5_pct": 4.71,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "USB": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.78%/1.93ATR，RSI67.9"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=61.83 L2=62.64"
+    }
+   ],
+   "close": 64.47,
+   "t1_pct": 1.19,
+   "d5_pct": 2.32,
+   "rsi14": 67.9,
+   "dist_ema9_pct": 1.97,
+   "dist_ma20_atr": 1.78,
+   "dist_ma50_pct": 10.72,
+   "vol_ratio": 1.07,
+   "range_pos": 95,
+   "atr14": 1.262,
+   "range5_pct": 3.78,
+   "double_bottom": {
+    "low1": 61.83,
+    "low1_date": "2026-07-14",
+    "low2": 62.64,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "V": {
+   "sector_etfs": [
+    "XLF",
+    "DIA"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间3.64%/1.64ATR，RSI56.2"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.63%，缩量0.51×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=344.42 L2=349.12"
+    }
+   ],
+   "close": 353.42,
+   "t1_pct": -0.67,
+   "d5_pct": -0.48,
+   "rsi14": 56.2,
+   "dist_ema9_pct": -0.63,
+   "dist_ma20_atr": 0.35,
+   "dist_ma50_pct": 5.4,
+   "vol_ratio": 0.51,
+   "range_pos": 22,
+   "atr14": 7.84,
+   "range5_pct": 3.64,
+   "double_bottom": {
+    "low1": 344.42,
+    "low1_date": "2026-07-09",
+    "low2": 349.12,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "VLO": {
+   "sector_etfs": [
+    "XLE",
+    "XOP"
+   ],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=274.81 L2=287.33"
+    }
+   ],
+   "close": 310.92,
+   "t1_pct": -1.23,
+   "d5_pct": 6.24,
+   "rsi14": 70.5,
+   "dist_ema9_pct": 2.97,
+   "dist_ma20_atr": 2.77,
+   "dist_ma50_pct": 18.34,
+   "vol_ratio": 0.8,
+   "range_pos": 22,
+   "atr14": 10.433,
+   "range5_pct": 8.44,
+   "double_bottom": {
+    "low1": 274.81,
+    "low1_date": "2026-07-10",
+    "low2": 287.33,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "VOO": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间1.84%/1.77ATR，RSI51.6"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.03%，缩量0.45×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=687.54 L2=680.92"
+    }
+   ],
+   "close": 687.03,
+   "t1_pct": -0.12,
+   "d5_pct": -0.98,
+   "rsi14": 51.6,
+   "dist_ema9_pct": -0.03,
+   "dist_ma20_atr": 0.21,
+   "dist_ma50_pct": 0.28,
+   "vol_ratio": 0.45,
+   "range_pos": 30,
+   "atr14": 7.129,
+   "range5_pct": 1.84,
+   "double_bottom": {
+    "low1": 687.54,
+    "low1_date": "2026-07-13",
+    "low2": 680.92,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "VRTX": {
+   "sector_etfs": [
+    "XLV",
+    "IBB"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.1%，缩量0.67×"
+    }
+   ],
+   "close": 472.57,
+   "t1_pct": -1.96,
+   "d5_pct": -0.95,
+   "rsi14": 46.0,
+   "dist_ema9_pct": -2.1,
+   "dist_ma20_atr": -1.41,
+   "dist_ma50_pct": 2.08,
+   "vol_ratio": 0.67,
+   "range_pos": 8,
+   "atr14": 13.818,
+   "range5_pct": 5.31,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "WFC": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间4.51%/1.78ATR，RSI54.0"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.5%，缩量0.93×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=83.83 L2=85.89"
+    }
+   ],
+   "close": 86.42,
+   "t1_pct": -1.5,
+   "d5_pct": -1.25,
+   "rsi14": 54.0,
+   "dist_ema9_pct": -0.5,
+   "dist_ma20_atr": 0.16,
+   "dist_ma50_pct": 5.71,
+   "vol_ratio": 0.93,
+   "range_pos": 9,
+   "atr14": 2.195,
+   "range5_pct": 4.51,
+   "double_bottom": {
+    "low1": 83.83,
+    "low1_date": "2026-07-14",
+    "low2": 85.89,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "WGMI": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "Ew",
+     "note": "shakeout已收回48.48(深7.93%)，burst未确认——开盘第一根放量动量bar触发买入，止损洗盘低点下方"
+    }
+   ],
+   "close": 57.16,
+   "t1_pct": 1.87,
+   "d5_pct": 7.85,
+   "rsi14": 49.8,
+   "dist_ema9_pct": 5.74,
+   "dist_ma20_atr": 0.12,
+   "dist_ma50_pct": -6.98,
+   "vol_ratio": 0.47,
+   "range_pos": 67,
+   "atr14": 4.722,
+   "range5_pct": 23.72,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "WMB": {
+   "sector_etfs": [
+    "XLE"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.29%，缩量0.81×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=72.81 L2=72.76"
+    }
+   ],
+   "close": 74.49,
+   "t1_pct": 1.54,
+   "d5_pct": 0.15,
+   "rsi14": 51.0,
+   "dist_ema9_pct": 0.29,
+   "dist_ma20_atr": -0.14,
+   "dist_ma50_pct": 0.23,
+   "vol_ratio": 0.81,
+   "range_pos": 68,
+   "atr14": 1.953,
+   "range5_pct": 3.97,
+   "double_bottom": {
+    "low1": 72.81,
+    "low1_date": "2026-07-13",
+    "low2": 72.76,
+    "low2_date": "2026-07-17",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "WRB": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.8%，缩量0.92×"
+    }
+   ],
+   "close": 72.36,
+   "t1_pct": 0.28,
+   "d5_pct": 3.55,
+   "rsi14": 57.8,
+   "dist_ema9_pct": 0.8,
+   "dist_ma20_atr": 0.59,
+   "dist_ma50_pct": 5.35,
+   "vol_ratio": 0.92,
+   "range_pos": 62,
+   "atr14": 1.698,
+   "range5_pct": 8.65,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "WTW": {
+   "sector_etfs": [
+    "XLF"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.84%，缩量0.85×"
+    }
+   ],
+   "close": 286.51,
+   "t1_pct": -0.8,
+   "d5_pct": 0.49,
+   "rsi14": 56.1,
+   "dist_ema9_pct": -0.84,
+   "dist_ma20_atr": 0.54,
+   "dist_ma50_pct": 7.56,
+   "vol_ratio": 0.85,
+   "range_pos": 37,
+   "atr14": 7.299,
+   "range5_pct": 6.36,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "XBI": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-1.43%，缩量0.64×"
+    }
+   ],
+   "close": 152.11,
+   "t1_pct": -1.55,
+   "d5_pct": -2.63,
+   "rsi14": 51.2,
+   "dist_ema9_pct": -1.43,
+   "dist_ma20_atr": -1.03,
+   "dist_ma50_pct": 6.41,
+   "vol_ratio": 0.64,
+   "range_pos": 5,
+   "atr14": 4.34,
+   "range5_pct": 4.86,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "XLB": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑49.88，假破深度0.08%"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=50.11 L2=49.84"
+    }
+   ],
+   "close": 50.82,
+   "t1_pct": 1.44,
+   "d5_pct": 0.63,
+   "rsi14": 49.5,
+   "dist_ema9_pct": 0.49,
+   "dist_ma20_atr": -0.09,
+   "dist_ma50_pct": -0.43,
+   "vol_ratio": 0.94,
+   "range_pos": 78,
+   "atr14": 0.872,
+   "range5_pct": 3.15,
+   "double_bottom": {
+    "low1": 50.11,
+    "low1_date": "2026-07-15",
+    "low2": 49.84,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLE": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=54.36 L2=55.76"
+    }
+   ],
+   "close": 59.2,
+   "t1_pct": 1.2,
+   "d5_pct": 4.78,
+   "rsi14": 67.7,
+   "dist_ema9_pct": 3.14,
+   "dist_ma20_atr": 3.47,
+   "dist_ma50_pct": 4.48,
+   "vol_ratio": 0.97,
+   "range_pos": 48,
+   "atr14": 1.095,
+   "range5_pct": 4.94,
+   "double_bottom": {
+    "low1": 54.36,
+    "low1_date": "2026-07-10",
+    "low2": 55.76,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLF": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "B",
+     "note": "tight：5日区间2.17%/1.74ATR，RSI62.3"
+    },
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.04%，缩量0.74×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=55.59 L2=55.72"
+    }
+   ],
+   "close": 56.05,
+   "t1_pct": -0.11,
+   "d5_pct": -0.9,
+   "rsi14": 62.3,
+   "dist_ema9_pct": 0.04,
+   "dist_ma20_atr": 1.01,
+   "dist_ma50_pct": 4.91,
+   "vol_ratio": 0.74,
+   "range_pos": 38,
+   "atr14": 0.698,
+   "range5_pct": 2.17,
+   "double_bottom": {
+    "low1": 55.59,
+    "low1_date": "2026-07-14",
+    "low2": 55.72,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLI": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑177.6，假破深度0.01%"
+    }
+   ],
+   "close": 178.85,
+   "t1_pct": 0.11,
+   "d5_pct": -0.67,
+   "rsi14": 47.8,
+   "dist_ema9_pct": -0.45,
+   "dist_ma20_atr": -0.86,
+   "dist_ma50_pct": 0.87,
+   "vol_ratio": 0.63,
+   "range_pos": 42,
+   "atr14": 2.967,
+   "range5_pct": 2.16,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "XLP": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.07%，缩量0.58×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=82.97 L2=83.92"
+    }
+   ],
+   "close": 84.38,
+   "t1_pct": 0.38,
+   "d5_pct": 1.09,
+   "rsi14": 50.7,
+   "dist_ema9_pct": -0.07,
+   "dist_ma20_atr": 0.09,
+   "dist_ma50_pct": 0.23,
+   "vol_ratio": 0.58,
+   "range_pos": 33,
+   "atr14": 1.35,
+   "range5_pct": 4.17,
+   "double_bottom": {
+    "low1": 82.97,
+    "low1_date": "2026-07-15",
+    "low2": 83.92,
+    "low2_date": "2026-07-21",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLRE": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距0.07%，缩量0.83×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=44.1 L2=44.05"
+    }
+   ],
+   "close": 45.01,
+   "t1_pct": -0.42,
+   "d5_pct": 1.01,
+   "rsi14": 53.8,
+   "dist_ema9_pct": 0.07,
+   "dist_ma20_atr": 0.49,
+   "dist_ma50_pct": 1.2,
+   "vol_ratio": 0.83,
+   "range_pos": 20,
+   "atr14": 0.606,
+   "range5_pct": 2.85,
+   "double_bottom": {
+    "low1": 44.1,
+    "low1_date": "2026-07-06",
+    "low2": 44.05,
+    "low2_date": "2026-07-10",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLU": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距1.25%，缩量0.98×"
+    },
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=45.04 L2=44.64"
+    }
+   ],
+   "close": 45.93,
+   "t1_pct": 2.25,
+   "d5_pct": 1.57,
+   "rsi14": 57.0,
+   "dist_ema9_pct": 1.25,
+   "dist_ma20_atr": 0.65,
+   "dist_ma50_pct": 2.35,
+   "vol_ratio": 0.98,
+   "range_pos": 93,
+   "atr14": 0.71,
+   "range5_pct": 3.29,
+   "double_bottom": {
+    "low1": 45.04,
+    "low1_date": "2026-07-09",
+    "low2": 44.64,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XLV": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-0.41%，缩量0.52×"
+    },
+    {
+     "type": "W",
+     "note": "双底未破前低：L1=157.25 L2=157.23"
+    }
+   ],
+   "close": 159.43,
+   "t1_pct": -0.51,
+   "d5_pct": 0.72,
+   "rsi14": 53.4,
+   "dist_ema9_pct": -0.41,
+   "dist_ma20_atr": -0.28,
+   "dist_ma50_pct": 3.66,
+   "vol_ratio": 0.52,
+   "range_pos": 24,
+   "atr14": 2.71,
+   "range5_pct": 4.25,
+   "double_bottom": {
+    "low1": 157.25,
+    "low1_date": "2026-07-15",
+    "low2": 157.23,
+    "low2_date": "2026-07-21",
+    "undercut": true,
+    "triple": false
+   },
+   "data_date": "2026-07-22"
+  },
+  "XMAG": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "C",
+     "note": "undercut收回：支撑25.12，假破深度0.08%"
+    }
+   ],
+   "close": 25.54,
+   "t1_pct": 0.28,
+   "d5_pct": 0.31,
+   "rsi14": 52.2,
+   "dist_ema9_pct": 0.28,
+   "dist_ma20_atr": -0.27,
+   "dist_ma50_pct": 1.24,
+   "vol_ratio": 0.61,
+   "range_pos": 67,
+   "atr14": 0.326,
+   "range5_pct": 1.98,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  },
+  "XOP": {
+   "sector_etfs": [],
+   "setups": [
+    {
+     "type": "W",
+     "note": "三重底未破前低：L1=156.41 L2=162.4"
+    }
+   ],
+   "close": 176.59,
+   "t1_pct": 1.59,
+   "d5_pct": 7.12,
+   "rsi14": 71.2,
+   "dist_ema9_pct": 4.6,
+   "dist_ma20_atr": 3.78,
+   "dist_ma50_pct": 7.49,
+   "vol_ratio": 0.89,
+   "range_pos": 51,
+   "atr14": 4.059,
+   "range5_pct": 7.06,
+   "double_bottom": {
+    "low1": 156.41,
+    "low1_date": "2026-07-10",
+    "low2": 162.4,
+    "low2_date": "2026-07-15",
+    "undercut": false,
+    "triple": true
+   },
+   "data_date": "2026-07-22"
+  },
+  "XYZ": {
+   "sector_etfs": [
+    "XLF",
+    "ARKK"
+   ],
+   "setups": [
+    {
+     "type": "A",
+     "note": "回踩9EMA：距-2.13%，缩量0.7×"
+    }
+   ],
+   "close": 77.46,
+   "t1_pct": -3.63,
+   "d5_pct": -5.32,
+   "rsi14": 51.1,
+   "dist_ema9_pct": -2.13,
+   "dist_ma20_atr": -0.26,
+   "dist_ma50_pct": 4.56,
+   "vol_ratio": 0.7,
+   "range_pos": 19,
+   "atr14": 2.958,
+   "range5_pct": 7.38,
+   "double_bottom": null,
+   "data_date": "2026-07-22"
+  }
+ },
+ "errors": [
+  "IXAU6.US: OpenApiException: (kind=ErrorKind.OpenApi, code=301600, trace_id=) invalid symbol",
+  "IXPU6.US: OpenApiException: (kind=ErrorKind.OpenApi, code=301600, trace_id=) invalid symbol"
+ ]
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""盘前JSON组装模板（2026-07-13沉淀，源自Vic"沉淀吧"；2026-07-22改造成两段式）。
+"""盘前JSON组装模板（2026-07-13沉淀，源自Vic"沉淀吧"；2026-07-22 改两段式 → **2026-08-12 改回一次跑完**）。
 
 用法：每天盘前把本文件复制到scratchpad改名 assemble_YYYYMMDD.py，
 只改标记为 ### 手写 ### 的判断内容；骨架/格式/字段名不要动——
@@ -28,24 +28,27 @@
   动能温度打分 risk_checklist：九项标签固定，见下方注释
 ═══════════════════════════════════════════════════════════════════════════
 
-🔴**两段式（2026-07-22 Vic："盘前报告我想每次分两段跑，白天跑隔夜收盘和x账号，4点后跑盘前数据"）**
-    python assemble_YYYYMMDD.py 1     # 段1·白天：隔夜收盘+X扫描 → 草稿_phase=1，不渲染
-    python assemble_YYYYMMDD.py 2     # 段2·SGT16:00后：盘前报价 → 定稿_phase=2 → 再render
+🔴**2026-08-12：两段式取消，盘前数据模块整体退役。**
+   Vic：「我觉得盘前数字没什么用，我也不看盘前异动选股，关于盘前的全部删了吧，
+         我打算以后 3-4 点就触发盘前」
+   3-4 点（SGT）在美股盘前数据可得（16:00）之前 —— 段2 唯一的机械产出就是补盘前列，
+   没有盘前数据它就没有存在理由。**现在一次跑完：**
 
-  段2**不会**重建段1那几张表（sector_rs/etf/持仓/防御篮子/setup扫描），只用
-  `H.patch_premarket_columns()` 机械补一个盘前列，段1写的「驱动/原因」「判断」「论点检查」
-  这些判断列原样保留。**如果盘前数据真的推翻了段1某一行的判断，手动改那一行，
-  并在报告正文里写明"段1判X→段2见Y→改为Z"**，不要静默覆盖（判断的时间戳要可追溯）。
+       copy scripts\\assemble_template.py  ->  scratchpad\\assemble_YYYYMMDD.py
+       python assemble_YYYYMMDD.py          # 一次跑完出定稿
+       python scripts\\render_report.py data\\daily\\YYYY-MM-DD-premarket.json
 
-  每段开工先跑： python scripts/premarket_status.py
+   随之退役的：`snap_premarket.py`、`H.patch_premarket_columns()`、
+   `PHASE2_FIELDS` / `PHASE2_PATCH_FIELDS`、RS 表和持仓表的「盘前」列、
+   ETF 表 T-1% 的「（盘前x%）」后缀、**Premarket Movers 整节**。
+   触发它的实例：2026-08-11 用盘前弱势（XLE -0.25%）判「利多出尽」把 OIH 从 4 分降到 C，
+   收盘 XLE +1.25% 是当日最强板块 —— 而「盘前经常是假的拉高出货」是我们自己写的规则。
 
-前置（段1必须先跑完）：
+前置（全部跑完再组装）：
   python scripts/fetch_market_data.py      # cache/market_YYYYMMDD.json（校验data_date=上一交易日）
   python scripts/fetch_earnings_calendar.py
   python scripts/scan_semis_rsi.py
   python scripts/scan_setups.py [--sectors XL?,XL?]   # cache/setups_YYYYMMDD.json
-前置（段2）：
-  python scripts/snap_premarket.py         # cache/premarket_YYYYMMDD.json（先看pm_stale比例！）
 
 渲染器格式gotcha（2026-07-13踩过的坑，别再踩）：
   - badges 必须是 list（空也要 []），不能 None
@@ -66,11 +69,16 @@ from datetime import date
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
-ROOT = Path(__file__).resolve().parent.parent
+# 2026-08-11：写死绝对路径。**本文件的用法就是复制到 scratchpad 跑**，按 __file__ 推 ROOT
+# 一复制就 ModuleNotFoundError，等于每天都得手改一次路径（盘后模板同批修）。
+ROOT = Path(r"D:\交易为生")
 sys.path.insert(0, str(ROOT / "scripts"))
 import report_helpers as H
 
-PHASE = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1] in ("1", "2") else 1
+# 🔴 2026-08-12：两段式取消（Vic：「关于盘前的全部删了吧，我打算以后 3-4 点就触发盘前」）。
+# 3-4 点（SGT）在美股盘前数据可得（16:00）之前，段2 唯一的机械产出就是补盘前列 —— 没有意义了。
+# PHASE 变量保留但恒为 1，只为让「python assemble_YYYYMMDD.py 1」这种旧命令不报错。
+PHASE = 1
 DS = date.today().strftime("%Y%m%d")          # 或手动指定 "20260713"
 DAY = date.today().isoformat()
 
@@ -78,14 +86,8 @@ cache = H.load_cache(DS)
 if cache.get("data_date") == DAY:
     sys.exit(f"🔴 cache的data_date={DAY}等于报告日本身——fetch跑在美股收盘前，拿到的不是完整"
              f"收盘数据。等美股收盘（SGT 04:00后）重跑 fetch_market_data.py")
-pm = H.load_premarket_snap(DS) if PHASE == 2 else {}
-if PHASE == 2:
-    if not pm:
-        sys.exit("🔴 段2需要盘前快照但 cache/premarket_%s.json 不存在——先跑 snap_premarket.py" % DS)
-    _stale = [k for k, v in pm.items() if isinstance(v, dict) and v.get("pm_stale")]
-    if len(_stale) > len(pm) * 0.5:
-        sys.exit(f"🔴 {len(_stale)}/{len(pm)} 只标记pm_stale——盘前报价是上一时段残留，"
-                 f"现在跑段2会把涨跌算反。确认已过SGT 16:00后重跑 snap_premarket.py")
+pm = {}          # 2026-08-12 起不再取盘前快照
+# （原段2 的盘前快照硬闸已随两段式一起退役 2026-08-12）
 setups = H.load_setups(DS)
 # 2026-07-16 Vic："以后持仓，只扫描我的tradebook"——不再读data/positions.json/查LongBridge MCP
 # /比对moomoo CSV，直接从Vic自己维护的data/tradebook.json派生当前持仓（见H.load_tradebook_positions
@@ -93,9 +95,9 @@ setups = H.load_setups(DS)
 positions = H.load_tradebook_positions()
 M = cache["metrics"]
 
-def pmp(tk, default="无盘前quote"):
-    v = (pm.get(tk) or {}).get("pm_pct")
-    return ("%+.2f%%" % v) if v is not None else default
+def pmp(tk, default="-"):
+    """退役 2026-08-12：恒返回 default。保留函数是为了旧脚本不报 NameError。"""
+    return default
 
 # ---------- RS三组（ticker列表沿用上一份报告，机械填充+判断列手写） ----------
 # 2026-07-15 Vic改版列：T-1% / 5日% / 1月% / 盘前 / 驱动 / RS(1周)——表头固定在这里，不再继承旧报告
@@ -103,20 +105,30 @@ def pmp(tk, default="无盘前quote"):
 # 🔴 RS = 对 QQQ 的 1 周(5日)超额收益，单位是**百分点，不带 %**（Vic 2026-08-10：
 #    「rs应该没有%的吧」）。H.rs_num() 输出 "+2.1" / "-1.6" 这种形式，不要自己加 %。
 #    第 6 列「驱动/原因」**留空当天手写**，整列空着会被 QA 打红。
-RS_HEADERS = ["TICKER", "T-1%", "5日%", "1月%", "盘前", "驱动/原因", "RS(1周)"]
-prev = sorted((ROOT / "data/daily").glob("*-premarket.json"))[-1]
+# 🔴 2026-08-12：「盘前」列删除（Vic：「盘前数字没什么用」）。六列。
+RS_HEADERS = ["TICKER", "T-1%", "5日%", "1月%", "驱动/原因", "RS(1周)"]
+# 🔴 2026-08-11 修：原写法 glob("*-premarket.json") 直接取 [-1]。data/daily 里有一个
+#    `sample-premarket.json`（2026-07-04 样板），字典序 's' > '2' —— **它永远排最后，
+#    等于每天都拿这个样板当「上一份报告」**。后果：RS 表塌成 3 组每组 1 只
+#    （XLF / SMH / XBI）、defensive_basket 变空表，**而报告照样渲染得出来**。
+#    改成只认 `YYYY-MM-DD-` 开头的文件名，并排除今天自己的草稿。
+_prevs = [p for p in (ROOT / "data/daily").glob("????-??-??-premarket.json")
+          if p.name[:10] != DAY]
+if not _prevs:
+    sys.exit("🔴 找不到上一份盘前报告，RS 分组/防御篮子无法继承")
+prev = sorted(_prevs)[-1]
+print(f"继承 RS 分组/防御篮子 ← {prev.name}")
 prev_json = json.load(open(prev, encoding="utf-8"))
 rs_tables = []
 for grp in prev_json["sector_rs_tables"]:
     tickers = [r[0] for r in grp["rows"]]
-    rows = H.sector_rs_rows(cache, tickers, pm)
+    rows = H.sector_rs_rows(cache, tickers)
     hl = []
     for r in rows:
-        pmv = (pm.get(r[0]) or {}).get("pm_pct")
-        r[5] = ""  ### 手写：驱动/原因列（只给有信息量的行写） ###
-        hl.append("warn" if (pmv is not None and pmv <= -4) else ("bull" if (pmv is not None and pmv >= 4) else ""))
+        r[4] = ""  ### 手写：驱动/原因列（只给有信息量的行写） ###
+        hl.append("")
     rs_tables.append({"title": grp["title"], "headers": RS_HEADERS, "rows": rows,
-                      "num_cols": [1, 2, 3, 4, 6], "row_highlights": hl})
+                      "num_cols": [1, 2, 3, 5], "row_highlights": hl})
 
 uni_rows, uni_hl = H.unilateral_rows(cache)      # hl: 距50MA≥5×ATR的行自动红底
 # 2026-07-15 Vic："反弹观察区删除吧，没用"——F节已退役，不再调用H.oversold_rows()
@@ -124,36 +136,37 @@ uni_rows, uni_hl = H.unilateral_rows(cache)      # hl: 距50MA≥5×ATR的行自
 # ---------- ETF技术总表 ----------
 # 🔴顺序和成员由唯一常量 H.INDEX_ORDER 决定（2026-07-28 Vic定）：
 #   VOO / QQQ / DIA / IWM / SMH / RSP / QQQE —— **全报告用VOO不用SPY，不要两个都写**。
-#   盘前B·指数、盘前E·指数基准、盘后01收盘总结三处必须一致，QA第9条会逐表比对。
+#   盘前·指数、盘前·指数基准、盘后01收盘总结三处必须一致，QA第9条会逐表比对。
 #   不要在这里手写ticker列表，改顺序去改 report_helpers.INDEX_ORDER。
 etf_rows = H.gate_etf_rows(cache, H.INDEX_ORDER)
 # ⚠️坑：sector_rs_rows() 内部按RS降序排，会把 INDEX_ORDER 打乱（2026-07-31 QA第9条抓到）。
 #    建「指数基准」组之后必须再过一次 H.order_index_rows(rows) 重排回来。
 etf_judge = {}  ### 手写：{"VOO": "判断", ...}；VOO/QQQ/IWM盘前%在snap里可能缺，用MCP值补 ###
-pm_override = {}  ### 手写：{"VOO": "-0.27%", ...} snap缺失时的盘前%覆盖 ###
+pm_override = {}  # 退役 2026-08-12（原用于补 snap 缺失的盘前%），留空壳
 for r in etf_rows:
-    r[2] = r[2] + "（盘前" + (pm_override.get(r[0]) or pmp(r[0])) + "）"
-    r[8] = etf_judge.get(r[0], "")
+    r[8] = etf_judge.get(r[0], "")   # 2026-08-12：不再往 T-1% 里塞「（盘前x%）」后缀
 
 # ---------- 持仓表 ----------
 mm_rows = H.positions_rows([p for p in positions if p["account"] == "moomoo"], cache)
 lb_rows = H.positions_rows([p for p in positions if p["account"] == "longbridge"], cache)
 mm_judge = {}  ### 手写：论点检查/今日行动 ###
 lb_judge = {}  ### 手写 ###
+# 🔴 2026-08-12：持仓表不再有「盘前」列（整个盘前数据模块退役）。表头 7 列、行 7 格，
+# 不再需要段2 的 patcher 去插列 —— 那个「表头 8 列 / 行 7 格 → patcher 每天静默跳过」
+# 的坑（8/10–8/11）也随之消失。
 for rows, judge in ((mm_rows, mm_judge), (lb_rows, lb_judge)):
     for r in rows:
-        alert = H.position_pm_alert(pm, r[0])  # 2026-07-15 SYK教训：持仓盘前量/价异动必须跳出来
-        r[1] = str(r[1]) + "（盘前" + pmp(r[0], "-") + "）" + ((" " + alert) if alert else "")
         r[6] = judge.get(r[0], "")
-mm_hl = ["warn" if H.position_pm_alert(pm, r[0]) else "" for r in mm_rows]
-lb_hl = ["warn" if H.position_pm_alert(pm, r[0]) else "" for r in lb_rows]
+# 行高亮：盘前警报退役后暂时全空；要恢复就改成按「距止损 <0.7ATR」置 warn
+mm_hl = ["" for _ in mm_rows]
+lb_hl = ["" for _ in lb_rows]
 
 # ---------- 防御篮子（2026-07-17起：ML Leader停用，Vic重新找leader中，见CONTEXT.md
 # 「ML Market Leader名单」节——不再生成ml_rows，out字典也不再填ml_leaders/ml_leaders_note/
 # leader_vs_defensive_note，render_report.py已改为这些字段缺失/空时不渲染方法1的Leader部分，
 # 只留防御篮子表。Vic给新名单后，把ml_list换成新名单、照旧法生成ml_rows即可复原） ----------
 def_rows = [{"ticker": r["ticker"], "price": str((M.get(r["ticker"]) or {}).get("close", "-")),
-             "pct": "盘前" + pmp(r["ticker"]), "role": "防御篮子"} for r in prev_json["defensive_basket"]]
+             "pct": "-", "role": "防御篮子"} for r in prev_json["defensive_basket"]]   # 2026-08-12：盘前列退役
 
 # ---------- 方法2 setup扫描表（机器初筛→人眼过滤后展示） ----------
 # 2026-07-15 Vic改版：已按板块强弱排序（强势板块在前）、RS取代RSI、评分列1-5手写、
@@ -215,23 +228,31 @@ out = {
  "macro_radar_detail": "",  ### 外部校对只认AP/IBD/MarketWatch+X池白名单 ###
  "sector_rs_tables": rs_tables,
  "sector_rs_note": "",
- "unilateral_scan_table": {"headers": ["排名", "TICKER", "得分", "通过项", "5日%", "1月%", "RS(1周)", "距50MA", "延伸档位"],
-                            "rows": uni_rows, "num_cols": [4, 5, 6], "row_highlights": uni_hl},
+ # 🔴 2026-08-11 修：H.unilateral_rows() 产出 **10 格**（排名 / TICKER / 得分 / **阶段** /
+ #    通过项 / 5日% / 1月% / RS / 距50MA / 延伸档位），而模板表头此前只写了 9 列——
+ #    **「阶段」那一列被静默丢掉**。它不是 Vic 8/10 删掉的那个 Weinstein 独立小节，
+ #    而是单边榜的 stage 过滤依据：8/11 那天 XSW / KWEB 原始得分 4/4 全场最高却落榜，
+ #    正是因为 stage 3/4，不显示这一列根本看不出来为什么。
+ "unilateral_scan_table": {"headers": ["排名", "TICKER", "得分", "阶段", "通过项", "5日%", "1月%", "RS(1周)", "距50MA", "延伸档位"],
+                            "rows": uni_rows, "num_cols": [5, 6, 7], "row_highlights": uni_hl},
  "unilateral_scan_note": "",  ### 四件套：强势/可持有·修复/需确认·弱势/暂避·小结 ###
  "futures_table": {"headers": [], "rows": [], "num_cols": []},   # 2026-07-11已删除，留空壳
  "futures_note": "",
  "etf_table": {"headers": ["ETF", "收盘价", "T-1%（盘前%）", "进攻线(+1ATR)", "谨慎线(20MA)", "降级线(-1ATR)", "50MA", "距50MA", "判断"],
                 "rows": etf_rows, "num_cols": [1, 2]},
  "etf_table_note": "",  ### 四件套 ###
- "positions_moomoo_table": {"headers": ["TICKER", "现价", "盘前", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
+ # 🔴 7 列。「盘前」列 2026-08-12 随盘前数据模块一起退役，不再由 patcher 插列
+ "positions_moomoo_table": {"headers": ["TICKER", "现价", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
                              "rows": mm_rows, "num_cols": [], "row_highlights": mm_hl},
  "positions_moomoo_note": "",
- "positions_longbridge_table": {"headers": ["TICKER", "现价", "盘前", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
+ "positions_longbridge_table": {"headers": ["TICKER", "现价", "成本", "距止损", "持有理由", "失效条件", "论点检查/今日行动"],
                                   "rows": lb_rows, "num_cols": [], "row_highlights": lb_hl},
  "news_today": [],   ### Trump/战争第一优先级；重大消息必须WebSearch交叉核实 ###
  "news_week": [],
  "industry_radar_table": {"headers": ["主题", "信号", "解读"], "rows": [], "num_cols": []},
- "premarket_movers": [
+ # 🔴 2026-08-12 整块退役（Vic：「我也不看盘前异动选股」）。留空壳作历史记录，
+ # 已加进 qa_report.RETIRED_FIELDS：既不要求出现、出现也不算自造字段。
+ "premarket_movers": [   # 退役 2026-08-12
    # {"ticker":"", "price":"", "pct":"", "pm_vol":"", "vol_tag":"", "catalyst":"", "sector_readthrough":"", "judgment":""}
    # 全watchlist+ETF holdings |盘前|>=7%（snap_premarket.py已按此打MOVER标+算好vol20/vol_ratio_pm）
    # pm_vol/vol_tag 用 H.pm_volume_cell(pm, ticker) 取（2026-07-15 Vic要求区分放量/低量）
@@ -293,10 +314,18 @@ out = {
  "dispersion_note": "",
  "ftd": {},                          ### H.ftd_status()（已 parked，仍要出三态标记）
  "ftd_table": {},                    ### H.ftd_table(...)
+ "ftd_note": "",                     ### 2026-08-11 补：一直在 PHASE1_FIELDS 里，却从没写进模板
+ "bounce_table": {},                 ### 2026-08-06 起 parked（依赖 FTD），仍要出三态标记
+ "bounce_note": "",                  ### 同上，2026-08-11 补进模板
  "position_governance_table": {},    ### H.position_governance_table(H.position_governance(pos))
  "position_governance_note": "",
  "stop_proximity_table": {},         ### H.stop_proximity_table(H.stop_proximity_rows(...))
  "stop_proximity_note": "",
+ # 2026-08-11 Vic 点名要出 GLW/MRVL/SOXX/AAOI →「单独拉一张」。
+ # EXIT_TICKERS 为空时整节不渲染（没人点名就没有这张表，不是漏了）。
+ # 同一只票两个账户各有一笔时用 ("MRVL","longbridge") 精确指定，否则两笔都进表。
+ "exit_plan_table": {},              ### H.exit_plan_table(H.exit_plan_rows(cache, EXIT_TICKERS, positions, pm))
+ "exit_plan_note": "",               ### 手写：退出理由 + warnings 念给 Vic
  "week_calendar": {},                ### 六列日历：周一~周五 + 周末
  "x_sentiment_macro_summary": "",
  "adanos_scan_note": "",
@@ -321,40 +350,45 @@ out = {
 }
 
 # ==========================================================================
-# 落盘：两段式分支（2026-07-22）
+# 开工自检（2026-08-12：两段式已取消，只剩一个桶）
 # ==========================================================================
-if PHASE == 1:
-    # 段1只保留自己该定稿的字段 + 待段2补盘前列的骨架表，其余键剔掉，
-    # 免得段2看到一堆空壳误以为"段1填过了"
-    keep = set(H.PHASE1_FIELDS) | set(H.PHASE2_PATCH_FIELDS)
-    draft = {k: v for k, v in out.items() if k in keep}
-    ### 手写：给Vic的隔夜结论摘要（3-5句，白天就能读；这也是段1唯一的交付物） ###
-    phase1_note = ""
-    p = H.save_premarket_draft(DAY, draft, phase=1, note=phase1_note)
-    print(f"段1草稿 → {p}（_phase=1，**不渲染**）")
-    print(f"  已定稿字段 {len([k for k in H.PHASE1_FIELDS if k in draft])}/{len(H.PHASE1_FIELDS)}")
-    print("  下一步：SGT 16:00后跑 snap_premarket.py，再跑本脚本 phase=2")
-    print("  现在在对话里给Vic讲隔夜结论，不要贴整份报告")
-else:
-    # 段2：读段1草稿 → 机械补盘前列 → 覆盖/新增段2字段 → 定稿
-    draft, warns = H.load_premarket_draft(DAY)
-    if draft is None:
-        sys.exit("\n".join(warns))
-    for w in warns:
-        print(w)                      # ← 这些要念给Vic听，不要静默吞掉
-    for c in H.patch_premarket_columns(draft, pm):
-        print("  patch:", c)
-    # 段2独有字段 + 段2重建的表，覆盖进草稿；段1的判断列不动
-    for k in H.PHASE2_FIELDS:
-        if k in out:
-            draft[k] = out[k]
-    ### 手写：若盘前数据推翻了段1某行判断，在这里手动改那一行，并把"段1判X→段2见Y→改为Z"
-    ### 写进 key_takeaways 或对应表的note——不要静默覆盖 ###
+# 🔴 2026-08-11：开工自检——三个 phase 桶必须**恰好**覆盖本文件的字段集。
+#    少了 → 落盘时被 keep 过滤掉 → **字段永久消失，而报告照样渲染**（已发生三次：
+#    8/3 ftd/仓位治理、8/7 事件缺口、8/11 发现 bam/dispersion/stop_proximity 等 11 个）。
+#    多了 → QA 会报「自造字段」。在这里先拦一道，不用等到渲染。
+_RETIRED = {"futures_table", "futures_note",          # 2026-07-11 主动退役
+            "premarket_movers", "premarket_movers_note"}  # 2026-08-12 主动退役（盘前模块下线）
+_buckets = set(H.PHASE1_FIELDS)   # 2026-08-12 起只有这一个桶
+# 下划线开头的是内部键（跟 QA 的 `not k.startswith("_")` 过滤一致），落盘时会被 keep 剔掉
+_orphan = sorted(k for k in out
+                 if not k.startswith("_") and k not in _buckets and k not in _RETIRED)
+if _orphan:
+    sys.exit("🔴 这些字段不在任何 phase 桶里，两段式跑法下会永久丢失：%s\n"
+             "   去 scripts/report_helpers.py 把它们加进 PHASE1_FIELDS / "
+             "PHASE2_PATCH_FIELDS / PHASE2_FIELDS 之一。" % _orphan)
 
-    # 2026-07-15：当天全部A级候选（不限setup类型）写入 data/setup_track.json 台账（去重，
-    # 见CONTEXT.md「Setup A专项对账」）。必须在watchlist_a手写填完之后、定稿之前调用。
-    n_new = H.sync_candidate_track(DAY, draft.get("watchlist_abc"))
-    if n_new:
-        print(f"setup_track.json 新增 {n_new} 条候选跟踪")
-    p = H.save_premarket_draft(DAY, draft, phase=2)
-    print("wrote", p, "→ 接着跑: python scripts/render_report.py", p)
+# ==========================================================================
+# 落盘（2026-08-12 起一次跑完；两段式已随盘前数据模块一起退役）
+# ==========================================================================
+keep = set(H.PHASE1_FIELDS)
+draft = {k: v for k, v in out.items() if k in keep}
+
+# 🔴 builder 戳（2026-08-11 Vic：「你今天的 pre market 是用了 builder 对吗」）——
+#    字段名检查骗得过（手写把键抄齐就行），戳骗不过。QA 抬头每次都会念出来。
+draft["_builder"] = "assemble_template.py"
+draft["_builder_at"] = __import__("datetime").datetime.now().isoformat(timespec="seconds")
+
+# 当天全部 A 级候选写进 data/setup_track.json 台账（去重，见 CONTEXT「Setup A 专项对账」）。
+# 必须在 watchlist_abc 手写填完之后、定稿之前调用。
+n_new = H.sync_candidate_track(DAY, draft.get("watchlist_abc"))
+if n_new:
+    print(f"setup_track.json 新增 {n_new} 条候选跟踪")
+
+p = H.save_premarket_draft(DAY, draft, phase=2, note="")
+_filled = len([k for k in H.PHASE1_FIELDS if draft.get(k) not in (None, "", [], {})])
+print(f"wrote {p}")
+print(f"  字段 {_filled}/{len(H.PHASE1_FIELDS)} 有内容")
+_empty = [k for k in H.PHASE1_FIELDS if draft.get(k) in (None, "", [], {})]
+if _empty:
+    print(f"  ⚠️ 还空着 {len(_empty)} 个（手写区没填完）：{_empty}")
+print("  接着跑: python scripts/render_report.py", p)

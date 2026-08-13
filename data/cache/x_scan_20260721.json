@@ -1,0 +1,41 @@
+{
+  "scan_date": "2026-07-21",
+  "scanned_at": "2026-07-21T15:30:00+08:00",
+  "accounts_covered": ["@KobeissiLetter", "@zerohedge", "@spotgamma", "@NickTimiraos", "@charliebilello", "@bluechipdaily", "@WalterDeemer", "@BillAckman", "@RichardMoglen", "@ohiain", "@spluscollective", "@aleabitoreddit", "@unusual_whales"],
+  "accounts_empty": [],
+  "macro": [
+    {"handle": "@KobeissiLetter", "time": "7/21 9-12h ago", "summary": "US corporations foreign revenue exposure at record high(S&P500);韩美AI交易60日相关性显著上升;CLO股权层Q1'26回报-15%,2020年疫情崩盘以来最差单季", "implication": "信用市场风险边缘区(CLO)压力上升,与AI/信贷叙事交织,需留意信用利差扩大风险"},
+    {"handle": "@KobeissiLetter", "time": "7/21 14-18h ago", "summary": "BREAKING特朗普对一批加拿大商品加征额外50%关税;AI热潮导致软件开发者就业代际分化(22-25岁群体就业较ChatGPT发布时-23%);中国沪深两市保证金杠杆快速去化;WSJ:美伊调解方推动新停火;特朗普称伊朗每杀一名美军士兵都要\"付出代价\"", "implication": "关税/伊朗地缘双线风险未消,AI对就业结构冲击的数据面证据增多"},
+    {"handle": "@zerohedge", "time": "7/21 (~1-3h ago)", "summary": "伊朗冲突持续外溢:科威特称遭伊朗打击发电/海水淡化设施、约旦拦截5架伊朗发射无人机、胡塞武装警告所有船只勿停靠沙特港口、哈萨克斯坦因油轮遇袭暂停经黑海输油;IEA称中东局势升级增加原油供应担忧;The Market Ear(经zerohedge转发):半导体财报预期修正广度开始从上行极值降温;哈里伯顿Q2财报后股价-5.7%;美中据路透社报道拟在9月习近平访美前举行AI会谈", "implication": "中东冲突已从伊朗-以色列/美双边扩散至约旦/科威特/沙特/黑海航运,油价上行压力持续;半导体财报修正广度降温是财报季前的谨慎信号,呼应今天SMH超跌反弹但周线-12.5%的背景"},
+    {"handle": "@spotgamma", "time": "7/19-20", "summary": "SPX与黄金相关性看似已经打破,但科技股与黄金相关性仍在;QQQ-SPX 1个月已实现波动率利差扩大至区间高位(隐含波动率利差反而收窄);GLD看跌期权skew高达90而看涨skew仅1,黄金下方保护需求极端", "implication": "科技股(QQQ)相对大盘的实际波动率持续偏高但期权定价未完全跟上,财报周若科技单边波动可能被低估;黄金极端看跌skew与Bilello的黄金-7%今年最差资产数据互相印证"},
+    {"handle": "@NickTimiraos", "time": "7/17-18", "summary": "多家机构预测6月核心PCE温和录得+0.18%;克利夫兰联储Hammack(有投票权)重申立场偏鹰,其PCE nowcast显示核心通胀3.3%,并首次提及AI数据中心建设是推高通胀的因素之一;副主席Jefferson考虑年内可能加息但措辞谨慎;WSJ报道婴儿潮一代不愿卖房导致住房供给紧张", "implication": "Fed鹰派表态密集且首次出现'AI资本开支推高通胀'的官方论调,呼应spluscollective关于油价上涨会重燃通胀/Fed辩论的判断,两条线索互相印证"},
+    {"handle": "@charliebilello", "time": "7/20-21", "summary": "过去11年标普500总回报+320% vs 迪士尼-11%;苹果市销率近11倍,创公司历史最高估值水平;比特币(-27%)与黄金(-7%)是2026年迄今表现最差的两个主要资产;美国通胀连续64个月高于Fed目标,年均4%", "implication": "苹果估值处于历史极值(此前已超越NVDA成全球市值第一),叠加比特币/黄金双双大跌,显示资金高度集中于少数科技龙头,风险偏好结构脆弱"}
+  ],
+  "stocks": [
+    {"handle": "@bluechipdaily", "time": "7/20 (18-20h ago)", "ticker": "$SOXX", "note": "回顾7/2以-4.5%提前止损离场SOXX(半导体ETF),此后该ETF又下跌13%,作为风控纪律案例复盘——明确的半导体谨慎/提前避险信号,不是抄底论调"},
+    {"handle": "@bluechipdaily", "time": "7/20 (20h ago)", "ticker": "$SNDK", "note": "SNDK 7/7-7/10反弹+31%后7/10-7/17又回撤-31%,评价'图形宽松震荡(wide and loose),尤其是回调中,不是我愿意买入的类型'——对存储芯片股(呼应本周Kimi K3冲击存储链主线)明确保持观望"},
+    {"handle": "@bluechipdaily", "time": "7/20 (18h ago)", "ticker": "$XME", "note": "另一风控案例:6月-4.2%提前止损离场XME(金属矿业ETF),此后又跌19%,与SOXX案例并列展示'小亏止损避免大亏'的纪律"},
+    {"handle": "@WalterDeemer", "time": "7/21 (14h ago)", "ticker": "$SPY/$QQQ", "note": "确认上周五(7/17)SPY/QQQ的跳空缺口已于本周一(7/20)全部回补(此前目标SPY 747.88/QQQ 702.61)——经典缺口理论下属偏多头技术确认信号"},
+    {"handle": "@BillAckman", "time": "7/19-20", "ticker": "", "note": "对Hugging Face披露内容反应'Scary'(具体指向AI供应链/中国AI竞争的一则爆料,延续对Kimi K3类中国AI冲击的担忧基调);对'超级智能已增量到来'一文评'Interesting';持续呼吁放宽移民政策留住AI人才;转发Anduril新型无人攻击旋翼机表达认同——整体延续对AI竞争格局的谨慎/担忧情绪,无具体买卖表态"},
+    {"handle": "@RichardMoglen", "time": "7/20 (19h ago)", "ticker": "", "note": "'Bitcoin theme strongest since the open'(配Deepvue强度截图)——盘中比特币相关主题强度观察,余下内容以TraderLion交易大会推广和社交回复为主,无具体个股setup"},
+    {"handle": "@ohiain", "time": "7/20-21", "ticker": "", "note": "本周仍以社交内容为主(从希腊回程、感谢寒暄),唯一交易相关内容是回复中提到'不喜欢买跳空高开(gap up),你有什么情况下愿意买gap up吗?'——纯交易风格讨论,无具体标的"},
+    {"handle": "@spluscollective", "time": "7/21 (6-9h ago)", "ticker": "$FTNT", "note": "'世界正走向AI agent,每个agent都像另一个队友在和工具/数据交互',FTNT处于AI agent数据中心高速安全需求的核心位置——AI基础设施安全叙事个股"},
+    {"handle": "@spluscollective", "time": "7/21 (8h ago)", "ticker": "$XOM $CVX $XLE", "note": "'油气名单重新回到关注列表。布伦特重回90美元上方,美国天然气重回4美元上方,霍尔木兹海峡风声再起……我认为能源板块轮动已经就绪',并判断油价上涨会重燃通胀辩论、通胀辩论会左右Fed——与今日'能源/金融主线'关注点直接吻合"},
+    {"handle": "@spluscollective", "time": "7/21 (8h ago)", "ticker": "$XGN", "note": "对这只小盘股表示'不常对便宜股票感兴趣,但这只有点意思'(具体理由被截断),仅作为观察记录,信息不完整"},
+    {"handle": "@spluscollective", "time": "7/21 (7h ago)", "ticker": "", "note": "回复中提到'成功精准喊顶了那些已经被高估的太空股名字'——暗示SPCX等太空题材股顶部已现的看法,与WalterDeemer/bluechipdaily此前对SPCX的谨慎态度一致"},
+    {"handle": "@aleabitoreddit", "time": "7/21 (1-2h ago)", "ticker": "$AMD $AAOI", "note": "【降权账号,仅记录不作为独立信号】称据Rosenblatt渠道调研AMD可能曾洽谈成为AAOI客户;AMD SF活动定于7/22-23(周三/周四),据Jefferies客户报告AMD届时预计提供业绩指引,另有AMD-GlobalFoundries(GFS)合作消息传出,对光模块股'sivers'类名字被认为利好"},
+    {"handle": "@aleabitoreddit", "time": "7/21 (3h ago)", "ticker": "$SIVE $LITE $AAOI $NBIS $IREN $INTC $AMD $MRVL", "note": "【降权账号】称亚洲存储股Kioxia收盘+17.18%、三星+6.15%;光模块股SIVE/LITE/AAOI显现企稳迹象,均+4%以上;Neocloud股NBIS/IREN盘前+4%以上;INTC/AMD/MRVL盘前均+4%以上——描述为存储/AI供应链的普遍性回暖迹象,但发帖账号历史上有喊多倾向,需其他中立信号源交叉确认才可采信"},
+    {"handle": "@aleabitoreddit", "time": "7/21 (13h ago)", "ticker": "$NBIS $NVDA", "note": "【降权账号】称NBIS盘后大涨因NVDA通过SEC文件披露持有其9.3%实益所有权(该消息7/20已由zerohedge/多方报道,非独家)"}
+  ],
+  "congress": [],
+  "soft": [
+    {"handle": "@bluechipdaily", "time": "7/20", "note": "'我很早就学会把风控和退出看得和买入一样重要。小亏损常常能避免更大的亏损'——用SOXX/XME两笔提前止损案例作为纪律示范,而非事后诸葛"},
+    {"handle": "@ohiain", "time": "7/20-21", "note": "明确表达不喜欢买跳空高开(gap up)的股票,并反问对方'什么情况下你会愿意买gap up',体现其对追高型入场的谨慎风格"},
+    {"handle": "@RichardMoglen", "time": "7/21 (4h ago)", "note": "推荐4年前与交易心理学者Denise Shull的播客,称'交易者至今仍在从中受益'——交易心理类软内容"}
+  ],
+  "trump_or_contrarian": [
+    {"source": "Trump via @KobeissiLetter转发", "time": "7/21 (14h ago)", "detail": "BREAKING:特朗普宣布对一批加拿大商品加征额外50%关税(具体触发原因贴文未展开)"},
+    {"source": "Trump via @KobeissiLetter转发", "time": "7/21 (18h ago)", "detail": "特朗普表示伊朗每杀一名美军士兵,'他们都要为此付出代价'——对伊表态强硬,与zerohedge同期报道的美军过去两周近100人受伤消息(经unusual_whales转发)相呼应"},
+    {"source": "Jim Cramer via @aleabitoreddit转发", "time": "7/21 (14h ago引用)", "detail": "Cramer原话'Miserable close... Miserable market for the moment. watch tonight....'——情绪极度低落的收盘评论。按Vic大反指框架,Cramer的悲观情绪本身可作为超跌/见底的反向参考,但需与价格行为/广度指标共振才提权,不单独作为信号"}
+  ]
+}

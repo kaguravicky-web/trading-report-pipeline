@@ -1,0 +1,255 @@
+{
+ "universe_size": 883,
+ "calendar": {
+  "2026-08-11": [
+   {
+    "symbol": "LITE",
+    "name": "Lumentum Holdings Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.62"
+   },
+   {
+    "symbol": "CAH",
+    "name": "Cardinal Health, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.42"
+   },
+   {
+    "symbol": "CRWV",
+    "name": "CoreWeave, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($1.67)"
+   },
+   {
+    "symbol": "SMCI",
+    "name": "Super Micro Computer, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.56"
+   },
+   {
+    "symbol": "ERAS",
+    "name": "Erasca, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "($0.12)"
+   },
+   {
+    "symbol": "FLY",
+    "name": "Firefly Aerospace Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.50)"
+   },
+   {
+    "symbol": "AMBQ",
+    "name": "Ambiq Micro, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.41)"
+   },
+   {
+    "symbol": "LWLG",
+    "name": "Lightwave Logic, Inc.",
+    "time": "pre-market",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "UAMY",
+    "name": "United States Antimony Corporation",
+    "time": "after-hours",
+    "eps_forecast": "($0.02)"
+   },
+   {
+    "symbol": "NRGV",
+    "name": "Energy Vault Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.20)"
+   },
+   {
+    "symbol": "VELO",
+    "name": "Velo3D, Inc.",
+    "time": "after-hours",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-12": [
+   {
+    "symbol": "CSCO",
+    "name": "Cisco Systems, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.99"
+   },
+   {
+    "symbol": "COHR",
+    "name": "Coherent Corp.",
+    "time": "after-hours",
+    "eps_forecast": "$1.43"
+   },
+   {
+    "symbol": "CBRS",
+    "name": "Cerebras Systems Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.21)"
+   },
+   {
+    "symbol": "NBIS",
+    "name": "Nebius Group N.V.",
+    "time": "pre-market",
+    "eps_forecast": "($0.53)"
+   },
+   {
+    "symbol": "AMCR",
+    "name": "Amcor plc",
+    "time": "pre-market",
+    "eps_forecast": "$1.20"
+   },
+   {
+    "symbol": "TRMB",
+    "name": "Trimble Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.65"
+   },
+   {
+    "symbol": "TECH",
+    "name": "Bio-Techne Corp",
+    "time": "not-supplied",
+    "eps_forecast": "$0.46"
+   },
+   {
+    "symbol": "EYE",
+    "name": "National Vision Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.09"
+   },
+   {
+    "symbol": "TE",
+    "name": "T1 Energy Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.13)"
+   },
+   {
+    "symbol": "PURR",
+    "name": "Hyperliquid Strategies Inc",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "GO",
+    "name": "Grocery Outlet Holding Corp.",
+    "time": "after-hours",
+    "eps_forecast": "$0.09"
+   }
+  ],
+  "2026-08-13": [
+   {
+    "symbol": "AMAT",
+    "name": "Applied Materials, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$3.36"
+   },
+   {
+    "symbol": "TPR",
+    "name": "Tapestry, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.26"
+   },
+   {
+    "symbol": "ASND",
+    "name": "Ascendis Pharma A/S",
+    "time": "pre-market",
+    "eps_forecast": "$1.29"
+   },
+   {
+    "symbol": "AES",
+    "name": "The AES Corporation",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "DDS",
+    "name": "Dillard's, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$4.03"
+   },
+   {
+    "symbol": "XE",
+    "name": "X-Energy, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.09)"
+   },
+   {
+    "symbol": "ONDS",
+    "name": "Ondas Inc",
+    "time": "pre-market",
+    "eps_forecast": "($0.09)"
+   },
+   {
+    "symbol": "ALM",
+    "name": "Almonty Industries Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$0.10"
+   },
+   {
+    "symbol": "BLSH",
+    "name": "Bullish",
+    "time": "pre-market",
+    "eps_forecast": "$0.09"
+   },
+   {
+    "symbol": "LUNR",
+    "name": "Intuitive Machines, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.07)"
+   },
+   {
+    "symbol": "TMC",
+    "name": "TMC the metals company Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.06)"
+   },
+   {
+    "symbol": "LAC",
+    "name": "Lithium Americas Corp.",
+    "time": "not-supplied",
+    "eps_forecast": "($0.04)"
+   },
+   {
+    "symbol": "HIVE",
+    "name": "HIVE Digital Technologies Ltd",
+    "time": "not-supplied",
+    "eps_forecast": "($0.20)"
+   },
+   {
+    "symbol": "ELMT",
+    "name": "The Elmet Group Co.",
+    "time": "pre-market",
+    "eps_forecast": "$0.07"
+   },
+   {
+    "symbol": "SLNH",
+    "name": "Soluna Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.11)"
+   },
+   {
+    "symbol": "KULR",
+    "name": "KULR Technology Group, Inc.",
+    "time": "after-hours",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-14": [
+   {
+    "symbol": "DGXX",
+    "name": "Digi Power X Inc.",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-17": [
+   {
+    "symbol": "TOYO",
+    "name": "TOYO Co., Ltd",
+    "time": "not-supplied",
+    "eps_forecast": "$0.52"
+   }
+  ]
+ }
+}

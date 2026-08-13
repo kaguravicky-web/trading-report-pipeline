@@ -1,0 +1,73 @@
+{
+ "universe_size": 884,
+ "calendar": {
+  "2026-08-11": [
+   {
+    "symbol": "LITE",
+    "name": "Lumentum Holdings Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.62"
+   },
+   {
+    "symbol": "CAH",
+    "name": "Cardinal Health, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$2.42"
+   },
+   {
+    "symbol": "CRWV",
+    "name": "CoreWeave, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($1.67)"
+   },
+   {
+    "symbol": "SMCI",
+    "name": "Super Micro Computer, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.56"
+   },
+   {
+    "symbol": "ERAS",
+    "name": "Erasca, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "($0.12)"
+   },
+   {
+    "symbol": "FLY",
+    "name": "Firefly Aerospace Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.50)"
+   },
+   {
+    "symbol": "AMBQ",
+    "name": "Ambiq Micro, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "($0.41)"
+   },
+   {
+    "symbol": "LWLG",
+    "name": "Lightwave Logic, Inc.",
+    "time": "pre-market",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "UAMY",
+    "name": "United States Antimony Corporation",
+    "time": "after-hours",
+    "eps_forecast": "($0.02)"
+   },
+   {
+    "symbol": "NRGV",
+    "name": "Energy Vault Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "($0.20)"
+   },
+   {
+    "symbol": "VELO",
+    "name": "Velo3D, Inc.",
+    "time": "after-hours",
+    "eps_forecast": ""
+   }
+  ]
+ }
+}

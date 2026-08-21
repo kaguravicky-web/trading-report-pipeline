@@ -71,6 +71,28 @@ def main():
         for p in st["problems"]:
             print("  " + p)
 
+    # 13F 申报窗口提醒（2026-08-14 Vic：「下周提醒自己每天扫描 13F」）。
+    # 🔴 写成代码而不是写进 CONTEXT：日历规则已经在 CONTEXT 里躺了很久，
+    #    但「记得去看日历」本身就是要靠人记的事——**开工体检表打印出来才是真提醒。**
+    _q_deadlines = ["2026-02-17", "2026-05-15", "2026-08-14", "2026-11-16"]
+    _today = date.today()
+    for _dl in _q_deadlines:
+        _d = date.fromisoformat(_dl)
+        _delta = (_today - _d).days
+        if -7 <= _delta <= 10:      # 截止日前 7 天到后 10 天：每天都扫
+            if _delta < 0:
+                _msg = f"距 13F 申报截止（{_dl}）还有 {-_delta} 天"
+            elif _delta == 0:
+                _msg = f"**今天就是 13F 申报截止日**——大机构通常压线在美东下午提交"
+            else:
+                _msg = (f"13F 截止后第 {_delta} 天——**大机构的申报现在才陆续可见，"
+                        f"这几天才是真正有信息量的窗口**")
+            print(f"\n【13F 扫描窗口】{_msg}")
+            print("  → curl -s -A \"Vic Trading Research vic@example.com\" "
+                  "\"https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&type=13F-HR&output=atom\"")
+            print("  → 只看认识的机构名；小型 RIA 的申报没有信息量，别逐条读")
+            break
+
     print("\n【下一步】")
     if not st["cache_exists"]:
         print("  → 跑段1：python scripts/fetch_market_data.py 开始")

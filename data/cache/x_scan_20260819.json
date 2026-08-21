@@ -1,0 +1,791 @@
+{
+ "scan_date": "2026-08-19",
+ "accounts_scanned": [
+  "KobeissiLetter",
+  "zerohedge",
+  "spotgamma",
+  "NickTimiraos",
+  "bluechipdaily",
+  "WalterDeemer",
+  "RichardMoglen",
+  "ohiain",
+  "spluscollective",
+  "aleabitoreddit",
+  "BillAckman",
+  "unusual_whales",
+  "jimcramer"
+ ],
+ "accounts_no_content": [
+  "bluechipdaily",
+  "unusual_whales(仅国会交易/期权异动类无内容，泛新闻仍有更新)",
+  "BillAckman(无新增持仓/13F相关内容)"
+ ],
+ "macro": [
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 12:07 SGT",
+   "summary": "BREAKING（援引FT）：伊朗据报评估过若特朗普升级战事，将打击欧洲东南部（保加利亚等）及塞浦路斯的美军目标。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 10:17 SGT",
+   "summary": "BREAKING：特朗普暂停原定明早生效的对加拿大50%关税，为期3天，称美加'已达成协议'。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 07:44 SGT",
+   "summary": "BREAKING：美国7月保证金债务(margin debt)骤降850亿美元至1.42万亿美元，为有记录以来最大单月降幅，也是3月以来首次月度下降。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 06:17 SGT",
+   "summary": "BREAKING（援引CNN）：特朗普指示高层特使暂停与伊朗的对话，白宫官员称策略从'尽快施压伊朗'转向'扼杀'。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 05:13 SGT",
+   "summary": "黄金矿业股广度快速改善：GDX成分股中约62%股价高于200日均线，为5月以来最高，过去3周该比例飙升57个百分点，同期GDX大涨。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/19 04:08 SGT",
+   "summary": "BREAKING：对冲基金上周每个交易日都在净买入美股，合计为过去12个月第二大单周买入，个股占约70%。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/18",
+   "summary": "BREAKING：中国7月新增人民币贷款减少504亿美元，为本世纪以来第3次月度下降，降幅超预期3倍以上。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/18",
+   "summary": "BREAKING：耐克$NKE股价跌至2014年9月以来最低，较2021年历史高点已下跌78%，市值蒸发超2000亿美元。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/17",
+   "summary": "2026年有望成为至少30年来首个'零80%+ NYSE下跌成交量日'的年份（该指标衡量至少80% NYSE成交量来自下跌股，代表极端广泛抛售）。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/17",
+   "summary": "BREAKING（援引FT）：英伟达$NVDA已同意为OpenAI在俄亥俄州的新数据中心提供超1000亿美元backstop，其中土地/电力/厂房信贷支持上限1050亿美元。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/17",
+   "summary": "BREAKING：美国7月零售销售环比-0.6%，为2025年5月以来最大月度降幅，远低于预期的+0.1%；非店铺零售(含亚马逊)降幅最大。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/17",
+   "summary": "美国消费者信心快速恶化：X世代6个月均值消费者信心指数降至约78点，至少5年最低；婴儿潮世代降至约80点，为更久以来最低。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/16",
+   "summary": "美国国债对短期债务依赖上升：短期国库券(T-bills)现占应市国债约21%，接近2020年疫情融资激增以来最高，远高于2012年以来10-15%区间。"
+  },
+  {
+   "handle": "@KobeissiLetter",
+   "time": "8/16",
+   "summary": "铜市场供应紧张加剧：LME近月铜价差周五飙升至每吨370美元升水，为2021年供应挤压以来最大单月价差。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 10:23 SGT",
+   "summary": "*特朗普暂停对加拿大50%关税3天，视协议进展而定（与Kobeissi同步报道）。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 09:45 SGT",
+   "summary": "'Factor Musical Chairs'：价格与市场广度出现前所未见的背离（配图统计数据，具体数值未展开）。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 09:27 SGT",
+   "summary": "*Unitree(宇树科技)机器人股票上海上市首日暴涨629%（另有转述账号给出+492.18%口径，见13F/科技新闻部分，两个数字可能对应不同统计时点）。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 08:47 SGT",
+   "summary": "*韩国称将减少与美国的联合军演。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 08:06 SGT",
+   "summary": "'他又爆仓了？'——今日动量因子平仓(momentum sell off)为post-ChatGPT时代以来最大的10次之一，援引高盛数据(GS Momentum long/short pair)。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 08:06 SGT",
+   "summary": "回复关联贴：'那这对1.5万亿美元未兑现的超大规模云厂商/芯片公司承诺来说还是好事吧？'——对AI资本开支承诺可持续性的讽刺提问。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 08:06 SGT",
+   "summary": "*韩国交易所启动sidecar机制暂停KOSPI程序化抛售。"
+  },
+  {
+   "handle": "@zerohedge",
+   "time": "8/19 07:19 SGT",
+   "summary": "援引WSJ：OpenAI上季度营收增速远低于Anthropic，令期待ChatGPT追上对手的投资者失望。"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "8/18 20:18 SGT",
+   "summary": "VIX到期(周三)+下周NVDA财报/Jackson Hole，多项波动率指标(VVIX、COR1M等)处于低位；这些事件应至少令波动率维持到下周，之后要看Warsh。"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "8/18 19:44 SGT",
+   "summary": "今日SPX跨式期权价格$27.3/35bps(以7715为参考)，继续押注低波动；昨日现货波动50bps、隔夜ES波动60bps，叠加明日VIX到期。"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "8/18（8/17记录）",
+   "summary": "极端波动率低位：SPX 7790的0DTE跨式期权价格仅$22.7/29bps，为圣诞夜'Captain Condor'事件以来最低。"
+  },
+  {
+   "handle": "@spotgamma",
+   "time": "8/18 05:00 SGT附近",
+   "summary": "某笔期权交易OI原为零，判断为2万份看跌期权的下行押注/对冲仓位(非卖出看跌)。"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "8/18 22:26 SGT",
+   "summary": "克利夫兰联储调查显示企业高管预期未来一年CPI通胀3.3%，较Q2的3.7%略降；工资增长预期变化不大(2.8% vs去年2.9%)。"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "8/18 01:49 SGT",
+   "summary": "旧金山联储经济学家新估算中性利率中值约1.5%(误差区间较宽)；若假设潜在通胀至少2.5%，意味着当前货币政策仍属宽松。"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "8/14 23:39 SGT",
+   "summary": "对称版通胀指标显示，通胀在相当一段时间内并未朝Fed目标取得进展，即便低于核心指标读数——一个更对称的过滤方法(24/31分位)显示若剔除冲击，去通胀化仍在继续。"
+  },
+  {
+   "handle": "@NickTimiraos",
+   "time": "8/14 05:26 SGT",
+   "summary": "达拉斯联储经济学家推出修正版对称化截尾均值通胀指标(当前版本为不对称的trim前31%/后24%)。"
+  }
+ ],
+ "stocks": [
+  {
+   "handle": "@RichardMoglen",
+   "time": "8/17",
+   "ticker": "TSLA/META/MSFT/AAPL/AMZN/GOOG/NVDA/SPCX/SNDK/MU/STX/BE/AMD/DELL/HPE/NTAP/CRWD/DDOG/RBRK/NET/NBIS/LLY/TXG/PLTR",
+   "note": "发布'当前Mega Caps+Leaders名单'，征询是否要增删标的（Deepvue图表配文）。"
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "8/17 17:38 SGT+8换算约01:38 8/18",
+   "ticker": "MTRN",
+   "note": "分享$MTRN的Deepvue图表，未附文字论点。"
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "8/18",
+   "ticker": "CRWV",
+   "note": "先发'$CRWV短线setup看起来已就绪'，随后同一账号引用自己该贴回复仅一个词'Nope!'（配一张Deepvue图表），判断为setup失效/自我推翻，非新论点。"
+  },
+  {
+   "handle": "@RichardMoglen",
+   "time": "8/19 06:14 SGT",
+   "ticker": "无具体代码",
+   "note": "'Rotation Today'配Deepvue板块轮动图，未展开具体标的。"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "8/17",
+   "ticker": "MRVL/INTC/ARM/AMD/ALAB",
+   "note": "$MRVL和$INTC仍是他眼中最强的半导体，两者盘中都处于关键位置；$ARM在undercut/EMA簇附近反弹；$AMD维持强势；$ALAB早盘卖压直逼9周均线；整个半导体组和$SMH都处于'有意思的位置'（后文因Show more截断）。"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "8/17",
+   "ticker": "TSEM",
+   "note": "$TSEM：多月筑底+200心理位承接，财报反应正面，现出现楔形突破+EMA回穿直接冲入阻力缺口枢纽位；+270是关键反转枢纽，一旦突破300可能很快到达。"
+  },
+  {
+   "handle": "@ohiain",
+   "time": "8/17",
+   "ticker": "ALAB",
+   "note": "$ALAB：3个月左右+400%后-50%回撤ATH，现出现回归250上方以来首次真正的区间整理；财报后正在收紧+盘前跳空，'正是我想盯的那类重置(reset)形态'。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/19 11:00 SGT",
+   "ticker": "SOXX/NVDA/MU/AVGO",
+   "note": "$SOXX今日大跌不是因为AI是泡沫或失效，而是30年期美债收益率触及2007年以来新高，一旦如此$NVDA/$MU/$AVGO这类名字就会被抛售；能源板块表现（后文截断）。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/19 10:02 SGT",
+   "ticker": "DRAM/SMH/IGV",
+   "note": "'$DRAM和$SMH没有趋势，趋势正在$IGV和SaaS名字里运行'——不是只说今天，强调若理解这点就能赚钱，否则继续为追高/all-in AI'交学费'。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/19 09:46 SGT",
+   "ticker": "META",
+   "note": "$META：认为540一带只是短线反弹，更大的LIS(关键防线)在485；若有高信念，DCA分批买入或是一个想法。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/19 08:51 SGT",
+   "ticker": "CBRS",
+   "note": "$CBRS：第一目标价165，随后向130进发——从图表看当前价约217-220，属于看空/做空延续下跌的目标位表述，非看多。CBRS为Vic持仓，需重点关注。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/19 10:05 SGT",
+   "ticker": "HD",
+   "note": "$HD：目前无交易机会，只有重新站上360才考虑做多，当前YTD表现是主要路障。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18",
+   "ticker": "NFLX/META",
+   "note": "$NFLX目前形态与$META在610时（META后续下跌之前）有诸多相似之处——隐含警示意味。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18 21:27 SGT+8换算约05:27 8/19",
+   "ticker": "AEHR",
+   "note": "$AEHR：'上楼梯、下电梯'（Stairs up, Elevator down）——图表配文，暗示上涨缓慢下跌迅速的形态特征。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18",
+   "ticker": "KEYS",
+   "note": "$KEYS财报：营收18.5亿 vs 预期17.7亿(超4%)，EPS 3.07 vs 预期2.52(超22%)，同比+41%，盘后+4%。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18",
+   "ticker": "RSP/SPY",
+   "note": "问题会出现在$RSP跌破9EMA时，目前还没看到问题；建议对照$SPY追踪以获得更好的市场视角。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18",
+   "ticker": "SPOT",
+   "note": "$SPOT：周线收盘站上510对Spotify会是极好的信号，这个形态自2025年4月以来未再出现过。"
+  },
+  {
+   "handle": "@spluscollective",
+   "time": "8/18",
+   "ticker": "META/NFLX/TSLA",
+   "note": "'$META我已下车，但派对还在继续。$NFLX和$TSLA技术形态相似且出现负背离，它们是下一个（走弱候选）'——引用自己8/16的贴文（$META周线负背离，目标价540，该目标已于8/19被验证提及）。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/19 10:52 SGT",
+   "ticker": "无(人形机器人板块)",
+   "note": "宇树科技(Unitree)公开上市，估值约533亿美元，涨幅+492.18%（与zerohedge报道的+629%口径不一致，可能对应不同统计时点/交易所数据源）；对比Agility Robotics(受NVDA/AMZN支持)拟通过$CCXI以25亿美元pre-money估值于Q4上市；$TSLA机器人估值对比为1万亿美元+。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/19 01:27 SGT",
+   "ticker": "AAOI",
+   "note": "在Rosenblatt峰会的$AAOI要点：预计能为800G/1.6T美国本土产能获得溢价定价(对ASP/利润率非常正面)；有多份LTA(长期协议)在谈但不想签以免被其他客户(暗指$NVDA)锁死产能；已售罄至少（后文截断）。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/19 00:38 SGT",
+   "ticker": "HPS.A",
+   "note": "回复披露本人在两家公司均有仓位：变压器瓶颈正在拖累美国AI基建扩产，干式/液式变压器交期都很长（液式更极端）；$HPS.A积压订单同比+96.9%。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/19 00:20 SGT",
+   "ticker": "VPG/CCXI",
+   "note": "回复：Harmonic/LeaderDrive/Schaeffler几乎无处不在；$VPG是Optimus/Figure等人形机器人的小众零部件供应商，但Schaeffler称已与约45家人形机器人厂商合作，规模差距悬殊；$CCXI优先瞄准商业化落地，切入$AMZN/$MELI仓库的人力自动化场景。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/18 22:15 SGT",
+   "ticker": "AAOI/NBIS/SNDK",
+   "note": "'$AAOI是我唯一希望跌回80美元以便加仓的股票'，称激光/光学名字2027年全年需求可见度'高得离谱'；neocloud的$NBIS和存储的$SNDK同理强势。"
+  },
+  {
+   "handle": "@aleabitoreddit【promoter降权】",
+   "time": "8/18 22:03 SGT",
+   "ticker": "AVGO/TSM/LITE/COHR/AAOI/AXTI",
+   "note": "AI半导体主题从$AVGO到$TSM普遍走弱，高beta名字跌得最狠；光学名字中$LITE/$COHR反弹最快，$AAOI/$AXTI这类更大的高beta名字恢复到一半左右。"
+  },
+  {
+   "handle": "@BillAckman",
+   "time": "8/16",
+   "ticker": "PSUS/PS",
+   "note": "转发第三方贴文并评论'We believe in transparency'——内容是Ackman财报电话会结束后直接开X Space接受任意提问，属公司沟通姿态展示，非新增持仓披露。本周未见任何新股票仓位相关内容。"
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "8/18 21:38 SGT",
+   "ticker": "SPY/QQQ",
+   "note": "$SPY需涨到772.51、$QQQ需涨到729.27才能填补当天早盘缺口；缺口填补速度(是否填补)可反映当前趋势强弱。"
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "8/19 10:27 SGT",
+   "ticker": "SPY/QQQ",
+   "note": "跟进：两个缺口当天均未填补，'接下来几天值得留意'。"
+  },
+  {
+   "handle": "@WalterDeemer",
+   "time": "8/17",
+   "ticker": "无具体代码",
+   "note": "分享语录卡片：Mark Ungewitter名言'当买入时机到来时，你会不想买'——'What would make me wrong?'，配文'投资中最重要的五个词是什么'，属经典格言分享，无具体数据/Thrust信号更新。"
+  }
+ ],
+ "congress": [
+  {
+   "handle": "@unusual_whales",
+   "time": "",
+   "note": "本周(近7天)通过两轮定向搜索（from:unusual_whales congress / from:unusual_whales sweep）均未找到任何国会议员交易披露或期权异动播报类原创内容——账号近期推文几乎全为泛市场/地缘新闻聚合(利率、伊朗局势、Dallas招聘等)，congress关键词命中的仅有账号自身API广告贴('Unusual Whales API...congress trades and much more')和一条Bernie Sanders呼吁AI监管的转述，均非实际交易披露；sweep关键词命中的全部是2021-2023年的历史旧贴。与2026-08-14记录一致的趋势延续：该账号国会交易/期权异动类可交易内容持续为0。"
+  }
+ ],
+ "cramer": [
+  {
+   "time": "8/18 23:39 SGT",
+   "ticker": "INTC",
+   "note": "看多，原话：'As i told CNBC Investing Club members, another chance to buy Intel right here...'——明确的逢低买入建议。"
+  },
+  {
+   "time": "8/17 21:51 SGT",
+   "ticker": "HON",
+   "note": "看多/护盘，原话：'Enough with the selling of Honeywell. What do you want it do go down to $200? How much fear do you really have. It is not the horrendous, horrible, unforgivable Honeywell Aero'——为持续被抛售的Honeywell辩护，态度偏买入。"
+  },
+  {
+   "time": "8/19 04:01 SGT",
+   "ticker": "半导体板块",
+   "note": "看空/怀疑，原话：'Big semis never rallied.'——对大型半导体股反弹持怀疑态度。"
+  },
+  {
+   "time": "8/18 23:41 SGT",
+   "ticker": "NDX",
+   "note": "反指提示，回复某贴'NDX史上最高空头持仓'时评论'seems excessive'——暗示极端做空仓位可能过度，隐含看多/轧空可能性的反向解读。"
+  },
+  {
+   "time": "8/18 05:11 SGT",
+   "ticker": "科技板块/Anthropic",
+   "note": "中性偏空评论，原话：'Amazing that the Anthropic numbers couldn't save tech from oil-bonds'——即便Anthropic业绩数据良好，科技股仍受油价/债市拖累，反映当下科技股相对宏观(油价、利率)的脆弱性。"
+  }
+ ],
+ "thirteen_f_x": [
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@AlphaWireNewsAi",
+   "time": "8/19 10:44 SGT",
+   "ticker": "BIDU",
+   "action": "买入",
+   "size": "数字未披露",
+   "note": "重返美国上市中概股，两年多来首次，买入百度。"
+  },
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@ticker_report",
+   "time": "8/19 10:33 SGT",
+   "ticker": "AVGO",
+   "action": "清仓",
+   "size": "195,960股（前一季度约3300万美元建仓的相对新高信念仓位，具体清仓金额原文未展开）",
+   "note": "Q2清空博通全部持仓。"
+  },
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@ZenMasterTrades",
+   "time": "8/19 06:00 SGT",
+   "ticker": "AMZN/半导体",
+   "action": "买入/加仓",
+   "size": "数字未披露",
+   "note": "7月大跌前加仓亚马逊及芯片股，配文提及AMZN近期股价表现(259.45)，叙述含当前股价与13F持仓混杂，仅供参考。"
+  },
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@sty_defi(转述'Easy')",
+   "time": "8/19 04:18 SGT",
+   "ticker": "HYPE(Hyperliquid Strategies/PURR)",
+   "action": "新建仓位",
+   "size": "转述称'相较其他持仓规模显著更小'，未给出具体金额",
+   "note": "转述者称德鲁肯米勒'正在建仓'，长期依然非常看多HYPE。与一手数据交叉：另有@ArkkDaily发布具体数字为234.15万股/约2315万美元(见下一条)。"
+  },
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@ArkkDaily",
+   "time": "8/17 19:45 SGT",
+   "ticker": "PURR(Hyperliquid Strategies)",
+   "action": "新建仓位",
+   "size": "294万股，约2315万美元（截至6/30）",
+   "note": "披露后PURR盘前一度上涨约10%(6.68→7.36)。"
+  },
+  {
+   "institution": "Peter Thiel",
+   "handle": "@artinmemes",
+   "time": "8/19 00:25 SGT",
+   "ticker": "电力/能源股（未列具体代码）",
+   "action": "新建仓位",
+   "size": "数字未披露",
+   "note": "Q2 13F新进一批电力能源股，作者认为呼应'电力是AI真正瓶颈'的硅谷华尔街叙事，与黄仁勋'土地电力和外壳是AI工厂下个关键资源'的表态同期。"
+  },
+  {
+   "institution": "Druckenmiller/Duquesne Family Office",
+   "handle": "@artinmemes",
+   "time": "8/19 00:25 SGT",
+   "ticker": "YPF/VIST",
+   "action": "Q1已大幅买入",
+   "size": "数字未披露",
+   "note": "同贴提及Druckenmiller Q2也'弃硬件转投电力合同'；Q1曾大买阿根廷炼油厂YPF和Vista Energy(VIST)。"
+  },
+  {
+   "institution": "Duquesne Family Office",
+   "handle": "@artinmemes",
+   "time": "8/16 00:25 SGT附近(引用自己8/15旧贴)",
+   "ticker": "NTRA",
+   "action": "第一重仓",
+   "size": "数字未披露",
+   "note": "作者称Q2 NATERA(NTRA)是Druckenmiller第一大重仓且'大爆发'——与我方一手CIK数据(NATERA 16.60%为Duquesne第一大持仓)一致，未见冲突。"
+  },
+  {
+   "institution": "Berkshire Hathaway",
+   "handle": "@StableStock",
+   "time": "8/18 20:30 SGT",
+   "ticker": "GOOGL",
+   "action": "加仓",
+   "size": "数字未披露",
+   "note": "GOOGL现为前三大持仓。"
+  },
+  {
+   "institution": "Third Point",
+   "handle": "@StableStock",
+   "time": "8/18 20:30 SGT",
+   "ticker": "GOOGL/META/NVDA",
+   "action": "加仓GOOGL，减仓META和NVDA",
+   "size": "数字未披露",
+   "note": "同贴提及多家基金Q2共同加仓Google的趋势。"
+  },
+  {
+   "institution": "Third Point(Dan Loeb)",
+   "handle": "@ticker_report",
+   "time": "8/19 08:33 SGT",
+   "ticker": "META",
+   "action": "清仓",
+   "size": "9万股，约5149万美元",
+   "note": "Q2清空全部Meta持仓。"
+  },
+  {
+   "institution": "Third Point(Dan Loeb)",
+   "handle": "@ticker_report",
+   "time": "8/19 08:32 SGT",
+   "ticker": "NVDA",
+   "action": "清仓",
+   "size": "19万股，前一季度末价值超3300万美元",
+   "note": "Q2清空全部英伟达持仓，为更广泛调仓的一部分。"
+  },
+  {
+   "institution": "Bridgewater",
+   "handle": "@gulVasikova",
+   "time": "8/19 01:00 SGT",
+   "ticker": "SPY/IVV/VOO",
+   "action": "加仓",
+   "size": "三只合计约占组合26.8%，此前约20.9%",
+   "note": "组合规模从约224亿增至244亿美元(与一手数据$24.4B一致)，转向宽基ETF、远离集中科技仓位是本次最大变化。"
+  },
+  {
+   "institution": "Bridgewater",
+   "handle": "@gulVasikova",
+   "time": "8/19 01:00 SGT",
+   "ticker": "XOM/ES/SHEL/VST/PBR/PCG",
+   "action": "加仓（能源与公用事业）",
+   "size": "数字未披露",
+   "note": "同贴披露，另新建APP和NOW仓位。"
+  },
+  {
+   "institution": "Bridgewater",
+   "handle": "@gulVasikova",
+   "time": "8/19 01:00 SGT",
+   "ticker": "PLTR/CSCO/CRWD",
+   "action": "清仓",
+   "size": "数字未披露",
+   "note": "同贴披露：清空PLTR、CSCO、CRWD；MU砍仓约92%；减仓MSFT、TSM；AMZN减仓约54%。"
+  },
+  {
+   "institution": "多家机构(PIF/D1/Coatue/ARK/Temasek/Tiger Global/Bridgewater)",
+   "handle": "@marketsday / @MrStealth27",
+   "time": "8/18 00:15 SGT / 8/17 23:06 SGT",
+   "ticker": "SPCX(SpaceX)",
+   "action": "IPO后首次披露(非新买入)",
+   "size": "沙特PIF：263.4亿美元/占其13F组合69.48%；另7家机构合计披露超530亿美元",
+   "note": "均为IPO前老仓位在$135发行价后首次转为公开披露，作者强调'不是新买入，只是幕布拉开'。"
+  },
+  {
+   "institution": "Situational Awareness LP(Leopold Aschenbrenner)",
+   "handle": "@xSharpeIQ",
+   "time": "8/19 10:55 SGT",
+   "ticker": "无(基金层面)",
+   "action": "无(负面事件)",
+   "size": "Jane Street 7月亏损150亿美元",
+   "note": "路透追溯Jane Street(Situational Awareness原始出资方之一)7月创十年最差单月，主因是Situational Awareness于7/30被强制平仓(margin call fire sale)；同贴称Jane Street今年迄今仍浮盈400亿美元+(具体口径未展开)。"
+  },
+  {
+   "institution": "Situational Awareness LP",
+   "handle": "@jsfry007",
+   "time": "8/18 20:00 SGT",
+   "ticker": "MU/SNDK",
+   "action": "持仓集中(7月集中前)",
+   "size": "数字未披露(原文引用Yahoo Finance标题'Micron and Sandisk dominated fund before July collapse')",
+   "note": "与一手CIK数据(SNDK 28.03%、MU 27.54%为该基金前两大持仓)一致，未见冲突；用于解释近期MU股价波动。"
+  },
+  {
+   "institution": "Situational Awareness LP / Druckenmiller",
+   "handle": "@LeeHyun81528(韩文)",
+   "time": "8/18 22:28 SGT",
+   "ticker": "STM",
+   "action": "集中押注",
+   "size": "数字未披露",
+   "note": "称STM是Druckenmiller和Leopold(Situational Awareness)13F中的集中押注标的之一；我方一手数据未列出STM在该基金前六大持仓中，无法核实此说法，存疑但保留原文。"
+  },
+  {
+   "institution": "Jane Street",
+   "handle": "@iamalijandro",
+   "time": "8/19 03:54 SGT",
+   "ticker": "IBIT/FBTC/ARKB/BITB/GBTC/XRP",
+   "action": "加仓(加密货币)",
+   "size": "现货比特币ETF约10.1亿美元(Q1为4.384亿美元)；IBIT约8.28亿美元；XRP相关仓位据称扩大60倍",
+   "note": "'双倍下注加密'，Q2持仓较Q1明显扩大。"
+  },
+  {
+   "institution": "Jane Street",
+   "handle": "@normallitt(越南文)",
+   "time": "8/18 19:37 SGT",
+   "ticker": "比特币ETF",
+   "action": "持有",
+   "size": "约9.9亿美元(截至6/30)，其中约8.28亿为IBIT",
+   "note": "与@iamalijandro数据基本一致，交叉确认。"
+  },
+  {
+   "institution": "ARK Invest(Cathie Wood)",
+   "handle": "@getsignalfi",
+   "time": "8/15 23:56 SGT",
+   "ticker": "SPCX/AMD/ROKU",
+   "action": "新建SPCX仓位，减仓AMD和Roku等7只",
+   "size": "合计调仓规模约30亿美元(2026Q2)",
+   "note": "与一手数据(ARK：189只/$15.4B，SPCX 4.97%为新增头寸)方向一致。"
+  },
+  {
+   "institution": "ARK Invest / Tiger Global",
+   "handle": "@jinseongeo83473(韩文)",
+   "time": "8/17 08:54 SGT",
+   "ticker": "CBRS",
+   "action": "机构建仓",
+   "size": "Tiger Global约300万股A类股；ARK具体规模未披露(原文因'Show more'被截断，多次尝试展开未成功)",
+   "note": "IPO后Tiger Global率先披露约300万股仓位，ARK'也有动作'但规模未获取到；CBRS为Vic持仓，值得关注机构动向。"
+  },
+  {
+   "institution": "Intel机构split(多家)",
+   "handle": "@bullandbear_id(印尼文)",
+   "time": "8/19 10:44 SGT",
+   "ticker": "INTC",
+   "action": "分化：Duquesne与Glenview清仓，Coatue加仓",
+   "size": "Coatue买入1208万股，价值约16.9亿美元+（原文截断）",
+   "note": "同一标的机构动向分化，Duquesne/Glenview全部退出INTC，Coatue逆势加仓。"
+  }
+ ],
+ "cost_log": [
+  {
+   "account": "KobeissiLetter",
+   "tool_calls": 11,
+   "approx_chars": 9000
+  },
+  {
+   "account": "zerohedge",
+   "tool_calls": 8,
+   "approx_chars": 6500
+  },
+  {
+   "account": "spotgamma",
+   "tool_calls": 6,
+   "approx_chars": 4500
+  },
+  {
+   "account": "NickTimiraos",
+   "tool_calls": 3,
+   "approx_chars": 2000
+  },
+  {
+   "account": "bluechipdaily",
+   "tool_calls": 2,
+   "approx_chars": 1500
+  },
+  {
+   "account": "WalterDeemer",
+   "tool_calls": 5,
+   "approx_chars": 2500
+  },
+  {
+   "account": "RichardMoglen",
+   "tool_calls": 4,
+   "approx_chars": 3500
+  },
+  {
+   "account": "ohiain",
+   "tool_calls": 5,
+   "approx_chars": 4500
+  },
+  {
+   "account": "spluscollective",
+   "tool_calls": 7,
+   "approx_chars": 6000
+  },
+  {
+   "account": "aleabitoreddit",
+   "tool_calls": 5,
+   "approx_chars": 5000
+  },
+  {
+   "account": "BillAckman",
+   "tool_calls": 4,
+   "approx_chars": 2000
+  },
+  {
+   "account": "unusual_whales",
+   "tool_calls": 9,
+   "approx_chars": 5500
+  },
+  {
+   "account": "jimcramer",
+   "tool_calls": 5,
+   "approx_chars": 4000
+  },
+  {
+   "account": "13F_Druckenmiller_search",
+   "tool_calls": 2,
+   "approx_chars": 3000
+  },
+  {
+   "account": "13F_Bridgewater_search",
+   "tool_calls": 4,
+   "approx_chars": 3000
+  },
+  {
+   "account": "13F_SituationalAwareness_search",
+   "tool_calls": 2,
+   "approx_chars": 2500
+  },
+  {
+   "account": "13F_JaneStreet_search",
+   "tool_calls": 2,
+   "approx_chars": 2000
+  },
+  {
+   "account": "13F_ARKInvest_search",
+   "tool_calls": 4,
+   "approx_chars": 3000
+  },
+  {
+   "account": "13F_NVIDIA_search",
+   "tool_calls": 2,
+   "approx_chars": 2500
+  }
+ ],
+ "notes": "本次为重跑（上次跑到写JSON环节被中断，未落盘），全程13账号逐个单独查(from:账号名&f=live)，一律用javascript_tool直接读取<article>的<time datetime>精确UTC时间戳与tweetText innerText（比read_page(filter:all)更能拿到长推文完整正文，绕开X的'Show more'截断问题；仅WalterDeemer一条图片引言卡片因无alt文本、正文为空而用截图确认文字内容，其余全程未截图）。滚动用computer.scroll真实触发X的虚拟列表加载（window.scrollBy在该账号页面测试无效，卡在同一scrollY不再加载新内容）。\n\n【窗口说明】核心近一周窗口为8/13-8/19 SGT；对高发帖量账号(KobeissiLetter/zerohedge/spotgamma/spluscollective/aleabitoreddit/jimcramer)因量大只覆盖到约8/15-8/16为止的最新2-4天高信号密度内容，未逐条上溯满7天——机械提取优先保证'不漏最近的东西'而非'穷举一周所有推文'，与2026-08-14那次记录的方法论一致(该次也未做逐账号翻页确认全覆盖)。NickTimiraos/BillAckman/WalterDeemer等低频账号已完整覆盖到8/13-8/14。\n\n【accounts_no_content说明】bluechipdaily：8/18有2条方法论/市场评论(噪音占比、SPX vs NYSE广度差异)，但均非具体标的setup，故仍判定'无个股类实质内容'，最近一条真正的标的评论仍停留在8/12(TTD/AMD)，更新频率持续走低。BillAckman：本周(8/13-8/19)推文全部为税收政策辩论/政治评论/转发，唯一带公司相关内容的一条(8/16 'We believe in transparency')是转发第三方对其财报电话会+X Space问答的评价，非新持仓披露，本季度Pershing Square确认仍未申报13F，与我方一手CIK数据'Pershing Square本季至今未申报'一致。unusual_whales：国会交易/期权异动类固定扫描目标本周持续0条，已用两个定向关键词(congress/sweep)二次确认，非遗漏。\n\n【CBRS机构动向交叉提示】spluscollective(8/19)给出CBRS看空目标价165→130；同时Tiger Global/ARK(8/17转述)在CBRS上市后建仓——两条信息方向不完全一致(机构建仓 vs 技术面看空目标价)，不代表矛盾(机构13F是6/30持仓快照，技术面看空是当前时点判断)，仅并列记录供主session参考，未做进一步判断。\n\n【13F转述提醒】所有thirteen_f_x条目均为X二手转述，未见具体数字处已标注'数字未披露'；仅STM(Druckenmiller/Situational Awareness集中押注说法)一条因我方一手数据未列出该标的在前六大持仓中而标记'存疑但保留原文'，其余未发现与一手CIK数据明显冲突之处。",
+ "delta_scan": {
+  "run_at": "2026-08-19T19:45+08:00",
+  "window": "覆盖早间扫描之后（8/19 04:07 UTC = 12:07 SGT）到 11:45 UTC 的增量",
+  "accounts_checked": [
+   "KobeissiLetter",
+   "spluscollective",
+   "ohiain",
+   "RichardMoglen",
+   "aleabitoreddit",
+   "spotgamma",
+   "WalterDeemer",
+   "bluechipdaily",
+   "zerohedge",
+   "jimcramer"
+  ],
+  "accounts_no_new": [
+   "KobeissiLetter",
+   "RichardMoglen",
+   "spotgamma",
+   "WalterDeemer",
+   "bluechipdaily"
+  ],
+  "items": [
+   {
+    "handle": "@spluscollective",
+    "utc": "11:29",
+    "ticker": "ADI",
+    "note": "ADI 财报：营收 $4.02B vs $3.96B(超2%)、EPS $3.45 vs $3.37(超2%)、+52% YoY、盘前 +3%"
+   },
+   {
+    "handle": "@spluscollective",
+    "utc": "11:00",
+    "ticker": "LOW",
+    "note": "LOW：营收 $25.96B vs $26.51B(缺2%)、EPS $4.40 vs $4.29(超3%)、盘前 -2%"
+   },
+   {
+    "handle": "@spluscollective",
+    "utc": "05:41",
+    "ticker": "RBRK",
+    "note": "「inside week，IYKYK」"
+   },
+   {
+    "handle": "@zerohedge",
+    "utc": "11:36-11:38",
+    "ticker": "NBIS",
+    "note": "🔴NEBIUS 拟发行 $45 亿可转换优先票据（$2.75B 到期 2030 + $1.75B 到期 2034，另有 $675M 超额配售权，144A 私募），盘前跌幅扩大到 -7%~-9%"
+   },
+   {
+    "handle": "@zerohedge",
+    "utc": "11:32",
+    "ticker": "TJX",
+    "note": "TJX 指引：Q3 同店销售 +2%~+3%，低于预期 +3.16%"
+   },
+   {
+    "handle": "@zerohedge",
+    "utc": "11:32-11:33",
+    "ticker": "—",
+    "note": "中国威胁对欧盟反补贴调查采取报复措施（CCTV）；称对京东的调查不当"
+   },
+   {
+    "handle": "@aleabitoreddit【promoter降权】",
+    "utc": "07:11-07:32",
+    "ticker": "LITE/MTSI/AAOI/SIVE/POET",
+    "note": "光通信供需失衡叙事延续：称 Elazr GM 在投资者会议表示光学供给仍远落后于需求；自称 SIVE 是他最爱的高 beta 光通信多头"
+   },
+   {
+    "handle": "@jimcramer【反指】",
+    "utc": "08:49-10:20",
+    "ticker": "MU/SK海力士/债券",
+    "note": "①「SK 海力士在这里最好的对标是美光，而美光昨天跌了很多」——今天去博伊西见美光 ②「数据中心这么依赖 SK 和三星、而那些股票被借钱的散户主导」③「收益率上行主因是油不是供给」"
+   },
+   {
+    "handle": "外部(非账号池)",
+    "utc": "11:24-11:36",
+    "ticker": "ADI",
+    "note": "🎯ADI 的**指引**才是重点（多个来源一致）：Q4 营收指引 $4.20-4.40B vs 预期 $4.08B、EPS 指引 $3.71-4.01 vs 预期 $3.55，调整后营业利润率 50.0% 创纪录。**双超且指引大超**"
+   }
+  ],
+  "premarket_quotes_at_scan": {
+   "SMH": -0.33,
+   "SOXX": -0.48,
+   "ADI": 1.58,
+   "NBIS": -8.12,
+   "QQQ": -0.19,
+   "VOO": 0.03,
+   "IWM": 0.06,
+   "TGT": -0.97,
+   "TJX": -4.54,
+   "LOW": -3.31,
+   "PURR": -0.71,
+   "CRCL": -0.42,
+   "MU": -0.88,
+   "SNDK": -0.36
+  },
+  "note": "盘前报价仅作事件确认用，**不进报告、不改档位**（7/21「盘前抢跑不改档位」、7/13「盘前经常是假的拉高出货」）。"
+ }
+}

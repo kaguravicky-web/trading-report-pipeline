@@ -1,0 +1,19 @@
+{
+ "universe_size": 887,
+ "calendar": {
+  "2026-08-21": [
+   {
+    "symbol": "BJ",
+    "name": "BJ's Wholesale Club Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.16"
+   },
+   {
+    "symbol": "BKE",
+    "name": "Buckle, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ]
+ }
+}

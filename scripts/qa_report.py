@@ -64,6 +64,54 @@ def _text(html: str) -> str:
     return re.sub(r"<[^>]+>", " ", body)
 
 
+def _all_caches():
+    import glob
+    for f in sorted(glob.glob(str(ROOT / "data/cache/market_*.json")), reverse=True):
+        try:
+            yield json.loads(Path(f).read_text(encoding="utf-8"))
+        except Exception:
+            continue
+
+
+def _cache_for_day(day: str):
+    """按 data_date 反查 cache（文件名是「次日」，收盘数据次日才归档）。找不到返回 None。"""
+    for c in _all_caches():
+        if c.get("data_date") == day:
+            return c
+    return None
+
+
+def _cache_for_report(data):
+    """报告的**口径 cache**。盘前/盘后的口径日不是同一天，这里统一解析：
+
+      · 盘后：报告日 == 口径日（当天收盘），走 data_date == date；
+      · 盘前：报告写在开盘前，用的是**上一个交易日的收盘**——
+        `data_date` 是报告日的前一天，`_cache_for_day(报告日)` 永远查不到。
+
+    🔴 2026-08-19 发现：原来三条检查全走 `_cache_for_day(data["date"])`，
+    于是**在盘前报告上一条都没生效过**——包括 2026-08-09 那条
+    「报告里的价格必须等于口径日收盘价」。它建起来是为了盘前那次 AAOI 事故，
+    却因为这个偏移，一年里只在盘后跑过。找不到返回 None（不误报）。
+    """
+    if not isinstance(data, dict) or not data.get("date"):
+        return None
+    day = data["date"]
+    if data.get("report_type") == "premarket":
+        # 🔴 盘前**只能**取 data_date 严格早于报告日的那份，不许先试 data_date == 报告日。
+        #    T 日盘前报告写在开盘前，用的是 T-1 收盘；而「data_date == T」那份 cache
+        #    是 T+1 早上生成的、装着 T 日收盘——**对盘前报告来说那是未来函数**。
+        #    2026-08-19 差点写错：先 exact 再回退，8/18 的盘前报告就会去比 8/18 的收盘，
+        #    凭空报出 16 行「价格不符」。（同 COMBINED breadth 那条：盘前绝不碰当日 live。）
+        best = None
+        for c in _all_caches():
+            dd = c.get("data_date")
+            if dd and dd < day and (best is None or dd > best.get("data_date")):
+                best = c
+        return best
+    return _cache_for_day(day)
+
+
+_HHMM = re.compile(r"[0-2]?[0-9]:[0-5][0-9]")
 CHECKS = []
 WARN_PREFIX = "[规则生效前·仅记录] "
 VERBOSE = [False]   # --verbose 时打印全部通过项；默认只打失败/提醒
@@ -152,6 +200,11 @@ def _decimals(html, data):
     body = re.sub(r'<p class="brier-line">.*?</p>', "", body, flags=re.S)
     # ② 代理相对强弱表的比值/20日均值：0.9297 vs 0.9368 差 -0.75%，压到 2 位会变成两个 0.93
     body = re.sub(r"<h3>代理相对强弱.*?</table>", "", body, flags=re.S)
+    # ③ 2026-08-17 补：Brier 从盘后搬到周报后（Vic：「brier score 就放周报吧」），
+    #    它出现在**表格行**里、不再是 brier-line 段落，上面两条豁免都盖不到——
+    #    于是这条警告会每周稳定报一次，**又变成一条天天被忽略的检查**（正是 CONTEXT 警告过的）。
+    #    豁免范围严格限定为「本行文字里含 Brier」，不是所有表格行，别开成通用口子。
+    body = re.sub(r"<tr>(?:(?!</tr>).)*?Brier(?:(?!</tr>).)*?</tr>", "", body, flags=re.S)
     n = len(re.findall(r">\s*-?\d+\.\d{3,}\s*<", body))
     if n:
         return f"{n}处3位以上小数"
@@ -205,6 +258,111 @@ def _recon_prob(html, data):
     return (WARN_PREFIX + msg) if _pre_rule(data) else msg
 
 
+@check("模板占位符不许漏进正文（2026-08-21：signal_light 的 high|mid|low 直接渲染出去了）")
+def _no_placeholder_leak(html, data):
+    """Vic 2026-08-21 发来截图：「今日信号灯」里 BIAS 那格写着 **high|mid|low**，
+    RATES / DXY / BREADTH 三格全空 —— 我只填了 signal_light.discipline，
+    四个维度还留着模板里的占位字符串，**照原样渲染出去了**。
+
+    这类事故的共同点是「填了一半」：模板给的示例值本身是合法字符串，
+    不填也不会报错，只会安静地印在页面上。所以在渲染结果里直接搜这些字面量。
+    """
+    if not html:
+        return
+    body = re.sub(r"<style.*?</style>", "", html, flags=re.S)
+    txt = re.sub(r"<[^>]+>", " ", body)
+    marks = ["high|mid|low", "low|mid|high", "hit/miss", "TICKER 或 TICKER|account",
+             "{ticker}", "YYYY-MM-DD", "xxx", "待填", "TODO"]
+    hit = [m for m in marks if m in txt]
+    if hit:
+        return "正文里出现模板占位符：%s ——某个字段只填了一半" % " · ".join(hit)
+
+
+@check("emoji 不许一种砸到底（2026-08-21 Vic：「我也喜欢emoji，只是不喜欢红绿灯，可以用各种各样的」）")
+def _emoji_variety(html, data):
+    """Vic 2026-08-21：「🎯这个太多了…不用一直用同一个吗」。
+
+    当天那份盘前 142 个 emoji **只有 3 种**：🔴×97 / 🎯×38 / ⚠×7。
+    同一个符号砸到底，等于没有强调 —— 跟 2026-08-18 持仓表退役整行底色、
+    2026-08-19 A 级不填色是同一条：**颜色/符号只有稀有时才是信号。**
+
+    口径（对报告 JSON 的全部文本）：
+      · 总数 ≤ 90
+      · 种类 ≥ 5
+      · 单一 emoji 占比 ≤ 40%
+    他不喜欢的是「红绿灯」（同一组三色轮着用），不是 emoji 本身 —— 所以这条查的是
+    **多样性和总量**，不是禁用。
+    """
+    if data is None:
+        return
+    import collections as _c
+    import re as _re
+    # 🩹 2026-08-21 修：本来数的是 JSON，而 JSON 里的 🔴/⚠️ 会被 render 层的
+    #    strip_lights() 剥掉、根本不渲染 —— 等于在数看不见的东西。
+    #    改成数**渲染后的正文**（去掉 <style> 和标签），也就是 Vic 真正看到的那些。
+    _body = _re.sub(r"<style.*?</style>", "", html, flags=_re.S)
+    txt = _re.sub(r"<[^>]+>", " ", _body)
+    got = _c.Counter(_re.findall(r"[🌀-🫿☀-➿]", txt))
+    tot = sum(got.values())
+    if tot == 0:
+        return
+    top, cnt = got.most_common(1)[0]
+    errs = []
+    if tot > 90:
+        errs.append("总数 %d >90" % tot)
+    if len(got) < 5:
+        errs.append("只有 %d 种（要 ≥5）：%s" % (len(got), "".join(got)))
+    if cnt / tot > 0.40:
+        errs.append("%s 占 %.0f%%（要 ≤40%%）" % (top, cnt / tot * 100))
+    if errs:
+        return "；".join(errs)
+
+
+@check("盘后 01 收盘总结：指数小结和板块小结必须合成一块 callout（2026-08-21 Vic 第二次指出）")
+def _close_summary_merged(html, data):
+    """Vic 2026-08-21：「这两个小结是应该放一起，第二次错哦」。
+
+    指数表小结 + 板块表小结拆成上下两个蓝框，读的人要自己在两个框之间接一次。
+    渲染层已改成 chr(10).join 合并，这条守着它不要漂回去。
+    口径：01 节（到「软件细分」之前）里 callout 开标签只允许出现一次。
+    """
+    if data is None or data.get("report_type") != "postmarket":
+        return
+    if not (data.get("index_table_note") and data.get("sector_table_note")):
+        return
+    i = html.find("01 收盘总结")
+    j = html.find("软件细分", i + 1) if i >= 0 else -1
+    if i < 0 or j < 0:
+        return
+    n = html.count('<div class="callout', i, j)
+    if n > 1:
+        return "01 收盘总结里有 %d 个 callout——指数小结和板块小结要合成一块" % n
+
+
+@check("盘后对账每行都要有 result（空 result 会被渲染成「未触发」，看起来像没错过）")
+def _recon_result_filled(html, data):
+    """🔴 2026-08-21 建，起因是当天 Vic 一眼看出来的事故。
+
+    盘后模板用 `RESULTS.get(_claim[:12])` 做结果查表 —— **用固定 12 个字符当键**。
+    中文 claim 的前 12 字长度全看写法（"**XBI 今日收盘守"=11、"**T2108 今日收回 5"=14），
+    键只要不是刚好 12 字就静默匹配不上，result 变成空字符串，
+    **页面把它渲染成「未触发」** —— 五条里四条本该是 miss，看起来却像「没触发所以不算错」。
+    Vic：「你的盘后报告不是4条都失误嘛…写了未触发…做trader就不能怕错」。
+
+    键匹配已改成前缀匹配，但**匹配逻辑还会再变，空 result 这个症状要有人守**。
+    """
+    if data is None or data.get("report_type") != "postmarket":
+        return
+    rows = data.get("recon_rows") or []
+    if not rows:
+        return
+    blank = [r.get("plan", "")[:24] for r in rows if not (r.get("result") or "").strip()]
+    if not blank:
+        return
+    return ("%d/%d 条对账没有 result（会渲染成「未触发」）：%s"
+            % (len(blank), len(rows), " · ".join(blank[:3])))
+
+
 @check("盘后必须报 Brier 而不只是命中率（送分题堆出来的「满分日」要能被看穿）")
 def _recon_brier(html, data):
     if data is None or not data.get("recon_rows"):
@@ -214,8 +372,14 @@ def _recon_brier(html, data):
         return f"{st['no_prob']}条已判定的对账行没有prob，Brier算不全"
     if st.get("brier") is None:
         return "recon_rows全部无法评分（既没prob也没result）"
-    if "brier-line" not in html:
-        return "算出了Brier但没渲染到报告里（静默丢失）"
+    # 🔴 2026-08-17 改：不再要求**盘后**渲染 Brier 行（Vic：「brier score 就放周报吧」）。
+    #    但这条检查的初衷——「送分题堆出来的满分日要能被看穿」——不能跟着一起消失。
+    #    改成守住上游：每条已判定的行必须有 prob（上面已查），且概率口径必须写出来。
+    #    判语本身留给周报，那里 n 够大。
+    if not (data.get("recon_prob_note") or "").strip():
+        return ("Brier 算得出来，但 recon_prob_note 是空的——"
+                "**单日不印 Brier 数字可以，概率口径不能不写**，"
+                "否则没人能看穿送分题堆出来的满分日")
 
 
 @check("指数顺序统一（Vic 7/28：三处各排各的，且SPY/VOO并列重复）")
@@ -247,13 +411,19 @@ def _index_order(html, data):
             for p in _spy_hits(v, k)]
     if hits:
         bad.append(f"这些字段仍出现SPY（应统一为VOO）：{sorted(set(h.split('.')[0].split('[')[0] for h in hits))}")
-    for field, get in (("atr_extension_table", lambda r: r.get("ticker")),
-                       ("index_table", lambda r: r[0])):
+    # 🔴 2026-08-19：index_table 改成七只指数面板（list[dict]），不再是 {"rows":[[...]]}。
+    #    两种形状都要认，否则检查本身抛异常 —— 而**抛异常的检查等于没有检查**。
+    def _tk(r):
+        if isinstance(r, dict):
+            return r.get("ticker", "")
+        return r[0] if isinstance(r, (list, tuple)) and r else ""
+
+    for field in ("atr_extension_table", "index_table"):
         v = data.get(field)
         rows = v.get("rows") if isinstance(v, dict) else v
         if not rows:
             continue
-        got = [str(get(r)).split()[0] for r in rows]
+        got = [str(_tk(r)).split()[0] for r in rows]
         if got != want:
             bad.append(f"{field} 顺序是 {got}，应为 {want}")
     for grp in data.get("sector_rs_tables") or []:
@@ -376,11 +546,16 @@ def _orphan_fields(html, data):
     # 剥标签之后仍是实体形式，跟原文对不上（stop_proximity_note 的「距止损 <0.7ATR」中过一次）。
     # 两边都做实体反转义再比。
     import html as _htmlmod
-    plain = re.sub(r"\s+", "", _htmlmod.unescape(_text(html)))
+    # 🔴 2026-08-20：四件套标签在渲染时会被 build_note_callouts 改写——
+    #    「【强势/可持有】XLV」变成「强势/可持有：XLV」（剥掉【】、补上：）。
+    #    探针若原样比对就会误报「整块没渲染」，而内容其实在。
+    #    **两边都把【】：等分隔记号一起去掉**，只比实字。
+    _NOISE = r"[*#`\s【】：:·、（）()]|🔴|🟢|⚠️|🎯|⭐|️"
+    plain = re.sub(_NOISE, "", _htmlmod.unescape(_text(html)))
 
     def _probe(s):
         s = _htmlmod.unescape(str(s))
-        s = re.sub(r"[*#`\s]|🔴|🟢|⚠️|🎯|⭐|️", "", s)
+        s = re.sub(_NOISE, "", s)
         return s[:10]
 
     SKIP = {"report_type", "date", "generated_at", "_phase", "_phase1_at", "_phase1_note",
@@ -459,12 +634,17 @@ def _fieldnames(html, data):
 # 否则 QA 会红——**这是故意的**：顺序变更必须是有意的，不能是某次改动的副作用。
 REPORT_SPEC = {
     "premarket": {
-        "sections": ["signal", "risk", "scoreboard", "breadthscore", "macro", "gate",
-                     "positions", "news", "setup", "scenario", "wrapup"],
+        # 🔴 2026-08-19 Vic：「三个角度分歧：闸门位置=中性、市宽打分=偏空、动能打分=偏空
+        #    既然这样 闸门位置提到市宽上面」——build_cross_check 挂在「市宽打分」末尾、
+        #    点名三个角度，而闸门原本排在第 7 位，读到那句结论时还有一个角度没出现过。
+        #    渲染侧的顺序常量在 render_report.PREMARKET_SECTION_ORDER，两边要同步改。
+        "sections": ["signal", "gate", "risk", "breadthscore", "macro",
+                     "positions", "news", "setup", "wrapup", "scenario"],   # 2026-08-21：情景＋对账台账合并成最后一节
         "optional": ["ftd", "bounce"],          # FTD 2026-08-06 起暂停；反弹品类等 Vic 指令
         "required_fields": ["signal_light", "risk_checklist", "gate_scoreboard_rows",
                             "breadth_score_rows", "sector_rs_tables", "unilateral_scan_table",
-                            "etf_table", "positions_moomoo_table", "positions_longbridge_table",
+                            # etf_table 2026-08-17 退役，读数并进 gate_scoreboard_rows（已是必填）
+                            "positions_moomoo_table", "positions_longbridge_table",
                             "strong_sector_setups_table", "watchlist_abc", "playbook_scenarios",
                             "key_takeaways", "today_position", "recon_ledger"],
         # 2026-08-12：两段式取消 → 不再有「段1 草稿可以缺这些」的豁免；
@@ -472,11 +652,14 @@ REPORT_SPEC = {
         "phase1_exempt": [],
     },
     "postmarket": {
-        "sections": ["recon", "hitrate", "lessons", "newswatch", "close", "breadth",
+        # 🔴 2026-08-20 Vic：「这个改成和盘前报告一样的闸门格式吧？有颜色容易看」——
+        #    开头的收盘四张卡换成闸门表，节 id = closegate（不能叫 close，
+        #    后面「01 收盘总结」已经占了那个 id）。
+        "sections": ["closegate", "recon", "hitrate", "lessons", "newswatch", "close", "breadth",
                      "setupa", "xwatch", "earnings", "positions", "outlook"],
         "optional": ["ml"],
         "required_fields": ["recon_rows", "hit_rate_stats", "iterations", "news_tracking",
-                            "index_table", "sector_table", "breadth_live_table",
+                            "gate_scoreboard_rows", "index_table", "sector_table", "breadth_live_table",
                             "positions_moomoo_table", "next_day_outlook"],
         "phase1_exempt": [],
     },
@@ -642,23 +825,25 @@ def _price_matches_cache(html, data):
     if data is None or not data.get("date"):
         return
     day = data["date"]
-    # 口径日的 cache 文件名是「次日」（收盘数据次日才归档）——按 data_date 反查更稳
-    import glob
-    cache = None
-    for f in sorted(glob.glob(str(ROOT / "data/cache/market_*.json")), reverse=True):
-        try:
-            c = json.loads(Path(f).read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        if c.get("data_date") == day:
-            cache = c
-            break
+    cache = _cache_for_report(data)
     if not cache:
         return          # 没有对应口径日的 cache 就查不了，不误报
     M = cache.get("metrics", {})
+    day = cache.get("data_date") or day      # 盘前报告日 ≠ 口径日，报错文案要写口径日
     bad = []
-    for key in ("positions_moomoo_table", "positions_longbridge_table",
-                "index_table", "sector_table"):
+    # 🔴 2026-08-19：index_table 是 list[dict]（ticker/close），单独校验，
+    #    它现在是七只指数在报告里的唯一出处，价格错了没有第二张表能对出来。
+    for r in (data.get("index_table") or []):
+        if not isinstance(r, dict):
+            continue
+        tk, c_ = r.get("ticker"), r.get("close")
+        m = M.get(tk) or {}
+        if c_ is None or m.get("close") is None:
+            continue
+        if abs(float(c_) - float(m["close"])) > 0.005:
+            bad.append("index_table %s 写的是 %s，%s 的收盘是 %s" % (tk, c_, day, m["close"]))
+
+    for key in ("positions_moomoo_table", "positions_longbridge_table", "sector_table"):
         tbl = data.get(key) or {}
         for r in (tbl.get("rows") or []):
             if not isinstance(r, list) or len(r) < 2:
@@ -745,13 +930,14 @@ def _headers_match_template(html, data):
 
 @check("板块表必须是模板的六列（2026-08-12：「盘前」列退役后从七列变六列）")
 def _sector_rs_headers(html, data):
-    """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / **驱动·原因** / RS(1周)。
+    """模板 RS_HEADERS = TICKER / T-1% / 5日% / 1月% / RS(1周) / **驱动·原因**。
     第 5 列注明「留空当天手写」。8/10 我写过 6 列表头配 7 列数据，错位之后那一列
     在页面上就是一片空白——Vic 一眼看出来了。
     🔴 2026-08-12「盘前」列整列退役（Vic：「盘前数字没什么用」），七列 → 六列。"""
     if data is None or data.get("report_type") != "premarket":
         return
-    want = ["TICKER", "T-1%", "5日%", "1月%", "驱动/原因", "RS(1周)"]
+    # 🔴 2026-08-20 Vic：「我主要看 rs，所以 rs 放驱动前面」——RS 与驱动对调
+    want = ["TICKER", "T-1%", "5日%", "1月%", "RS(1周)", "驱动/原因"]
     bad = []
     for t in data.get("sector_rs_tables") or []:
         h = t.get("headers") or []
@@ -762,11 +948,208 @@ def _sector_rs_headers(html, data):
         if rows and len(rows[0]) != len(want):
             bad.append("%s 表头%d列/数据%d列 错位" % (t.get("title"), len(want), len(rows[0])))
             continue
-        blank = sum(1 for r in rows if not str(r[4]).strip())
+        blank = sum(1 for r in rows if not str(r[5]).strip())   # 驱动列 2026-08-20 起是第 6 格
         if blank == len(rows) and rows:
             bad.append("%s 的「驱动/原因」整列没写" % t.get("title"))
     if bad:
         return "；".join(bad[:4]) + "——列定义在 assemble_template.RS_HEADERS"
+
+
+@check("七只指数的表必须全在 03 那一节（2026-08-19 Vic：「指数所有表位置放一起」）")
+def _index_single_home(html, data):
+    """VOO/QQQ/DIA/IWM/SMH/RSP/QQQE 的所有表必须都在 03 指数闸门那一节里。
+
+    改之前它们散在三个地方：03 的闸门表、01 宏观里的「C · 指数」（距50MA ATR）、
+    01 里 RS 表的「指数基准」组。**同一组 ticker 隔着好几屏画三遍**，
+    读者要跨节拼才知道某只指数什么状态。
+
+    🔴 2026-08-19 Vic 分两轮定的：先「集中到一个地方」，
+    再「格式改回去，让我想想先，目前新板块没有以前得好」——
+    **所以合并的是位置、不是长相**：三张旧格式的表挨着放。
+    查的是渲染结果（哪一节里出现），不是数据（字段照旧都在）。
+    """
+    if data is None or data.get("report_type") != "premarket":
+        return
+    if not data.get("index_table"):
+        return "盘前缺 index_table —— 七只指数的唯一出处不能空"
+    bad = []
+    body = html.split("</style>")[-1]
+    # 🔴 2026-08-19 第二轮 Vic：「指数所有表位置放一起，但是格式改回去」——
+    #    **查的不再是「只能有一张表」，而是「所有指数表都必须在 03 指数闸门那一节里」**。
+    #    三张旧格式的表挨着放是允许的；散到 01 宏观里去不允许。
+    import re as _re
+    m = _re.search(r'<section[^>]*id="gate"[^>]*>(.*?)</section>', body, _re.S)
+    if not m:
+        return "找不到 03 指数闸门那一节"
+    gate_html, outside = m.group(1), body[:m.start()] + body[m.end():]
+    for probe, what in (("指数基准", "指数基准 RS 表"),
+                        ("距50MA（ATR倍数）", "距50MA(ATR) 表"),
+                        ("C · 指数", "旧的 01-C 指数表")):
+        if probe in outside:
+            bad.append("「%s」出现在 03 之外" % what)
+    if "指数基准" not in gate_html:
+        bad.append("03 里没有指数基准 RS 表")
+    if bad:
+        return ("；".join(bad)
+                + "——七只指数的所有表都放在 03 指数闸门一节里（2026-08-19 Vic：「位置放一起」）")
+
+
+@check("催化剂在手：空表必须写明四条口径逐条查过（2026-08-20 Vic：EP/burst 选不出来）")
+def _catalyst_watch_explained(html, data):
+    """🔴 起因：Vic 8/19 买了 PURR 和 COIN，盘前报告一只都没提示。
+
+    实测过**为什么不能靠形态扫描**：8/18 收盘 COIN −2.87%／量比 0.91×／收区间 4%，
+    PURR +0.70%／量比 1.35×／收区间 63%——**T-1 价格里没有任何爆发特征**。
+    能提前抓到的只有催化剂，而 8/19 开盘前四条催化剂全都已存在
+    （SEC 加密框架 / 白宫峰会 / PURR 财报窗口 / 德鲁肯米勒新建仓）。
+
+    所以这条查的是**空表有没有被解释**：
+    「今天真的四条都空」和「今天没查」在页面上长得一模一样——
+    跟 Trump 那格「没看到就写没有」是同一个失败模式。
+    """
+    if data is None or data.get("report_type") != "premarket":
+        return None
+    cw = data.get("catalyst_watch")
+    if cw is None:
+        return "缺 catalyst_watch 字段"
+    if cw.get("rows"):
+        return None
+    note = str(data.get("catalyst_watch_note") or "")
+    if len(note) < 20:
+        return ("催化剂在手是空表，但 catalyst_watch_note 没写查过什么——"
+                "四条口径（财报窗口 / 13F 新建仓 / 政策·监管日程 / X 点名）"
+                "要逐条说明查过且为空")
+    return None
+
+
+@check("Trump 那格写「无」必须写清查过什么（2026-08-19 我写「无新增」，实际当天有白宫加密峰会）")
+def _trump_no_event_needs_evidence(html, data):
+    """🔴 2026-08-19 的报告写了「今日无 Trump 点名个股/行业的新事件（Truth Social 侧无新增）」。
+
+    **当天有白宫加密峰会**：Trump + SEC 主席 Atkins + CFTC 主席 Selig +
+    Coinbase/Kraken/Ripple/Gemini/Chainlink/Robinhood/NYSE/Nasdaq/ICE，
+    Trump 当场说 **CFTC 正在推动把 Hyperliquid 引入美国**——
+    而 Vic 的持仓 PURR 就是 Hyperliquid Strategies。**PURR 当天 +30.42%。**
+
+    根因不是漏看，是**写法**：我没有主动查 Trump，是「13 个账号的时间线里没看到，就写没有」。
+    CONTEXT 写死了 Trump 是**第一优先级**且是「**一类事件监听**，不是一个 X 账号」。
+
+    所以这条查的是：**只要 news_today 里有一条在讲 Trump 且断言「无/没有/未见」，
+    它就必须同时写出查过的来源**（@账号 或 Truth Social / 白宫 / SEC / CFTC 等具体入口）。
+    「没看到」和「查过没有」在页面上长得一样，**但它们不是一回事**。
+    """
+    if data is None or data.get("report_type") != "premarket":
+        return None
+    NEG = ("无", "没有", "未见", "未发现")
+    SRC = ("@", "Truth Social", "白宫", "SEC", "CFTC", "WatcherGuru", "已查", "已搜")
+    for item in (data.get("news_today") or []):
+        t = str(item)
+        if ("Trump" not in t) and ("特朗普" not in t):
+            continue
+        if not any(n in t for n in NEG):
+            continue
+        if not any(x in t for x in SRC):
+            return ("Trump 那条写了「无」却没写查过哪里：%s…——"
+                    "「没看到」不等于「查过没有」，把来源写出来"
+                    "（@WatcherGuru / Truth Social / 白宫·SEC·CFTC 日程）" % t[:40])
+    return None
+
+
+@check("2026-08-20 定的格式不许漂回去（小结无标题 / 罗马数字 / 陈述用白块）")
+def _format_lock_0820(html, data):
+    """8/20 一天里 Vic 连提四次同类问题，全部收口在渲染层。这条守住它们。
+
+    · 「哈哈你又有两个小结」→ callout **不再挂「小结：」标题**（默认 label="" ）
+    · 「点点又来了，不如你写成 I. II. III.」→ co-item 用 upper-roman，**不用圆点**
+    · 「这个不是小结，直接用白色表格吧」→ 陈述走 build_plain_block，不占蓝底
+    **这三条只要有一条漂回去，页面上看着都「还行」，所以必须机器查。**
+    """
+    if data is None:
+        return None
+    body = html.split("</style>")[-1]
+    css = html.split("</style>")[0]
+    bad = []
+    if "小结：" in body or "<span class=\"co-label\">小结</span>" in body:
+        bad.append("正文又出现「小结：」标题行——label 默认值应为 \"\"")
+    if "upper-roman" not in css:
+        bad.append("co-item 的罗马数字序号没了")
+    if 'content:"•"' in css or "content: '•'" in css:
+        bad.append("圆点项目符号又回来了")
+    if bad:
+        return "；".join(bad) + "——这三条 2026-08-20 定，收口在 render_report/report.css"
+    return None
+
+
+@check("盘后开头必须是闸门表（2026-08-20 Vic：「改成和盘前报告一样的闸门格式，有颜色容易看」）")
+def _postmarket_gate_head(html, data):
+    """盘后原来开头是四张收盘卡（VOO/QQQ/SMH/广度），Vic 要求换成盘前那张闸门表。
+
+    **盘前盘后同一件事就该长同一个样**（跟 8/18 持仓表统一是同一条）。
+    这条查：盘后有没有 gate_scoreboard_rows、节 id 是不是 closegate、状态格有没有上色。
+    """
+    if data is None or data.get("report_type") != "postmarket":
+        return None
+    if not data.get("gate_scoreboard_rows"):
+        return "盘后缺 gate_scoreboard_rows —— 开头那节应该是闸门表"
+    body = html.split("</style>")[-1]
+    if 'id="closegate"' not in body:
+        return "盘后开头没有 closegate 那一节"
+    n = sum(body.count(x) for x in ("status-met", "status-unmet", "status-triggered"))
+    if n < 3:
+        return "闸门表的状态格没有上色（只找到 %d 个）——颜色是这次改版的全部意义" % n
+    return None
+
+
+@check("A 级候选跟踪表的列（2026-08-20 定：形态/区间拆列、只在 D+5 结算）")
+def _track_table_shape(html, data):
+    """Vic 8/20 三条：跟全部 A 级 · 形态和 5日区间%/区间ATR 拆成三列 · 自入场% 改成只在 D+5 结算。
+
+    **列一旦改回去，「谁最紧」就又没法跨行比了**，而页面上看不出少了什么。
+    """
+    if data is None or data.get("report_type") != "postmarket":
+        return None
+    t = data.get("setup_a_track_table") or {}
+    h = t.get("headers") or []
+    want = ["信号日", "TICKER", "板块", "形态", "5日区间%", "区间ATR",
+            "失效", "现价", "当日%", "结算%(D+5)", "状态"]
+    if h != want:
+        return "跟踪表表头是 %s，应为 %s" % (h, want)
+    for r in (t.get("rows") or []):
+        if len(r) != len(want):
+            return "跟踪表 %d 列表头配 %d 列数据——错位后整列会静默变空" % (len(want), len(r))
+    return None
+
+
+@check("带时刻的事件必须同时给 SGT（2026-08-20 Vic：「应该告诉我 fomc 是几点，我可以熬夜」）")
+def _event_time_has_sgt(html, data):
+    """8/19 那份写的是「FOMC 会议纪要 今天 14:00 ET」——**只有 ET**。
+
+    Vic 人在 SGT，14:00 ET 是他这边**次日凌晨 02:00**；
+    只写 ET 等于把「今晚要不要熬夜」这个决定藏在一次时区换算后面。
+    那晚 PURR 收 +29.34%、收在区间 98%——**漏这条信息的代价是可量化的。**
+
+    只要出现 HH:MM，同一格里就得有 SGT。转换用 report_helpers.et_sgt()，
+    不要手算（夏令时会错一小时）。
+    """
+    if not data:
+        return None
+    hits = []
+    tbl = data.get("macro_radar_table") or {}
+    for row in (tbl.get("rows") or []):
+        if not isinstance(row, (list, tuple)) or len(row) < 2:
+            continue
+        cell = str(row[1])
+        if _HHMM.search(cell) and "SGT" not in cell:
+            hits.append("宏观雷达「%s」：%s" % (str(row[0])[:18], cell))
+    cal = data.get("week_calendar") or {}
+    for col in (cal.get("cells") or []):
+        for item in (col or []):
+            txt = str(item)
+            if _HHMM.search(txt) and "SGT" not in txt:
+                hits.append("本周日历「%s…」" % txt[:26])
+    if hits:
+        return "；".join(hits[:4]) + "——带时刻就要带 SGT，用 H.et_sgt() 生成"
+    return None
 
 
 @check("信号灯必须五格齐（2026-08-10 Vic：「今天盘前的信号灯好少，少了几个呢」）")
@@ -788,6 +1171,54 @@ def _signal_light_full(html, data):
         msg.append("写了渲染器不认的键 %s（会被静默丢掉）" % unknown)
     if msg:
         return "；".join(msg) + "——只认 " + "/".join(SIGNAL_LIGHT_KEYS)
+
+
+@check("信号灯维度列不能中英重复（2026-08-20 Vic：「我不喜欢中英重复」）")
+def _signal_light_en_only(html, data):
+    """维度列只放 BIAS / RATES / DXY / BREADTH，**不放中文**。
+
+    这条写成检查而不是文档，是因为 8/20 之前同一类格式要求已经漂回去过三次
+    （见 CONTEXT「格式漂移」那节）：渲染器改了、下次谁手改一行又加回中文，
+    没有会失败的闸门就发现不了。顺带钉住 BOND→RATES 的改名。
+    """
+    if data is None or data.get("report_type") != "premarket":
+        return
+    if 'class="sig-table' not in html:
+        return
+    seg = html.split('class="sig-table', 1)[1].split("</table>", 1)[0]
+    bad = [w for w in ("方向", "利率", "美元", "广度") if ">%s<" % w in seg]
+    if bad:
+        return "维度列还留着中文 %s——只放 BIAS/RATES/DXY/BREADTH" % bad
+    want = [w for w in ("BIAS", "RATES", "DXY", "BREADTH") if w not in seg]
+    if want:
+        return "维度列缺 %s（BOND 已于 8/20 改名 RATES）" % want
+    if 'class="sig-en"' in seg:
+        return "sig-en 小字副标题已随中文一起退役，不该再出现"
+
+
+@check("本周日历：图标分类型，重要项不能过半（2026-08-20 Vic：「不要都用箭靶」）")
+def _cal_icons_typed(html, data):
+    """两条一起查：
+
+      ① 日历格里**不能出现 🎯**——重要性改由字重＋色条表达，emoji 只表类型
+      ② **加粗条数不能过半**——8/20 之前周三 4 条里 4 条挂 🎯，
+         等于没标（同「铺满 = 等于没标」：8/18 持仓表、8/19 A级表都栽在这上面）
+    """
+    if data is None or data.get("report_type") != "premarket":
+        return
+    if 'class="cal-table' not in html:
+        return
+    seg = html.split('class="cal-table', 1)[1].split("</table>", 1)[0]
+    if "🎯" in seg:
+        return "日历里还有 🎯——图标只表类型，重要性走 hot（字重＋左色条）"
+    if 'class="cal-ic"' not in seg:
+        return "日历条目缺类型图标，可能又退回统一圆点"
+    # 🔴 不能用前缀 count：'class="cal-i' 也匹配图标 span 的 'class="cal-ic"'，
+    #    total 会翻倍、条件永远不成立（写完这条检查当场用假数据抓到的）。
+    hot = seg.count('class="cal-i hot"')
+    total = seg.count('class="cal-i"') + hot
+    if total >= 4 and hot * 2 > total:
+        return "日历 %d 条里 %d 条标了重要（过半）——标满等于没标" % (total, hot)
 
 
 PHASE1_BADGE_MARKERS = ["段1", "盘前报价未取", "待段2", "段2待", "（盘后填）"]
@@ -856,8 +1287,18 @@ def _template_fields(template="assemble_template.py", retired=None):
 # 否则以后没人分得清「主动退役」和「漂移丢失」。
 # premarket_movers/_note —— 2026-08-12 整块退役（Vic：「我也不看盘前异动选股，关于盘前的全部删了吧」）。
 #   模板里留空壳作历史记录；既不要求出现、出现也不算自造。
+# other_assets_table —— 2026-08-14 Vic：「整个表格删除，我只需要小结」。
+#   模板留空壳，内容改由 other_assets_note 承载（后者是必备字段，要出现在报告里）。
+# scoreboard_rows/_note + breadth_table —— 2026-08-17 整块退役（Vic：「我的攻守记分板删除」
+#   「广度明细可以加入市宽打分表格，2表变成一涨」）。内容分别并入 regime_triggers 和 breadth_score_rows。
+# adanos_scan_table/_note —— 2026-08-17 Vic：「方法3 · Adanos Top100扫描 删除这个方法」。
+# etf_table —— 2026-08-17 Vic：「03 指数闸门…没必要写两次，用闸门位置格式」，
+#   七只 ETF 的读数并进 gate_scoreboard_rows（etf_table_note 仍在用，不退役）。
 RETIRED_FIELDS = {"futures_table", "futures_note",
-                  "premarket_movers", "premarket_movers_note"}
+                  "premarket_movers", "premarket_movers_note",
+                  "other_assets_table",
+                  "scoreboard_rows", "scoreboard_note", "breadth_table",
+                  "adanos_scan_table", "adanos_scan_note", "etf_table"}
 
 # 盘后已退役 / 已暂停的字段：模板里以注释形式留空壳，既不要求出现、出现也不算自造。
 # breadth_stage_table/_note —— 2026-08-11 Vic：「Weinstein 728 票全扫 用不着 stage 了，这个删除」
@@ -890,7 +1331,11 @@ def _premarket_field_set(html, data):
     if data is None or data.get("report_type") != "premarket":
         return
     tpl = _template_fields()
-    have = {k for k in data if not k.startswith("_")}
+    # 🔴 2026-08-17：退役字段要从 have 里也减掉，盘后那条一直是这么写的，盘前漏了。
+    #    漏的后果在 8/17 删记分板时炸出来：8/10~8/14 五份历史报告集体报「自造字段
+    #    scoreboard_rows」——**它们写的时候那字段是合法的**，退役是今天的事。
+    #    退役的语义是「不要求出现、出现也不算自造」，两边都得减。
+    have = {k for k in data if not k.startswith("_")} - RETIRED_FIELDS
     unknown = sorted(have - tpl)
     # 段1 草稿本来就还没有段2 字段，只查「多出来的」；段2 定稿两头都查
     is_final = data.get("_phase") == 2 or "watchlist_abc" in data
@@ -1049,35 +1494,344 @@ RISK_LABELS = [
 ]
 
 
-@check("攻守记分板骨架固定（2026-08-10 Vic：「攻守积分版只有3个？」+「7月随机2个报告比对」）")
-def _scoreboard_fixed(html, data):
-    if data is None or data.get("report_type") != "premarket":
+# 🔴 「攻守记分板骨架固定」这条检查 2026-08-17 随记分板一起删除。
+#    它守的是 scoreboard_rows 的四桶和 7~11 行——而那块已经整体退役。
+#    留着只会每天红一次，变成又一条被忽略的检查（同 8/03-8/10 那条报了 45 次没人修的）。
+#    **骨架没了，守卫也要走。**
+
+
+# 🔴 临时检查 · 只在 2026-08-15 那一份报告上生效（2026-08-14 Vic：
+#    「今天改的部分，全部写进模板，建立临时 1 天的额外 QA，追踪明天是否都改了」）
+#
+# **为什么要临时的**：8/14 一天改了七处口径。改动落进模板 ≠ 明天真的会生效——
+# 明天是新会话，它复制模板、填手写区、渲染，中间任何一步都可能把新口径带偏
+# （最典型的：又从旧报告继承一份 15 行的广度表）。这条就是**明天那一次的验收单**。
+#
+# **到期自动失效**：日期不匹配直接 return。不要手工删——留着当历史记录，
+# 也免得「临时检查」自己变成又一条没人维护的永久规则。
+# =========================================================================
+# 🔴 2026-08-16 修：原本写的是 "2026-08-15"，**那天是周六，根本没有报告**——
+#    这条检查建成之后一次都不会触发，等于白建。改成下一个真实交易日 8/17（周一）。
+#    教训：写「明天」的日期闸门时，先确认那天是不是交易日。
+@check("候选表只有 A/B 两级（2026-08-17 Vic：「c退役」）")
+def _no_grade_c(html, data):
+    """C 级 = 「当日忽略」，是个明说了不做的清单，对当天决定没有输入。
+
+    退役后降级理由要落到对应模块的 note，**不是不写**——
+    这条检查守的是反面：候选表里不该再出现 C。
+    """
+    if data is None:
         return
-    rows = data.get("scoreboard_rows") or []
-    if not rows:
-        # 🔴 不能 return——8/03~8/07 那批正是「这个字段整个不存在」（被拆进
-        # gate_scoreboard_rows + breadth_score_rows），静默放过等于漏掉最严重的一种漂移。
-        if data.get("_phase") == 2 or "watchlist_abc" in data:
-            return ("**攻守记分板整块缺失**（scoreboard_rows 为空）"
-                    "——是不是又被拆进 gate/breadth 两张表了？口径见 2026-07-22")
+    bad = [x.get("ticker", "?") for x in (data.get("watchlist_abc") or [])
+           if (x.get("grade", "") or "").strip()[:1].upper() not in ("A", "B")]
+    if bad:
+        return ("候选表里还有非 A/B 级：%s——C 级 2026-08-17 已退役，"
+                "降级理由请写进对应模块的 note" % bad)
+
+
+@check("盘后正文不许出现 Brier 数字（2026-08-17 Vic：「brier score 就放周报吧」）")
+def _no_daily_brier(html, data):
+    """守的是「注释宣布了删除、代码没跟上」这种漂移。
+
+    8/17 第一次删时只改了注释，渲染块留着，随后 recon_prob_note 里又写满了
+    Brier 数字和「比基线差」的判语——**QA 当时只查 recon_prob_note 非空，所以绿灯**。
+    这条专查「盘后正文里有没有 Brier 的数字」，让同一个洞不能再从别的字段钻回来。
+    周报不受影响（判语本来就该在那里出）。
+    """
+    if data is None or data.get("report_type") != "postmarket":
         return
-    buckets = {r.get("type") for r in rows if isinstance(r, dict)}
-    conds = " ".join(str(r.get("condition", "")) for r in rows if isinstance(r, dict)).replace(" ", "")
-    msg = []
-    lost = SCOREBOARD_BUCKETS - buckets
-    if lost:
-        msg.append("**整桶缺失** %s（四桶：升级/降级/技术平价/久期防线）" % sorted(lost))
-    unknown = buckets - SCOREBOARD_BUCKETS
-    if unknown:
-        msg.append("出现未知 type %s" % sorted(unknown))
-    miss_core = [grp[0] for grp in SCOREBOARD_CORE
-                 if not any(alt.replace(" ", "") in conds for alt in grp)]
-    if miss_core:
-        msg.append("缺核心条件 %s（这四条从 7/06 起没缺过）" % miss_core)
-    if not (7 <= len(rows) <= 12):
-        msg.append("共 %d 行，历史区间是 7~11 行" % len(rows))
-    if msg:
-        return "；".join(msg) + "——**允许加行，不允许整桶消失**；口径见 2026-07-22 / 07-24"
+    import re as _re
+    body = _re.sub(r"<(script|style)[^>]*>.*?</\1>", "", html, flags=_re.S)
+    body = _re.sub(r"<!--.*?-->", "", body, flags=_re.S)
+    text = _re.sub(r"<[^>]+>", " ", body)
+    bad = _re.findall(r"Brier[^。\n]{0,20}?(\d+\.\d+)", text)
+    if bad:
+        return ("盘后正文出现了 Brier 数字 %s——**日频 Brier 已于 2026-08-17 搬到周报**。"
+                "recon_prob_note 只写概率口径（怎么定、为什么盘后不许改），不写分数和判语" % bad[:3])
+
+
+@check("小结里的分组小标题不带项目符号（2026-08-18 Vic：「还是有小点」）")
+def _co_head_no_bullet(html, data):
+    """「今晚要动的：」这种冒号结尾的短行是分组标题，不是条目。
+
+    带上项目符号后读起来像一个漏了内容的空条目——Vic 圈出来两次。
+    渲染层按「≤24 字且以：结尾」自动打 co-head；这条检查守它别退化回去。
+    """
+    import re as _re
+    bad = []
+    for m in _re.finditer(r'<div class="co-item">(.*?)</div>', html, _re.S):
+        txt = _re.sub(r"<[^>]+>", "", m.group(1)).strip()
+        if txt.endswith("：") and len(txt) <= 24:
+            bad.append(txt)
+    if bad:
+        return ("这些分组小标题还挂着项目符号：%s——"
+                "渲染层应给它们 class=\"co-item co-head\"" % bad[:3])
+
+
+@check("盘前盘后的持仓表必须同一套列（2026-08-18 Vic：「今天改的格式固定下来」）")
+def _positions_same_shape(html, data):
+    """同一张表在两份报告里两个长相，就是下一次漂移的起点。
+
+    8/17 那批格式问题（记分板 30 种写法、etf_table 和闸门表画两遍、广度两张表）
+    全是「同一件事有两个地方可以写」造成的。持仓表的列由 H.POS_HEADERS_V2 定义一处，
+    盘前只把最后一列改名成「论点检查 / 今日行动」（盘前问的是明天做什么，盘后问的是今天发生了什么）。
+    """
+    if data is None:
+        return
+    import sys as _s
+    _s.path.insert(0, str(ROOT / "scripts"))
+    import report_helpers as _H
+    want = list(_H.POS_HEADERS_V2)
+    for k in ("positions_moomoo_table", "positions_longbridge_table"):
+        got = (data.get(k) or {}).get("headers")
+        if not got:
+            continue
+        if got[:-1] != want[:-1]:
+            return ("%s 的列和 H.POS_HEADERS_V2 不一致：%s ≠ %s——"
+                    "列定义只有一处真源，改列请改 report_helpers" % (k, got[:-1], want[:-1]))
+
+
+@check("持仓表不带整行底色（2026-08-18 Vic：「颜色都删除，基本都上色了」）")
+def _positions_no_row_colors(html, data):
+    """守的不是审美，是**信号密度**。
+
+    8/18 实测 16 笔里 13 笔上色，只剩 3 笔白的——颜色铺满就不再是颜色。
+    根因是拿「今天要动手」染色，而 p14 每天都会判出动作，它注定高频。
+    替代品是 ADR% 和「距止损 X ATR」两列数字（可比、可排序、不因条数多失效）。
+    """
+    if data is None:
+        return
+    bad = [k for k in ("positions_moomoo_table", "positions_longbridge_table")
+           if any((data.get(k) or {}).get("row_highlights") or [])]
+    if bad:
+        return ("%s 又带上了整行底色——2026-08-18 已退役。"
+                "要表达紧迫程度请用「距止损 X ATR」那一列，别再加颜色" % bad)
+
+
+TEMP_CHECK_DAY = "2026-08-17"
+
+# 8/14 把单边榜票池收成纯 ETF 后，这 12 只个股不该再出现在「单边板块」榜里
+_OPTICAL_STOCKS = {"AVGO", "ANET", "CRDO", "GLW", "MTSI", "FN",
+                   "LITE", "MRVL", "CIEN", "COHR", "AAOI", "POET"}
+
+
+@check("【临时·仅 2026-08-17】8/14 那批口径改动今天有没有真的生效")
+def _temp_20260815_carryover(html, data):
+    if data is None or data.get("date") != TEMP_CHECK_DAY:
+        return
+    bad = []
+    rt = data.get("report_type")
+
+    if rt == "premarket":
+        # ① 市宽 checklist 必须是 9 项，且不含已退役的 Sheet 六项
+        # 🔴 2026-08-17：数据源从 breadth_table 换成 breadth_score_rows——
+        #    那天两表合一，明细行搬进了打分表（Vic：「2表变成一涨」），
+        #    再照着 breadth_table 数就永远是 0 项，这条会天天误报。
+        rows = data.get("breadth_score_rows") or []
+        if len(rows) != 9:
+            bad.append("市宽 checklist 是 %d 项，应为 **9 项**（8/14 起只用 Stockbee）" % len(rows))
+        if any(("Sheet" in str(r.get("condition", "")) or "站上20MA" in str(r.get("condition", ""))
+                or "站上50MA" in str(r.get("condition", ""))) for r in rows):
+            bad.append("市宽表里还有「Maket breath」Sheet 那六项——**它们 8/14 已退役**")
+        # ② 其他资产：表格退役、note 必填
+        if (data.get("other_assets_table") or {}).get("rows"):
+            bad.append("other_assets_table 又有内容了——**8/14 已退役，只留 other_assets_note**")
+        if not data.get("other_assets_note"):
+            bad.append("缺 other_assets_note——「其他资产」现在只靠这一段小结")
+        # ③ 持仓两列不许空（Vic：「论点检查/今日行动应该写两句的吧」）
+        for key in ("positions_moomoo_table", "positions_longbridge_table"):
+            for r in ((data.get(key) or {}).get("rows") or []):
+                if len(r) < 7 or not str(r[5]).strip() or not str(r[6]).strip():
+                    bad.append("%s 里 %s 那行的「失效条件」或「论点检查/今日行动」是空的"
+                               % (key, r[0]))
+                    break
+        # ④ 单边**板块**榜不许出现个股
+        hit = [r[1] for r in ((data.get("unilateral_scan_table") or {}).get("rows") or [])
+               if len(r) > 1 and r[1] in _OPTICAL_STOCKS]
+        if hit:
+            bad.append("单边**板块**榜里出现个股 %s——**8/14 已把票池收成纯 ETF**" % hit)
+        # ⑤ 方法4 盘前异动机会必须已消失
+        if html and "方法4" in html:
+            bad.append("正文里还有「方法4」——**盘前异动机会 8/14 已整块删除**")
+        # ⑥ BAM 要么是图要么没有，不该退回表格
+        if html and "10日涨家数" in html:
+            bad.append("BAM 又渲染成表格了——**8/14 改成折线图**（build_bam_chart）")
+
+    if rt == "postmarket":
+        # ⑦ p14 持仓管理执行表必须在（8/14 接入盘后）
+        pmt = data.get("position_manage_table") or {}
+        if not pmt.get("rows") and not pmt.get("nodata"):
+            bad.append("缺「持仓管理执行表（教材 p14）」——**8/14 接入盘后，"
+                       "前置是 python scripts/position_manage.py**")
+
+    if bad:
+        return ("8/14 定的口径有 %d 处没带过来：" % len(bad)
+                + "".join("\n      · " + x for x in bad))
+
+
+# ==========================================================================
+# 🔴 拆股/复权两条（2026-08-19 建）
+#
+# 起因：2026-08-18 的 cache 是不复权K线，窗口里拆过股的 6 只全线污染——
+#   CRWD（07-02 四拆一）距50MA 报 -42.07% 真值 **+11.35%**、Weinstein 报 Stage 4 真值 Stage 2；
+#   XLY/XLU/XLB/XLK/XLE（2025-12-05 二拆一）距52周高 报 -44~-53% 真值 -0.05~-7.91%。
+# CRWD 当天在 ML Leader 名单上，而那张表印的就是「距52周高」和「距50MA」。
+#
+# 两条检查是**两层**，都要有：
+#   ①「拆股绊线」查我们自己的标记有没有被无视——快，不联网，每天都跑；
+#   ②「独立源核对」查标记本身有没有漏——慢，联网，但它是唯一能发现
+#      「detect_split 和复权同时失灵」的那一层。
+#      只有 ① 的话，数据源整体错了我们会全票通过。
+# ==========================================================================
+
+def _report_tickers(data) -> list:
+    """从报告 JSON 里把出现过的 ticker 捞出来（各表第一列）。
+    只查报告里真的印了的票——全 universe 116 只逐个联网太慢，也没必要。"""
+    if not isinstance(data, dict):
+        return []
+    out = []
+
+    def walk(v):
+        if isinstance(v, dict):
+            for k, x in v.items():
+                walk(x)
+        elif isinstance(v, list):
+            for x in v:
+                if isinstance(x, list) and x and isinstance(x[0], str):
+                    out.append(x[0])
+                elif isinstance(x, dict) and isinstance(x.get("ticker"), str):
+                    out.append(x["ticker"])
+                else:
+                    walk(x)
+
+    walk(data)
+    seen, tks = set(), []
+    for t in out:
+        t = t.split()[0].strip().upper() if t.split() else ""
+        # 形如 SPY / BRK.B / XLU，排除中文标题和长句
+        if t and len(t) <= 6 and re.fullmatch(r"[A-Z][A-Z.\-]{0,5}", t) and t not in seen:
+            seen.add(t)
+            tks.append(t)
+    return tks
+
+
+def _yahoo_off_52w(ticker: str, asof: str, timeout: int = 8):
+    """独立源（Yahoo Chart API，见 CONTEXT.md「历史K线备用方案」）算的距52周高%。
+    口径要跟 fetch_market_data.analyze() 对齐：**最近252根的最高 high**，跟最新收盘比。
+    Yahoo 的 close 是拆股复权、不含分红复权——正是我们要的那个基准。
+    拿不到返回 None（离线/被限流时这条检查自己失效，不制造假失败）。"""
+    import urllib.request, datetime
+    url = ("https://query1.finance.yahoo.com/v8/finance/chart/%s?range=2y&interval=1d"
+           % ticker.replace(".", "-"))
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        r = json.loads(urllib.request.urlopen(req, timeout=timeout).read())["chart"]["result"][0]
+        q = r["indicators"]["quote"][0]
+        bars = [(datetime.date.fromtimestamp(t).isoformat(), h, c)
+                for t, h, c in zip(r["timestamp"], q["high"], q["close"])
+                if h is not None and c is not None]
+        bars = [b for b in bars if b[0] <= asof]
+        if len(bars) < 60 or bars[-1][0] != asof:
+            return None            # 口径日对不上就不比，避免拿昨天的高点当今天的
+        hi = max(b[1] for b in bars[-252:])
+        return (bars[-1][2] - hi) / hi * 100 if hi else None
+    except Exception:
+        return None
+
+
+OFF52_TOLERANCE_PP = 10.0     # 差多少个百分点算不一致（Vic 口径：10pp）
+OFF52_MAX_TICKERS = 30        # 单次最多核对多少只，别把 QA 跑成半分钟
+
+
+@check("距52周高必须跟独立源对得上（2026-08-19：不复权K线让 CRWD 报 -72.91%，真值 -6.41%）")
+def _off_52w_vs_independent(html, data):
+    """跟 2026-08-09「价格必须等于口径日收盘」同一类——**Vic 肉眼查不出派生指标**，
+    要查得逐个去比对第二个数据源，所以这里就是那第二个数据源。
+
+    这条**故意联网**。它是唯一能抓住「我们自己的拆股检测也失灵了」的一层：
+    2026-08-18 那天 cache 里 6 只全错，报告侧却没有任何字段说它错了。
+    离线/限流时整条安静跳过（返回 None 的都不计入），不制造假失败。
+    """
+    if data is None or not data.get("date"):
+        return
+    day = data["date"]
+    cache = _cache_for_report(data)
+    if not cache:
+        return
+    M = cache.get("metrics", {})
+    # 🔴 as-of 必须用 cache 的 data_date，不是报告日——盘前报告日是 T，口径日是 T-1，
+    #    拿报告日去比 Yahoo 的最后一根永远对不上，整条会静默降级成「一只都没取到」。
+    day = cache.get("data_date") or day
+    tks = [t for t in _report_tickers(data) if M.get(t, {}).get("off_52w_high_pct") is not None]
+    # 🔴 按 |距52周高| 从大到小排，再截断。
+    #    未复权的拆股**一定**表现为「距52周高异常地深」（拆股把历史高点抬高了 N 倍），
+    #    所以把跌得最狠的排前面 = 所有可疑对象都排在截断线之前，截掉的永远是最不可疑的尾巴。
+    #    2026-08-19 实测：不排序时 CRWD 排在第 54 位，被 30 只的上限挡在外面**没查到**——
+    #    而它正是这次事故里最严重的那一只。
+    tks.sort(key=lambda t: -abs(M[t]["off_52w_high_pct"]))
+    if not tks:
+        return
+    bad, checked = [], 0
+    for t in tks[:OFF52_MAX_TICKERS]:
+        y = _yahoo_off_52w(t, day)
+        if y is None:
+            continue
+        checked += 1
+        ours = M[t]["off_52w_high_pct"]
+        if abs(ours - y) > OFF52_TOLERANCE_PP:
+            bad.append("%s cache %+.2f%% vs 独立源 %+.2f%%（差 %.1fpp）" % (t, ours, y, abs(ours - y)))
+    if not checked:
+        return WARN_PREFIX + "独立源一只都没取到（离线或被限流），这条本次没生效"
+    if bad:
+        return ("跟独立源差 >%.0fpp 的有 %d 只：" % (OFF52_TOLERANCE_PP, len(bad))
+                + "；".join(bad[:6]) + ("" if len(bad) <= 6 else "（共%d只）" % len(bad))
+                + "  ← 十有八九是 cache 的 adjust_type 不是 forward，重跑 fetch_market_data.py"
+                + "（已核对 %d 只）" % checked)
+
+
+@check("拆股存疑的票不许印距52周高／距50MA（2026-08-19：CRWD 距50MA 报 -42%，真值 +11%）")
+def _split_suspect_not_rendered(html, data):
+    """fetch_market_data.detect_split() 已经把票标成 split_suspect 了，
+    报告侧还是把数字印出去 = 标记白打。
+    正确写法是走 report_helpers.off_52w_cell() / dist_ma50_cell()，它们会出 SPLIT_BLOCKED。"""
+    if data is None or not data.get("date"):
+        return
+    day = data["date"]
+    cache = _cache_for_report(data)
+    if not cache:
+        return
+    suspect = {t for t, m in (cache.get("metrics") or {}).items() if m.get("split_suspect")}
+    if not suspect:
+        return
+    blocked = helpers.SPLIT_BLOCKED
+    bad = []
+
+    def scan(container, key):
+        for r in (container or []):
+            cells = r if isinstance(r, list) else (list(r.values()) if isinstance(r, dict) else [])
+            if not cells or not isinstance(cells[0], str):
+                continue
+            tk = cells[0].split()[0].strip().upper() if cells[0].split() else ""
+            if tk not in suspect:
+                continue
+            # 这一行里只要还有百分比/×ATR 形态的数字，就是把被污染的列印出去了
+            for c in cells[1:]:
+                txt = str(c)
+                if blocked in txt:
+                    continue
+                if re.search(r"[-+]?\d+(\.\d+)?\s*(%|×ATR)", txt):
+                    bad.append("%s:%s 那行印了「%s」" % (key, tk, txt.strip()[:24]))
+                    break
+
+    for key, val in (data.items() if isinstance(data, dict) else []):
+        if isinstance(val, dict) and isinstance(val.get("rows"), list):
+            scan(val["rows"], key)
+        elif isinstance(val, list):
+            scan(val, key)
+    if bad:
+        return ("这些票 cache 里已标 split_suspect（%s），报告却照印数字：" % "、".join(sorted(suspect))
+                + "；".join(bad[:6]) + ("" if len(bad) <= 6 else "（共%d处）" % len(bad))
+                + "  ← 这两列要走 report_helpers.off_52w_cell()/dist_ma50_cell()")
 
 
 # 🔴 入口守卫必须放在文件最末。2026-08-10 发现它卡在中间，

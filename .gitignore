@@ -19,3 +19,6 @@ deepvue/.env.local
 
 # output/ 是独立 git 仓库（自带历史），不作为 gitlink 混进主仓库
 output/
+
+# 脚本自动生成的时间戳备份（改动前的副本），不进仓库
+*.bak-*

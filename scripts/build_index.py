@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Scan output/{premarket,postmarket,weekly,monthly,special} and build output/index.html —
+"""Scan output/{premarket,postmarket,xdesk,weekly,monthly,special} and build output/index.html —
 Vic 的每日入口页。
 
 2026-08-04 Vic：「我喜欢老师那样，所有报告按日期排，混在一起，上面的标签已经够我用来分开看了」——
@@ -27,6 +27,11 @@ Vic 的每日入口页。
 时间线，更早的收进新的「归档」筛选标签（默认隐藏，点了才展开）；周报/月报不受影响，永远都在。
 「当月」以数据里最新一条盘前/盘后的年月为准，不依赖系统时钟，避免服务器时区/时钟漂移导致误判。
 
+2026-08-20 新增 X 盘中简报（xdesk）：`output/xdesk/YYYY-MM-DD-x.html` 进同一条时间线，
+排在当天盘后之后，用单独的「X盘中」筛选标签（绿色，跟专题的紫色和日报的蓝色分开）。
+它没有报告那套 header，摘要由 `_xdesk_entry()` 单独拼：当天几轮/几条/几张图 + 最新一轮
+判断的第一句。归档规则跟盘前/盘后一样按月滚动。
+
 Usage:
     python build_index.py
 """
@@ -43,23 +48,26 @@ OUT = ROOT / "output"
 WEEKDAYS = ("周一", "周二", "周三", "周四", "周五", "周六", "周日")
 
 # 类型定义：key -> (中文名, 同日排序优先级)
+# xdesk 用 1.5 排在盘后之后、专题之前，这样不必给已有四类重新编号
 KINDS = {
     "premarket": ("盘前", 0),
     "postmarket": ("盘后", 1),
+    "xdesk": ("X盘中", 1.5),
     "special": ("专题", 2),
     "weekly": ("周报", 3),
     "monthly": ("月报", 4),
 }
 
-# 筛选分组：盘前/盘后/周报/月报是同一种「报告」，只有专题单独一组
+# 筛选分组：盘前/盘后/周报/月报是同一种「报告」；专题、X盘中 各自单独一组
 GROUP_OF = {
     "premarket": "report",
     "postmarket": "report",
     "weekly": "report",
     "monthly": "report",
     "special": "special",
+    "xdesk": "xdesk",
 }
-GROUPS = (("report", "日报"), ("special", "专题"))
+GROUPS = (("report", "日报"), ("special", "专题"), ("xdesk", "X盘中"))
 
 EXTRA_CSS = """
 a{color:var(--blue);text-decoration:none}
@@ -91,6 +99,7 @@ header .badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
   padding:2px 9px;border:1px solid transparent;white-space:nowrap}
 .t-premarket,.t-postmarket,.t-weekly,.t-monthly{color:var(--blue);background:var(--blue-bg);border-color:#c3d6f5}
 .t-special{color:#5b4a8a;background:#efecf8;border-color:#d5cdea}
+.t-xdesk{color:var(--green);background:var(--green-bg);border-color:#bfe0cd}
 .rpt-date{font-size:12.5px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums}
 .rpt h3{margin:0 0 5px;font-size:16.5px;line-height:1.42}
 .rpt h3 a{color:var(--text)}
@@ -125,7 +134,8 @@ FILTER_JS = """
     archive: document.getElementById('archive-panel'),
     other: document.getElementById('other-panel')
   };
-  var TARGET = { all: 'rpt', report: 'rpt', special: 'rpt', archive: 'archive', other: 'other' };
+  var TARGET = { all: 'rpt', report: 'rpt', special: 'rpt', xdesk: 'rpt',
+                 archive: 'archive', other: 'other' };
   btns.forEach(function(b){
     b.addEventListener('click', function(){
       var f = b.dataset.filter;
@@ -218,9 +228,42 @@ def _entry(path: Path, kind: str, sort_date: datetime.date, label: str) -> dict:
     }
 
 
+def _xdesk_entry(path: Path, d: datetime.date) -> dict:
+    """X 盘中简报的卡片：它没有报告那套 header，所以摘要单独拼。
+
+    页面本身是「一天多轮追加」的，所以摘要给的是当天的量级（几轮/几条/几张图）
+    加最新一轮判断的第一句——一眼看出这天 X 上有没有值得回去翻的东西。
+    """
+    text = path.read_text(encoding="utf-8", errors="ignore")
+    m = re.search(r"今日 (\d+) 轮 · (\d+) 条 · (\d+) 张图.*?最后更新 ([\d:]+)", text, re.S)
+    stat = "%s 轮 · %s 条 · %s 张图 · 最后更新 %s" % m.groups() if m else ""
+    take = _pick(r'<div class="callout"><b>本轮判断</b><br>(.*?)</div>', text)
+    # 页面里的 takeaway 已经转义过、还带 <b> 标签：先去标签再反转义，
+    # 否则下面 esc() 会把 &amp; 变成 &amp;amp;
+    take = html.unescape(re.sub(r"<[^>]+>", "", take)).strip()
+    take = re.split(r"(?<=[。！？])", take)[0][:110] if take else ""
+    return {
+        "kind": "xdesk",
+        "sort": (d, KINDS["xdesk"][1]),
+        "label": "%s %s" % (d.isoformat(), _weekday(d)),
+        "file": "%s/%s" % (path.parent.name, path.name),
+        "title": "X 盘中简报",
+        "summary": ("<strong>%s</strong>%s" % (stat, "　" + esc(take) if take else "")) if stat
+                   else esc(take),
+        "badges": "",
+    }
+
+
 def collect() -> list:
-    """把五类报告合并成一条按日期倒序的时间线。"""
+    """把六类产物合并成一条按日期倒序的时间线（五类报告 + X 盘中简报）。"""
     items = []
+
+    if (OUT / "xdesk").exists():
+        for f in (OUT / "xdesk").glob("*-x.html"):
+            m = re.match(r"(\d{4}-\d{2}-\d{2})-x\.html", f.name)
+            if not m:
+                continue
+            items.append(_xdesk_entry(f, datetime.date.fromisoformat(m.group(1))))
 
     for kind in ("premarket", "postmarket"):
         for f in (OUT / kind).glob(f"*-{kind}.html") if (OUT / kind).exists() else []:
@@ -305,7 +348,7 @@ def _archive_section(archived: list) -> str:
     cards = "".join(_card(i) for i in archived)
     return (
         '<section id="archive-panel" class="rpt-list" hidden>'
-        '<p class="muted" style="margin:0 0 12px">已归档：本月之前的盘前/盘后。'
+        '<p class="muted" style="margin:0 0 12px">已归档：本月之前的盘前/盘后/X盘中。'
         '周报/月报不受影响，一直留在「日报」里。</p>'
         f'{cards}</section>'
     )
@@ -335,7 +378,8 @@ def build() -> Path:
     cutoff = _daily_archive_cutoff(items)
     archived = [
         i for i in items
-        if i["kind"] in ("premarket", "postmarket") and (i["sort"][0].year, i["sort"][0].month) < cutoff
+        if i["kind"] in ("premarket", "postmarket", "xdesk")
+        and (i["sort"][0].year, i["sort"][0].month) < cutoff
     ] if cutoff else []
     archived_files = {i["file"] for i in archived}
     visible = [i for i in items if i["file"] not in archived_files]

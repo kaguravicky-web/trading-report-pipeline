@@ -23,6 +23,11 @@ from fetch_market_data import analyze  # 复用同一套指标口径
 
 from longport.openapi import QuoteContext, Config, Period, AdjustType
 
+# 🔴 K线复权口径统一走 fetch_market_data.BARS_ADJUST（2026-08-19 定）——
+#    这里原本写死 NoAdjust，窗口跨过拆股就整段作废（CRWD 距50MA 报 -42% 真值 +11%）。
+import report_helpers as _H  # noqa: E402
+_ADJUST = _H.bars_adjust()
+
 
 def get_watchlist_symbols(ctx):
     """LongBridge自选列表全量US标的（去重）。"""
@@ -48,41 +53,55 @@ def load_etf_holdings():
 
 
 def classify(m):
-    """按CONTEXT.md「选股规则」的机器初筛参数打setup标签。返回[(setup, 说明)]。"""
+    """按CONTEXT.md「选股规则」的机器初筛参数打setup标签。返回[(setup, 说明)]。
+
+    🔴 **2026-08-20 Vic 把 A/B/C/D/E 全部换成形态名**（原话：「abcde那些都好删除了」）：
+        A → pullback（缩量回踩 9EMA）
+        D → pullback（放量突破后缩量回踩）—— 同为回踩，说明文字里仍区分
+        B → tight（高位收紧）
+        C → spring（浅插针快速收回，Wyckoff spring；样本天然少，8/19 全场只有 2 个）
+        E → shakeout+burst（深度洗盘 + 放量夺回）
+        Ew → pullback（洗盘已收回但爆发 bar 未出现 —— 2026-08-20 Vic：「这个就是 Pullback」，
+             做法跟回踩买点一样都是等一根 bar，动作相同就不该占两个标签名）
+        W → 2 wick（双底/三重底，同一位置两次插针）
+    ⚠️ **spring 和 shakeout+burst 不是同一个东西，不许合并**（2026-08-20 Vic 问过）：
+       支撑窗口 15 根 vs 40 根、盘中破 vs 收盘破、3 根内收回 vs 待 ≥2 根、
+       深度 ≤5% vs ≤20%，而且 **shakeout+burst 强制要求爆发 bar，spring 不要求**。
+       合并 = 把两个不同的入场时点混成一个。
+    """
     tags = []
     if m["rsi14"] is None or m.get("ma20") is None:
         return tags
     up_bg = (m.get("dist_ma50_pct") or -99) > 0 and m["rsi14"] >= 45  # 强势背景（人眼过滤的机器近似）
     # Setup B：tight consolidation（高位收紧，不是低位阴跌）
     if m.get("tight_5d") and m["rsi14"] >= 50 and (m.get("dist_ma20_pct") or -99) > 0 and m.get("ma20_slope_up"):
-        tags.append(("B", f"tight：5日区间{m['range5_pct']}%/{m['range5_atr']}ATR，RSI{m['rsi14']}"))
+        tags.append(("tight", f"5日 {m['range5_pct']}%/{m['range5_atr']}ATR · RSI {m['rsi14']}"))
     # Setup A：缩量回踩9EMA（上升趋势中贴近9EMA）
     d9 = m.get("dist_ema9_pct")
     if up_bg and d9 is not None and -2.5 <= d9 <= 1.5 and m.get("ma20_slope_up") and (m.get("vol_ratio") or 9) < 1.0:
-        tags.append(("A", f"回踩9EMA：距{d9}%，缩量{m.get('vol_ratio')}×"))
+        tags.append(("pullback", f"距9EMA {d9}% · 量 {m.get('vol_ratio')}×"))
     # Setup C：undercut and rally（强势背景里的假跌破收回）
     if m.get("undercut_rally") and m["rsi14"] >= 45:
         u = m["undercut_rally"]
-        tags.append(("C", f"undercut收回：支撑{u['support']}，假破深度{u['undercut_depth_pct']}%"))
+        tags.append(("spring", f"支撑 {u['support']} · 假破 {u['undercut_depth_pct']}%"))
     # Setup D：放量突破→缩量回踩
     if m.get("breakout_pullback"):
         b = m["breakout_pullback"]
-        tags.append(("D", f"突破{b['pivot']}({b['breakout_date']},量{b['breakout_vol_ratio']}×)后缩量回踩"))
+        tags.append(("pullback", f"突破位 {b['pivot']}（{b['breakout_date']} 量{b['breakout_vol_ratio']}×）"))
     # Setup E：shakeout + momentum burst（深度洗盘后动量爆发，2026-07-15 Vic老师PLTR案例）
     if m.get("shakeout_burst"):
         s = m["shakeout_burst"]
         if s["burst"]:
             bu = s["burst"]
-            tags.append(("E", f"shakeout收回{s['support']}(深{s['depth_pct']}%/{s['days_below']}天下方)"
-                              f"+burst {bu['date']} +{bu['gain_pct']}%量{bu['vol_ratio']}×"))
+            tags.append(("shakeout+burst", f"收回 {s['support']}（深{s['depth_pct']}%/{s['days_below']}天）"
+                              f" · burst {bu['date']} +{bu['gain_pct']}% 量{bu['vol_ratio']}×"))
         elif m["rsi14"] >= 40:
-            tags.append(("Ew", f"shakeout已收回{s['support']}(深{s['depth_pct']}%)，burst未确认——"
-                               f"开盘第一根放量动量bar触发买入，止损洗盘低点下方"))
+            tags.append(("pullback", f"收回 {s['support']}（深{s['depth_pct']}%）· burst 未确认"))
     # 加分结构：二次/三次探底未破前低
     if m.get("double_bottom"):
         db = m["double_bottom"]
         kind = "三重底" if db.get("triple") else "双底"
-        tags.append(("W", f"{kind}未破前低：L1={db['low1']} L2={db['low2']}"))
+        tags.append(("2 wick", f"{'×3' if db.get('triple') else '×2'} L1 {db['low1']} · L2 {db['low2']}"))
     return tags
 
 
@@ -107,7 +126,7 @@ def main():
         try:
             bars = [{"date": str(b.timestamp.date()), "o": float(b.open), "h": float(b.high),
                      "l": float(b.low), "c": float(b.close), "v": b.volume}
-                    for b in ctx.candlesticks(sym, Period.Day, 220, AdjustType.NoAdjust)]
+                    for b in ctx.candlesticks(sym, Period.Day, 220, _ADJUST)]
             if len(bars) < 60 or bars[-1]["c"] < 3:
                 continue
             m = analyze(bars)
@@ -133,7 +152,9 @@ def main():
               open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"wrote {out}  (setups on {len(results)} tickers, {len(errors)} errors)")
     for tk, r in sorted(results.items(), key=lambda kv: -(kv[1]["rsi14"] or 0)):
-        tags = "+".join(s["type"] for s in r["setups"])
+        # 🔴 2026-08-20：连接符从 "+" 改成 " · "。新标签里的 "shakeout+burst" 自带加号，
+        #    再用 "+" 连接就成了 "pullback+shakeout+burst"，**分不出是两个标签还是三个**。
+        tags = " · ".join(s["type"] for s in r["setups"])
         print(f"  {tk:6s} [{tags}] close={r['close']} RSI={r['rsi14']} "
               f"d9EMA={r['dist_ema9_pct']}% 20MA={r['dist_ma20_atr']}ATR vol={r['vol_ratio']}x | "
               + "；".join(s["note"] for s in r["setups"]))

@@ -1,5 +1,5 @@
 {
- "_说明": "X trader点名台账（2026-07-07建，Vic确认的改进#6）。7个个股/Setup类账号每次明确点名的票都记一条：日期/账号/ticker/提及时参考价（提及前最后一个收盘价）。fetch_market_data.py每次运行自动补最新价和涨跌幅——既统计『这个trader值不值得跟』，也是免费候选池。X提取的setup默认进当日B级候选（只看不做），除非通过了CONTEXT.md选股规则二次验证才能升A。",
+ "_说明": "🔴 @BillAckman 2026-08-18 **连历史条目一起删除**（Vic：「bill ackman删除哦，不符合我的选股，昨天说过了」）。删前战绩：6 条、胜率 17%、均值 -0.42%、中位数 -1.32%，**是全部账号里最差的一个**。代价是这 6 条不再进长期胜率统计——但它已经不在扫描池里，未来不会再有新样本，留着也算不出更多东西。",
  "entries": [
   {
    "date": "2026-07-05",
@@ -478,6 +478,48 @@
    "note": "能源股形态看涨，但作者自己语气偏谨慎（「是否只是看起来简单的setup」）"
   },
   {
+   "date": "2026-08-05",
+   "handle": "@ohiain",
+   "ticker": "UMAC",
+   "ref_price": 24.23,
+   "note": "四个交易日内+50%，7/28曾提示重新站上9周线；他称这类暴力拉升「很少无迹可寻」"
+  },
+  {
+   "date": "2026-08-06",
+   "handle": "@ohiain",
+   "ticker": "ARM",
+   "ref_price": 286.68,
+   "note": "楔形突破想法已兑现获利；继续看9周线与50日均线的关系，暗示逼空后续"
+  },
+  {
+   "date": "2026-08-06",
+   "handle": "@RichardMoglen",
+   "ticker": "CBRS",
+   "ref_price": 211.3,
+   "note": "从21日均线附近推升，短线技术反弹setup"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@aleabitoreddit",
+   "ticker": "AAOI",
+   "ref_price": 124.22,
+   "note": "【promoter降权】称存在20-40%的800G/1.6T光模块产能缺口；财报后盘后 -5.22%"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@aleabitoreddit",
+   "ticker": "AXTI",
+   "ref_price": 75.17,
+   "note": "【promoter降权】InP衬底供需失衡逻辑，称仍长期持有；当日 +9.56%、5日 +60.14%"
+  },
+  {
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "DAVE",
+   "ref_price": 365.26,
+   "note": "增长强劲但有阵痛，建议等50日均线企稳再考虑，不急于追高（当日 -15.09%）"
+  },
+  {
    "date": "2026-08-07",
    "handle": "@RichardMoglen",
    "ticker": "NET",
@@ -492,25 +534,11 @@
    "note": "「报告扎实，AI的骨干」，当晚AH涨幅最大的名字之一"
   },
   {
-   "date": "2026-08-06",
-   "handle": "@RichardMoglen",
-   "ticker": "CBRS",
-   "ref_price": 211.3,
-   "note": "从21日均线附近推升，短线技术反弹setup"
-  },
-  {
-   "date": "2026-08-06",
-   "handle": "@ohiain",
-   "ticker": "ARM",
-   "ref_price": 286.68,
-   "note": "楔形突破想法已兑现获利；继续看9周线与50日均线的关系，暗示逼空后续"
-  },
-  {
-   "date": "2026-08-05",
-   "handle": "@ohiain",
-   "ticker": "UMAC",
-   "ref_price": 24.23,
-   "note": "四个交易日内+50%，7/28曾提示重新站上9周线；他称这类暴力拉升「很少无迹可寻」"
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "SEZL",
+   "ref_price": 178.53,
+   "note": "财报双超，但他自己提出「是不是要利好出尽」——正面消息+谨慎语气"
   },
   {
    "date": "2026-08-07",
@@ -522,51 +550,254 @@
   {
    "date": "2026-08-07",
    "handle": "@spluscollective",
-   "ticker": "ZETA",
-   "ref_price": 25.56,
-   "note": "持续做多，预期测试历史新高（当日 -5.58%）"
-  },
-  {
-   "date": "2026-08-07",
-   "handle": "@spluscollective",
-   "ticker": "DAVE",
-   "ref_price": 365.26,
-   "note": "增长强劲但有阵痛，建议等50日均线企稳再考虑，不急于追高（当日 -15.09%）"
-  },
-  {
-   "date": "2026-08-07",
-   "handle": "@spluscollective",
-   "ticker": "SEZL",
-   "ref_price": 178.53,
-   "note": "财报双超，但他自己提出「是不是要利好出尽」——正面消息+谨慎语气"
-  },
-  {
-   "date": "2026-08-07",
-   "handle": "@spluscollective",
    "ticker": "WDC",
    "ref_price": 451.52,
    "note": "🔴反向观点：「虽然喜欢，但这些名字目前一个都不碰，市场已经给出足够信号」——存储链回避，当日 -13.03%，与SNDK -6.81% 同向"
   },
   {
-   "date": "2026-08-06",
-   "handle": "@BillAckman",
-   "ticker": "UBER",
-   "ref_price": 70.47,
-   "note": "转发并同意：2027年预期利润15倍、2028年12倍，「开始看起来像无脑买入」"
+   "date": "2026-08-07",
+   "handle": "@spluscollective",
+   "ticker": "ZETA",
+   "ref_price": 25.56,
+   "note": "持续做多，预期测试历史新高（当日 -5.58%）"
   },
   {
-   "date": "2026-08-07",
+   "date": "2026-08-13",
+   "handle": "@ohiain",
+   "ticker": "AAOI",
+   "ref_price": 138.08,
+   "note": "光模块链点名"
+  },
+  {
+   "date": "2026-08-13",
+   "handle": "@spluscollective",
+   "ticker": "CAVA",
+   "ref_price": 69.47,
+   "note": "—"
+  },
+  {
+   "date": "2026-08-13",
+   "handle": "@spluscollective",
+   "ticker": "COHR",
+   "ref_price": 355.64,
+   "note": "财报前点名；当晚财报毛利率指引不及，次日 -7.99%"
+  },
+  {
+   "date": "2026-08-13",
+   "handle": "@aleabitoreddit",
+   "ticker": "LITE",
+   "ref_price": 932.47,
+   "note": "【promoter降权】"
+  },
+  {
+   "date": "2026-08-13",
+   "handle": "@aleabitoreddit",
+   "ticker": "NBIS",
+   "ref_price": 259.2,
+   "note": "【promoter降权】"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "ALKT",
+   "ref_price": 20.78,
+   "note": "「突破进行中」"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@unusual_whales",
+   "ticker": "AMAT",
+   "ref_price": 534.54,
+   "note": "财报数字披露（营收 91.1 亿 / EPS 3.50 双超）"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@ohiain",
+   "ticker": "AMZN",
+   "ref_price": 265.13,
+   "note": "「9EMA 看起来很诱人」= 回踩型表述"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "ASAN",
+   "ref_price": 9.87,
+   "note": "阻力位讨论"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "BE",
+   "ref_price": 236.22,
+   "note": "标普 500 潜在增补候选；「技术面只能算 OK，除非站上 50 日均线」"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@RichardMoglen",
+   "ticker": "CBRS",
+   "ref_price": 231.01,
+   "note": "回复贴、上下文不完整；Vic 当时持仓"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "DELL",
+   "ref_price": 494.51,
+   "note": "达标离场"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@ohiain",
+   "ticker": "FTNT",
+   "ref_price": 165.44,
+   "note": "同上；同期在我们的 Setup A 台账里"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "HEI",
+   "ref_price": 371.56,
+   "note": "同上，增补候选"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "HOOD",
+   "ref_price": 99.37,
+   "note": "「50 附近有个小路障，突破就是晴空万里」。**已在标普 500 内，与指数增补无关**"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@RichardMoglen",
+   "ticker": "MU",
+   "ref_price": 949.83,
+   "note": "只分享了 Deepvue 图表、无文字论点。**记录不代表信号**"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@ohiain",
+   "ticker": "OKTA",
+   "ref_price": 154.95,
+   "note": "与 FTNT 并列点名「两者都收紧到极致」= tight consolidation；Vic 当时持仓"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@aleabitoreddit",
+   "ticker": "ONDS",
+   "ref_price": 8.91,
+   "note": "同上，无人机关税链"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@aleabitoreddit",
+   "ticker": "RCAT",
+   "ref_price": 10.23,
+   "note": "同上，无人机关税链"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@aleabitoreddit",
+   "ticker": "RDDT",
+   "ref_price": 158.12,
+   "note": "【promoter降权】因纳入标普 500 消息暴涨"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@aleabitoreddit",
+   "ticker": "SMCI",
+   "ref_price": 39.16,
+   "note": "【promoter降权】称财报当天见指引即买入"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@aleabitoreddit",
+   "ticker": "UMAC",
+   "ref_price": 27.24,
+   "note": "【promoter降权，但本条为事实陈述且已交叉核实】无人机关税受益；当日盘前 +13.36%"
+  },
+  {
+   "date": "2026-08-14",
+   "handle": "@spluscollective",
+   "ticker": "WDAY",
+   "ref_price": 206.45,
+   "note": "🔴**已清仓**（在 +18.7% 当晚）。次日 IGV 收区间 1%——本周最准的一条外部信号"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "SPCX",
+   "ref_price": 140.0,
+   "note": "tightening in a range；RKLB 等太空股形态类似（Vic 同日自选同一只）"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "MRVL",
+   "ref_price": 222.02,
+   "note": "many semis coiled with a similar look（Vic 持仓）"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "CBRS",
+   "ref_price": 218.98,
+   "note": "testing the level and 21ema（Vic 持仓；当日 -5.21%、量比 2.37）"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "CRWV",
+   "ref_price": 105.26,
+   "note": "tightening post earnings gap，in a monster base"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "SITM",
+   "ref_price": 711.91,
+   "note": "只发图无文字"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "NTRA",
+   "ref_price": 309.93,
+   "note": "testing the gap low level"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@RichardMoglen",
+   "ticker": "AMZN",
+   "ref_price": 262.65,
+   "note": "🔴看坏：key level at gap lows，could not hold the breakout"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@aleabitoreddit",
+   "ticker": "SNDK",
+   "ref_price": 1641.11,
+   "note": "NAND 供需失衡叙事（Phison CEO 2027 产能紧缺）。🔴promoter 类账号，看多降权"
+  },
+  {
+   "date": "2026-08-18",
    "handle": "@aleabitoreddit",
    "ticker": "AXTI",
-   "ref_price": 75.17,
-   "note": "【promoter降权】InP衬底供需失衡逻辑，称仍长期持有；当日 +9.56%、5日 +60.14%"
+   "ref_price": 95.97,
+   "note": "MLCC/NAND/InP 瓶颈论：三星高容 MLCC 交期到 ~40 周、村田 6月24周→7月30周→现~36周；「新产能扩张从 26Q4 推到 2027」。🔴promoter 类降权"
   },
   {
-   "date": "2026-08-07",
+   "date": "2026-08-18",
    "handle": "@aleabitoreddit",
-   "ticker": "AAOI",
-   "ref_price": 124.22,
-   "note": "【promoter降权】称存在20-40%的800G/1.6T光模块产能缺口；财报后盘后 -5.22%"
+   "ticker": "SNDK",
+   "ref_price": 1786.85,
+   "note": "同上，MLCC 交期跟踪。🔴promoter 类降权"
+  },
+  {
+   "date": "2026-08-17",
+   "handle": "@ohiain",
+   "ticker": "ALAB",
+   "ref_price": 321.61,
+   "note": "「回归 250 上方以来首次真正的区间整理」，财报后收紧+盘前跳空，他称是「正是我想盯的那类 reset 形态」。ref_price = 提及日前最后收盘（8/14）"
   }
  ]
 }

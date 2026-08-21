@@ -85,6 +85,16 @@
    "spy_next_pct": 0.24,
    "qqq_next_pct": -0.97,
    "outcome_date": "2026-07-28"
+  },
+  {
+   "date": "2026-08-14",
+   "bias": "mid",
+   "bond": "mid",
+   "dxy": "low",
+   "breadth": "low",
+   "spy_next_pct": -0.47,
+   "qqq_next_pct": -0.16,
+   "outcome_date": "2026-08-17"
   }
  ]
 }

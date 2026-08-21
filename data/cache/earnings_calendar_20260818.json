@@ -1,0 +1,31 @@
+{
+ "universe_size": 886,
+ "calendar": {
+  "2026-08-18": [
+   {
+    "symbol": "HD",
+    "name": "Home Depot, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": "$4.71"
+   },
+   {
+    "symbol": "KEYS",
+    "name": "Keysight Technologies Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.16"
+   },
+   {
+    "symbol": "TOL",
+    "name": "Toll Brothers, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.90"
+   },
+   {
+    "symbol": "JKHY",
+    "name": "Jack Henry & Associates, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.44"
+   }
+  ]
+ }
+}

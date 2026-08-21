@@ -98,7 +98,10 @@ def sign_class(cell: str) -> str:
     return ""
 
 
-ROW_HIGHLIGHT_CLASS = {"bull": "row-bull", "warn": "row-warn", "band": "row-band", "mute": "row-mute"}
+ROW_HIGHLIGHT_CLASS = {"bull": "row-bull", "warn": "row-warn", "band": "row-band",
+                       "mute": "row-mute",
+                       # 2026-08-18 Vic：「需要执行的仓位…标识黄色底」
+                       "act": "row-act"}
 
 
 def build_table(table: dict) -> str:
@@ -143,6 +146,11 @@ def build_table(table: dict) -> str:
             first, last = 9, 32 if n >= 5 else 26
             mid = round((100 - first - last) / (n - 2), 2)
             col_widths = [f"{first}%"] + [f"{mid}%"] * (n - 2) + [f"{last}%"]
+    # 🔴 2026-08-20：fixed-cols 原来只在**自动兜底**那条分支上补。
+    #    assemble 侧显式写了 col_widths 的表走另一条路，class 一直是空的，
+    #    渲出来就是裸 <table>——「表格列宽对齐」那条 QA 当场报错。
+    #    **给了列宽就一定要给 fixed-cols**，否则 colgroup 的宽度不生效（表还是自适应）。
+    if col_widths:
         table_class = table_class or "fixed-cols"
     colgroup = ("<colgroup>" + "".join(f'<col style="width:{w}">' for w in col_widths) + "</colgroup>") if col_widths else ""
     tbl_attr = f' class="{esc(table_class)}"' if table_class else ""
@@ -332,31 +340,206 @@ def build_regime_triggers(rt: dict) -> str:
 </section>"""
 
 
-def build_callout(kind: str, text: str) -> str:
+def build_callout(kind: str, text: str, label: str = "") -> str:
+    # 🔴 2026-08-20：默认标题一并去掉。build_split_callout 在段数 ≤2 时会转调这里，
+    #    如果只改一边，就变成「短小结带标题、长小结不带」——同一个东西两种长相，
+    #    那是格式漂移的经典起点。
     """2026-07-12 Vic："小结统一都用蓝色装饰，红色绿色很刺眼"——kind参数保留兼容旧调用，
-    但一律渲染成蓝色基础callout。2026-07-22起正文走rich()：支持**加粗**与空行分段。"""
+    但一律渲染成蓝色基础callout。2026-07-22起正文走rich()：支持**加粗**与空行分段。
+
+    🔴 2026-08-17 加 label：build_split_callout 的 label="" 此前只在「≥3 段」那条
+       分支上生效，段数少时掉进这里、标题行又冒出来。Vic 当天抓到的就是这个——
+       D·其他资产（陈述）和它下面的联合信号（真小结）连着两个「小结：」。"""
     if not text:
         return ""
-    return f'<div class="callout"><strong>小结：</strong>{rich(text)}</div>'
+    head = f"<strong>{esc(label)}：</strong>" if label else ""
+    return f'<div class="callout">{head}{rich(text)}</div>'
 
 
-def build_split_callout(text: str, sep: str = "；", label: str = "小结",
+def _split_outside_bold(text: str, sep: str) -> list:
+    """按 sep 切，但**不切在 `**…**` 里面**。
+
+    🔴 2026-08-14 建。起因：8/13 盘后的 ml_tomorrow_watch 里有一句
+       `**明日核心矛盾：……不是财报点起来的；而当天有三份真财报……全部被卖。**`——
+       粗体跨了一个全角分号，旧写法 `text.split(sep)` 从中间切开，
+       两半各拿到一个落单的 `**`，rich() 配不上对，**两个星号原样渲染到页面上**。
+       QA 的「literal ** 星号」那条抓到了，但这是渲染层的锅不是写作的锅：
+       小结里出现「……；……」本来就是最自然的中文写法，不该要求作者绕开它。
+    """
+    out, buf, bold, i = [], [], False, 0
+    while i < len(text):
+        if text.startswith("**", i):
+            bold = not bold
+            buf.append("**")
+            i += 2
+            continue
+        if not bold and text.startswith(sep, i):
+            out.append("".join(buf))
+            buf = []
+            i += len(sep)
+            continue
+        buf.append(text[i])
+        i += 1
+    out.append("".join(buf))
+    return out
+
+
+def build_bam_chart(tbl: dict, bam: dict) -> str:
+    """Deemer BAM 比值折线图（2026-08-14 建，Vic：「只显示2天，或者你做成图表」）。
+
+    取代原来的 10 行逐日表格——那张表只有最后一行有判语，前 9 行纯粹是让眼睛找趋势，
+    而找趋势本来就该交给图。画三样东西：
+      · 比值折线（每个点带日期，最后一点加粗标数）
+      · **触发阈值线**（BAM_THRESHOLD 1.97，虚线）——「离触发还有多远」一眼可见
+      · 1.0 基准线（涨跌家数持平）
+
+    纯内联 SVG，不引外部库；颜色全部走报告自己的 CSS 变量，深浅色主题都能看。
+    y 轴范围按数据自适应，但**下界不高于 1.0、上界不低于阈值**——否则阈值线会跑出画布，
+    「差多远」这个唯一重点就丢了。
+    """
+    rows = tbl.get("rows") or []
+    pts = []
+    for r in rows:
+        try:
+            pts.append((str(r[0]), float(r[3])))
+        except (ValueError, TypeError, IndexError):
+            continue
+    if len(pts) < 2:
+        return build_table(tbl)          # 点太少画不出趋势，退回表格
+
+    thr = 1.97                            # = report_helpers.BAM_THRESHOLD
+    vals = [v for _, v in pts]
+    lo = min(min(vals), 1.0) * 0.97
+    hi = max(max(vals), thr) * 1.03
+    W, H = 720, 210
+    PADL, PADR, PADT, PADB = 44, 14, 14, 34
+    iw, ih = W - PADL - PADR, H - PADT - PADB
+
+    def x(i):
+        return PADL + iw * i / (len(pts) - 1)
+
+    def y(v):
+        return PADT + ih * (hi - v) / (hi - lo)
+
+    line = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, (_, v) in enumerate(pts))
+    area = f"{PADL},{PADT + ih} " + line + f" {x(len(pts) - 1):.1f},{PADT + ih}"
+    dots = "".join(
+        f'<circle cx="{x(i):.1f}" cy="{y(v):.1f}" r="{3.6 if i == len(pts) - 1 else 2.4}" '
+        f'fill="{"var(--accent, #2f6f4f)" if i == len(pts) - 1 else "var(--fg, #333)"}"/>'
+        for i, (_, v) in enumerate(pts))
+    # x 轴标签：点多时隔一个画一个，避免糊成一片
+    step = 1 if len(pts) <= 7 else 2
+    xlabels = "".join(
+        f'<text x="{x(i):.1f}" y="{H - 12}" text-anchor="middle" font-size="10" '
+        f'fill="var(--muted, #777)">{esc(d[5:])}</text>'
+        for i, (d, _) in enumerate(pts) if i % step == 0 or i == len(pts) - 1)
+    ygrid = "".join(
+        f'<line x1="{PADL}" y1="{y(v):.1f}" x2="{W - PADR}" y2="{y(v):.1f}" '
+        f'stroke="var(--border, #ddd)" stroke-width="1"/>'
+        f'<text x="{PADL - 6}" y="{y(v) + 3:.1f}" text-anchor="end" font-size="10" '
+        f'fill="var(--muted, #777)">{v:.2f}</text>'
+        for v in (1.0, round((1.0 + thr) / 2, 2)))
+    last_d, last_v = pts[-1]
+    return (
+        f'<div style="overflow-x:auto">'
+        f'<svg viewBox="0 0 {W} {H}" width="100%" style="max-width:{W}px;height:auto" '
+        f'role="img" aria-label="Deemer BAM 比值近 {len(pts)} 个交易日走势">'
+        f'{ygrid}'
+        # 触发阈值线
+        f'<line x1="{PADL}" y1="{y(thr):.1f}" x2="{W - PADR}" y2="{y(thr):.1f}" '
+        f'stroke="#c0392b" stroke-width="1.4" stroke-dasharray="5,4"/>'
+        f'<text x="{W - PADR}" y="{y(thr) - 5:.1f}" text-anchor="end" font-size="10.5" '
+        f'fill="#c0392b">触发线 {thr}</text>'
+        f'<polygon points="{area}" fill="var(--accent, #2f6f4f)" opacity="0.10"/>'
+        f'<polyline points="{line}" fill="none" stroke="var(--accent, #2f6f4f)" '
+        f'stroke-width="2" stroke-linejoin="round"/>'
+        f'{dots}'
+        f'<text x="{x(len(pts) - 1):.1f}" y="{y(last_v) - 9:.1f}" text-anchor="end" '
+        f'font-size="12" font-weight="600" fill="var(--accent, #2f6f4f)">{last_v:.2f}</text>'
+        f'{xlabels}'
+        f'</svg></div>'
+        # 🔴 图里的 x 轴标签只有 MM-DD 且隔点显示，QA 的「字段写了却没被渲染」是拿
+        #    第一行原值当文本探针的 —— 所以窗口首尾日期必须以**完整形式**出现在图注里。
+        #    这不是为了骗过检查：改成图之后「这张图覆盖哪一段」本来就该写出来。
+        f'<p class="src-note">窗口 {esc(pts[0][0])} → {esc(last_d)}（{len(pts)} 个交易日）·'
+        f' 最新比值 <b>{last_v:.2f}</b>'
+        f'（样本内第 {bam.get("pctile", "?")} 分位，窗口峰值 {bam.get("peak", "?")}）·'
+        f' 口径为 10 日累计涨家数 ÷ 跌家数</p>')
+
+
+def build_split_callout(text: str, sep: str = "；", label: str = "",
                         kind: str = "") -> str:
+    # 🔴 2026-08-20 Vic：「哈哈你又有两个小结」——**默认标题从「小结」改成空**。
+    #    同一个毛病这是第三次：7/28「删除『方法论：』这行，配色已经在说明它是什么」、
+    #    8/17「其他资产里面有两个小结」、8/20 指数表和板块表的小结连着出现、
+    #    而且板块表用的是四件套、**最后一条本身就叫【小结】**——同一个词出现两次。
+    #    蓝色 callout 的样式已经在说「这是小结」，标题行是多余的第二层。
+    #    要标题的调用点自己传 label=...，不要靠默认值。
     """按分隔符切成多段、每段悬挂缩进的callout（2026-07-27 Vic："按; 分段落；段落开头缩进对齐"）。
     整段糊成一块的长小结很难扫读——切开后每条独立一行，续行缩进与首行文字左边缘对齐。"""
     if not text:
         return ""
-    segs = [s.strip() for s in text.split(sep) if s.strip()]
+    # 2026-08-17 Vic：「小结里面又出现这些点点了」——截图里有空的项目符号和落单的符号。
+    #    根因：写作时的段落分隔符是连续两个换行，而这里只按分隔符（默认全角分号）切。
+    #    切出来的每一段**内部还带着换行**，rich() 再把它拆成多个 <p>，
+    #    于是 co-item 的项目符号落在一个空行上，后面的 <p> 又各自像掉了符号的孤儿。
+    #    改法：**先按作者写的换行分段**（那才是他真正的分段意图），
+    #    只有单行仍然很长且含分隔符时才继续切。空段一律丢掉。
+    segs = []
+    for line in (x.strip() for x in text.split(chr(10))):
+        if not line:
+            continue
+        if len(line) > 120 and sep in line:
+            segs.extend(x.strip() for x in _split_outside_bold(line, sep))
+        else:
+            segs.append(line)
+    segs = [x for x in segs if x]
     # 2026-07-27 Vic："你这分段有点多哦，但是是一句话吧，不用分段"——只有1个分号（=2段）时
     # 整体仍读作一句话，切开反而更碎。≥3段才分行，否则原样一段。
     if len(segs) <= 2:
-        return build_callout(kind, text)
+        return build_callout(kind, text, label)
     # kind非空时走对应配色（2026-07-28 Vic：方法论不该跟「小结」同色，用绿/黄区分）
     cls = f"callout {esc(kind)}" if kind else "callout"
-    items = "".join(f'<div class="co-item">{rich(s)}</div>' for s in segs)
+    # 🔴 2026-08-18 Vic：「小结还是有小点」——冒号结尾的短行是**分组小标题**，
+    #    不该和条目一样挂项目符号。判据：≤24 字且以「：」结尾。
+    # 🔴 2026-08-20 Vic：「蓝色部分你没改 i ii」——permission 块之前走的是 build_callout
+    #    （纯段落，没有编号）。切过来之后又冒出新问题：那一块最后是**一组子项**
+    #    （「不进候选的理由」下挂 4 条），如果它们也拿到 V./VI./VII./VIII.，
+    #    就把「4 个并列结论 + 1 组附注」拍平成 9 条并列——**编号反而消灭了层级**。
+    #    所以子项单独一档：以 · 或 - 开头 → co-sub，不参与编号、多缩进一级。
+    def _cls(x):
+        t = re.sub(r"\*\*", "", x).strip()
+        if t[:1] in ("·", "-", "—"):
+            return "co-item co-sub"
+        return "co-item co-head" if (len(t) <= 24 and t.endswith("：")) else "co-item"
+
+    def _body(x):
+        t = x.strip()
+        return t[1:].strip() if t[:1] in ("·", "-", "—") else t
+
+    items = "".join(f'<div class="{_cls(x)}">{rich(_body(x))}</div>' for x in segs)
     # label="" → 不渲染标题行（2026-07-28 Vic：方法论块「删除『方法论：』这行」，配色已经在说明它是什么）
     head = f"<strong>{esc(label)}：</strong>" if label else ""
     return f'<div class="{cls}">{head}<div class="co-list">{items}</div></div>'
+
+
+def build_plain_block(text: str) -> str:
+    """白底陈述块——**不是小结**（2026-08-17 Vic：「D · 其他资产 里面的陈述，
+    就背景白色吧，不是小结格式」）。
+
+    蓝底 callout 在这份报告里有固定含义：**这是判断**。而「其他资产」那一段是跨资产
+    读数的**陈述**（10Y 多少、金银怎么分化、TLT 在说什么），它是判断的输入不是判断本身。
+    两者用同一种底色，等于告诉眼睛「这两块一样重要」。
+    """
+    if not text:
+        return ""
+    lines = [x.strip() for x in text.split(chr(10)) if x.strip()]
+    if not lines:
+        return ""
+    items = "".join(
+        '<div style="margin:0 0 6px">%s</div>' % rich(x) for x in lines)
+    return ('<div style="background:var(--card,#fff);border:1px solid var(--line,#e3e8ef);'
+            'border-radius:8px;padding:10px 12px;margin:8px 0">' + items + "</div>")
 
 
 def build_cross_check(cc: dict) -> str:
@@ -377,40 +560,181 @@ def build_cross_check(cc: dict) -> str:
             f'<div class="cc-detail">{rich(cc.get("detail",""))}</div></div>')
 
 
+
+
+def build_catalyst_watch(t: dict) -> str:
+    """催化剂在手（2026-08-20 Vic 定）。
+
+    Vic：「我的 tradebook 里面 setup 有 momentum burst 和 ep，盘前报告是没有选这种股的…
+          我买了 purr 和 coin…如果你能抓到就能大仓位进去」
+
+    🔴 **为什么不是「burst 扫描器」**：实测 8/18 收盘时
+       COIN −2.87%／量比 0.91×／收区间 4%，PURR +0.70%／量比 1.35×／收区间 63%——
+       **两只在 T-1 收盘上都没有任何爆发特征**，爆发发生在 8/19 当天。
+       **任何基于 T-1 收盘的形态扫描都抓不到它们**，只会在第二天告诉你昨天涨了 ＝ 追高。
+
+    🎯 **能提前抓到的是催化剂，不是形态。**8/19 开盘前四条催化剂全都已存在：
+       SEC 加密框架（8/18 盘后）· 白宫峰会（8/19 日程）·
+       PURR 财报窗口已开 · 德鲁肯米勒新建仓 PURR。**后两条报告里写了，
+       但写成了「持仓风险」而不是「加仓机会」。**
+
+    所以这张表的作用是**把决定前移**：爆发那一刻他是「执行」而不是「发现」，
+    仓位、入场、止损都是事前算好的——这才是「能大仓位进去」的前提。
+    """
+    if not t or not t.get("rows"):
+        return empty_body("none", "今日没有已知催化剂在手（财报窗口 / 13F 新建仓 / "
+                                  "政策日程 / X 池点名，四条都空）。")
+    return build_table(t)
+
+
+def build_index_panel(rows: list) -> str:
+    """七只指数的唯一位置：一张 ATR 横轴图 + 一张表（2026-08-19 Vic 两条要求合并实现）。
+
+    Vic：「voo qqq dia iwm smh rsp qqqe 表格里面好几张，你先都集中到一个地方」
+        「指数闸门能用图示吗？一根横轴看位置」
+
+    🎯 **横轴单位是 ATR，不是价格**：x = (价 − 20MA) / ATR14。
+       闸门线定义就是 20MA ± 1×ATR14，所以换算之后
+       **降级线恒在 −1、20MA 在 0、进攻线恒在 +1**，七只指数共用一根轴、彼此可比。
+       用绝对价格画的话 VOO(705) 和 QQQE(122) 根本放不进同一张图。
+    ⚠️ 闸门线只对 VOO/QQQ/IWM 画标签（框架定义），其余四只只画位置。
+    """
+    if not rows:
+        return '<p class="placeholder">暂无数据。</p>'
+
+    xs = [v for r in rows for v in (r.get("x_close"), r.get("x_ma50")) if v is not None]
+    lo, hi = min(xs + [-1.6]), max(xs + [1.6])
+    pad = max(0.45, (hi - lo) * 0.10)
+    lo, hi = lo - pad, hi + pad
+    W, LBL, RGT = 100.0, 8.6, 3.0          # 百分比坐标系，SVG 用 viewBox 0 0 100 H
+    TRACK = W - LBL - RGT
+
+    def px(x):
+        return LBL + (x - lo) / (hi - lo) * TRACK
+
+    ROW_H, TOP = 26.0, 20.0
+    H_ = TOP + ROW_H * len(rows) + 10
+    parts = [f'<svg class="idx-svg" viewBox="0 0 100 {H_:.0f}" preserveAspectRatio="xMidYMid meet" '
+             f'role="img" aria-label="七只指数相对20MA的ATR位置">']
+
+    # 三条参考线：-1 降级 / 0 20MA / +1 进攻
+    for xv, lab, cls in ((-1.0, "降级线", "gl-red"), (0.0, "20MA", "gl-mid"), (1.0, "进攻线", "gl-green")):
+        if not (lo <= xv <= hi):
+            continue
+        X = px(xv)
+        parts.append(f'<line class="idx-gl {cls}" x1="{X:.2f}" y1="{TOP - 8:.0f}" '
+                     f'x2="{X:.2f}" y2="{TOP + ROW_H * len(rows):.0f}"/>')
+        parts.append(f'<text class="idx-gl-lab {cls}" x="{X:.2f}" y="{TOP - 11:.0f}" '
+                     f'text-anchor="middle">{esc(lab)}</text>')
+
+    for i, r in enumerate(rows):
+        y = TOP + ROW_H * i + ROW_H / 2
+        parts.append(f'<text class="idx-tk" x="0" y="{y + 1.6:.2f}">{esc(r["ticker"])}</text>')
+        parts.append(f'<line class="idx-track" x1="{LBL:.2f}" y1="{y:.2f}" '
+                     f'x2="{LBL + TRACK:.2f}" y2="{y:.2f}"/>')
+        xm = r.get("x_ma50")
+        if xm is not None and lo <= xm <= hi:
+            X = px(xm)
+            parts.append(f'<line class="idx-ma50" x1="{X:.2f}" y1="{y - 4.2:.2f}" '
+                         f'x2="{X:.2f}" y2="{y + 4.2:.2f}"/>')
+            parts.append(f'<text class="idx-ma50-lab" x="{X:.2f}" y="{y - 5.4:.2f}" '
+                         f'text-anchor="middle">50MA</text>')
+        xc = r.get("x_close")
+        if xc is None:
+            continue
+        X = px(xc)
+        cls = {"attack": "dot-green", "caution": "dot-amber",
+               "broken": "dot-red"}.get(r.get("state_kind"), "dot-ref")
+        parts.append(f'<circle class="idx-dot {cls}" cx="{X:.2f}" cy="{y:.2f}" r="2.6"/>')
+        parts.append(f'<text class="idx-val {cls}" x="{min(X + 4.0, W - 0.5):.2f}" '
+                     f'y="{y + 1.5:.2f}">{xc:+.2f}</text>')
+    parts.append("</svg>")
+    svg = ('<div class="idx-chart">' + "".join(parts)
+           + '<div class="idx-legend">横轴 ＝ <b>(收盘 − 20MA) ÷ ATR14</b>，'
+             '单位 ATR。闸门线本来就是 20MA ± 1×ATR，所以<b>进攻线恒在 +1、降级线恒在 −1</b>，'
+             '七只共用一根轴、可以直接互相比。<b>闸门只对 VOO / QQQ / IWM 成立</b>，'
+             '其余四只只读位置。</div></div>')
+
+    body = []
+    for r in rows:
+        kd = r.get("state_kind", "ref")
+        cls = {"attack": "status-met", "caution": "status-unmet",
+               "broken": "status-triggered"}.get(kd, "status-unmet")
+        row_cls = {"attack": "row-bull", "broken": "row-warn"}.get(kd, "")
+        tr = f' class="{row_cls}"' if row_cls else ""
+        gate_txt = ("%.2f / %.2f" % (r["defend"], r["attack"])) if r.get("attack") else "—"
+        body.append(
+            f"<tr{tr}>"
+            f'<td><b>{esc(r["ticker"])}</b></td>'
+            f'<td class="num">{r["close"]:.2f}</td>'
+            f'<td class="num {sign_class(_RH.fpct(r.get("t1_pct")))}">{tri(_RH.fpct(r.get("t1_pct")))}</td>'
+            f'<td class="num {sign_class(_RH.fpct(r.get("d5_pct")))}">{tri(_RH.fpct(r.get("d5_pct")))}</td>'
+            f'<td class="num {sign_class(_RH.fpct(r.get("d21_pct")))}">{tri(_RH.fpct(r.get("d21_pct")))}</td>'
+            f'<td class="num {sign_class(_rs_num(r.get("rs_1w")))}">{tri(_rs_num(r.get("rs_1w")))}</td>'
+            f'<td class="num">{("%+.2f" % r["x_close"]) if r.get("x_close") is not None else "—"}</td>'
+            f'<td class="num">{("%+.1f" % r["dist_ma50_atr"]) if r.get("dist_ma50_atr") is not None else "—"}</td>'
+            f'<td class="num">{esc(gate_txt)}</td>'
+            f'<td class="{cls}">{esc(r.get("state",""))}</td>'
+            f"<td>{rich(r.get('note',''))}</td>"
+            "</tr>")
+    table = (
+        '<table class="fixed-cols"><colgroup>'
+        '<col style="width:6%"><col style="width:8%"><col style="width:7%"><col style="width:7%">'
+        '<col style="width:7%"><col style="width:7%"><col style="width:8%"><col style="width:8%">'
+        '<col style="width:12%"><col style="width:8%"><col style="width:22%">'
+        "</colgroup><thead><tr>"
+        '<th>指数</th><th class="num">收盘</th><th class="num">T-1%</th><th class="num">5日%</th>'
+        '<th class="num">1月%</th><th class="num">RS(1周)</th><th class="num">距20MA(ATR)</th>'
+        '<th class="num">距50MA(ATR)</th><th class="num">降级线 / 进攻线</th>'
+        "<th>状态</th><th>判断</th>"
+        "</tr></thead><tbody>" + "".join(body) + "</tbody></table>")
+    return svg + table
+
+
+def _rs_num(v) -> str:
+    return "-" if v is None else ("%+.1f" % v)
+
+
 def build_gate_scoreboard(rows: list) -> str:
-    """攻守记分板（2026-07-27 Vic大改：只留QQQ/SPY各一行，进攻/标配/防守同行）。
-    改版原因（Vic原话）："qqq和spy 进攻/防守/标配 应该都是在一行的…如果qqq防守线，肯定不在标配"——
-    旧版把同一个指数的攻击线/标配线/防守线拆成3行(且"科技标配"与"升级攻击线"数值完全相同=重复行)，
-    读者要跨行拼才知道这个指数到底在哪个区间；现在一行一个指数，区间位置一眼可见。"""
+    """闸门表（2026-08-20 Vic 改版）。
+
+    Vic：「指数闸门里面删除 dia rsp qqqe，smh 要增加进攻线和防守线，
+          状态放第二栏，(=标配) 删除，距进攻/防守这两列其实不用，多给点位置给说明」
+
+    · **只放有闸门线的四只**（VOO/QQQ/IWM/SMH）——名单在 report_helpers.GATE_TICKERS。
+      DIA/RSP/QQQE 原本是闸门四列全「—」的参考行；**闸门表里放没有闸门的行本身就自相矛盾**，
+      它们的读数在同节的「指数基准」RS 表和「距50MA(ATR)」表里照旧有。
+    · **状态提到第二列**：它是这张表真正要回答的东西，不该排在五个数字后面。
+    · **「距进攻 / 距防守」两列删掉**：收盘、进攻线、防守线三个数字并排，
+      距离一眼能看出来，专门占两列去写百分比是把同一件事说第三遍——省下的宽度给「说明」。
+    · **表头「进攻线(=标配)」的括号删掉**（Vic：「(=标配) 删除」）。
+    """
     if not rows:
         return '<p class="placeholder">暂无数据。</p>'
     body = []
     for r in rows:
-        state = r.get("state", "")
-        cls = {"attack": "status-met", "neutral": "status-unmet", "broken": "status-triggered"}.get(
-            r.get("state_kind", ""), "status-unmet")
-        row_cls = {"attack": "row-bull", "broken": "row-warn"}.get(r.get("state_kind", ""), "")
+        kind = r.get("state_kind", "")
+        cls = {"attack": "status-met", "caution": "status-unmet",
+               "broken": "status-triggered"}.get(kind, "status-unmet")
+        row_cls = {"attack": "row-bull", "broken": "row-warn"}.get(kind, "")
         tr_attr = f' class="{row_cls}"' if row_cls else ""
         body.append(
             f"<tr{tr_attr}>"
             f"<td><b>{esc(r.get('ticker',''))}</b></td>"
+            f'<td class="{cls}">{esc(r.get("state",""))}</td>'
             f'<td class="num">{esc(r.get("close",""))}</td>'
             f'<td class="num">{esc(r.get("attack",""))}</td>'
-            f'<td class="num {sign_class(r.get("dist_attack",""))}">{tri(esc(r.get("dist_attack","")))}</td>'
             f'<td class="num">{esc(r.get("defend",""))}</td>'
-            f'<td class="num {sign_class(r.get("dist_defend",""))}">{tri(esc(r.get("dist_defend","")))}</td>'
-            f'<td class="{cls}">{esc(state)}</td>'
             f"<td>{rich(r.get('note',''))}</td>"
-            "</tr>"
-        )
+            "</tr>")
     return (
-        '<table class="fixed-cols"><colgroup><col style="width:7%"><col style="width:9%">'
-        '<col style="width:11%"><col style="width:9%"><col style="width:9%"><col style="width:9%">'
-        '<col style="width:12%"><col style="width:34%"></colgroup><thead><tr>'
-        "<th>指数</th><th class=\"num\">收盘</th><th class=\"num\">进攻线(=标配)</th><th class=\"num\">距进攻</th>"
-        "<th class=\"num\">防守线</th><th class=\"num\">距防守</th><th>状态</th><th>说明</th>"
-        "</tr></thead><tbody>" + "".join(body) + "</tbody></table>"
-    )
+        '<table class="fixed-cols"><colgroup>'
+        '<col style="width:7%"><col style="width:9%"><col style="width:9%">'
+        '<col style="width:9%"><col style="width:9%"><col style="width:57%">'
+        "</colgroup><thead><tr>"
+        '<th>指数</th><th>状态</th><th class="num">收盘</th>'
+        '<th class="num">进攻线</th><th class="num">防守线</th><th>说明</th>'
+        "</tr></thead><tbody>" + "".join(body) + "</tbody></table>")
 
 
 # 四件套标签：既认旧的【强势/可持有】方括号式，也认实际写作里更常用的「强势/可持有：」冒号式
@@ -441,44 +765,57 @@ def build_note_callouts(text: str) -> str:
 
 
 def build_signal_light(sl: dict) -> str:
+    """今日信号灯 → **表格**（2026-08-19 Vic：「开头信号灯很有用，但是文本这么长，
+    不适合用信号灯格式，不如你改成表格」）。
+
+    改版史（同一个问题改了三次，这次是第三次）：
+      · 原版 = nowrap 的 status-tag 胶囊 → label 一长就撑成超宽单行
+      · 2026-07-22 Vic：「这么长的文本，其实不适合标签，用红绿背景色块吧」→ 整块背景色行卡片
+      · 2026-08-19 Vic：色块还是不对——**整块上色的背景在长文本上等于给整段话涂色，
+        眼睛读不出重点**。改成表格：档位收进一个窄列（只有那一格上色），
+        长文本回到正常正文，可以正常换行、正常读。
+
+    🔴 **只认 bias / bond / dxy / breadth 四个键 + discipline**，写别的会被静默丢掉
+    （8/10 写过 'vol'，整格不见）——QA 的 _signal_light_full 查这件事。
+    """
     if not sl:
         return ""
-    # 2026-07-22 Vic："今日信号灯这么长的文本，其实不适合标签，用红绿背景色块吧"
-    # ——原来是nowrap的status-tag胶囊，label一长就撑成一条超宽单行；改成整块背景色的行卡片，
-    # 左侧固定宽度的键名chip + 右侧可换行正文。配色沿用绿/浅红/深红三档（不引入黄色，7/06定案）。
-    blocks = []
-    order = [("BIAS", "bias"), ("BOND", "bond"), ("DXY", "dxy"), ("BREADTH", "breadth")]
-    for label, key in order:
+    LEVEL_TXT = {"low": "低", "mid": "中", "high": "高"}
+    # 2026-08-20 Vic：「只放 bias rates dxy breath ... 我不喜欢中英重复」——
+    # 维度列去掉中文，只留英文键名；BOND 显示为 RATES（他的叫法）。
+    order = [("BIAS", "bias"), ("RATES", "bond"),
+             ("DXY", "dxy"), ("BREADTH", "breadth")]
+    body = []
+    for key_en, key in order:
         item = sl.get(key)
         if not item:
             continue
         level = item.get("level", "mid")
-        blocks.append(
-            f'<div class="signal-block {esc(level)}">'
-            f'<span class="sb-key">{esc(label)}</span>'
-            f'<span class="sb-text">{rich(item.get("label", ""))}</span>'
-            "</div>"
-        )
-    out = f'<div class="signal-blocks">{"".join(blocks)}</div>'
+        body.append(
+            f'<tr class="sig-row {esc(level)}">'
+            f'<td class="sig-dim">{esc(key_en)}</td>'
+            f'<td class="sig-lv {esc(level)}">{esc(LEVEL_TXT.get(level, level))}</td>'
+            f'<td class="sig-txt">{rich(item.get("label", ""))}</td>'
+            "</tr>")
+    out = ('<table class="sig-table fixed-cols"><colgroup>'
+           '<col style="width:10%"><col style="width:7%"><col style="width:83%">'
+           '</colgroup><thead><tr><th>维度</th><th class="sig-lv-h">档位</th>'
+           '<th>读数</th></tr></thead>'
+           f'<tbody>{"".join(body)}</tbody></table>')
     disc = sl.get("discipline")
     if disc:
-        # 2026-07-12 Vic最终版："用一整块黄色，不要分3条，用今日定位的格式"——一个action-directive
-        # 样式的黄色卡片。2026-07-22 Vic："核心纪律又有bullet point,又有**,还有红绿灯,是不是太多了"——
-        # 三层强调（●bullet + 🔴emoji + **粗体**）叠在同一句话上互相打架。改成单一强调层级：
-        # 用disc-item（无bullet，box本身+行间距已经够醒目）；文字里的emoji"红绿灯"是写作时的内容选择，
-        # 不是渲染器能删的，交给assemble脚本自己收着点用——渲染器这层只负责不再叠加bullet。
+        # 2026-07-22 Vic：「核心纪律又有bullet point，又有**，还有红绿灯，是不是太多了」——
+        # 单一强调层级：disc-item 不加 bullet。
         if isinstance(disc, list):
             lines = [rich(x) for x in disc]
         else:
-            s = rich(disc)
+            t = rich(disc)
             for mark in ("②", "③", "④", "⑤"):
-                s = s.replace(mark, "\x00" + mark)
-            lines = [x for x in s.split("\x00") if x.strip()]
+                t = t.replace(mark, "␟" + mark)
+            lines = [x for x in t.split("␟") if x.strip()]
         lis = "".join(f'<li class="disc-item">{x}</li>' for x in lines)
-        out += (
-            '<div class="action-directive"><span class="ad-label">核心纪律</span>'
-            f'<ul class="disc-list">{lis}</ul></div>'
-        )
+        out += ('<div class="action-directive"><span class="ad-label">核心纪律</span>'
+                f'<ul class="disc-list">{lis}</ul></div>')
     return out
 
 
@@ -486,20 +823,28 @@ def build_entry_legend() -> str:
     """A级入场的bar级触发定义（2026-07-27常驻，Vic："一开始我会记不住，在A级表格下面增加注释"）。
 
     起因：报告长期把回踩类的入场写成"回踩9EMA企稳分批"，而"企稳"没有可判定的定义，
-    Vic因此在V上找不到入场点——他等的是"贴着9EMA不破"的干净回踩，但A级回踩setup的真实形态
+    Vic因此在V上找不到入场点——他等的是"贴着9EMA不破"的干净回踩，但回踩类setup的真实形态
     是"击穿后当天收回"（V 7/23：击穿-0.91%、量缩0.48×、收盘位置87%，次日再确认98%）。
-    改成bar级事件后，"今天有没有触发"变成可客观判定的，不需要临场解释什么算企稳。"""
+    改成bar级事件后，"今天有没有触发"变成可客观判定的，不需要临场解释什么算企稳。
+
+    🔴 2026-08-20 Vic：「这段已经失效了吧，我名字都改了」——这里一直还写着 A/B/C/D/E，
+       而扫描器、表格、图例当天全部换成了 pullback / tight / spring / shakeout+burst / 2 wick。
+       **改名当天没有回头查谁在引用旧名**，同一批遗留还包括 score_setup_row 的 split("+")
+       和 assemble 的 count("+")（两处都当场变成恒假/恒单标签，见各自注释）。
+    """
     return """<div class="entry-legend">
   <div class="el-title">入场触发一律看「bar」，不看价位</div>
   <div class="co-list">
-    <div class="co-item"><b>回踩类（A / C / D）——收回bar</b>：出现一根<b>收盘站回9EMA上方</b>且
+    <div class="co-item"><b>pullback / spring —— 收回bar</b>：出现一根<b>收盘站回9EMA上方</b>且
       <b>收盘位置≥60%</b>的K线，在该bar收盘或次日开盘进；止损放该bar低点下方。
       <b>不要等「贴着均线不破」的干净回踩</b>，那种形态多数时候不会出现。</div>
-    <div class="co-item"><b>突破类（B / tight）——突破bar</b>：<b>收盘</b>站上突破位 且
+    <div class="co-item"><b>tight —— 突破bar</b>：<b>收盘</b>站上突破位 且
       <b>量≥1.5×20日均量</b>才算数。<b>不要把单子挂在突破点</b>——挂单会在每一次假突破都成交，
       这正是Base Breakout实测胜率仅27%的来源。</div>
-    <div class="co-item"><b>Setup E（shakeout+burst）</b>：等开盘后<b>第一根放量动量bar</b>，
+    <div class="co-item"><b>shakeout+burst</b>：等开盘后<b>第一根放量动量bar</b>，
       止损放洗盘低点下方；报告只给结构位，入场时机由盘中人工执行。</div>
+    <div class="co-item"><b>2 wick</b>：<b>加分结构，不是入场形态</b>——它没有自己的触发bar，
+      只在和 pullback / tight 同时出现时抬高评分（评分函数里不单独计入结构数）。</div>
     <div class="co-item"><b>通用否决</b>：<b>开盘跳空高开超过 1×ATR(14) 即视为追高</b>，当日放弃；
       触发bar量能低于0.8×20日均量视为无买盘跟进，不进。<br>
       <span class="muted">2026-08-10 Vic：「这条删了吧，要看atr的」——原来写的是固定 1.5%。
@@ -575,25 +920,30 @@ def build_defensive_basket(rows: list) -> str:
     这是唯一保真、随时可核对的数字；"盘前%"列在盘前时段未到/数据不可靠时留空不硬填猜测值。"""
     if not rows:
         return '<p class="placeholder">暂无数据。</p>'
+    # 🔴 2026-08-17 Vic：「盘前列删除，但是 t-1 收盘你为什么不填」——两件事一起修。
+    #    「盘前%」列 2026-08-12 盘前数据整体下线后就恒为 "-"，早该跟着走；
+    #    而 T-1 收盘% 是这张表**唯一保真的数字**（2026-07-21 加它就是为了这个），
+    #    却一直没接数据源——assemble 里 defensive_basket 只填了 ticker/price/role。
+    #    现在 t1_pct 缺失直接渲染成红色「缺」，让它没法再静默空着。
     body_rows = []
     for r in rows:
         t1 = r.get("t1_pct", "")
-        pm = r.get("pct", "")
+        cell = (f'<td class="num {sign_class(t1)}">{esc(t1)}</td>' if t1
+                else '<td class="num neg">缺</td>')
         body_rows.append(
             "<tr>"
             f"<td>{esc(r.get('ticker',''))}</td>"
             f'<td class="num">{esc(r.get("price",""))}</td>'
-            f'<td class="num {sign_class(t1)}">{esc(t1) if t1 else "-"}</td>'
-            f'<td class="num {sign_class(pm)}">{esc(pm) if pm else "-"}</td>'
+            + cell +
             f"<td>{esc(r.get('role',''))}</td>"
             "</tr>"
         )
     return (
         # 2026-08-01 与周报对齐时发现：这张表一直没有fixed-cols，列宽跟同页其它表对不齐
         '<table class="fixed-cols"><colgroup><col style="width:14%"><col style="width:16%">'
-        '<col style="width:18%"><col style="width:16%"><col style="width:36%"></colgroup>'
+        '<col style="width:18%"><col style="width:52%"></colgroup>'
         '<thead><tr><th>TICKER</th><th class="num">收盘价</th><th class="num">T-1收盘%</th>'
-        '<th class="num">盘前%</th><th>角色</th></tr></thead><tbody>' + "".join(body_rows) + "</tbody></table>"
+        "<th>角色</th></tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
     )
 
 
@@ -691,18 +1041,89 @@ def build_x_sentiment(macro_items: list, stock_items: list, macro_summary: str =
     return "".join(parts)
 
 
+# 日历图标（2026-08-20 Vic：「圆点干脆改成 emoji 吧，区分个股宏观，或者重要不重要？
+# **不要都用箭靶**」）。原来 li::before 是统一的「·」，重要性靠手写 🎯 —— 结果
+# 一格里四条有三条挂 🎯，等于没标（同「铺满 = 等于没标」那条）。
+#
+# 拆成两个正交维度，各管各的：
+#   **类型** → 图标（这里出）        **重要** → 字重＋左侧色条（CSS 出，不再占一个 emoji）
+CAL_ICON = {
+    "fed":    "🏛️",   # 🏛 央行 / 财政 / 白宫 / 官员讲话
+    "data":   "📊",          # 📊 经济数据（初请 / PMI / 成屋销售）
+    "stock":  "🏢",          # 🏢 个股 · 公司事件（财报 / 批文 / 上市）
+    "market": "📈",          # 📈 指数 · 板块 · 跨资产
+}
+CAL_KIND_CN = {"fed": "央行政策", "data": "经济数据",
+               "stock": "个股公司", "market": "指数板块"}
+# 关键词兜底：历史草稿里的事件是纯字符串，没有类型标注。**显式标注永远优先**，
+# 这张表只在没标注时用，规则写在这里是为了能被 QA 和肉眼一起检查。
+_CAL_KW = (
+    ("fed",    ("FOMC", "纪要", "Fed", "美联储", "财政部", "白宫", "Trump", "特朗普",
+                "Jackson Hole", "主席", "讲话", "演讲", "降息", "加息", "国债", "回购")),
+    ("data",   ("初请", "失业", "PMI", "CPI", "PPI", "非农", "零售", "成屋", "耐用品",
+                "GDP", "PCE", "消费者信心", "库存")),
+    ("market", ("SPX", "QQQ", "SMH", "IWM", "VOO", "指数", "板块", "半导体", "BTC",
+                "黄金", "原油", "美元", "DXY")),
+)
+
+
+def _cal_kind(text: str) -> str:
+    for kind, kws in _CAL_KW:
+        if any(k in text for k in kws):
+            return kind
+    return "stock"          # 剩下的默认当个股（多数是公司事件）
+
+
+def _cal_item(x):
+    """接受三种写法，越靠前优先级越高：
+         {"k": "fed", "t": "FOMC 纪要 …", "hot": True}
+         "[fed] FOMC 纪要 …"
+         "FOMC 纪要 …"                      ← 关键词兜底
+    """
+    hot = False
+    if isinstance(x, dict):
+        kind, text, hot = x.get("k"), x.get("t", ""), bool(x.get("hot"))
+    else:
+        kind, text = None, str(x)
+        if text.startswith("[") and "]" in text[:12]:
+            kind, text = text[1:text.index("]")].strip(), text[text.index("]") + 1:].strip()
+    # 🔴 手写的 🎯 / 🔴 在这里剥掉：重要性改由 hot 表达，emoji 不再兼职
+    for mark in ("🎯", "🔴"):
+        while mark in text:
+            hot = True
+            text = text.replace(mark, "", 1).strip()
+    if kind not in CAL_ICON:
+        kind = _cal_kind(text)
+    return kind, text, hot
+
+
 def build_week_calendar(cal: dict) -> str:
     """本周大事日历（2026-07-27 Vic："做成6列 5个工作日 加周末的日历样子"）。
-    cal = {"headers": ["周一 7/27", ...6个], "cells": [[...], ...]}，每格是该日事件列表。"""
+    cal = {"headers": ["周一 7/27", ...6个], "cells": [[...], ...]}，每格是该日事件列表。
+    每条事件的写法见 _cal_item。"""
     if not cal or not cal.get("headers"):
         return ""
     ths = "".join(f"<th>{esc(h)}</th>" for h in cal["headers"])
     tds = []
+    used = set()
     for col in cal.get("cells", []):
-        items = "".join(f"<li>{rich(x)}</li>" for x in col) if col else ""
+        lis = []
+        for x in col or []:
+            kind, text, hot = _cal_item(x)
+            used.add(kind)
+            lis.append(
+                f'<li class="cal-i{" hot" if hot else ""}">'
+                f'<span class="cal-ic" title="{esc(CAL_KIND_CN[kind])}">{CAL_ICON[kind]}</span>'
+                f'{rich(text)}</li>')
+        items = "".join(lis)
         tds.append(f'<td>{f"<ul class=cal-list>{items}</ul>" if items else "<span class=cal-none>—</span>"}</td>')
+    legend = "".join(
+        f'<span class="cal-lg"><i>{CAL_ICON[k]}</i>{esc(CAL_KIND_CN[k])}</span>'
+        for k in ("fed", "data", "stock", "market") if k in used)
     return (f'<table class="cal-table"><thead><tr>{ths}</tr></thead>'
-            f"<tbody><tr>{''.join(tds)}</tr></tbody></table>")
+            f"<tbody><tr>{''.join(tds)}</tr></tbody></table>"
+            f'<div class="cal-legend">{legend}'
+            '<span class="cal-lg cal-lg-hot"><i></i>加粗＝重要</span></div>')
 
 
 RESULT_BADGE_CLASS = {
@@ -795,19 +1216,21 @@ def build_recon_table(rows: list) -> str:
             f"<td>{rich(r.get('actual',''))}</td>"
             f'<td style="text-align:center">{prob_cell}</td>'
             f'<td style="text-align:center"><span class="result-badge {badge_cls}">{badge_label}</span></td>'
-            f'<td style="text-align:center">{brier_cell}</td>'
+
             f"<td>{rich(r.get('fix',''))}</td>"
             "</tr>"
         )
     return (
         '<table class="recon-table fixed-cols"><colgroup>'
-        '<col style="width:25%"><col style="width:25%"><col style="width:9%">'
-        '<col style="width:9%"><col style="width:9%"><col style="width:23%"></colgroup>'
+        # 🔴 2026-08-17 Vic：「brier score 就放周报吧」——**整列删掉**，
+        #    一整列日频 Brier 和那一行小字是同一件事。「事前」列（概率）保留：
+        #    它是这条预判有多难的读数，不是打分。
+        '<col style="width:27%"><col style="width:27%"><col style="width:10%">'
+        '<col style="width:10%"><col style="width:26%"></colgroup>'
         '<thead><tr>'
         "<th>盘前</th><th>收盘实况</th>"
         '<th class="nowrap" style="text-align:center">事前</th>'
-        '<th style="text-align:center">对账</th>'
-        '<th class="nowrap" style="text-align:center">Brier</th><th>下次修正</th>'
+        '<th style="text-align:center">对账</th><th>下次修正</th>'
         "</tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
     )
 
@@ -1012,8 +1435,12 @@ def build_13dg_table(rows: list) -> str:
             f"<td>{rich(r.get('note',''))}</td>"
             "</tr>"
         )
+    # 2026-08-17：这张表此前是裸 <table>（QA「表格列宽对齐」抓到最后一张）。
+    # 之前一直空着没人发现——真扫出行来的第一天就露了。
     return (
-        '<table><thead><tr><th>标的</th><th>申报人/机构</th><th>类型</th><th>申报日期</th>'
+        '<table class="fixed-cols"><colgroup><col style="width:9%"><col style="width:20%">'
+        '<col style="width:9%"><col style="width:11%"><col style="width:51%"></colgroup>'
+        '<thead><tr><th>标的</th><th>申报人/机构</th><th>类型</th><th>申报日期</th>'
         "<th>解读</th></tr></thead><tbody>" + "".join(body_rows) + "</tbody></table>"
     )
 
@@ -1259,6 +1686,42 @@ def build_toc(sections: list) -> str:
     return f'<nav class="toc" aria-label="章节导航">{links}</nav>'
 
 
+
+# 🔴 盘前小节顺序的**唯一**真源（2026-08-19 建）。
+#    在此之前顺序 = 各 body_sections.append() 的书写位置，散在 500 行里，
+#    调一次顺序要在四五个地方来回找。现在统一在 render_premarket 末尾按 id 重排。
+#    没列进来的 id 保持相对次序、排在列出的之后。
+PREMARKET_SECTION_ORDER = [
+    "signal",        # 今日信号灯
+    "gate",          # 03 指数闸门 ← 2026-08-19 从第 7 位提到这里
+    "risk",          # 今日动能打分
+    "breadthscore",  # 市宽打分（三表一致性检查挂在这一节末尾，所以上面三张表必须都已出现）
+    "ftd",
+    "bounce",
+    "macro",
+    "positions",
+    "news",
+    "setup",
+    "wrapup",        # 今日定位（核心结论）
+    "scenario",      # 今日情景 · 对账台账 ← 2026-08-21 Vic：情景和对账是一套东西，合并放最后
+]
+
+
+def _reorder_sections(sections: list, order: list) -> list:
+    """按 id 重排小节；未列出的保持原相对次序、排在后面。
+
+    section() 产出的字符串形如 `<section id="xxx" ...>`，这里只读 id 不改内容。
+    """
+    import re as _re
+
+    def sid(html):
+        m = _re.search(r'<section[^>]*id="([^"]+)"', html)
+        return m.group(1) if m else ""
+
+    rank = {k: i for i, k in enumerate(order)}
+    return sorted(sections, key=lambda h: (rank.get(sid(h), len(order)), sections.index(h)))
+
+
 def render_premarket(data: dict) -> str:
     date = data.get("date", "")
     generated_at = data.get("generated_at", "")
@@ -1272,8 +1735,10 @@ def render_premarket(data: dict) -> str:
     # 2026-07-27 Vic大改：「攻守记分板和今日动能打分有点分不清，他们其实指向都应该一样的」。
     # 新顺序=动能打分(先给整体强弱观感) → 攻守记分板(只剩QQQ/SPY两行闸门) → 市宽打分(原记分板里
     # 的广度类条件独立成节)。原"今日动能温度打分"改名"今日动能打分"。
+    # 🔴 2026-08-17：目录里摘掉「攻守记分板」——那节已随字段一起退役，
+    #    留着就是一条点了没反应的死链（#scoreboard 在页面上已经不存在了）。
     toc_sections = [
-        ("signal", "信号灯"), ("risk", "动能打分"), ("scoreboard", "攻守记分板"),
+        ("signal", "信号灯"), ("risk", "动能打分"),
         ("breadthscore", "市宽打分"), ("ftd", "FTD"),
         ("macro", "宏观"), ("gate", "指数闸门"), ("positions", "持仓"),
         ("news", "消息"), ("movers", "盘前异动"), ("setup", "机会扫描"),
@@ -1294,36 +1759,25 @@ def render_premarket(data: dict) -> str:
 
     # 2026-07-12 Vic：记分板/温度/联合信号/宏观雷达的分析性文字是"小结"，
     # 用蓝色callout格式渲染，不再是灰色小字（"这些灰色字很重要啊"）
-    gate_rows = data.get("gate_scoreboard_rows", [])
-    # 🔴 2026-08-10 改回优先级：**攻守记分板就是 scoreboard_rows**（升级/降级/技术平价三类，
-    # 7/22 之前一直如此）。7/27 那次把它拆成 gate_scoreboard_rows 之后，这里的
-    # `if gate_rows` 让 scoreboard_rows 永远走不到，Vic 的九行板子就此消失了两周。
-    # gate_scoreboard_rows 保留作闸门视图和 cross_check 的输入，挂在记分板下面。
-    sb_rows = data.get("scoreboard_rows") or []
-    if sb_rows:
-        scoreboard_body = build_scoreboard_table(sb_rows)
-        if gate_rows:
-            scoreboard_body += "<h3>闸门位置</h3>" + build_gate_scoreboard(gate_rows)
-    else:
-        scoreboard_body = build_gate_scoreboard(gate_rows) if gate_rows else build_scoreboard_table([])
-    if data.get("scoreboard_note"):
-        scoreboard_body += build_split_callout(data["scoreboard_note"])
-    body_sections.append(section("scoreboard", "攻守记分板", scoreboard_body))
+    # 🔴 **攻守记分板 2026-08-17 整块退役**（Vic：「我的攻守记分板删除」）。
+    #    实测：21 份报告里归一化后仍有 30 种条件、行数 7~12 从没固定、
+    #    最后一份 11 行里 10 行在别处已有。它唯一的功能（升级 N/M 的聚合判断）
+    #    由 regime_triggers 承担——那个块本来就是干这个的。
+    #    gate_scoreboard_rows 保留：它是 cross_check_alignment 的输入，且是闸门的独立视图。
+    # 🔴 gate_scoreboard_rows 2026-08-17 起**不再单独渲染成一节**：
+    #    它的 anchor 会和「03 指数闸门」撞车（同 anchor 渲染两次 → 页内跳转失效），
+    #    而那几条闸门价位在 03 的 ETF 表里已经逐行列着了。
+    #    字段保留：它是 cross_check_alignment 的输入（拿闸门位置和风险清单对表）。
 
+    # 🔴 2026-08-17 两表合一（Vic：「广度明细可以加入市宽打分表格，2表变成一涨」）——
+    #    breadth_score_rows 现在就是那张合并表：9 项 Stockbee 明细 + 框架阈值/状态列。
+    #    breadth_table 随之退役（模板留空壳）。
     bs_rows = data.get("breadth_score_rows", [])
     if bs_rows:
         bs_body = build_scoreboard_table(bs_rows)
         if data.get("breadth_score_note"):
             bs_body += build_split_callout(data["breadth_score_note"])
         bs_body += build_cross_check(data.get("cross_check", {}))
-        # 2026-08-05：breadth_table/_note 在渲染器里一直零引用，写了就丢（QA「字段写了却没被渲染」抓到）
-        # 2026-08-10 再修：note 原来挂在「表有行」的条件下，**表空了连解释一起丢**——
-        # 而表为什么空（数据源 400 / 今天没扫出来）恰恰是空表时最该被看见的信息。
-        bt = data.get("breadth_table") or {}
-        if bt.get("rows"):
-            bs_body += "<h3>广度明细</h3>" + build_table(bt)
-        elif data.get("breadth_table_note"):
-            bs_body += "<h3>广度明细</h3>"
         if data.get("breadth_table_note"):
             bs_body += build_split_callout(data["breadth_table_note"])
         body_sections.append(section("breadthscore", "市宽打分", bs_body))
@@ -1384,28 +1838,43 @@ def render_premarket(data: dict) -> str:
     # 它是**分母信号**（10日跌家数少到极值），跟 ATR 延伸度不是一类，单独一节。
     if (data.get("bam_table") or {}).get("rows"):
         macro_parts.append("<h3>B · Deemer Breakaway Momentum</h3>")
-        macro_parts.append(build_table(data["bam_table"]))
+        # 2026-08-14 Vic：「只显示2天，或者你做成图表」——改成折线图。
+        # 逐日表格 10 行数字里只有最后一行有判语，其余 9 行是给眼睛找趋势用的，
+        # **那正是图该干的事**。阈值线画出来，「离触发还有多远」一眼可见。
+        macro_parts.append(build_bam_chart(data["bam_table"], data.get("bam") or {}))
         if data.get("bam_note"):
             macro_parts.append(build_split_callout(data["bam_note"]))
-    if atr_rows:
-        macro_parts.append("<h3>C · 指数</h3>")
-        macro_parts.append(build_atr_extension_table(atr_rows))
-        if data.get("atr_extension_note"):
-            macro_parts.append(build_split_callout(data["atr_extension_note"]))
-    macro_parts.append("<h3>D · 其他资产</h3>")
-    macro_parts.append(build_table(data.get("other_assets_table", {})))
+    # 🔴 2026-08-19 Vic：「voo qqq dia iwm smh rsp qqqe 表格里面好几张，你先都集中到一个地方」——
+    #    原「C · 指数」= atr_extension_table（七只的距 50MA ATR 倍数），已并进 03 指数闸门的
+    #    index_table（那张表有「距50MA(ATR)」列）。**盘前不再渲染这一块**；
+    #    盘后/周报仍在用 build_atr_extension_table，那两处是独立视图，不动。
+    # 🔴 D · 其他资产 2026-08-14 Vic：「整个表格删除，我只需要小结」——
+    #    表格退役，只渲染 other_assets_note。10Y/VIX/DXY/黄金/白银/WTI/BTC 的数字
+    #    本来就只在「信号」列被读，数字本身没人逐行看。
+    if data.get("other_assets_note"):
+        # 🔴 2026-08-17 Vic：「其他资产里面有两个小结，第一个不是小结，只是陈述」——
+        #    这一块是跨资产读数的**陈述**（10Y/金银/TLT/加密各说各的），
+        #    真正的小结是紧跟其后的 joint_signal_lines（把它们和股票合起来给结论）。
+        #    连着两个「小结：」标题，第二个的分量就被稀释了。label="" 去掉标题行。
+        macro_parts.append("<h3>D · 其他资产</h3>")
+        macro_parts.append(build_plain_block(data["other_assets_note"]))
     joint_lines = data.get("joint_signal_lines", [])
     if joint_lines:
         # 2026-07-27 Vic：联合信号也走统一的bullet小结格式，不再是<br><br>硬换行
         items = "".join(f'<div class="co-item">{rich(x)}</div>' for x in joint_lines)
-        macro_parts.append('<div class="callout"><strong>小结：</strong>'
-                           f'<div class="co-list">{items}</div></div>')
+        # 🔴 2026-08-20：这里硬编码了「小结：」标题，是 label 默认值改空之后
+        #    唯一漏网的一处（Vic：「哈哈你又有两个小结」）。callout 配色已经在说它是小结。
+        macro_parts.append(f'<div class="callout"><div class="co-list">{items}</div></div>')
     macro_parts.append("<h3>D · 宏观雷达</h3>")
     macro_parts.append(build_table(data.get("macro_radar_table", {})))
     if data.get("macro_radar_detail"):
         macro_parts.append(build_callout("", data["macro_radar_detail"]))
     macro_parts.append("<h3>E · 板块</h3>")
     for t in data.get("sector_rs_tables", []):
+        # 🔴 2026-08-19：「指数基准」组的七只已在 03 指数闸门的 index_table 里，
+        #    这里跳过，避免同一组 ticker 在一份报告里画第二遍（Vic：「集中到一个地方」）。
+        if "指数" in (t.get("title") or ""):
+            continue
         macro_parts.append(f"<h3 style='font-size:15px;color:var(--muted);margin:14px 0 4px'>{esc(t.get('title',''))}</h3>")
         macro_parts.append(build_table(t))
     if data.get("sector_rs_note"):
@@ -1434,7 +1903,30 @@ def render_premarket(data: dict) -> str:
             gate_body += build_note_callouts(data["futures_note"])
     # 2026-08-06 Vic 三条：①「（盘前+0.33%）字样直接换一行」②「抬头（atr）那些括号都删除」
     # ③「如果在进攻线，那么进攻线有个绿灯；同理降级线符合有个红灯」
-    gate_body += build_gate_etf_table(data.get("etf_table", {}))
+    # 🔴 2026-08-17 Vic：「03 指数闸门这个表格就和上面闸门位置放一起，没必要写两次，
+    #    用闸门位置格式」——此前 etf_table（七只 ETF 九列）和 gate_scoreboard_rows
+    #    （三只闸门标的卡片式）同页画两遍，VOO/QQQ/IWM 的进攻线在两张表里各写一次。
+    #    合成一张，走闸门位置的格式；DIA/SMH/RSP/QQQE 没有闸门线，作参考行（kind="ref"）。
+    # 🔴 2026-08-19 Vic 两条：「voo qqq dia iwm smh rsp qqqe 表格里面好几张，你先都集中到一个地方」
+    #    「指数闸门能用图示吗？一根横轴看位置」——七只指数原本散在三处
+    #    （gate_scoreboard_rows / sector_rs_tables 的「指数基准」组 / atr_extension_table），
+    #    现在合成 index_table 一处：ATR 横轴图 + 一张全字段表。另两处已在本函数里停渲。
+    # 🔴 2026-08-19 Vic 第二轮：「指数所有表位置放一起，但是格式改回去，让我想想先，
+    #    目前新板块没有以前得好」——**位置的合并保留、长相回到旧的三张表**。
+    #    所以这一节现在是「三张旧格式的表挨着放」，而不是新的 ATR 横轴图 + 宽表。
+    #    `build_index_panel()` **代码留着不删**（他说「让我想想先」），随时可以切回来：
+    #    把下面三段换成 `gate_body += build_index_panel(data.get("index_table", []))` 即可。
+    gate_body += build_gate_scoreboard(data.get("gate_scoreboard_rows", []))
+    for _t in data.get("sector_rs_tables", []):
+        if "指数" in (_t.get("title") or "") and _t.get("rows"):
+            gate_body += f'<h3>{esc(_t["title"])}</h3>' + build_table(_t)
+    _atr = data.get("atr_extension_table", [])
+    if _atr:
+        # 🔴 2026-08-20 Vic：「有两个小结」——03 这一节原来出两个蓝色小结
+        #    （距50MA 表后一个 + 节末 etf_table_note 一个），讲的是同一堆数字。
+        #    **一节只留一个小结**，统一由节末的 etf_table_note 收口；
+        #    atr_extension_note 在盘前不再单独渲染（盘后/周报那两处不受影响）。
+        gate_body += "<h3>距50MA（ATR倍数）</h3>" + build_atr_extension_table(_atr)
     if data.get("etf_table_note"):
         gate_body += build_split_callout(data["etf_table_note"])
     body_sections.append(section("gate", "03 指数闸门", gate_body))
@@ -1532,6 +2024,14 @@ def render_premarket(data: dict) -> str:
     # 机会扫描：核心模块，六种找机会的方式合并成一节（2026-07-05：13D/13G和轧空扫描从独立模块并进来，
     # 因为它们本质也是"机会提取"，应该跟其他找机会的方法放一起，不该是散落的独立小节）
     setup_parts = []
+    # 🔴 2026-08-20 Vic：EP / momentum burst 这类票盘前报告一直选不出来。
+    #    根因不是扫描器不够好，是**这类 setup 的信息不在 T-1 的价格里，在催化剂里**。
+    #    所以放在机会扫描最前面——它决定的是「今天要盯谁」，A/B 候选决定「今天做什么形态」。
+    cw = data.get("catalyst_watch") or {}
+    setup_parts.append("<h3>催化剂在手（事前预案）</h3>")
+    setup_parts.append(build_catalyst_watch(cw))
+    if data.get("catalyst_watch_note"):
+        setup_parts.append(build_split_callout(data["catalyst_watch_note"]))
     # 2026-07-07：避险股+老登合并成一张表、上下排列不再左右分栏（Vic："没地方"）
     # 2026-07-17：ML Leader停用（Vic："leaders既然不再有效，拿掉他们吧，我重新找leader"）——
     # ml_leaders为空时不渲染Market Leader表/方法1标题/联合信号，只留防御篮子表；
@@ -1562,53 +2062,27 @@ def render_premarket(data: dict) -> str:
                            + "</p>")
 
     setup_parts.append('<span class="method-tag">方法2 · 强势板块全量Setup扫描</span>')
-    setup_parts.append(
-        '<p class="note">'
-        'Setup A 缩量回踩9EMA ｜ B tight consolidation出方向 ｜ C undercut and rally ｜ '
-        'D 突破后缩量回踩 ｜ W 双底/三重底未破前低 ｜ E shakeout + momentum burst'
-        '（Ew = shakeout已收回但burst未确认，等开盘第一根放量动量bar）</p>')
+    # 🔴 2026-08-20：这行图例一直还写着 A/B/C/D/W/E/Ew —— **Vic 8/20 早就让改成具体的字**
+    #    （「我记得我们刚把 setup a b c d 都改成具体的字」），扫描器和表格都改了，
+    #    唯独这行说明漏了，于是表里印 "2 wick"、图例里讲 "W 双底"，对不上。
+
     strong_sector_setups = data.get("strong_sector_setups_table", {})
     setup_parts.append(build_table(strong_sector_setups) if strong_sector_setups.get("rows") else '<p class="placeholder">本次未做强势板块全量技术形态扫描（需要多日K线判断tight consolidation/undercut等结构，LongBridge candlestick接口的参数验证问题仍未解决，暂时只能从板块RS表读超额强弱，不能自动识别具体setup形态），下次盘前继续尝试。</p>')
     # 2026-07-15 Vic：仓位/许可每行都一样没必要占一列，改为表后统一提醒
     if data.get("strong_sector_setups_permission"):
-        setup_parts.append(build_callout("warn", data["strong_sector_setups_permission"]))
+        # 2026-08-20 Vic：「蓝色部分你没改 i ii」——改走 split（罗马数字＋子项分级）
+        setup_parts.append(build_split_callout(
+            data["strong_sector_setups_permission"], kind="warn"))
 
-    setup_parts.append('<span class="method-tag">方法3 · Adanos Top100扫描</span>')
-    adanos = data.get("adanos_scan_table", {})
-    # 2026-08-07：Adanos 数据由 fetch_market_data.fetch_adanos() 用 urllib 直拉，写在
-    # cache['adanos_movers']（surges + top5_steady）——**不走 curl，7/13 那条"curl 被安全
-    # 分类器拦"的旧结论对现在的取数路径不适用**。空表只可能是 assemble 没去读 cache。
-    if adanos.get("rows"):
-        setup_parts.append(build_table(adanos))
-    if data.get("adanos_scan_note"):
-        # 2026-08-10：note 原来只挂在「表有行」的分支上，表空时连「今天为什么取不到、
-        # 依据哪一天」一起丢——而那正是空表时唯一有价值的信息（同 breadth_table/stop_proximity）。
-        setup_parts.append(build_split_callout(data["adanos_scan_note"]))
-    if not adanos.get("rows") and not data.get("adanos_scan_note"):
-        # 有 adanos_scan_note 时不再叠这段兜底文案——兜底里没有日期出处，
-        # 会被「陈旧结论必须带日期」那条 QA 打红（2026-08-10）。
-        setup_parts.append(empty_body(
-            "nodata", "cache['adanos_movers'] 为空——**先查 fetch_market_data 是否跑成功，"
-                      "不要默认是接口被拦**（它走 urllib 不走 curl）。"))
+    # 🔴 **方法3 · Adanos Top100 扫描 2026-08-17 整块退役**（Vic：「删除这个方法」）。
+    #    方法号不重排——方法5/6/7 的编号在 CONTEXT.md 和历史报告里被引用过。
+    #    adanos_scan_table / _note 进 RETIRED_FIELDS，模板不再产出。
 
-    setup_parts.append('<span class="method-tag">方法4 · 盘前异动机会</span>')
-    # 2026-08-06 Vic：「盘前异动整个表格你应该放在方法4下面」——原来它是独立一节挂在
-    # 04宏观消息之后，跟方法4「盘前异动机会」讲的是同一批标的，分两处读要来回翻。
-    mv = data.get("premarket_movers", [])
-    if mv:
-        setup_parts.append(build_premarket_movers(mv))
-        if data.get("premarket_movers_note"):
-            setup_parts.append(build_split_callout(data["premarket_movers_note"]))
-    else:
-        # 段1（白天）本来就没有盘前报价——那是「还没到时候」，不是「今天没有异动」
-        setup_parts.append(empty_body(
-            "nodata" if data.get("_phase") == 1 else "none",
-            "段1（白天）盘前报价尚未开始，段2（SGT 16:00 后）补" if data.get("_phase") == 1
-            else "全票池 |盘前| ≥7% 无命中"))
-    mover_ops = data.get("mover_opportunities_table", {})
-    if mover_ops.get("rows"):
-        setup_parts.append(build_table(mover_ops))
-
+    # 🔴 方法4 · 盘前异动机会 —— 2026-08-14 Vic：「删除吧 没什么用」，整块退役。
+    #    它本来就已经名存实亡：2026-08-12 盘前数据模块整体下线后（Vic：「我也不看盘前异动选股」），
+    #    premarket_movers 进了 RETIRED_FIELDS、恒为空，这一节每天渲染的只有一个空标记。
+    #    方法号**不重排**——方法5/6/7… 的编号在 CONTEXT.md 和历史报告里被引用过，
+    #    重排会让旧报告里的「方法5」指向另一件事。4 号位就留空。
     setup_parts.append('<span class="method-tag">方法5 · X trader setup提取</span>')
     setup_parts.append(build_x_sentiment(data.get("x_sentiment_macro", []), data.get("x_sentiment_stocks", []),
                                          data.get("x_sentiment_macro_summary", "")))
@@ -1694,10 +2168,20 @@ def render_premarket(data: dict) -> str:
         # 只靠整行底色区分（A=绿 / B=白 / C=灰），不再是"A卡片+B表格+C灰块"三种格式。
         # 2026-07-27 Vic："级别不要放一列，放在上面一行，就不用重复很多次；
         # 来源和板块放在一列叫来源；级别/Ticker记得居中"
-        GRADE_HL = {"A": "bull", "B": "", "C": "mute"}
-        GRADE_LABEL = {"A": "A级 · 允许执行", "B": "B级 · 观察为主", "C": "C级 · 当日忽略"}
+        # 🔴 **C 级 2026-08-17 退役**（Vic：「c退役」）。C 级的定义是「当日忽略」——
+        #    一个**明说了不做**的清单，对当天的任何决定都不产生输入，
+        #    而最后一份里它占了 3/6 行、正文字数约占全表一半。
+        #    降级的**理由**仍然要写（那是判断记录），但归到对应模块的 note，
+        #    不占候选表的行——**候选表回答的是「今天做什么」。**
+        # 🔴 2026-08-19 Vic：「a级setup 如果全绿，就不要填色了」——
+        #    A 级本来就整组连在一起、上面还有「A级 · 允许执行」的组标题行，
+        #    每行再铺一遍绿底是把**同一个信息说第二遍**；而**颜色只有稀有时才是信号**
+        #    （跟 8/18 持仓表退役整行底色是同一条：16 笔里 13 笔上色 = 等于没标）。
+        #    组标题已经承担了分级，行底色不再需要。**不要再给这张表加 row_highlights。**
+        GRADE_HL = {"A": "", "B": ""}
+        GRADE_LABEL = {"A": "A级 · 允许执行", "B": "B级 · 观察为主"}
         rows, hl, groups = [], [], []
-        for g in ("A", "B", "C"):
+        for g in ("A", "B"):
             items = [x for x in abc if (x.get("grade", "") or "").strip()[:1].upper() == g]
             if not items:
                 continue
@@ -1718,6 +2202,14 @@ def render_premarket(data: dict) -> str:
             # 2026-08-06 Vic：「这个表格的列宽给的不合理，setup应该宽，触发列窄对不对」
             # Setup 8%→26%（要放完整形态描述），触发 26%→12%（只是一个价位/一句话）
             "col_widths": ["7%", "14%", "26%", "12%", "11%", "9%", "21%"]}))
+        stray_c = [x.get("ticker", "?") for x in abc
+                   if (x.get("grade", "") or "").strip()[:1].upper() not in ("A", "B")]
+        if stray_c:
+            raise ValueError(
+                "C 级已于 2026-08-17 退役（Vic：「c退役」），但 watchlist_abc 里还有 %s——"
+                "**不要静默丢掉**：把降级理由写进对应模块的 note（方法2 的写 "
+                "strong_sector_setups_permission，单边榜的写 unilateral_scan_note），"
+                "候选表只留 A/B。" % stray_c)
         setup_parts.append(build_entry_legend())
     else:
         # 2026-07-28 Vic第三次提「A级B级C级setup格式还是不一样的」。前两次（7/12、7/27）都改了
@@ -1737,21 +2229,28 @@ def render_premarket(data: dict) -> str:
         setup_parts.append(build_split_callout(data["setup_conclusion"]))
     body_sections.append(section("setup", "机会扫描 / Setup（核心）", "".join(setup_parts)))
 
-    # 情景分析放在结论之前
-    body_sections.append(section("scenario", "今日情景分析", build_playbook_scenarios(data.get("playbook_scenarios", []))))
+    # 🔗 2026-08-21 Vic：「今日情景分析 和盘后对账其实是一套东西，合并放在最后吧」——
+    #    情景说的是「如果 A 就做 X」，对账台账说的是「A 会不会发生、我给多少概率」，
+    #    **是同一件事的两半**。原来一个在中段、一个在末尾，读的时候要自己接回去。
+    #    现在：今日定位（核心结论）在前，情景 ＋ 对账台账合成最后一节。
+    #    顺序变更已同步进 qa_report.REPORT_SPEC["premarket"]["sections"]（QA 会比对两边）。
 
-    # 今日定位（含对账清单）放最后。2026-07-27 Vic三处精简：
+    # 今日定位（只留核心结论）。2026-07-27 Vic三处精简：
     # ①删「油门升级/降级讯号」——降级线触发了他也不会真降级（7/27大跌当天一条都没触发，证明这组线没用）
     # ②KEY TAKEAWAYS只保留一个标题，不再"kicker+h3"重复两次
     # ③删黄色「今日定位」指令块——内容跟A/B/C候选表重复，反向信号已并进那张表的「不做/备注」列
     wrapup_body = build_key_takeaways(data.get("key_takeaways", []))
-    wrapup_body += '<h3 style="margin-top:24px">盘后对账清单</h3>'
-    wrapup_body += build_recon_ledger(data.get("recon_ledger", []))
+    body_sections.append(section("wrapup", "今日定位", wrapup_body))
+
+    # 最后一节：情景 ＋ 对账台账（2026-08-21 合并）
+    sc_body = build_playbook_scenarios(data.get("playbook_scenarios", []))
+    sc_body += '<h3 style="margin-top:24px">盘后对账清单</h3>'
+    sc_body += build_recon_ledger(data.get("recon_ledger", []))
     # 事前概率的口径说明（2026-08-08 建）。盘后一直有渲染，盘前漏了——
     # 而盘前才是概率被**写下**的地方，说明放在这里比放盘后更重要。
     if data.get("recon_prob_note"):
-        wrapup_body += f'<p class="brier-line">{rich(data["recon_prob_note"])}</p>'
-    body_sections.append(section("wrapup", "今日定位", wrapup_body))
+        sc_body += f'<p class="brier-line">{rich(data["recon_prob_note"])}</p>'
+    body_sections.append(section("scenario", "今日情景 · 对账台账", sc_body))
 
     # 2026-07-05：13F→13D/13G、轧空、国会交易、Polymarket全部已解决（13D/13G和轧空并进了机会扫描，
     # 国会交易走X观点池），"待接入"暂时是空的，先不渲染这个section；等真出现新的没数据源的模块再加回来
@@ -1762,6 +2261,14 @@ def render_premarket(data: dict) -> str:
     footer = data.get("footer_sources", "")
     if isinstance(footer, (list, tuple)):
         footer = " · ".join(str(x) for x in footer)
+
+    # 🔴 2026-08-19 Vic：「三个角度分歧：闸门位置=中性、市宽打分=偏空、动能打分=偏空
+    #    既然这样 闸门位置提到市宽上面」
+    #    根因不是审美：**三表一致性检查（build_cross_check）挂在「市宽打分」那一节的末尾**，
+    #    而它点名的三个角度里，「闸门位置」原本排在第 7 节 —— 读到那句「三个角度分歧」时，
+    #    读者还没看过其中一个角度。把闸门提到市宽之前，三张表就都在结论之前出现了。
+    #    顺序在这里收口（按 id 重排），不要回到各 append 点各改一次。
+    body_sections = _reorder_sections(body_sections, PREMARKET_SECTION_ORDER)
 
     return f"""<!doctype html>
 <html lang="zh-Hans">
@@ -1817,17 +2324,30 @@ def render_postmarket(data: dict) -> str:
     miss = data.get("miss_count", 0)
     recon_body = build_hitbar(hit, partial, miss)
     recon_body += build_recon_table(data.get("recon_rows", []))
-    # 2026-08-08：命中条只说「中了几条」，不说「有多难」。Brier 是同一批行算出来的，
-    # 必须跟命中条贴在一起——分开放就会像 8/5 那样只有「7/0」被读到。
-    _bs = _RH.brier_score(data.get("recon_rows", []))
-    if _bs.get("brier") is not None:
-        recon_body += f'<p class="brier-line">{rich(_RH.brier_note(_bs, "今日", verdict=False))}</p>'
+    # 🔴 2026-08-17 Vic：「brier score 就放周报吧」。
+    #    **8/17 那次没删干净**：我只写了注释说已删，渲染代码原样留着，
+    #    还把 Brier 数字和判语写进了 recon_prob_note——绕一圈放回去了。
+    #    Vic 8/18 引原文问「不是说这句话删了嘛？」。**注释宣布的改动不算改动。**
+    #    现在 recon_prob_note 的语义收窄成「概率口径」：只说概率怎么定、为什么不许盘后改，
+    #    **不出现任何 Brier 数字或判语**（QA `_no_daily_brier` 会红）。
+    #    Brier 仍然逐日算、逐日进 JSON（每行的 prob + result 都在），
+    #    **判语只在周报出**——那里一周 ~20 条，n 才够。
     if data.get("recon_prob_note"):
         recon_body += f'<p class="brier-line">{rich(data["recon_prob_note"])}</p>'
     if data.get("recon_note"):
         recon_body += build_split_callout(data["recon_note"])
-    body_sections.append(build_summary_cards(data.get("close_summary_cards", []))
-                         + section("recon", "盘后对账", recon_body))
+    # 🔴 2026-08-20 Vic：「这个改成和盘前报告一样的闸门格式吧？有颜色容易看」——
+    #    收盘四张卡（VOO/QQQ/SMH/广度）换成**盘前那张闸门表**：
+    #    同一个 build_gate_scoreboard、同一组 GATE_TICKERS、状态列同一套配色。
+    #    **盘前盘后同一件事就该长同一个样**（跟 8/18 持仓表统一是同一条）。
+    #    广度不在闸门表里（它没有进攻线/防守线）——它本来就有独立的「市宽」一节承载，
+    #    塞进闸门表就等于又造一行「四列全是横杠」的参考行，那正是 8/20 刚删掉的东西。
+    _gate = data.get("gate_scoreboard_rows") or []
+    _top = (section("closegate", "收盘 · 闸门位置", build_gate_scoreboard(_gate)
+                    + (build_split_callout(data["close_gate_note"])
+                       if data.get("close_gate_note") else ""))
+            if _gate else build_summary_cards(data.get("close_summary_cards", [])))
+    body_sections.append(_top + section("recon", "盘后对账", recon_body))
 
     hr = data.get("hit_rate_stats", {})
     hr_rows = []
@@ -1875,13 +2395,16 @@ def render_postmarket(data: dict) -> str:
     # 一张表的两段。ATR延伸表和两段小结都排在这两张表之后。
     close_body = build_table(data.get("index_table", {}))
     close_body += build_table(data.get("sector_table", {}))
-    if data.get("index_table_note"):
-        close_body += build_split_callout(data["index_table_note"])
-    # 2026-07-28补：板块表后必须跟"强势/可持有·修复/需确认·弱势/暂避·小结"四件套callout
-    # （CONTEXT.md周报章节定的规则，明写"盘前盘后的板块表也要跟小结四件套"）——
-    # 此前postmarket JSON里写了sector_table_note但渲染层没接，是静默丢失，不是没写
-    if data.get("sector_table_note"):
-        close_body += build_split_callout(data["sector_table_note"])
+    # 🔴 2026-08-21 Vic：「这两个小结是应该放一起，第二次错哦」——
+    #    指数表小结和板块表小结**渲染成一块 callout**，不是上下两块。
+    #    它们本来就都排在两张表之后（CONTEXT「中间不插任何东西」），
+    #    但拆成两个蓝框之后，读的人要在两个框之间自己接一次；
+    #    而这两段说的是同一件事的两个层（指数怎么走 / 板块怎么排）。
+    #    2026-07-28 的板块四件套规则不变，只是它现在挂在合并块的后半段。
+    _notes = [data.get("index_table_note"), data.get("sector_table_note")]
+    _notes = [x for x in _notes if x]
+    if _notes:
+        close_body += build_split_callout(chr(10).join(_notes))
     # 2026-08-06 Vic：「软件细分单独开一个表格，里面有 igv cibr arkk xsw」——
     # 盘前已经分出来了，盘后一直没接上，等于同一份分组只做了一半。
     if (data.get("sector_soft_table") or {}).get("rows"):
@@ -1896,8 +2419,10 @@ def render_postmarket(data: dict) -> str:
             close_body += build_split_callout(data["atr_extension_note"])
     body_sections.append(section("close", "01 收盘总结", close_body))
 
-    # 02 市场广度（2026-07-21新增，Vic提供的S&P500全量市宽tab——填回02空号位，
-    # 数据从cache["sp500_breadth"]来，由assemble侧调report_helpers.sp500_breadth_tables()生成）
+    # 02 市场广度。2026-07-21 建时数据来自 Vic 提供的 S&P500 全量市宽 tab；
+    # 🔴 **2026-08-14 起数据源改为单一的 Stockbee 公开表**（Vic：「以后只用 stockbee，其他删除」），
+    #    由 assemble 侧的 breadth_rows() 直接从 cache["stockbee"] 生成。
+    #    sp500_breadth / maket_breath 两个源已在 fetch_market_data.py 退役成空壳。
     bt = data.get("breadth_live_table", {})
     if bt.get("rows"):
         br_body = build_table(bt)
@@ -1931,7 +2456,9 @@ def render_postmarket(data: dict) -> str:
         sa_body = empty_body("none", "窗口内无跟踪中的条目（当天 A 级为空，或已有条目全部满 5 日窗口归档）。")
     if data.get("setup_a_track_note"):
         sa_body += build_split_callout(data["setup_a_track_note"])
-    body_sections.append(section("setupa", "Setup A专项对账（连续5个交易日跟踪）", sa_body))
+    # 🔴 2026-08-20 改名：字母退役后「Setup A 专项对账」这个名字既不准也误导——
+    #    它现在跟的是**当天放行的全部 A 级候选**，不分形态。
+    body_sections.append(section("setupa", "A 级候选跟踪（连续 5 个交易日）", sa_body))
 
     x_watch_table = data.get("x_watch_table", {})
     if x_watch_table.get("rows"):
@@ -1947,7 +2474,11 @@ def render_postmarket(data: dict) -> str:
     if earnings_table.get("rows") or data.get("earnings_note"):
         _eb = build_table(earnings_table) if earnings_table.get("rows") else ""
         if data.get("earnings_note"):
-            _eb += build_split_callout(data["earnings_note"])
+            # 🔴 2026-08-20 Vic：「这个不是小结，直接用白色表格吧」——
+            #    财报那段是**陈述**（谁报了、超没超、盘面怎么反应），判断只是其中一句。
+            #    蓝底 callout 在这份报告里有固定含义 ＝「这是判断」，用错了就等于
+            #    告诉眼睛「这块和真正的小结一样重」。走白底陈述块（同 D·其他资产）。
+            _eb += build_plain_block(data["earnings_note"])
         body_sections.append(section("earnings", "03 财报复盘", _eb))
     else:
         body_sections.append(placeholder_section("earnings", "03 财报复盘", "今日无重大财报。"))
@@ -1962,20 +2493,39 @@ def render_postmarket(data: dict) -> str:
     # 持仓治理（2026-08-01 Vic批准启用为硬性规则）：thesis为空或止损为空的仓位
     # **标红单列一节**，不再只在持仓表备注里提一句——「每笔仓位都有持有理由」
     # 已连续两周未做到，按CONTEXT「同一缺口连续两周→升级为硬性规则」处理。
+    # 🔴 2026-08-19：note 不再挂在「表有行」的条件下（这是同一个坑的**第四次**，
+    #    前三次记在 CONTEXT「note 不能挂在表有行的条件下」）。**治理表为空恰恰是要说明的状态**——
+    #    「今天没有缺持有理由的仓位」和「这一节被整块吞掉」在页面上长得一模一样。
     gov = data.get("position_governance_table") or {}
-    if gov.get("rows"):
+    if gov.get("rows") or data.get("position_governance_note"):
         pos_body += ('<h3 class="gov-head">仓位治理：%d 笔缺持有理由或止损</h3>'
-                     % len(gov["rows"]))
-        pos_body += build_table(gov)
+                     % len(gov.get("rows") or [])) if gov.get("rows") else                     '<h3 class="gov-head">仓位治理</h3>'
+        if gov.get("rows"):
+            pos_body += build_table(gov)
         if data.get("position_governance_note"):
             pos_body += build_split_callout(data["position_governance_note"],
                                             label="", kind="co-warn")
+    # 教材 p14 持仓管理执行表（2026-08-14 接入）。为什么它排在持仓表之后、代理RS之前：
+    # 51 笔跟单实测显示曾浮盈 ≥10% 的 18 笔里 13 笔最终 ≤0% 收场（平均放走 22.4pt），
+    # 而选股评分对峰值没有预测力——**亏钱的地方是持有和退出，不是选股**。
+    # 🔴 数据日不对时 helper 返回 nodata 而不是错数，这里要把它渲染出来，不能整节消失。
+    pmt = data.get("position_manage_table") or {}
+    if pmt.get("rows") or pmt.get("nodata") or data.get("position_manage_note"):
+        pos_body += '<h3>持仓管理执行表</h3>'
+        if pmt.get("rows"):
+            pos_body += build_table(pmt)
+        else:
+            pos_body += empty_body("nodata", pmt.get("nodata", ""))
+        if data.get("position_manage_note"):
+            pos_body += build_split_callout(data["position_manage_note"])
     # 代理/杠杆型仓位 vs 母体的相对强弱（2026-08-06 建，用于论点退出触发）。
     # 建的当天就在 helpers 里算了，但渲染层一直没接——WGMI 的退出信号只出现在 iterations
     # 的文字里，那张表从来没渲染过。同一批静默丢失里最隐蔽的一个。
     prs = data.get("proxy_rs_table") or {}
-    if prs.get("rows"):
-        pos_body += "<h3>代理相对强弱（论点退出）</h3>" + build_table(prs)
+    if prs.get("rows") or data.get("proxy_rs_note"):
+        pos_body += "<h3>代理相对强弱（论点退出）</h3>"
+        if prs.get("rows"):
+            pos_body += build_table(prs)
         if data.get("proxy_rs_note"):
             pos_body += build_split_callout(data["proxy_rs_note"])
     body_sections.append(section("positions", "04 持仓跟踪", pos_body))
@@ -2110,8 +2660,13 @@ def render_weekly(data: dict) -> str:
 
     # ⑥ 交易复盘
     tr = ""
+    # 🔴 2026-08-17 加 exec_quality_table（Vic：「你的周报里面没有分析我的一周交易」）。
+    #    CONTEXT 周报②要求四样，此前只做了三样——缺的正是唯一算「分析」的那样：
+    #    **重复模式 vs 做对的事**。这张表量的是买卖点在当日区间的位置 + 是否触及止损，
+    #    三个数都不依赖事后叙事，避免复盘变成讲故事。
     for key, h3 in (("closed_trades_table", "本周平仓明细"),
                     ("trade_stats_table", "分口径统计（自主 / 跟单 / 日内）"),
+                    ("exec_quality_table", "执行质量：买卖点在当日区间的位置"),
                     ("open_positions_table", "持仓中")):
         if (data.get(key) or {}).get("rows"):
             tr += f"<h3>{h3}</h3>" + build_table(data[key])
@@ -2366,11 +2921,13 @@ VALIDATED_FIELDS = {
     "gate_scoreboard_rows": (build_gate_scoreboard, True),
     "scoreboard_rows": (build_scoreboard_table, True),
     "atr_extension_table": (build_atr_extension_table, True),
+    "catalyst_watch": (build_catalyst_watch, True),
     "squeeze_candidates": (build_squeeze_table, True),
     "event_gap_candidates": (build_event_gap_table, True),
     "iterations": (build_iterations, True),
     "ml_leaders": (build_ml_leaders_postmarket, True),
     "close_summary_cards": (build_summary_cards, True),
+    "gate_scoreboard_rows": (build_gate_scoreboard, True),
     "cross_check": (build_cross_check, False),
     "week_calendar": (build_week_calendar, False),
 }

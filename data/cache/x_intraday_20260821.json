@@ -1,0 +1,455 @@
+{
+ "date": "2026-08-21",
+ "runs": [
+  {
+   "run_id": 1,
+   "run_at": "2026-08-21T12:20+08:00",
+   "window": "8/20 13:20 – 8/21 04:08 UTC（8/20 21:20 – 8/21 12:08 SGT，覆盖 8/20 整个美股交易日 + 盘后 + 隔夜）",
+   "accounts_checked": [
+    "KobeissiLetter",
+    "zerohedge",
+    "spotgamma",
+    "NickTimiraos",
+    "bluechipdaily",
+    "WalterDeemer",
+    "RichardMoglen",
+    "ohiain",
+    "spluscollective",
+    "aleabitoreddit",
+    "BillAckman",
+    "unusual_whales",
+    "jimcramer",
+    "markminervini",
+    "jasongoepfert"
+   ],
+   "accounts_no_new": [
+    "BillAckman（7 条全是网球票价争论/致谢，无交易内容）",
+    "unusual_whales（4 条全为非交易新闻）"
+   ],
+   "items": [
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T15:06:00Z",
+     "kind": "macro",
+     "summary": "*Bessent：回购规模「可以比我们宣布的 40 亿更大」。（引用的是「30 年收益率涨 4bp 到 5.23%，前一天才跌了 9bp」）",
+     "url": "https://x.com/zerohedge/status/2090457465284346056",
+     "flag": "hot",
+     "full_text": "*BESSENT: BUDGET DIRECTOR VOUGHT KNOWS WHERE WE CAN CUT BACK\n\nDOGE is back",
+     "quoted": "@zerohedge：*BESSENT TO HOLD PRESS CONFERENCE MONDAY ON IRAN PLANS"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T15:07:00Z",
+     "kind": "macro",
+     "summary": "一句话概括这套操作：「周四卖 230 亿 30 年期，周五回购 230 亿 30 年期。」",
+     "url": "https://x.com/zerohedge/status/2090457342609342965",
+     "flag": "hot",
+     "full_text": "*BESSENT TO HOLD PRESS CONFERENCE MONDAY ON IRAN PLANS"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T18:05:00Z",
+     "kind": "macro",
+     "summary": "🔴 回购实际执行：目标是 2029–2031 到期券，**收到 101.59 亿报价，只接受了 18.6 亿**——嘴上说可以更大，手上做得很小。",
+     "url": "https://x.com/zerohedge/status/2090500589549474164",
+     "flag": "hot",
+     "full_text": "TREASURY DEBT BUYBACK TARGETS COUPONS MATURING IN 2029 - 2031\n\nTREASURY RECEIVES $10.159B OF OFFERS FOR BUYBACK, ACCEPTS $1.86B"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T17:20:00Z",
+     "kind": "macro",
+     "summary": "野村：财政部这套笨拙的回购只是「枪伤上贴创可贴」，但同时也说——**失去长端现在已经不是一个可选项**。",
+     "url": "https://x.com/zerohedge/status/2090489066408059149",
+     "full_text": "Treasury's Clumsy Buyback Just A 'Band-Aid On A Bullet Hole', But Nomura Says Losing The Long-End Is Now A Non-Starter https://t.co/1x0HwrKfUH"
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-20T14:39:46Z",
+     "kind": "macro",
+     "summary": "长端美债收益率已经回吐了周三回购政策公布后那波涨势的一部分或全部。（配图；引用 WSJ Markets：Bessent 会为了让市场动起来做非常规的事）",
+     "url": "https://x.com/NickTimiraos/status/2090448713357595099",
+     "media": [
+      "https://pbs.twimg.com/media/HQLDyWfasAQdt3N.png",
+      "https://pbs.twimg.com/media/HQLDyWlbQAAVHB1.png"
+     ],
+     "full_text": "Yields on longer-dated U.S. Treasurys have retraced some or all of the decline that occurred when changes to Treasury buyback policies fueled a rally after they were announced Wednesday. https://t.co/s4CIJl5XGS",
+     "quoted": "@WSJmarkets：Treasury Secretary Scott Bessent has shown he’ll do unconventional things to get markets moving his way. His latest maneuver is his most radical yet. https://t.co/joQkZiLqBq"
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-20T17:24:00Z",
+     "kind": "macro",
+     "summary": "Bessent 在 CNBC 解释这次债务管理的突然调整：他认为**市场没有正确定价基本面**，所以需要出手。",
+     "url": "https://x.com/NickTimiraos/status/2090473793664024639",
+     "full_text": "@briangobosox @fcastofthemonth The third sentence of your comment ties back to Daly's speech in Tokyo earlier this month. She's making an argument for a *very different* approach. Paraphrasing, she says go read Bernanke, 2004. We used to do gradualism, but in this circumstance, we might have to do cold turkey."
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-20T17:44:00Z",
+     "kind": "macro",
+     "summary": "Sara Eisen 追问：回购长债会不会让联储的货币政策变复杂（言下之意是财政部在做期限管理）。",
+     "url": "https://x.com/NickTimiraos/status/2090487355249701234",
+     "full_text": "@briangobosox @fcastofthemonth Here's Daly's remarks, transcribed, from 34:52 in Tokyo\n\nSo if I take the shocks that I went through and I look at, let's start with tariffs, if that data that looked positive in the June release goes back up for a variety of reasons, either the new tariff announcements, the"
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-20T17:51:00Z",
+     "kind": "macro",
+     "summary": "Bessent 还说**财政整顿计划正在路上**——Timiraos 读作是对「回购治标不治本」这个批评的隐性承认。",
+     "url": "https://x.com/NickTimiraos/status/2090496849375600659",
+     "full_text": "@bdquinn He said also that a fiscal consolidation plan (which would address fundamentals) is coming. That was an implicit acknowledgement of your point, perhaps."
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T16:40:00Z",
+     "kind": "macro",
+     "summary": "🔴 做了几十年的债券大多头 **Lacy Hunt 转空**，今晚详谈。",
+     "url": "https://x.com/zerohedge/status/2090479000808255567",
+     "full_text": "The Great Reversal: Decades-Long Bond Bull Lacy Hunt On His Bearish Pivot, Tonight https://t.co/AaCKhgXtpu"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T17:03:00Z",
+     "kind": "macro",
+     "summary": "29 年 6 个月期 TIPS 拍卖：bid/cover **2.82**（前次 2.75），间接投标人拿走 84.4%——需求这一端还没坏。",
+     "url": "https://x.com/zerohedge/status/2090484886645670265",
+     "full_text": "*US 29-YR 6-MO TIPS BID/COVER RATIO 2.82 VS. 2.75 PREVIOUS AUCTION\n\n*US AWARDS 84.4% OF 29-YR 6-MO TIPS TO INDIRECT BIDDERS"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T15:16:00Z",
+     "kind": "macro",
+     "summary": "*Bessent：通胀冲动只来自能源、是暂时的；底层经济非常强劲。",
+     "url": "https://x.com/zerohedge/status/2090458042672259416",
+     "full_text": "*BESSENT: ONLY INFLATIONARY IMPULSES FROM ENERGY, IT'S TEMPORARY\n*BESSENT: UNDERLYING ECONOMY VERY STRONG"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T15:20:00Z",
+     "kind": "macro",
+     "summary": "欧洲天然气触及 2023 年能源危机时的水平——「经济 D-Day」让霍尔木兹重开的前景蒙上阴影。",
+     "url": "https://x.com/zerohedge/status/2090458865263341774",
+     "full_text": "EU NatGas Hits 2023 Energy Crisis Levels As Trump's \"Economic D-Day\" Clouds Hormuz Reopening https://t.co/TABMzAxS5t"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-21T02:52:00Z",
+     "kind": "stock",
+     "summary": "🔴 **博通 CDS 爆炸**，同时在谈一笔高达 **1000 亿美元**的巨额表外债务交易。",
+     "url": "https://x.com/zerohedge/status/2090633009951084724",
+     "ticker": "AVGO",
+     "flag": "hot",
+     "full_text": "Broadcom CDS Explodes As It Seeks Up To $100 Billion In Massive Off-Balance Sheet Debt Deal https://t.co/NwRZ7iCZ7K"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T16:34:00Z",
+     "kind": "macro",
+     "summary": "🔴「7 月那波涨势结束了」——超大规模厂商 CDS 再度走阔，**$ORCL 和 $NVDA 处于历史最阔水平，$META 也逼近纪录**。（配图）",
+     "url": "https://x.com/zerohedge/status/2090477521691177051",
+     "ticker": "ORCL/NVDA/META",
+     "flag": "hot",
+     "media": [
+      "https://pbs.twimg.com/media/HQLeLEgXQAAasDd.png"
+     ],
+     "full_text": "The post July rip is over\nHyperscaler CDS are blowing out again and ORCL and NVDA are at all-time wides, Meta just shy of record https://t.co/tOaoarGDUV"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T21:49:00Z",
+     "kind": "stock",
+     "summary": "把这件事排成一列：$AVGO 正在为 AI 融资、$GOOGL 融过了、$AMZN 融过了、$META 融过了、$MSFT 基本还是自筹、$AAPL 根本不在乎。「看出规律了吗？他们需要更多钱来建。」",
+     "url": "https://x.com/spluscollective/status/2090556973561655395",
+     "ticker": "AVGO/GOOGL/AMZN/META/MSFT/AAPL",
+     "full_text": "$AVGO: raising cash for AI.\n$GOOGL: raised cash.\n$AMZN: raised cash.\n$META: raised cash.\n$MSFT: still mostly self funded.\n$AAPL: couldn't care less. \n\nSee the pattern? They need more money to build what’s next. Be ready for what’s coming.",
+     "quoted": "@epictrades1：$AVGO BROADCOM SEEKING MORE THAN $60 BILLION IN LATEST AI DEBT DEAL"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T22:02:00Z",
+     "kind": "stock",
+     "summary": "补充：应该预期更多债券发行，这不奇怪——**这是负债不是股权稀释**，等于借钱建 AI。风险在杠杆变高，不在股东被摊薄。",
+     "url": "https://x.com/spluscollective/status/2090560118719189023",
+     "full_text": "We should expect more bond sales. That shouldn't surprise anyone. This is debt, not share dilution. They are basically borrowing to fund the AI buildout.\n\nThe risk is higher leverage andnot our ownership automatically gets down.",
+     "quoted": "@Yash3067：@spluscollective Bro. Please tell whats coming."
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-21T00:13:00Z",
+     "kind": "macro",
+     "summary": "🔴 美国私募信贷的裂缝在扩大：20 家最大上市 BDC 里被标记为非应计的贷款，2026 Q2 上升了 0.8 个百分点。",
+     "url": "https://x.com/KobeissiLetter/status/2090593060979712429",
+     "flag": "hot",
+     "media": [
+      "https://pbs.twimg.com/media/HQKnEJLWAAAfTIE.jpg"
+     ],
+     "full_text": "Cracks in the US private credit industry are widening:\n\nLoans marked as non-accrual across the 20 largest publicly traded business development companies (BDCs) rose +0.8 percentage points in Q2 2026, to a median 2.8% of cost, the highest since 2017.\n\nBDCs are publicly traded https://t.co/JbF97qKKXJ"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-21T02:56:00Z",
+     "kind": "macro",
+     "summary": "高盛 Delta One：前沿实验室的争论焦点已经转成**「增长还能不能匹配已经极高的预期」**，同时模型经济性还在快速改善。",
+     "url": "https://x.com/zerohedge/status/2090634235824504907",
+     "full_text": "Goldman Delta One: \n\n\"The frontier lab debate has shifted towards whether growth can continue to match already extremely elevated expectations. At the same time, model economics keep improving stupidly fast. Qwen3.8 is another example… increasingly useful intelligence from"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T17:58:00Z",
+     "kind": "macro",
+     "summary": "*Anthropic 预计 IPO 规模会匹配甚至超过 SpaceX 的纪录。zerohedge 配文：「祝好运」。",
+     "url": "https://x.com/zerohedge/status/2090498634512994443",
+     "full_text": "ANTHROPIC EXPECTS TO MATCH SPACEX’S RECORD IPO SIZE OR TOP IT\n\nGood luck"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-21T00:15:00Z",
+     "kind": "stock",
+     "summary": "🔴 有人问 Power Trend 今天是不是失效了——「**还没有，但快了**」。$SPY 回到 21 日线属于正常；**$QQQ 是弱的那个，9 日、21 日、50 日全丢了**。",
+     "url": "https://x.com/spluscollective/status/2090593596949098909",
+     "ticker": "SPY/QQQ",
+     "flag": "hot",
+     "media": [
+      "https://pbs.twimg.com/media/HQNHx62bAAACRwR.png"
+     ],
+     "full_text": "I am asked if Power Trend failed today. No, Not yet. But I see it's almost there.\n\n$SPY pulled back to the 21. That’s normal.\n$QQQ is the weak one. It lost the 9, the 21, and the 50.\n\nPower Trend does not turn off because price tags the 21. It turns off when the 21 crosses back https://t.co/fI55k9kM9c",
+     "quoted": "@spluscollective：\"Power Trend\" is one of the best times to make money. It’s how I decide if I should even be buying and putting more capital.\n\nBill O’Neil was simple about this. If the market is strong, you press leaders. If it isn’t, you wait. A small 🧵on how to trade Power Trend. https://t.co/P"
+    },
+    {
+     "handle": "@WalterDeemer",
+     "utc": "2026-08-20T16:56:00Z",
+     "kind": "stock",
+     "summary": "$SPY 的缺口已经补掉。",
+     "url": "https://x.com/WalterDeemer/status/2090483115122729460",
+     "ticker": "SPY",
+     "full_text": "$SPY gap has been filled"
+    },
+    {
+     "handle": "@WalterDeemer",
+     "utc": "2026-08-20T13:35:00Z",
+     "kind": "stock",
+     "summary": "早盘又留了一个缺口：$SPY 要涨到 **768.10** 才补得上；$QQQ 今天没缺口，但**周二那个 729.27 的缺口还开着**。（配图）",
+     "url": "https://x.com/WalterDeemer/status/2090432560853651538",
+     "ticker": "SPY/QQQ",
+     "media": [
+      "https://pbs.twimg.com/media/HQK1UtWWkAArYeR.png"
+     ],
+     "full_text": "We have another gap this morning; $SPY would have to rally to 768.10 to fill It. There’s no gap in $QQQ – but its’ gap from Tuesday at 729.27 is still open. How quickly the gaps get filled -- if at all – gives us an idea of how strong the underlying trend still is. https://t.co/Sd8IRv4pSI"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T18:20:00Z",
+     "kind": "macro",
+     "summary": "美银调查：几乎没有空头了，投资者正在往股票里挤。",
+     "url": "https://x.com/zerohedge/status/2090504164803527036",
+     "full_text": "BofA Poll Sees Few Bears Left As Investors Pile Into Stocks https://t.co/zTICXJUTMS"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T14:04:00Z",
+     "kind": "stock",
+     "summary": "沃尔玛 $WMT 暴跌，创 **2022 年以来最大跌幅**，起因是同店销售大幅不及预期。",
+     "url": "https://x.com/zerohedge/status/2090439739576815678",
+     "ticker": "WMT",
+     "full_text": "Walmart Crashes Most Since 2022 After Huge Comp Store Sales Miss https://t.co/uwJy4utsO1"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T21:27:00Z",
+     "kind": "stock",
+     "summary": "$MU 把头探到 50 日线上方，正在测试缺口区域。（配图）",
+     "url": "https://x.com/RichardMoglen/status/2090551254187442345",
+     "ticker": "MU",
+     "flag": "pick",
+     "media": [
+      "https://pbs.twimg.com/media/HQMhSOGXAAAgyKt.jpg"
+     ],
+     "full_text": "$MU poking its head above the 50 and testing the gap area https://t.co/FxNW0Udpy4"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T17:48:00Z",
+     "kind": "stock",
+     "summary": "$PLTR 在这个区间里收得很紧。（配图）",
+     "url": "https://x.com/RichardMoglen/status/2090496195936313355",
+     "ticker": "PLTR",
+     "flag": "pick",
+     "media": [
+      "https://pbs.twimg.com/media/HQLvNbZXoAAseau.jpg"
+     ],
+     "full_text": "$PLTR tight in this range https://t.co/TIC9f8aa66"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T21:42:00Z",
+     "kind": "stock",
+     "summary": "回复里说：**SMH 在我看来是弱的**。",
+     "url": "https://x.com/RichardMoglen/status/2090555024820797903",
+     "ticker": "SMH",
+     "full_text": "@TomTwr @Deepvue SMH looks weak to my eye"
+    },
+    {
+     "handle": "@bluechipdaily",
+     "utc": "2026-08-20T14:48:00Z",
+     "kind": "stock",
+     "summary": "$MRK 在 137.16 预警，前一天是 +12% 的突破日。（配图）",
+     "url": "https://x.com/bluechipdaily/status/2090450966562644302",
+     "ticker": "MRK",
+     "media": [
+      "https://pbs.twimg.com/media/HQLFthsWQAA3Gqp.png"
+     ],
+     "full_text": "$MRK alerted at 137.16, had a +12% breakout day yesterday. https://t.co/yBeYwJmm2i https://t.co/aKSLPXKm2K"
+    },
+    {
+     "handle": "@bluechipdaily",
+     "utc": "2026-08-20T14:48:43Z",
+     "kind": "stock",
+     "summary": "连续两天的突破提示：$AU 自昨天提示以来 +8%，$MRK 自周二提示以来 +9%。（配图）",
+     "url": "https://x.com/bluechipdaily/status/2090450964574597518",
+     "ticker": "AU/MRK",
+     "media": [
+      "https://pbs.twimg.com/media/HQLEzK_XYAAr3FA.png"
+     ],
+     "full_text": "Back-to-back breakouts for members in our https://t.co/yBeYwJmm2i Chart of the Day alerts.\n\n$AU is +8% since yesterday's alert.\n\n$MRK is +9% since Tuesday's alert. https://t.co/FG2J9oMuwq"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T21:12:22Z",
+     "kind": "stock",
+     "summary": "$ROST 财报亮眼，盘后 +7%。（配图）",
+     "url": "https://x.com/spluscollective/status/2090547513153769973",
+     "ticker": "ROST",
+     "media": [
+      "https://pbs.twimg.com/media/HQMd3xzasAAi2if.jpg"
+     ],
+     "full_text": "$ROST is impressive ER. 7% AH. https://t.co/W4ErC0Zcba"
+    },
+    {
+     "handle": "@spotgamma",
+     "utc": "2026-08-20T19:23:00Z",
+     "kind": "stock",
+     "summary": "野村标记了 $IWM 的看跌期权，用来防**信用事件引发的股票抛售**。过去一周 call skew 在降、put 在升；但整体看 IWM 期权很便宜（IV Rank 低）。",
+     "url": "https://x.com/spotgamma/status/2090520098586935664",
+     "ticker": "IWM",
+     "media": [
+      "https://pbs.twimg.com/media/HQMEjdfXgAAspOs.jpg"
+     ],
+     "full_text": "Nomura flagged $IWM  puts in case of a credit-related equity selling.  Here you see over the last week calls skew is coming down with puts up a bit.\n\nOverall, though IWM options are cheap: \n\nIV Rank of just 3! https://t.co/Ykz9qOcEQC"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T17:04:00Z",
+     "kind": "stock",
+     "summary": "*英伟达为中国客户筹划新芯片，符合美国出口管制规则；**不确定北京会不会放行订单**。（信息源：The Information）",
+     "url": "https://x.com/zerohedge/status/2090485051091726812",
+     "ticker": "NVDA",
+     "full_text": "*NVIDIA PLOTS NEW CHIP FOR CHINESE CUSTOMERS: INFORMATION\n\n*NEW CHIP COMPLIES WITH US EXPORT CONTROL RULES: INFORMATION\n\n*UNCLEAR IF BEIJING WILL ALLOW ORDERS TO GO THROUGH: INFORMATION"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T21:30:00Z",
+     "kind": "macro",
+     "summary": "散户对芯片股的需求极强：美国记忆体 ETF **$DRAM** 的规模两个月内 +20%，达到创纪录的 280 亿美元。",
+     "url": "https://x.com/KobeissiLetter/status/2090552065583989083",
+     "ticker": "DRAM",
+     "media": [
+      "https://pbs.twimg.com/media/HQKnQBdWcAAlCu3.jpg"
+     ],
+     "full_text": "Retail investor demand for chip stocks is incredibly strong:\n\nTotal assets under management (AUM) in the US memory ETF, $DRAM, have surged +20% over the last 2 months, to a record $28 billion.\n\nThis is despite a -28% decline in the fund’s price over the same period.\n\nThis comes https://t.co/kOemKaBL9w"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T23:13:00Z",
+     "kind": "macro",
+     "summary": "美国招聘出现复苏迹象：7 月有 20% 的小企业主表示未来 3 个月打算招人，为 **2022 年 10 月以来最高**。",
+     "url": "https://x.com/KobeissiLetter/status/2090577970352054634",
+     "media": [
+      "https://pbs.twimg.com/media/HQKmgLuXUAArNIu.jpg"
+     ],
+     "full_text": "US hiring is showing signs of a recovery:\n\n20% of small business owners said in July that they plan to hire over the next 3 months, the highest since October 2022.\n\nBy comparison, the average since the 1970s is just ~11%.\n\nThis also marks a +9 percentage point MoM increase, the https://t.co/FepFmIh70I"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T22:00:00Z",
+     "kind": "macro",
+     "summary": "Jeff Currie：「做多，系好安全带」——商品牛市正进入下一段。",
+     "url": "https://x.com/zerohedge/status/2090559535756824652",
+     "full_text": "\"Get Long And Buckle Up\": Jeff Currie Says Commodity Bull Market Entering Next Leg https://t.co/NGkAzY33jL"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-21T01:27:00Z",
+     "kind": "macro",
+     "summary": "比特币升破 **74,000**，5 月 27 日以来最高，4 天涨 20%。（前一天 zerohedge 记录了史上最大单日加密空头爆仓）",
+     "url": "https://x.com/KobeissiLetter/status/2090611593868415140",
+     "media": [
+      "https://pbs.twimg.com/media/HQNYDwJWkAEqPl2.jpg"
+     ],
+     "full_text": "BREAKING: Bitcoin surges above $74,000 and hits its highest level since May 27th.\n\nBitcoin is now up +20% in 4 days. https://t.co/NC3Jnu4nWp"
+    },
+    {
+     "handle": "@ohiain",
+     "utc": "2026-08-20T20:00:00Z",
+     "kind": "stock",
+     "summary": "一个被低估的市场信号：**看自己的扫描结果本身**——现在是有 30 只票在成形，还是连 5 只都难找？观察名单的扩张/收缩说明很多问题。",
+     "url": "https://x.com/ohiain/status/2090529304492839105",
+     "full_text": "1 underrated market signal for me is simply what my scans look like.\n\nAre there 30 stocks setting up right now? ...or am I struggling to find 5?\n\nWatchlist expansion/contraction tells me a LOT about the current environment.\n\nSimple &amp; effective."
+    },
+    {
+     "handle": "@markminervini",
+     "utc": "2026-08-20T14:03:00Z",
+     "kind": "stock",
+     "summary": "今年的波段交易平均持有期：**盈利单 32 天，亏损单 11 天**。",
+     "url": "https://x.com/markminervini/status/2090439509716443192",
+     "full_text": "@RelativstyrkaW For swing trades this year: 32 days on winners. 11 days on losers. Those are averages."
+    },
+    {
+     "handle": "@jasongoepfert",
+     "utc": "2026-08-20T21:11:00Z",
+     "kind": "macro",
+     "summary": "全市场（all-issues）广度通常比只用普通股的广度更有效——大概是因为利率敏感型证券的走向不同。",
+     "url": "https://x.com/jasongoepfert/status/2090547215894732966",
+     "full_text": "@gregburrellmd Not at all, it only emphasizes it. All-issues breadth tends to be more effective than using common stocks only, likely because of the tendency for interest-sensitive securities to be leading indicators of trouble."
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-20T21:19:00Z",
+     "kind": "cramer",
+     "summary": "人在爱达荷博伊西的美光园区，看 1000 万平方英尺的在建设施，晚上 6 点 CNBC 还有和美光 CEO 的独家专访。当天另有三条同主题造势帖。按反指框架记为情绪过热提示。",
+     "url": "https://x.com/jimcramer/status/2090549282625437956",
+     "ticker": "MU",
+     "demoted": true,
+     "media": [
+      "https://pbs.twimg.com/media/HQMffkjXIAE-s-d.jpg"
+     ],
+     "full_text": "Boots on the ground in Boise, Idaho! \n\nChecking out the 10m square feet of infrastructure being built here on @MicronTech’s campus.\n\nPlus, my exclusive with @MicronCEO tonight at 6p ET on @CNBC! https://t.co/tIaOwW9zL0"
+    },
+    {
+     "handle": "@aleabitoreddit",
+     "utc": "2026-08-20T17:24:00Z",
+     "kind": "stock",
+     "summary": "称光通信板块近期从 $AAOI 到 $SIVE 的跑输「荒谬」，理由是需求可见度「高得离谱」，引 AOI 的说法。（promoter 账号，降权）",
+     "url": "https://x.com/aleabitoreddit/status/2090490101260591481",
+     "ticker": "AAOI/SIVE",
+     "demoted": true,
+     "media": [
+      "https://pbs.twimg.com/media/HQLpqgfakAARJe3.jpg",
+      "https://pbs.twimg.com/media/HQLpqgaaUAAl_DB.jpg"
+     ],
+     "full_text": "Very positive. My opinion is that the optical sector underperformance recently from $AAOI to $SIVE has been absurd.\n\nThe demand visibility... is just way too stupidly high.\n\nAOI: “Even combined AOI, Coherent program altogether, is still very tough to meet the customer demand in https://t.co/HHCQ0HwG3J",
+     "quoted": "@stekkerauto：@aleabitoreddit @EnamelEquity you’re still positive about $SIVE, right? just needs time to play out."
+    }
+   ],
+   "takeaway": "**出现了一条昨天没有的线：AI 的资本开支正在债券化，而信用市场开始给它定价。**\n\n博通 CDS 爆炸的同时在谈一笔最多 1000 亿美元的表外债务；超大规模厂商的 CDS 集体走阔，$ORCL 和 $NVDA 已经在**历史最阔水平**、$META 逼近纪录。@spluscollective 把这件事排成一列——AVGO 在融、GOOGL/AMZN/META 都融过了、只有 MSFT 还基本自筹、AAPL 不在乎——并且点明关键：**这是负债不是股权稀释，风险在杠杆不在摊薄**。同一时间 @KobeissiLetter 给出私募信贷那一侧的印证：20 家最大 BDC 的非应计贷款 Q2 升了 0.8 个百分点。三条互相独立的信息指向同一件事，这是共振不是噪音。\n\n**债市这边，Bessent 当天就被市场打脸，然后嘴上加码、手上很小。** 30 年收益率涨回 5.23%，把周三宣布回购后那 9bp 的下跌全吐了；他的回应是「回购可以比 40 亿更大」，但当天实际操作**收到 101.59 亿报价、只接受了 18.6 亿**。zerohedge 那句「周四卖 230 亿 30 年、周五回购 230 亿 30 年」是最省事的概括。野村的判断值得记：这是「枪伤上贴创可贴」，**但失去长端已经不是一个可选项**——意思是他还得接着做。做了几十年债券多头的 Lacy Hunt 在这个时点转空。\n\n**对持仓最直接的一条**：@spluscollective 明说 Power Trend「还没失效，但快了」——$SPY 回 21 日线算正常，**$QQQ 把 9/21/50 三条全丢了**。配合 @RichardMoglen 那句「SMH 看起来弱」和 @WalterDeemer 记的「QQQ 周二 729.27 的缺口还开着」，弱的是纳指这一侧，不是大盘整体。\n\n@RichardMoglen 给了两个位置：$MU 探出 50 日线在测缺口区、$PLTR 区间收紧。这两个都要按我们自己的选股规则二次验证，不能直接进候选。\n\n新加的两个号首次有产出，但都不是可交易信号：@markminervini 一条持有期统计（今年盈利单平均 32 天、亏损单 11 天），@jasongoepfert 一条广度方法论。继续观察。",
+   "notes": "15 个账号全扫。@zerohedge 这次覆盖完整（37 条，滚到了窗口起点之前）。\n\n🔴 **覆盖缺口**：@unusual_whales 只滚出 8/21 02:58 之后的 4 条，更早的加载不出来（后台标签页 + 该账号发帖密度高），窗口内更早的部分没覆盖到。\n\n已过滤：@BillAckman 全部 7 条（网球票价争论、致谢）、@ohiain 的回复和人生感悟类、@zerohedge 的政治/天气/军事类（安提法、飓风、龙卷风、朝鲜导弹、Swalwell 等）、@unusual_whales 的非交易新闻。",
+   "cost_log": [
+    {
+     "account": "全部15号",
+     "tool_calls": 34,
+     "approx_chars": "仅取链接+时间戳；101 条正文和图由 x_hydrate 补"
+    }
+   ]
+  }
+ ]
+}

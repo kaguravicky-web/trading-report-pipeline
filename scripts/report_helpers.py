@@ -37,12 +37,19 @@ def tri3(cache: dict, ticker: str) -> str:
     文本格式解析成带period标签的独立小chip（<span class="ma">...</span>），不再是原来纯▲▼
     三字符文本（旧格式"▲▲▼"）。这个函数只管产出可解析的纯文本，不掺HTML，HTML组装留给渲染层。"""
     m = cache["metrics"].get(ticker, {})
+    # 🔴 拆股存疑时 50/200 两条线是错的，箭头会指反——实测 CRWD 200 应该是▲印成了▼、
+    #    XLB 也一样。20MA 窗口短，跨不过拆股点，照常给（见 SPLIT_BLOCKED 那一节）。
+    blocked = is_split_suspect(cache, ticker)
 
-    def a(period, v):
+    def a(period, v, guard=False):
+        if guard and blocked:
+            return f"{period}?"
         arrow = "▲" if (v is not None and v >= 0) else ("▼" if v is not None else "-")
         return f"{period}{arrow}"
 
-    return " ".join([a(20, m.get("dist_ma20_pct")), a(50, m.get("dist_ma50_pct")), a(200, m.get("dist_ma200_pct"))])
+    return " ".join([a(20, m.get("dist_ma20_pct")),
+                     a(50, m.get("dist_ma50_pct"), guard=True),
+                     a(200, m.get("dist_ma200_pct"), guard=True)])
 
 
 def badge(kind: str, text: str) -> str:
@@ -55,6 +62,94 @@ def badge(kind: str, text: str) -> str:
 
 def fpct(v, na="-"):
     return na if v is None else ("%+.2f%%" % v)
+
+
+# =========================================================================
+# 🔴 拆股绊线：疑似未复权的标的，**禁止渲染滚动窗口指标**（2026-08-19建）
+#
+# 起因：2026-08-18 那份 cache 用的是不复权K线，窗口里拆过股的 6 只全线污染——
+#   CRWD（2026-07-02 四拆一）：距50MA 报 **-42.07%**，真值 **+11.35%**；
+#                              50MA 报 367.53 真值 191.22；Weinstein 报 Stage 4 真值 Stage 2；
+#                              距52周高 报 -72.91%，真值 -6.41%。
+#   XLY/XLU/XLB/XLK/XLE（2025-12-05 二拆一）：距52周高 和 200MA 废，50MA/RSI/Stage 是好的。
+# CRWD 当天**在 ML Leader 名单上**（CONTEXT 2026-08-17），
+# 而 ML Leader 表要印的正是「距52周高」和「距50MA」这两列。
+#
+# **为什么必须由代码拦、不能靠人**：跟 2026-08-09「报告里的价格必须来自口径日 cache」
+# 同一类——派生指标 Vic 肉眼查不出来，要查得逐个去比对第二个数据源。
+# 数据源修好了（前复权）仍然留这道闸：**修的是今天这次，闸拦的是下一次**。
+#
+# 口径：只要 metrics[ticker].split_suspect 为真，这两类列一律出 SPLIT_BLOCKED 而不是数字。
+# 不做「XLU 的 50MA 其实是好的所以放它过」这种精细放行——
+# 放行逻辑一旦出错就是**又一个静默发出去的错数字**，而拦错了最多是少一格。
+SPLIT_BLOCKED = "⚠️拆股存疑"
+
+
+def bars_adjust():
+    """所有直接调 ctx.candlesticks 的地方**都要走这个**取复权口径，
+    别再各自写 AdjustType.NoAdjust（2026-08-19 之前 9 个调用点全是那样，
+    于是 dispersion_series 这种 260 根窗口的照样被拆股打穿）。
+    口径本身定义在 fetch_market_data.BARS_ADJUST，这里只是转发。"""
+    from longport.openapi import AdjustType
+    try:
+        import fetch_market_data as _F
+        return _F._adjust_type()
+    except Exception:
+        return AdjustType.ForwardAdjust      # 取不到也**不许**退回不复权
+
+
+def is_split_suspect(cache: dict, ticker: str) -> bool:
+    """cache 里这只是否被 fetch_market_data.detect_split() 标了。
+    老 cache（2026-08-19 之前，没有 split_suspect 字段）一律当 False——
+    它们的口径问题由 qa_report 的独立源核对那条兜底，不在这里瞎猜。"""
+    return bool((cache.get("metrics", {}).get(ticker) or {}).get("split_suspect"))
+
+
+def split_detail(cache: dict, ticker: str) -> list:
+    return (cache.get("metrics", {}).get(ticker) or {}).get("split_detail") or []
+
+
+def guard_split(cache: dict, ticker: str, value, na="-"):
+    """滚动窗口类数值的统一出口：疑似拆股 → SPLIT_BLOCKED，否则原样返回 value。
+    value 传**已经格式化好的字符串**或 None。"""
+    if is_split_suspect(cache, ticker):
+        return SPLIT_BLOCKED
+    return na if value is None else value
+
+
+def off_52w_cell(cache: dict, ticker: str, na="-") -> str:
+    """「距52周高」列的唯一出口。ML Leader 表等**必须走这个函数取这一列**，
+    不许直接 fpct(m["off_52w_high_pct"])。"""
+    m = cache.get("metrics", {}).get(ticker) or {}
+    v = m.get("off_52w_high_pct")
+    return guard_split(cache, ticker, None if v is None else fpct(v), na)
+
+
+def dist_ma50_cell(cache: dict, ticker: str, unit: str = "pct", na="-") -> str:
+    """「距50MA」列的唯一出口。unit="pct" → +1.23%；unit="atr" → 1.23×ATR。"""
+    m = cache.get("metrics", {}).get(ticker) or {}
+    if unit == "atr":
+        v = m.get("dist_ma50_atr")
+        txt = None if v is None else ("%.2f×ATR" % v)
+    else:
+        v = m.get("dist_ma50_pct")
+        txt = None if v is None else fpct(v)
+    return guard_split(cache, ticker, txt, na)
+
+
+def split_note(cache: dict, tickers=None) -> str:
+    """给表底下的 note 用：一句话说明哪几只被拦了、为什么。没有就返回空串。"""
+    M = cache.get("metrics", {})
+    tks = [t for t in (tickers if tickers is not None else M) if is_split_suspect(cache, t)]
+    if not tks:
+        return ""
+    bits = []
+    for t in sorted(tks):
+        d = split_detail(cache, t)
+        bits.append("%s（%s %s）" % (t, d[0]["date"], d[0]["implied_ratio"]) if d else t)
+    return ("%s 疑似拆股未复权，**距52周高／距50MA 两列本日不发**（%s）——"
+            "这些是滚动窗口指标，窗口跨过拆股点就整段作废；"
+            "先确认 cache 的 adjust_type 是 forward 再重跑。" % ("、".join(bits), SPLIT_BLOCKED))
 
 
 def rs_week(cache: dict, ticker: str):
@@ -71,8 +166,9 @@ def rs_num(v) -> str:
 
 
 def sector_rs_rows(cache: dict, tickers: list, pm_cache: dict = None) -> list:
-    """板块RS表骨架：[ticker, T-1%, 5日%, 1月%, ""(驱动), RS(1周)]——**六列**。
+    """板块RS表骨架：[ticker, T-1%, 5日%, 1月%, RS(1周), ""(驱动)]——**六列**。
     驱动列留空当天手写。已按T-1%降序。
+    🔴 2026-08-20 起 RS 在驱动**前面**（Vic：「我主要看 rs」）。
 
     🔴 2026-08-12：「盘前」列删除（Vic：「我觉得盘前数字没什么用…关于盘前的全部删了吧」）。
     `pm_cache` 参数保留但被忽略，只为旧调用点不报 TypeError。"""
@@ -84,7 +180,9 @@ def sector_rs_rows(cache: dict, tickers: list, pm_cache: dict = None) -> list:
     data.sort(key=lambda x: (x[1] is None, -(x[1] or -999)))
     rows = []
     for tk, t1, d5, d21 in data:
-        rows.append([tk, fpct(t1), fpct(d5), fpct(d21), "", rs_num(rs_week(cache, tk))])
+        # 🔴 2026-08-20 Vic：「我主要看 rs，所以 rs 放驱动前面」——
+        #    RS 从第 6 列挪到第 5 列，「驱动/原因」退到最后一列（它是最宽的文字列，放末尾也更好读）。
+        rows.append([tk, fpct(t1), fpct(d5), fpct(d21), rs_num(rs_week(cache, tk)), ""])
     return rows
 
 
@@ -155,7 +253,7 @@ def unilateral_rows(cache: dict, top_n: int = 5, stages=(1, 2), family_dedupe: b
                      "·".join(it.get("passed", [])) or "-",
                      fpct(it.get("d5_pct")), fpct(it.get("d21_pct")),
                      rs_num(rs_week(cache, it["ticker"])),
-                     ("%.2f×ATR" % it["dist_ma50_atr"]) if it.get("dist_ma50_atr") is not None else "-",
+                     dist_ma50_cell(cache, tk, "atr"),
                      ext_label.get(it.get("extension", "ok"), "ok")])
         hl.append("warn" if (it.get("dist_ma50_atr") is not None and it["dist_ma50_atr"] >= 5) else "")
         if len(rows) >= top_n:
@@ -170,6 +268,23 @@ def unilateral_rows(cache: dict, top_n: int = 5, stages=(1, 2), family_dedupe: b
 # 此前三处各排各的（盘前B: SPY QQQ QQQE RSP DIA IWM VOO SMH / 盘前E: IWM DIA VOO QQQ /
 # 盘后: 按涨跌排序），且SPY和VOO并列重复。定成**唯一常量**，所有指数表引用它，不各自维护顺序。
 INDEX_ORDER = ["VOO", "QQQ", "DIA", "IWM", "SMH", "RSP", "QQQE"]
+# 🔴 有闸门线的标的（2026-08-20 Vic：「指数闸门里面删除 dia rsp qqqe，smh 要增加进攻线和防守线」）。
+#    跟 INDEX_ORDER 是两件事：INDEX_ORDER 管「七只指数的显示顺序」，
+#    GATE_TICKERS 管「谁有进攻/防守线」——闸门表只放后者，不放没有闸门的参考行。
+GATE_TICKERS = ["VOO", "QQQ", "IWM", "SMH"]
+
+# 🔴 **篮子仓（ETF）名单**（2026-08-18 Vic：「SOXX 算指数吧」）。
+#    加/减这个名单只改这一处——它同时被 p14 执行表、仓位治理、持仓表底色读。
+#    判据不是「是不是指数」而是「进场理由是不是 setup」：
+#    篮子仓买的是一层暴露（半导体/纳指），不是某个形态走出来，
+#    所以「突破没 playout」这条对它没有意义。
+BASKET_POSITIONS = {"QQQ", "SOXX", "SMH", "VOO", "SPY", "IWM", "DIA", "RSP", "QQQE",
+                    "XLE", "XOP", "OIH", "IGV", "CIBR", "ARKK", "XBI", "IBIT"}
+
+
+def is_basket(ticker: str) -> bool:
+    """这笔是不是篮子仓（ETF 配置）而不是个股 setup 仓。"""
+    return str(ticker).upper() in BASKET_POSITIONS
 ATR_EXT_INDICES = INDEX_ORDER
 
 
@@ -203,6 +318,12 @@ def atr_extension_rows(cache: dict, tickers: list = None) -> list:
         r = m.get(t, {})
         dist = r.get("dist_ma50_atr")
         if dist is None:
+            continue
+        if is_split_suspect(cache, t):
+            # 距50MA 这一列本身就是被污染的那个数，不出数字也不给趋势标签
+            rows.append({"ticker": t, "close": r2(r.get("close")), "ma50": SPLIT_BLOCKED,
+                         "atr14": r2(r.get("atr14")), "dist_ma50_atr": None,
+                         "trend": "", "judgment": SPLIT_BLOCKED + "——50MA 窗口跨过拆股点，本日不出读数"})
             continue
         trend = atr_extension_trend(dist)
         # 2026-07-27 Vic："判断里面为什么需要说 低于50MA 0.75ATR 这种废话，前面都有了"——
@@ -243,16 +364,22 @@ def gate_etf_rows(cache: dict, tickers: list) -> list:
     for tk in tickers:
         m = M.get(tk) or {}
         g = G.get(tk)
+        # 🔴 50MA / 距50MA 两列走拆股绊线（见 SPLIT_BLOCKED）——闸门线本身是 20MA±ATR，
+        #    窗口短、跨不过拆股点，照常给。
+        blocked = is_split_suspect(cache, tk)
         if g:
+            d50 = (("%.1f×ATR" % ((m["close"] - g["ma50"]) / g["atr14"]))
+                   if (m.get("close") and g.get("atr14")) else "-")
             row = [tk, str(m.get("close", "-")), fpct(m.get("t1_pct")),
                    str(g.get("ma20_plus_1atr", "-")), str(g.get("ma20", "-")),
-                   str(g.get("ma20_minus_1atr", "-")), str(g.get("ma50", "-")),
-                   ("%.1f×ATR" % ((m["close"] - g["ma50"]) / g["atr14"])) if (m.get("close") and g.get("atr14")) else "-",
-                   ""]
+                   str(g.get("ma20_minus_1atr", "-")),
+                   SPLIT_BLOCKED if blocked else str(g.get("ma50", "-")),
+                   guard_split(cache, tk, d50), ""]
         else:
+            d50 = ("%.1f×ATR" % m["dist_ma50_atr"]) if m.get("dist_ma50_atr") is not None else "-"
             row = [tk, str(m.get("close", "-")), fpct(m.get("t1_pct")), "-", "-", "-",
-                   str(m.get("ma50", "-")),
-                   ("%.1f×ATR" % m["dist_ma50_atr"]) if m.get("dist_ma50_atr") is not None else "-", ""]
+                   SPLIT_BLOCKED if blocked else str(m.get("ma50", "-")),
+                   guard_split(cache, tk, d50), ""]
         rows.append(row)
     return rows
 
@@ -323,8 +450,15 @@ def position_pm_highlight(pm_cache: dict, ticker: str) -> str:
     return "bull" if p > 0 else "warn"
 
 
-def x_watch_rows(cache: dict, pm_cache: dict = None, spike_pct: float = 4.0) -> list:
-    """X台账定价表骨架：[提及日, 账号, TICKER, 提及时价, 最新收盘, 自提及%, 备注]，按自提及%降序。
+def x_watch_rows(cache: dict, pm_cache: dict = None, spike_pct: float = 4.0,
+                 window_days: int = 7) -> list:
+    """X台账定价表骨架：[提及日, 账号, TICKER, 提及时价, 最新收盘, 自提及%, 备注]。
+
+    🔴 **2026-08-18 Vic：「太多了，按时间排吧，排最近一周，从昨天开始排」**——两处改动：
+      ① 窗口从 14 天收到 **7 天**（`window_days`）；
+      ② 排序从「自提及%降序」改成 **提及日倒序**（最近的在最上面），同日内再按自提及%降序。
+    **为什么排序比窗口更重要**：按收益率排等于把「上周点的、已经涨了 20%」排在
+    「昨天刚点的」上面——而昨天那条才是今天要动作的。这张表是**跟踪**不是**排行榜**。
     盘前时若给pm_cache，会在备注前加⚡标注当日盘前大幅异动的标的。
     **展示过滤：** ①提及日距报告当天>14天（2026-07-28 Vic："只追踪2周"）；
     ②自提及%≤-7%且已过3个自然日（Vic："暴跌7%以上3天内不拉回来的算失效，3天后删除记录"）；
@@ -336,7 +470,10 @@ def x_watch_rows(cache: dict, pm_cache: dict = None, spike_pct: float = 4.0) -> 
     report_date = cache.get("data_date")
     report_d = _date.fromisoformat(report_date) if report_date else None
     rows = []
-    for it in sorted(cache.get("x_watch_performance", []), key=lambda x: -(x.get("pct_since") or -999)):
+    # 提及日倒序（最近在前），同日内自提及%降序
+    for it in sorted(cache.get("x_watch_performance", []),
+                     key=lambda x: (x.get("date") or "", x.get("pct_since") or -999),
+                     reverse=True):
         pct = it.get("pct_since")
         if report_d is not None:
             try:
@@ -346,11 +483,13 @@ def x_watch_rows(cache: dict, pm_cache: dict = None, spike_pct: float = 4.0) -> 
             # 展示过滤三条（2026-07-28 Vic："我们只追踪2周吧，暴跌7%以上3天内不拉回来的
             # 算失效，3天后删除记录"）。"暴跌7%"按**自提及%**口径（这张表衡量的就是这个），
             # 不是单日跌幅——单日跌7%但已拉回的不该被删掉。
-            if age_days > 14:                                   # ①超出2周追踪窗口
+            if age_days > window_days:                          # ①超出追踪窗口（2026-08-18 由 14 天收到 7 天）
                 continue
             if pct is not None and pct <= -7 and age_days >= 3:  # ②暴跌≥7%且3天未拉回=失效
                 continue
-            if age_days >= 7 and pct is not None and pct < 0:    # ③原「去弱留强」规则保留
+            # ③「去弱留强」：原来写死 7 天。窗口收到 7 天后这条会把整周的负收益全删掉，
+            #    等于表里只剩赢家——**那正是 survivorship bias**。改成窗口的一半。
+            if age_days >= max(window_days // 2, 3) and pct is not None and pct < 0:
                 continue
         # 2026-08-07 Vic 抓到：「'一直在看但没下手'；6/26称URI是被低估的数据中心概念，现在被市场」
         # ——句子被 [:36] 硬切在半句上，读者根本不知道"被市场"后面是什么。
@@ -499,7 +638,7 @@ def regime_setup_permission(cache: dict, vol_trend: str = None) -> list:
     if defen and offen:
         dm, om = sum(defen) / len(defen), sum(offen) / len(offen)
         side = "防御侧（XLU/XLP/XLV/XLE）" if dm > om else "进攻侧（XLK/XLY/XLC）"
-        out.append(("Setup A/D（回踩类）", f"✅优先做{side}",
+        out.append(("pullback（回踩类）", f"✅优先做{side}",
                     f"防御均值{dm:+.2f}% vs 进攻均值{om:+.2f}%——回踩买点只在资金流入的那一侧才有跟进买盘"))
     return out
 
@@ -521,88 +660,8 @@ def fetch_exec_metrics(tickers: list) -> dict:
 
 
 EXEC_HEADERS = ["TICKER", "收盘", "距20EMA", "距50MA", "收盘位置", "今日状态判定",
-                "触发价", "止损", "每股风险", "风险%", "够1×ATR?", "股数"]
-RISK_BUDGET = 400.0   # Vic 2026-07-23定：单笔风险预算$400
-
-
-def exec_rows(cache: dict, tickers: list, risk_budget: float = RISK_BUDGET,
-              extra: dict = None, autofetch: bool = True) -> list:
-    """②候选 → 可执行指令。表头见EXEC_HEADERS。
-
-    **均线口径2026-07-23改（Vic："距9EMA改成距离20ema/50ma先"）：** 轮动市里9EMA太贴、
-    单日板块极差能到12.94pct，9EMA回踩买点天天被噪音打穿；改用20EMA做主判据、50MA做结构参照。
-
-    今日状态判定（核心列，把"并列的4个候选"变成"今天只有1个能碰"）：
-      跌破20EMA       → 🔴回踩论点已破
-      收盘位置<20%    → 🔴收在当日最低区=还在跌，不是企稳
-      收盘位置>80%    → ⚠️收在当日最高区=今天已跑完，谈不上回踩买点
-      距20EMA>4%      → ⚠️延伸过度（20EMA比9EMA远，阈值相应从3%放到4%）
-      跌破50MA        → 附加⚠️标注：中期结构也破了，即使短线在20EMA上也降级
-
-    触发价=5日高点（突破确认进场，客观可执行）；止损=5日低点-0.5×ATR。
-    「够1×ATR?」列：止损距离若不足1×ATR14，正常波动就能打掉——实证Vic 10笔持仓有6笔踩这个坑。
-    股数=risk_budget÷每股风险，止损放宽时仓位自动缩小，单笔风险恒定。
-    """
-    M = dict(cache.get("metrics", {}))
-    if extra:
-        M.update(extra)
-    missing = [t for t in tickers if t not in M or not M[t].get("ema20")]
-    if missing and autofetch:
-        M.update(fetch_exec_metrics(missing))
-
-    rows = []
-    for t in tickers:
-        d = M.get(t) or {}
-        c, e20, ma50 = d.get("close"), d.get("ema20"), d.get("ma50")
-        atr, rp = d.get("atr14"), d.get("range_pos")
-        if c is None or e20 is None or atr is None:
-            rows.append([t, "-", "-", "-", "-", "🔴数据缺失，需人工补", "-", "-", "-", "-", "-", "-"])
-            continue
-        d20 = (c / e20 - 1) * 100
-        d50 = ((c / ma50 - 1) * 100) if ma50 else None
-
-        if d20 < 0:
-            verdict = f"🔴买点作废：已跌破20EMA {e20:.2f}"
-        elif rp is not None and rp < 20:
-            verdict = f"🔴买点作废：收在当日最低区（{rp}%），还在跌不是企稳"
-        elif rp is not None and rp > 80:
-            verdict = f"⚠️今天已跑完（收盘位置{rp}%），等回到20EMA {e20:.2f}再看"
-        elif d20 > 4:
-            verdict = f"⚠️延伸过度（距20EMA{d20:+.2f}%），只做回踩不追"
-        else:
-            verdict = f"✅仍在买点区（距20EMA{d20:+.2f}%、收盘位置{rp}%）"
-        if d50 is not None and d50 < 0 and not verdict.startswith("🔴"):
-            verdict += f"｜⚠️但已在50MA下方{d50:+.2f}%，中期结构未修复"
-
-        hi5, lo5 = d.get("hi5"), d.get("lo5")
-        if hi5 and lo5:
-            entry, stop = hi5, lo5 - 0.5 * atr
-        else:
-            entry, stop = c + 0.5 * atr, c - 1.5 * atr
-        risk = entry - stop
-        atr_mult = risk / atr if atr else 0
-        atr_ok = f"✅{atr_mult:.1f}×" if atr_mult >= 1.0 else f"🔴仅{atr_mult:.1f}×"
-        shares = int(risk_budget / risk) if (risk_budget and risk > 0) else None
-        rows.append([t, f"{c:.2f}", f"{d20:+.2f}%",
-                     (f"{d50:+.2f}%" if d50 is not None else "-"),
-                     f"{rp}%" if rp is not None else "-", verdict,
-                     f"{entry:.2f}", f"{stop:.2f}", f"{risk:.2f}",
-                     f"{risk / entry * 100:.2f}%", atr_ok, str(shares) if shares else "-"])
-    return rows
-
-
-# =========================================================================
-# 🔴 成交量的读法取决于它出现在哪个位置（2026-08-05 Vic 定，「这个加入我们的框架，
-#    不要只记住，我觉得很重要」）
-#
-# 同一个「缩量」在不同位置含义完全相反，这是 2026-08-04 我读错 8/3 那根 bar 的根因：
-#   · 回踩／整理／rally attempt 期缩量 = **无供给**（没人卖）= 加分
-#       —— Wyckoff no supply bar、Minervini VDU(volume dry-up)、我们的 Setup A 就是这个
-#   · 突破／确认日（FTD、Setup B/E 的 burst bar）缩量 = **无需求**（没人买）= 减分
-#       —— O'Neil 要看到机构真金白银进场；实测见 CONTEXT.md「FTD 日的量能不能反着读」
-#
-# **不要再靠人每次记住**：所有输出量比的地方一律走 volume_read()，让读法跟着位置自动出来。
-# 新增用到量比的表 → 传对 context，别自己写判断文字。
+                "ADR%", "0.5ADR 价位", "1.0ADR 价位"]
+RISK_BUDGET = 400.0   # Vic 2026-07-23定：单笔风险预算$400（= 标准档 0.50% 对应的金额）
 VOL_CONTEXT = {
     "pullback":  ("缩量=无供给", "放量=有人在卖"),   # 回踩/整理/Setup A/D
     "attempt":   ("缩量=卖压枯竭", "放量=仍在换手"),  # rally attempt 的 Day 2-3
@@ -616,6 +675,106 @@ VOL_CONTEXT = {
 VOL_GOOD_WHEN_LOW = {"pullback", "attempt"}
 VOL_NO_VERDICT = {"base"}
 
+# 老师《Market Wizard 进场教学》（James Muninn 拆 Qullamaggie 2019-2022 的 900+ 笔）实测：
+#   ADR延伸 = (进场价 − 当日低点) ÷ ADR
+#     <0.25   → 胜率 8.9%  / -0.47R  🔴噪音区，91% 失败
+#     0.25-0.50 → 21.1% / +1.66R    （前 5% 的交易贡献了约 99% 的总 R，靠右尾）
+#     0.50-0.75 → 24.8% / +0.79R
+#     0.75-1.00 → 45.0% / +1.36R    🎯胜率最高
+#     >1.00     → 40.7% / +2.63R    平均 R 最高，但需更强催化剂 + 缩仓
+ADR_BANDS = [(0.25, "🔴噪音区", "8.9% / -0.47R"), (0.50, "可用·靠右尾", "21.1% / +1.66R"),
+             (0.75, "可用", "24.8% / +0.79R"), (1.00, "🎯最佳", "45.0% / +1.36R"),
+             (99.0, "高R·需催化+缩仓", "40.7% / +2.63R")]
+# 老师原表还有一套「按 setup 质量分档的仓位」（0.50/0.25/0.10/0%），
+# 🔴 2026-08-17 Vic：「风险由我来决定，暂时不加，你依然用 $400」——**不进表**。
+# 判定列仍然会写出「延伸过度 / 已跑完 / 买点作废」，仓位怎么缩由 Vic 自己定。
+
+
+def exec_rows(cache: dict, tickers: list, risk_budget: float = RISK_BUDGET,
+              extra: dict = None, autofetch: bool = True) -> list:
+    """②候选 → 可执行指令。表头见 EXEC_HEADERS。
+
+    🔴🔴 **2026-08-17 全面改口径**（Vic：「我的确是入场时靠盯盘的……不用两个口径，
+    我的执行其实一直是跟着这份走，所以和你一直有差异」）。
+
+    **旧版假设的执行模型是错的。** 旧版盘前算一个「回踩位」当进场价、算止损宽度、
+    按 ≤1×ATR 判过闸——这假设 Vic 挂单等成交。但他实际是**盯开盘、等区间形成、
+    在当日低点上方按 ADR 延伸进场**（所以他做日内）。
+
+    **两套模型的结论系统性相反。** 8/14 那七只按旧版：IOT 0.57ATR ✅ / ADP 0.84 ✅ /
+    OKTA 0.73 ✅ 通过，ITRI 1.12 / ROP 1.19 / AGYS 1.25 被否。按老师的 ADR 延伸表：
+    **通过的三只全部落在 <0.25 ADR 噪音档（8.9% 胜率、-0.47R、91% 失败）**，
+    被否的三只落在 0.25-0.75 的可用区间。
+    原因：**旧判据奖励「止损窄」，而止损最窄的位置就是紧贴前一日低点 = 买在噪音里。**
+
+    **新版不再给「进场价」——盘前给不出，因为当日低点还没形成。** 改成给尺子：
+    ADR 的绝对点数，以及 0.5 / 0.75 / 1.0 ADR 各等于多少点。
+    开盘后区间走出来，Vic 用「当日低点 + 这几个数」就地算进场位。
+
+    止损仍由结构决定（老师：「停損由 setup 結構決定，不由希望承受多少決定」，
+    且「不是為了買更多股而故意收窄」）——这里给的是**结构止损参考**（前一日低点），
+    真正下单当天要重设到当日低位下方。
+
+    **价位以前日低点为基准**（0.5ADR 价位 = 前日低 + 0.5×ADR）。开盘后区间走出来，
+    把前日低换成当日低点重算即可——加法一样，只是基准更新。
+    🔴 **止损 / 每股风险 / 股数三列 2026-08-17 删除**（Vic：「这几条都删除」）——
+    他盯盘时自己定止损和仓位，盘前给的只会是过时的代用值。判定列照写。
+    """
+    M = dict(cache.get("metrics", {}))
+    if extra:
+        M.update(extra)
+    missing = [t for t in tickers if t not in M or not M[t].get("ema20")]
+    if missing and autofetch:
+        M.update(fetch_exec_metrics(missing))
+
+    rows = []
+    for t in tickers:
+        d = M.get(t) or {}
+        c, e20, ma50 = d.get("close"), d.get("ema20"), d.get("ma50")
+        atr, rp = d.get("atr14"), d.get("range_pos")
+        adr_pct = d.get("adr20_pct")
+        if c is None or e20 is None or atr is None:
+            rows.append([t, "-", "-", "-", "-", "🔴数据缺失，需人工补", "-", "-", "-", "-", "-", "-"])
+            continue
+        d20 = (c / e20 - 1) * 100
+        d50 = ((c / ma50 - 1) * 100) if ma50 else None
+
+        if d20 < 0:
+            verdict = f"🔴买点作废：已跌破20EMA {e20:.2f}"
+        elif rp is not None and rp < 20:
+            verdict = f"🔴买点作废：收在当日最低区（{rp}%），还在跌不是企稳"
+        elif rp is not None and rp > 80:
+            verdict = f"⚠️昨天已跑完（收盘位置{rp}%）——**开盘若直接高开，ADR 延伸会一步跳过 1.0**"
+        elif d20 > 4:
+            verdict = f"⚠️延伸过度（距20EMA{d20:+.2f}%），按质量档缩到 0.10%"
+        else:
+            verdict = f"✅结构完整（距20EMA{d20:+.2f}%、收盘位置{rp}%）→ 标准档 0.50%"
+        if d50 is not None and d50 < 0 and not verdict.startswith("🔴"):
+            verdict += f"｜⚠️但已在50MA下方{d50:+.2f}%，中期结构未修复"
+
+        # 结构止损参考 = 前一日低点。ADR 价位也以它为基准——
+        # 盘前只有这个低点可用；开盘后区间走出来，把它换成当日低点重算即可（同一个加法）。
+        prev_low = d.get("lo")
+        if prev_low is None and d.get("low_pct") is not None and d.get("t1_pct") is not None:
+            _pc = c / (1 + d["t1_pct"] / 100)
+            prev_low = _pc * (1 + d["low_pct"] / 100)
+        if prev_low is None:
+            prev_low = d.get("lo5")
+
+        # 🔴 2026-08-17 Vic：「结构止损(前日低) 每股风险 股数这几条都删除」。
+        #    止损和仓位是他盯盘时自己定的，盘前给的只会是过时的代用值。
+        adr_pt = (adr_pct / 100 * c) if adr_pct else None
+        if adr_pt and prev_low:
+            b50 = f"{prev_low + 0.50 * adr_pt:.2f}"
+            b100 = f"{prev_low + 1.00 * adr_pt:.2f}"
+        else:
+            b50 = b100 = "-"
+
+        rows.append([t, f"{c:.2f}", f"{d20:+.2f}%",
+                     (f"{d50:+.2f}%" if d50 is not None else "-"),
+                     f"{rp}%" if rp is not None else "-", verdict,
+                     (f"{adr_pct:.2f}%" if adr_pct else "-"), b50, b100])
+    return rows
 
 def volume_read(context: str, vol_ratio, low=0.9, high=1.2):
     """把量比翻译成「在这个位置上是加分还是减分」。
@@ -645,12 +804,14 @@ def setup_context(tags: str) -> str:
     A（缩量回踩9EMA）/ C（undercut收回）/ D（突破后缩量回踩）/ Ew（burst未确认）= 回踩类，要缩量；
     **只有 W（双底/三重底）= 结构标记，没有入场时点含义 → base，只描述不判好坏**。
     多标签共存时以突破类优先（那根 bar 的性质决定该看什么量）。"""
-    parts = [p.strip() for p in (tags or "").replace("Ew", "w").split("+") if p.strip()]
-    if any(p in ("B", "E") for p in parts):
-        return "breakout"
-    if any(p in ("A", "C", "D", "w") for p in parts):
-        return "pullback"
-    return "base"
+    # 🔴 2026-08-20 起标签是形态名不是字母（Vic：「abcde那些都好删除了」）。
+    #    注意 "shakeout+burst" 自带加号，**不能再按 "+" 切**，否则会被切成两半。
+    t = (tags or "")
+    if "shakeout+burst" in t or "tight" in t:
+        return "breakout"          # 这两类看的是「突破那根 bar 放没放量」
+    if "pullback" in t or "spring" in t:
+        return "pullback"          # 回踩/收回类，看的是「缩量代表没供给」
+    return "base"                  # 2 wick 只是结构标记，没有入场时点含义
 
 
 def setup_scan_rows(setups_cache: dict, cache: dict = None, sectors: list = None) -> list:
@@ -685,7 +846,9 @@ def setup_scan_rows(setups_cache: dict, cache: dict = None, sectors: list = None
         rs5 = stock_rs5(r)
         etfs = r.get("sector_etfs", [])
         rank = min((sector_rank.get(e, 999) for e in etfs), default=999)
-        tags = "+".join(s["type"] for s in r["setups"])
+        # 🔴 2026-08-20：连接符从 "+" 改成 " · "。新标签里的 "shakeout+burst" 自带加号，
+        #    再用 "+" 连接就成了 "pullback+shakeout+burst"，**分不出是两个标签还是三个**。
+        tags = " · ".join(s["type"] for s in r["setups"])
         items.append((rank, -(rs5 if rs5 is not None else -999),
                       [tk, "/".join(etfs) or "-", tags, rs_num(rs5),
                        fpct(r.get("dist_ema9_pct")),
@@ -699,7 +862,8 @@ def setup_scan_rows(setups_cache: dict, cache: dict = None, sectors: list = None
 
 
 # ---------------- 候选跟踪台账（2026-07-15建，见CONTEXT.md「Setup A专项对账」+「02主线复盘候选跟踪」）
-# 一个台账文件（data/setup_track.json）喂两处消费：①Setup A专项对账——只看setup标签含"A"的条目，
+# 一个台账文件（data/setup_track.json）喂两处消费：①A 级候选跟踪——按 grade=="A" 筛
+#   （2026-08-20 起；此前是「setup 标签含 A」，字母退役后改口径，顺带修好 tight/spring 被漏的问题），
 # 持续跟踪到D+N判定hit/partial/miss，攒样本评估这个setup的真实胜率；②02主线复盘候选跟踪——不限
 # setup类型，滚动展示窗口内点过名的全部A级候选（2026-07-15 Vic："追踪要连续3日"）。
 SETUP_TRACK_PATH = ROOT / "data" / "setup_track.json"
@@ -721,10 +885,26 @@ def _save_setup_track(ledger: dict) -> None:
 
 
 def _is_setup_a(text) -> bool:
+    """setup 标签里带没带「回踩类」。
+
+    🔴 2026-08-20 起**不再用于对账表的筛选**（那里改按 grade=="A"）。
+    保留是因为 build_tradebook 的历史标签页还在用它区分回踩类形态。
+    原文档：**漏判 = 候选静默消失**。
+
+    🔴 2026-08-14 修：旧写法 `"A" in text.split("+")` 只认「A」正好是加号分段的完整一段。
+       8/13 的 AVGO 写的是 `**Setup B + A**：tight 整理 + 回踩 9EMA…`——
+       按加号切出来的段是 ` A**：tight 整理 `，strip 完也不等于 "A"，于是 **它被静默漏掉了**，
+       一条 A 级候选整条不进对账表。改成从「Setup」后面把字母代号抓出来看 A 在不在里面。
+    """
     text = text or ""
-    if any(h in text for h in ("Setup A", "缩量回踩9EMA", "回踩9EMA")):
+    # 🔴 2026-08-20 起主判据是形态名 "pullback"（Vic 把 A/B/C/D/E 全删了）。
+    #    旧的字母写法仍然认——**台账里有 7 月起的历史条目，改口径不能让它们静默消失**。
+    if "pullback" in text.lower() or "回踩9EMA" in text or "Setup A" in text:
         return True
-    return "A" in [t.strip() for t in text.split("+")]
+    for seg in re.findall(r"Setup\s*([A-Z](?:\s*[+/&、·,]\s*[A-Z])*)", text):
+        if "A" in re.findall(r"[A-Z]", seg):
+            return True
+    return False
 
 
 def _trading_dates(cache: dict) -> list:
@@ -761,10 +941,10 @@ def check_invalid_level(ticker: str, date_str: str, invalid, ctx=None):
     if lv is None:
         return None
     try:
-        from longport.openapi import QuoteContext, Config, Period, AdjustType
+        from longport.openapi import QuoteContext, Config, Period
         ctx = ctx or QuoteContext(Config.from_apikey_env())
         bars = [b for b in ctx.candlesticks(f"{ticker}.US", Period.Day, 30,
-                                            AdjustType.NoAdjust)
+                                            bars_adjust())
                 if str(b.timestamp.date()) <= date_str]
         if not bars:
             return None
@@ -846,7 +1026,34 @@ def sync_candidate_track(date_str: str, watchlist_abc: list = None,
     return added
 
 
-def setup_a_track_rows(cache: dict, extra_prices: dict = None):
+def _pct_at(entry: dict, n: int):
+    """信号日之后第 n 个交易日的收盘，相对**信号日收盘**的涨跌%。取不到返回 None。
+
+    🔴 基准用信号日收盘而不是 entry 字段：entry 是自由文本
+    （「盘前 +0.19%，约 160.0」「不追现价 41.14。等回踩 9EMA 39.38」），
+    解析它既脆弱又有歧义（计划价 vs 现价）。**信号日收盘是无歧义的**，
+    也正是 2026-08-17 那份 18 条历史分析用的口径，两边可比。
+
+    用途：Setup A 表的「D+2 读数」列——Vic 的真实退出节奏是 2-3 天，
+    只显示 D+5 等于给他看一个他不会执行的结果。
+    """
+    try:
+        import fetch_market_data as _F
+        from longport.openapi import QuoteContext, Config
+        ctx = QuoteContext(Config.from_apikey_env())
+        b = _F.fetch_bars(ctx, entry["ticker"], 40)
+        if not b:
+            return None
+        idx = [i for i, x in enumerate(b) if x["date"] > entry["date"]]
+        if len(idx) < n or idx[0] == 0:
+            return None
+        base = b[idx[0] - 1]["c"]          # 信号日收盘
+        return round((b[idx[n - 1]]["c"] / base - 1) * 100, 2)
+    except Exception:
+        return None
+
+
+def setup_a_track_rows(cache: dict, extra_prices: dict = None, asof: str = None):
     """Setup A专项对账用：返回(rows, due)，只看setup标签含"A"的条目。
     2026-07-28 Vic：「只跟踪3天，超过3天的不用继续追踪了，只留记录就好」；
     **2026-08-07 Vic改为5个交易日**（3天窗口太短，很多setup还没走出来就被判过期）。
@@ -867,7 +1074,21 @@ def setup_a_track_rows(cache: dict, extra_prices: dict = None):
     extra_prices = extra_prices or {}
     rows, due = [], []
     for e in ledger["entries"]:
-        if not _is_setup_a(e.get("setup", "")):
+        # 🔴 2026-08-21 修（Vic：「我盘前报告还没出，20日盘后就 A 级有了呀，请问是哪里来的」）：
+        #    setup_track.json 是**跨日共享**的一份台账。跑 8/21 盘前时 sync_candidate_track
+        #    往里写了 8/21 的三条候选；之后为了改判定又**重渲染了 8/20 那份盘后**，
+        #    这张表就把 8/21 的条目一起捞了进去 —— **8/20 的报告里出现了 8/21 的 A 级**。
+        #    根因是本函数只按「窗口内 + tracking」筛，**从不按报告日截断**，
+        #    所以任何一次「回头重渲染旧报告」都会被之后的新数据污染。
+        #    asof 给定时，晚于报告日的条目一律不进表。**调用方必须传 DAY。**
+        if asof and str(e.get("date", "")) > asof:
+            continue
+        # 🔴 2026-08-20 Vic：「我记得我们刚把 setup a b c d 都改成具体的字」——
+        #    字母没了，按「setup 标签含 A」筛就再也说不通了，而且它**静默漏票**：
+        #    8/19 的 MSI 标签是 tight（原 Setup B），整条候选没进对账表。
+        #    改成按 **grade == "A"** 筛 —— 这张表本来要回答的就是
+        #    「今天放行的候选后来怎么样了」，跟它是哪种形态无关。
+        if (e.get("grade") or "").strip().upper() != "A":
             continue
         elapsed = sum(1 for d in trading_dates if d > e["date"])
         cur = (M.get(e["ticker"]) or {}).get("close")
@@ -875,11 +1096,12 @@ def setup_a_track_rows(cache: dict, extra_prices: dict = None):
             cur = extra_prices.get(e["ticker"])
         entry_px = e.get("entry")
         pct_since = None
-        try:
-            if cur is not None and entry_px not in (None, "", "-"):
-                pct_since = round((float(cur) - float(entry_px)) / float(entry_px) * 100, 2)
-        except (TypeError, ValueError):
-            pass
+        # 🔴 2026-08-20：入场位写的是**散文**（「9EMA **588.92** 上方」），
+        #    原来直接 float() 必然抛异常 → 「自入场%」整列常年空。
+        #    从字符串里把第一个像价格的数字抠出来（去掉千分位逗号和 markdown 星号）。
+        _ep = parse_price_from_text(entry_px, near=cur)
+        if cur is not None and _ep:
+            pct_since = round((float(cur) - _ep) / _ep * 100, 2)
         if e.get("verdict"):
             status_label = e["verdict"]
         elif e.get("status") == "tracking":
@@ -889,9 +1111,22 @@ def setup_a_track_rows(cache: dict, extra_prices: dict = None):
             status_label = e.get("status", "-")
         # 只有还在窗口内（含今天到期待评定）的才进报告表；其余只留在台账里当历史
         if e.get("status") == "tracking" and elapsed <= SETUP_TRACK_WINDOW:
+            # 🔴 2026-08-17 Vic：「aur/oust 2-3天不涨我都清了，你不能等这么久」。
+            #    他说得对的地方：对账表如果测的是他不会执行的持有期，作为反馈就是废的。
+            #    但 18 条历史实测说窗口本身没错——D+2 均值 +0.39% / D+5 **+2.09%**，
+            #    **胜率一样（都 12/18），差额 1.7pt 全在右尾**：
+            #      FIS D+2 +2.39% → D+5 +15.47%；**ANET D+2 -7.49% → D+5 +8.27%**
+            #    也就是说「2-3 天不涨就清」会在 -7.49% 清掉那笔本来 +8.27% 的。
+            #    所以**不改窗口，改成两个读数并排**——把早退的代价变成每周能看见的数字，
+            #    而不是一个要反复争论的判断。
+            # 🔴 2026-08-20 Vic：「自入场不需要哦，第五天结算就好了」——
+            #    跟踪中每天报一个浮动的「自入场%」是噪音：它天天变、天天要解释，
+            #    而真正要记账的只有**满窗口那一次**。
+            #    所以这一格**只在 elapsed >= 窗口时才有数**，跟踪中一律 None。
+            settle = pct_since if elapsed >= SETUP_TRACK_WINDOW else None
             rows.append([e["date"], e["ticker"], e.get("sector", "-"), str(entry_px), str(e.get("invalid", "-")),
                          str(e.get("target", "-")), str(cur if cur is not None else "-"),
-                         fpct(pct_since), status_label])
+                         fpct(_pct_at(e, 2)), fpct(settle), status_label])
         if e.get("status") == "tracking" and elapsed >= SETUP_TRACK_WINDOW:
             due.append({"date": e["date"], "ticker": e["ticker"], "pct_since_signal": pct_since})
     return rows, due
@@ -1072,7 +1307,7 @@ def stockbee_internals(cache: dict, lookback: int = 22):
 
 
 def cross_check_alignment(gate_rows: list, breadth_rows: list, risk_items: list) -> dict:
-    """三张表（攻守记分板/市宽打分/动能打分）方向一致性检查（2026-07-27 Vic：
+    """三个角度（闸门位置/市宽打分/动能打分）方向一致性检查（2026-07-27 Vic：
     "不知道会不会有不同向的情况，如果不同向，一定要指出"）。
 
     ⚠️这是**描述性**检查，不是预测性规则——它只回答"这三张表现在指向同一个方向吗"，
@@ -1081,13 +1316,17 @@ def cross_check_alignment(gate_rows: list, breadth_rows: list, risk_items: list)
     只做三个已有结论之间的对照，因此不存在同类过拟合问题。）
 
     每张表折算成 bull / neutral / bear：
-      - 攻守记分板：任一指数跌破防守线→bear；全部站上进攻线→bull；否则neutral
+      - 闸门位置：任一指数跌破防守线→bear；全部站上进攻线→bull；否则neutral
+        （2026-08-17 改名：这一档本来就是拿 gate_rows 算的，跟攻守记分板那块没关系；
+         记分板那天退役后名字还留着，会让人以为删掉的表还在参与判断。）
       - 市宽打分：有降级项triggered→bear；无triggered且有升级项met→bull；否则neutral
       - 动能打分：high档≥4项→bear；≤1项→bull；否则neutral
     返回 {verdict, stances, headline, detail}。verdict ∈ aligned / split。
     """
-    # 攻守记分板
-    kinds = [r.get("state_kind") for r in gate_rows]
+    # 闸门位置
+    # 2026-08-17：闸门表并入 03 后混进了 DIA/SMH/RSP/QQQE 四行参考标的（没有闸门线）。
+    # 它们 state_kind 不是 attack，**照旧写法会把 bull 永远压成 neutral**。只认闸门行。
+    kinds = [r.get("state_kind") for r in gate_rows if r.get("kind") != "ref"]
     if "broken" in kinds:
         gate = "bear"
     elif kinds and all(k == "attack" for k in kinds):
@@ -1109,19 +1348,24 @@ def cross_check_alignment(gate_rows: list, breadth_rows: list, risk_items: list)
     high_n = sum(1 for it in risk_items if it.get("level") == "high")
     momentum = "bear" if high_n >= 4 else ("bull" if high_n <= 1 else "neutral")
 
-    stances = {"攻守记分板": gate, "市宽打分": breadth, "动能打分": momentum}
+    stances = {"闸门位置": gate, "市宽打分": breadth, "动能打分": momentum}
     ZH = {"bull": "偏多", "neutral": "中性", "bear": "偏空"}
     uniq = set(stances.values())
 
     if len(uniq) == 1:
         verdict = "aligned"
-        headline = f"✅三表同向（均为{ZH[gate]}）"
-        detail = ("攻守记分板、市宽打分、动能打分本日指向一致——"
+        # 2026-08-17 Vic：「三表同向（均为偏多）这是2表了吧？」——他数得没错，
+        # 页面上现在只剩「市宽打分」和「动能打分」两张表，闸门那一档 8/17 并进了
+        # 「03 指数闸门」、不再是独立小节。判断源仍是三个，**但「三表」这个说法
+        # 已经和页面对不上了**。改成点名三个角度，不再数表。
+        # headline 走的是 esc() 不是 rich()，**加粗记号会原样渲染成星号**（QA 当场抓到）。
+        headline = f"✅闸门位置 / 市宽打分 / 动能打分 三个角度同向（均为{ZH[gate]}）"
+        detail = ("闸门位置、市宽打分、动能打分本日指向一致——"
                   "价格位置、广度内部、风险清单三个角度没有互相矛盾，判断可以直接采用。")
     else:
         verdict = "split"
         desc = "、".join(f"{k}={ZH[v]}" for k, v in stances.items())
-        headline = f"🔴三表分歧：{desc}"
+        headline = f"🔴三个角度分歧：{desc}"
         pairs = []
         if gate != breadth:
             if gate in ("bull", "neutral") and breadth == "bear":
@@ -1135,9 +1379,9 @@ def cross_check_alignment(gate_rows: list, breadth_rows: list, risk_items: list)
                              "**这种分歧下不要因为指数破位就全面停手，但也需要价格确认后才加仓。**")
         if momentum != gate or momentum != breadth:
             pairs.append(f"动能打分（{ZH[momentum]}，high档{high_n}项）与另两张表不一致——"
-                         "动能打分是定性观感，另两张是定量门槛；**定性与定量打架时以定量为准，"
+                         "动能打分是定性观感，另两个是定量门槛；**定性与定量打架时以定量为准，"
                          "并回头检查是不是某一项的档位打得太重或太轻。**")
-        detail = "；".join(pairs) if pairs else "三表未完全一致，请逐项核对。"
+        detail = "；".join(pairs) if pairs else "三个角度未完全一致，请逐项核对。"
 
     return {"verdict": verdict, "stances": stances, "high_n": high_n,
             "headline": headline, "detail": detail}
@@ -1208,15 +1452,22 @@ def sp500_breadth_tables(cache: dict, history_days: int = 10):
 # ①段1定稿，段2不动：全部基于上一交易日收盘 + 隔夜新闻 + X扫描
 PHASE1_FIELDS = [
     "report_type", "date", "title", "subtitle", "badges",
-    "scoreboard_rows", "scoreboard_note", "risk_checklist", "risk_checklist_note",
-    "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note", "cross_check",
+    "risk_checklist", "risk_checklist_note",
+    "catalyst_watch", "catalyst_watch_note", "index_table", "gate_scoreboard_rows", "breadth_score_rows", "breadth_score_note", "cross_check",
     "atr_extension_table", "atr_extension_note",
-    "regime_triggers", "breadth_table", "breadth_table_note",
-    "other_assets_table", "joint_signal_lines", "macro_radar_table", "macro_radar_detail",
+    "regime_triggers", "breadth_table_note",
+    # other_assets_table 2026-08-14 整块退役（Vic：「整个表格删除，我只需要小结」），
+    # 模板里留空壳、**不进本清单**——留在清单里会被写进报告，QA 判「自造字段」。
+    # 同 premarket_movers 的处理方式。内容改由 other_assets_note 承载。
+    "other_assets_note",
+    "joint_signal_lines", "macro_radar_table", "macro_radar_detail",
     "unilateral_scan_table", "unilateral_scan_note",
-    "ml_leaders", "ml_leaders_note", "leader_vs_defensive_note",
-    "adanos_scan_table", "x_sentiment_macro", "x_sentiment_macro_summary",
+    "ml_leaders", "ml_leaders_table", "ml_leaders_note", "leader_vs_defensive_note",
+    # adanos_scan_table 2026-08-17 退役（方法3 整块删除），不进本清单
+    "x_sentiment_macro", "x_sentiment_macro_summary",
     "x_sentiment_stocks", "x_sentiment_note",
+    # 方法6 · 肉眼筛选（2026-08-20 从纯文字升级成表格；不进这个桶会在 save 时被静默丢掉）
+    "vic_manual_picks", "vic_manual_picks_table", "vic_manual_picks_note",
     "thirteen_dg_rows", "thirteen_dg_note", "squeeze_candidates", "squeeze_note",
     "news_week", "week_calendar", "industry_radar_table", "x_watch_table", "x_watch_note", "footer_sources",
     # 2026-08-04补：这三组字段只依赖「已收盘」数据（FTD计数／仓位治理／反弹队列收盘区间），
@@ -1238,13 +1489,13 @@ PHASE1_FIELDS = [
     "bam", "bam_table", "bam_note",
     "dispersion", "dispersion_note",
     "special_readthrough_table", "special_readthrough_note",
-    "adanos_scan_note", "recon_prob_note",
+    "recon_prob_note",   # adanos_scan_note 2026-08-17 随方法3 退役
     # ── 2026-08-12 从已退役的 PHASE2_FIELDS / PHASE2_PATCH_FIELDS 并进来（两段式取消）──
     "signal_light", "sector_rs_note", "etf_table_note", "positions_moomoo_note",
     "news_today", "strong_sector_setups_permission",
     "watchlist_abc", "setup_conclusion", "playbook_scenarios",
     "key_takeaways", "today_position", "recon_ledger", "generated_at",
-    "sector_rs_tables", "etf_table",
+    "sector_rs_tables",   # etf_table 2026-08-17 退役
     "positions_moomoo_table", "positions_longbridge_table",
     "defensive_basket", "strong_sector_setups_table",
     "stop_proximity_table", "stop_proximity_note",
@@ -1377,14 +1628,7 @@ def patch_premarket_columns(draft: dict, pm: dict) -> list:
             changes.append(f"sector_rs_tables[{grp.get('title','?')[:12]}]: 补了{n}行盘前"
                            + (f"（其中{miss}只无盘前报价）" if miss else ""))
 
-    et = draft.get("etf_table") or {}
-    n = 0
-    for r in et.get("rows", []):
-        if len(r) > 2 and "盘前" not in str(r[2]):
-            r[2] = f"{r[2]}（盘前{pmp(r[0]) or '无quote'}）"
-            n += 1
-    if n:
-        changes.append(f"etf_table: 补了{n}行盘前")
+    # etf_table 2026-08-17 退役，这段补盘前列的逻辑随之删除（盘前数据本身也已在 8/12 下线）。
 
     # 2026-08-06 Vic：「持仓2个表格盘前价格直接给一列吧」——原来是塞进「现价」格里加后缀，
     # 一格两个数字很难扫。改成在「现价」后面插一列「盘前」。
@@ -1530,7 +1774,7 @@ def ftd_status(ctx=None) -> dict:
                 "note": st.get("parked_reason", "")}
     if not st.get("day1_date"):
         return {"verdict": "未设定Day 1", "rows": []}
-    from longport.openapi import QuoteContext, Config, Period, AdjustType
+    from longport.openapi import QuoteContext, Config, Period
     ctx = ctx or QuoteContext(Config.from_apikey_env())
     d1 = st["day1_date"]
     lows = st.get("day1_lows", {})
@@ -1541,7 +1785,7 @@ def ftd_status(ctx=None) -> dict:
     for tk in panel:
         bars = [{"date": str(b.timestamp.date()), "c": float(b.close),
                  "l": float(b.low), "v": b.volume}
-                for b in ctx.candlesticks(f"{tk}.US", Period.Day, 40, AdjustType.NoAdjust)]
+                for b in ctx.candlesticks(f"{tk}.US", Period.Day, 40, bars_adjust())]
         idx = next((i for i, b in enumerate(bars) if b["date"] >= d1), None)
         if idx is None or idx == 0:
             continue
@@ -1675,12 +1919,12 @@ def bounce_candidates(tickers: list, ftd_ok: bool, ctx=None, asof: str = None) -
 
     返回 [{ticker, adr, dd25, dist_ema9, range_pos, eligible, action}]，按ADR降序。
     """
-    from longport.openapi import QuoteContext, Config, Period, AdjustType
+    from longport.openapi import QuoteContext, Config, Period
     ctx = ctx or QuoteContext(Config.from_apikey_env())
     out = []
     for t in tickers:
         try:
-            raw = ctx.candlesticks(f"{t}.US", Period.Day, 60, AdjustType.NoAdjust)
+            raw = ctx.candlesticks(f"{t}.US", Period.Day, 60, bars_adjust())
         except Exception:
             continue
         bars = [{"d": str(b.timestamp.date()), "h": float(b.high),
@@ -1728,20 +1972,92 @@ def position_governance(positions: list = None) -> dict:
         th = str(p.get("thesis") or "").strip()
         stop = p.get("stop")
         bad_th = (not th) or th.lower().replace(" ", "") in PLACEHOLDER
-        bad_stop = stop in (None, "", 0)
-        if not (bad_th or bad_stop):
+        # 🔴 2026-08-18：篮子仓（ETF）的「无止损」不算缺口——QQQ 一直是有意为之，
+        #    现在把这条写进代码，不再靠每天在文字里解释一遍。
+        bad_stop = (stop in (None, "", 0)) and not is_basket(p.get("ticker"))
+        # 🔴 2026-08-17 新增：止损**荒谬**也要抓，不只是「空」。
+        #    实测两次同类事故：MU(longbridge) 止损 157（那是 GLW 的值）、
+        #    MRAM 止损 30.10（那是同日建仓的 WOLF 的值，而 MRAM 现价 19.85）。
+        #    两次都是**串行录入时把上一笔的数字带下来**，而旧检查只看「空不空」，
+        #    非空的错值一路穿到 p14 执行表，还被判成「止损>成本 ✅」——
+        #    **一个在现价上方的止损，比没有止损更危险：它让人以为这笔是被保护的。**
+        cost = p.get("cost")
+        bad_lv = ""
+        if stop and cost:
+            if stop >= cost * 1.30:
+                bad_lv = "**止损 %.2f 高于成本 %.2f 的 30%%——多半是串了别的票的数字**" % (stop, cost)
+            elif stop <= cost * 0.55:
+                bad_lv = "**止损 %.2f 距成本 %.2f 超过 45%%——核对是不是串了行**" % (stop, cost)
+        if not (bad_th or bad_stop or bad_lv):
             continue
         miss = []
         if bad_th:
             miss.append("**持有理由**")
         if bad_stop:
             miss.append("**止损**")
+        if bad_lv:
+            miss.append(bad_lv)
         rows.append([p.get("ticker", "-"), p.get("account", "-"), str(p.get("qty", "-")),
                      ("%.2f" % p["cost"]) if p.get("cost") else "-",
                      ("%.2f" % stop) if stop else "**空**",
                      (th[:22] if th else "**空**"),
-                     "缺 " + " + ".join(miss)])
+                     ("缺 " if (bad_th or bad_stop) else "") + " + ".join(miss)])
     return {"rows": rows, "n_bad": len(rows)}
+
+
+POSITION_MANAGE_PATH = ROOT / "data/cache/position_manage.json"
+
+
+def position_manage_table(day: str) -> dict:
+    """教材 p14「持仓管理」执行表——读 scripts/position_manage.py 落的 cache 渲染成报告表。
+
+    2026-08-14 建。为什么它值得占一个报告版位（51 笔跟单实测）：
+        曾浮盈 ≥10% 的 18 笔里 **13 笔最终 ≤0% 收场**，峰值均值 +22.3% → 实际 -0.2%；
+        而 p16 七问 ≥5 分和 ≤4 分两批的峰值几乎一样（+10.28% vs +10.57%）。
+        **瓶颈不在选股，在持有和退出**——所以先接这张表，选股扫描器往后放。
+
+    🔴 触发口径 2026-08-17 改（Vic：「我其实不是硬性3天peel，只是说突破以后延续peel，
+    然后没有Playout我考虑的是止损和减仓」）——**天数不再是闸门**：
+      ①突破后在延续（浮盈 ≥3%）→ 按 peel 分批减
+      ②没有 playout（持有 ≥3 日但浮盈 <1%）→ 考虑止损或减仓
+      ③余仓止损要**高于**成本  ④按选定 EMA 跟踪，首次收盘跌破才出。
+    TICKER 带 * = mentor 跟单：减不减、退不退听老师的，本表只记账和提醒。
+
+    🔴 用 data_date 校验口径日，跟价格纪律同源：cache 里的收盘价必须是报告日那天的，
+       否则宁可整表空着也不出错数（8/6 那次判断反了就是栽在错日价格上）。
+       盘后触发时点在 SGT 白天，date.today() 会比数据日期快一天——所以脚本戳的是
+       最后一根 K 的日期，不是 today()。
+    """
+    # 🔴 2026-08-17 Vic：「止损=成本? 应该改成 止损>成本」——等于成本不算已保护
+    hdr = {"headers": ["TICKER", "账户", "持仓日", "浮盈", "减过?", "止损>成本?",
+                       "跟踪线", "线位", "距线", "今日动作"],
+           # 数字列是「浮盈」和「距线」（3/8），**不是最后一列**——最后一列是整段判断文字，
+           # 走默认的 rich() 路径才会渲染 **加粗**，塞进 num_cols 会被当数字右对齐+上涨跌配色。
+           "num_cols": [3, 8], "center_cols": [2, 6], "badge_cols": [4, 5],
+           "table_class": "fixed-cols",
+           "col_widths": ["8%", "10%", "7%", "8%", "6%", "8%", "7%", "8%", "7%", "31%"]}
+    if not POSITION_MANAGE_PATH.exists():
+        return dict(hdr, rows=[], nodata="没跑 scripts/position_manage.py")
+    d = json.loads(POSITION_MANAGE_PATH.read_text(encoding="utf-8"))
+    if d.get("data_date") != day:
+        return dict(hdr, rows=[],
+                    nodata=f"position_manage cache 的数据日是 {d.get('data_date')}，"
+                           f"不是报告日 {day}——重跑 scripts/position_manage.py")
+    rows = []
+    for r in d.get("rows", []):
+        rows.append([
+            r["ticker"] + ("*" if r.get("mentor") else ""),
+            r["acct"],
+            str(r["days"]) if r.get("days") else "-",
+            f"{r['pnl']:+.1f}%" if r.get("pnl") is not None else "-",
+            "是" if r.get("trimmed") else "否",
+            "是" if r.get("be") else "否",
+            r.get("pick") or "-",
+            f"{r['line']:.2f}" if r.get("line") else "-",
+            f"{r['dist']:+.1f}%" if r.get("dist") is not None else "-",
+            r.get("act") or "",
+        ])
+    return dict(hdr, rows=rows)
 
 
 def position_governance_table(gov: dict) -> dict:
@@ -1948,12 +2264,12 @@ DISP_HISTORY = ROOT / "data" / "dispersion_history.json"
 def dispersion_series(ctx=None, days: int = 260, asof: str = None):
     """算 [(日期, 板块横截面标准差, |指数涨跌|, 比值)]，最新在后。asof 给定则只算到该日（含）。"""
     import statistics
-    from longport.openapi import QuoteContext, Config, Period, AdjustType
+    from longport.openapi import QuoteContext, Config, Period
     ctx = ctx or QuoteContext(Config.from_apikey_env())
     bars = {}
     for t in DISP_SECTORS + ["VOO"]:
         bars[t] = [{"d": str(b.timestamp)[:10], "c": float(b.close)}
-                   for b in ctx.candlesticks(f"{t}.US", Period.Day, days, AdjustType.NoAdjust)]
+                   for b in ctx.candlesticks(f"{t}.US", Period.Day, days, bars_adjust())]
     idx = {t: {b["d"]: i for i, b in enumerate(bars[t])} for t in bars}
 
     def ret(t, d):
@@ -2070,12 +2386,12 @@ def proxy_rs(ticker: str, parent: str = None, ctx=None, lookback: int = 20):
     parent = parent or PROXY_PARENT.get(ticker)
     if not parent:
         return None
-    from longport.openapi import QuoteContext, Config, Period, AdjustType
+    from longport.openapi import QuoteContext, Config, Period
     ctx = ctx or QuoteContext(Config.from_apikey_env())
 
     def closes(t):
         return {str(b.timestamp)[:10]: float(b.close)
-                for b in ctx.candlesticks(f"{t}.US", Period.Day, 90, AdjustType.NoAdjust)}
+                for b in ctx.candlesticks(f"{t}.US", Period.Day, 90, bars_adjust())}
 
     a, b = closes(ticker), closes(parent)
     days = sorted(set(a) & set(b))
@@ -2179,8 +2495,24 @@ RECON_PROB_MIN, RECON_PROB_MAX = 0.40, 0.80
 RECON_PROB_HIGH = 0.85     # >= 此值算「框架级防线」，每份限 1 条
 RECON_HIGH_MAX = 1
 RECON_MIN_MARKET = 4       # 一份 ledger 至少几条真预测
+# 🔴 广度类每份最多 1 条（2026-08-17 盘后定，2026-08-19 补成会失败的检查）。
+#    8/17 五条里三条问的是同一件事（涨4%+ / T2108 / 10日ratio），所以三条一起错——
+#    那不是判断错，是**一个预测拆成三条，赌一次押三倍**。当天写进了「本日迭代」的规则栏，
+#    但只是文档条文：**8/18 的盘前台账立刻又放了 2 条**（T2108、跌4%+家数）。
+#    规则不写成会失败的检查就守不住，所以搬进 validate_recon_ledger。
+RECON_BREADTH_MAX = 1
+_RECON_BREADTH_PAT = ("T2108", "涨 4%", "跌 4%", "涨4%", "跌4%", "家数", "广度",
+                      "Stockbee", "日 ratio", "日ratio", "月度赢家", "BAM", "腾落")
 RECON_OUTCOME = {"hit": 1.0, "partial": 0.5, "miss": 0.0}   # not_triggered 不计分
 BRIER_BASELINE = 0.25      # 全填 0.5 的分数 =「我什么都不知道」
+
+
+def _recon_is_breadth(item: dict) -> bool:
+    """这条 claim 押的是不是市场广度。**同一份台账里广度类最多 1 条**——
+    它们彼此高度相关（T2108 / 涨跌4%+家数 / 5日10日 ratio 本来就是同一批数据的不同切法），
+    放两条以上等于同一个预测重复计分，对也一起对、错也一起错。"""
+    txt = (item.get("claim") or item.get("plan") or "")
+    return any(k in txt for k in _RECON_BREADTH_PAT)
 
 
 def _recon_split(items: list):
@@ -2192,7 +2524,9 @@ def _recon_split(items: list):
 
 
 # 允许出现在台账里的标的：指数 + 板块/主题 ETF。其余一律视为个股。
-_RECON_OK_TICKERS = set(INDEX_ORDER) | {"SPY", "XBI", "IBIT", "TLT", "GLD", "SLV", "USO", "UUP"}
+# ETHB 2026-08-20 加入：它和 IBIT 一样是 ETF 不是个股，而加密条目现在是台账的常驻要求。
+_RECON_OK_TICKERS = set(INDEX_ORDER) | {"SPY", "XBI", "IBIT", "ETHB",
+                                        "TLT", "GLD", "SLV", "USO", "UUP"}
 for _g, _ts in SECTOR_RS_GROUPS:
     _RECON_OK_TICKERS |= set(_ts)
 
@@ -2206,10 +2540,41 @@ def _recon_names_single_stock(item: dict) -> bool:
     return bool(cands - _RECON_OK_TICKERS)
 
 
-def validate_recon_ledger(items: list, where: str = "recon_ledger") -> list:
-    """返回错误列表，空=通过。assemble 和 qa_report 共用这一处定义。"""
+# 加密必须有一条（2026-08-20 Vic：「盘后对账清单 你应该加 btc 和 eth 吧？」）。
+# 为什么这是对的：他手上的加密相关敞口一直有（COIN / BMNR / CIFR / WGMI / PURR），
+# 而**加密 24 小时交易 —— 它是这些票开盘前唯一已经走完的一段行情**。
+# 台账里押 VOO/SMH/T2108 却不押 BTC，等于对开盘前最先出结果的那个变量不表态。
+# 代理：IBIT（BTC）/ ETHB（ETH），两者都已在 cache universe 里。
+RECON_CRYPTO_PAT = ("BTC", "ETH", "IBIT", "ETHB", "加密", "比特", "以太")
+
+
+def _recon_has_crypto(items: list) -> bool:
+    market, _ = _recon_split(items or [])
+    return any(any(k in str(x.get("claim") or x.get("plan") or "")
+                   for k in RECON_CRYPTO_PAT) for x in market)
+
+
+def validate_recon_ledger(items: list, where: str = "recon_ledger",
+                          design_checks: bool = None) -> list:
+    """返回错误列表，空=通过。assemble 和 qa_report 共用这一处定义。
+
+    design_checks：**台账的设计类规则只在它被写下来的那一刻查**（盘前 recon_ledger）。
+    盘后的 recon_rows 是对同一份台账的机械复制，prob 和 claim 都不许改——
+    在那里报「广度类押多了」等于让盘后为盘前的设计问题背锅，而且当天无法修复。
+    默认按 where 推断：where=="recon_rows"（盘后）时关掉。"""
+    if design_checks is None:
+        design_checks = (where != "recon_rows")
     errs = []
     market, disc = _recon_split(items)
+    # 🔴 2026-08-20 Vic：「纪律：今日不做 A 级以外的标的…这条太没用了！！！删除」
+    #    **自控条目根本不该进对账台账**：它不是预测，是给自己下的指令；
+    #    盘后给它判 hit/miss 毫无信息量（8/19 判 miss，而他买 COIN 是对的——
+    #    那是 Trump 白宫峰会的事件驱动，错的是候选表没有承载这个品类）。
+    #    而且台账上限 5 条，它白占一格。W32 复盘里「2 条我自己的行为」标过同一个问题，
+    #    当时只写进记忆没写成检查，所以又犯了一次。**这次写成会失败的检查。**
+    if disc:
+        errs.append("%s: 有 %d 条纪律/自控条目 %s——**自控不进对账台账**（2026-08-20 Vic）。它不是预测，判 hit/miss 没有信息量，还占掉 5 条上限里的一格。纪律写进 signal_light.discipline"
+                    % (where, len(disc), [(x.get("claim") or x.get("plan") or "")[:18] for x in disc]))
     if len(items or []) > RECON_MAX:
         errs.append("%s: 共 %d 条，**最多 %d 条**（Vic 2026-08-10）——"
                     "条数一多收盘后就没人逐条核对了"
@@ -2219,6 +2584,19 @@ def validate_recon_ledger(items: list, where: str = "recon_ledger") -> list:
         errs.append("%s: 这些条目押的是个股 %s——**个股不进对账台账**（Vic 2026-08-10），"
                     "它们的验证走 A/B/C 的失效位和事件缺口表的止损位"
                     % (where, [ (x.get("claim") or x.get("plan") or "")[:22] for x in stock ]))
+    if design_checks and market and not _recon_has_crypto(items):
+        errs.append("%s: **没有加密类条目**（2026-08-20 Vic 要求 BTC/ETH 常驻）——"
+                    "加密 24 小时交易，是开盘前唯一已经走完的一段行情，"
+                    "而 COIN/BMNR/CIFR/WGMI 的开盘直接吃它的结果。代理用 IBIT / ETHB。"
+                    % where)
+    breadth = [x for x in market if _recon_is_breadth(x)]
+    if design_checks and len(breadth) > RECON_BREADTH_MAX:
+        errs.append("%s: 广度类押了 %d 条（%s），**每份最多 %d 条**（2026-08-17 定）——"
+                    "它们是同一批数据的不同切法，错会一起错；"
+                    "腾出来的位置写执行类判断"
+                    % (where, len(breadth),
+                       "、".join((x.get("claim") or x.get("plan") or "")[:20] for x in breadth),
+                       RECON_BREADTH_MAX))
     if len(market) < RECON_MIN_MARKET:
         errs.append("%s: 真预测只有 %d 条，至少 %d 条（纪律条目不算）"
                     % (where, len(market), RECON_MIN_MARKET))
@@ -2636,3 +3014,649 @@ def bam_reading(cache: dict) -> dict:
     return {"date": cur["date"], "ratio": cur["ratio"], "adv10": cur["adv10"],
             "dec10": cur["dec10"], "pctile": pct, "peak": peak, "n": len(s),
             "threshold": BAM_THRESHOLD, "verdict": verdict, "series": s}
+
+
+# ============================================================================
+# 2026-08-17 补进框架的两件（当天先只改了那一份报告，Vic 问「框架builder也改了嘛？」才发现）
+# ============================================================================
+
+def gate_rows(cache: dict, notes: dict = None, order: list = None) -> list:
+    """闸门表：**只放有闸门线的标的**（2026-08-20 Vic 定）。
+
+    🔴 2026-08-20 Vic：「指数闸门里面删除 dia rsp qqqe，smh 要增加进攻线和防守线」
+       —— DIA/RSP/QQQE 原来是「参考行」，闸门四列全是「—」。
+       **一张闸门表里放没有闸门的行，本身就是自相矛盾。**
+       它们的读数在同一节的「指数基准」RS 表和「距50MA(ATR)」表里照旧有，没有信息丢失。
+
+    🎯 **SMH 补上闸门线**：它是主线板块、也是当前唯一在 50MA 下方的，
+       此前没有闸门线纯粹是因为 `fetch_market_data.gate_reference` 只算了
+       VOO/SPY/QQQ/IWM 四只。闸门线的定义是 20MA ± 1×ATR14，
+       **metrics 里本来就有 ma20 和 atr14**，直接算即可，不必等 fetch 端改。
+
+    列：TICKER / 状态 / 收盘 / 进攻线 / 防守线 / 说明（2026-08-20 Vic：
+      「状态放第二栏，(=标配) 删除，距进攻/防守这两列其实不用，多给点位置给说明」）。
+    """
+    M = cache.get("metrics", {})
+    G = cache.get("gate_reference", {})
+    notes = notes or {}
+    out = []
+    for tk in (order or GATE_TICKERS):
+        m, g = M.get(tk) or {}, G.get(tk) or {}
+        c_, ma20, atr = m.get("close"), m.get("ma20"), m.get("atr14")
+        if not c_:
+            continue
+        # gate_reference 只有四只算了；其余（SMH）用同一口径从 metrics 现算
+        atk = g.get("ma20_plus_1atr") or ((ma20 + atr) if (ma20 and atr) else None)
+        dfd = g.get("ma20_minus_1atr") or ((ma20 - atr) if (ma20 and atr) else None)
+        if not (atk and dfd):
+            continue
+        if c_ >= atk:
+            state, kind = "进攻区", "attack"
+        elif c_ >= dfd:
+            state, kind = "谨慎区", "caution"
+        else:
+            state, kind = "降级区", "broken"
+        out.append({"ticker": tk, "kind": "gate", "close": "%.2f" % c_,
+                    "attack": "%.2f" % atk, "defend": "%.2f" % dfd,
+                    "dist_attack": "%+.2f%%" % ((c_ / atk - 1) * 100),
+                    "dist_defend": "%+.2f%%" % ((c_ / dfd - 1) * 100),
+                    "state": state, "state_kind": kind, "note": notes.get(tk, "")})
+    return out
+
+
+# 方法2 评分口径（2026-08-17 Vic：「评分1-5…而且你没写」）。
+# 🔴 **写死在这里，不每天重新发明**——当天第一版是手写的 {ticker: 分} 字典，
+#    那等于每天重来一次、跨报告没法比。改成从行内容算：
+#      质量标签 q = Setup 标签里除 W 之外的个数（A/B/C/D/E/Ew）
+#         W = 双底/三重底 = **筑底形态，不是延续形态**，单独出现只值 2~3 分
+#      d9 = |距 9EMA %|，越近越好（进场结构的核心）
+SETUP_SCORE_DOC = "5=两种以上结构且贴9EMA｜4=单结构且贴9EMA｜3=结构一般或距9EMA 1~3%｜2=只有W｜1=距9EMA>10%"
+
+
+def score_setup_row(row) -> int:
+    """给方法2 的一行打 1~5 分。row = [TICKER, 板块, Setup标签, "RS / 9EMAx% / 量y", 说明, 评分]
+
+    🔴 2026-08-20 修了两处同源 bug，都是 setup 改名那天留下的：
+      · 标签用 `split("+")` 切 —— 连接符当天已改成 " · "，所以
+        "tight · pullback" 被算成**一个**标签，**多结构共振从此评不出 5 分**
+      · 排除项写 `!= "W"` —— W 已改名 "2 wick"，这条排除也失效了，
+        于是「只有一个 2 wick」也被当成一个有效结构计数
+    两个错误方向相反、互相掩盖，全表齐刷刷 4 分看起来「正常」，所以一直没被发现。
+    """
+    import re as _re
+    m = _re.search(r"9EMA\s*([+-]?[\d.]+)%", str(row[3])) or         _re.search(r"^\s*([+-]?[\d.]+)%?\s*$", str(row[3]))
+    return score_setup(row[2], m.group(1) if m else None)
+
+
+def score_setup(tags_text: str, d9_text) -> int:
+    """结构数 + 延伸度 → 1~5 分。**显式收两个输入，不再靠列位置猜**
+    （2026-08-20 重排列宽时发现：score_setup_row 硬编 row[2]/row[3]，
+    一改列序就静默变成另一套打分）。"""
+    # 🔴 占位文字要当成「没有标签」——2026-08-20 方法6 表里写「（无结构）」，
+    #    结果它被 split 成一个标签，ORCL 又拿回 3 分。**占位不是数据。**
+    _EMPTY = {"（无结构）", "(无结构)", "-", "—", "无", "None"}
+    tags = [t.strip() for t in str(tags_text).split("·")
+            if t.strip() and t.strip() not in _EMPTY]
+    # 2 wick 是**加分结构**不是入场形态（它没有入场时点），不计入有效结构数
+    q = len([t for t in tags if t.upper() not in ("2 WICK", "W")])
+    try:
+        d9 = abs(float(str(d9_text).replace("%", "").strip()))
+    except (TypeError, ValueError):
+        return 2
+    if d9 > 10:
+        return 1
+    if q >= 2:
+        return 5 if d9 < 2 else 4
+    if q == 1:
+        return 4 if d9 < 1 else (3 if d9 < 3 else 2)
+    # 🔴 2026-08-20：这里原来是 `return 3 if d9 < 2 else 2`，**一个标签都没有也能拿 3 分**。
+    #    当天 ORCL（零结构、RS5 −5.13、在 50MA 下方）和 MMYT（tight ＋ 三重底）同为 3 分，
+    #    评分列当场失去区分度。分成两档：
+    #      只有 2 wick → 最高 3（它是加分结构，没有入场时点，见入场图例）
+    #      连 2 wick 都没有 → 1（**没有可交易的结构**）
+    if not tags:
+        return 1
+    return 3 if d9 < 2 else 2
+
+
+# 同股不同权：一家公司的两个股票代码是**同一个赌注**，不该各占一个候选位。
+# 2026-08-20 Vic：「这个表格 goog 有两个」——当天 6 个位子里 GOOGL 和 GOOG 占了 2 个，
+# 而 permission 里被剔掉的 FOX/FOXA 也是同一对。这跟 8/17「16 行是能源同一个赌注」
+# 是同一个病，只是换成了公司层面。**名单是显式的**：不做「去掉结尾字母」这种猜测
+# （TEAM/BABA 这类会被误伤）。
+def setup_vol_short(cell: str) -> str:
+    """量比列：只留「0.80x －」，去掉后面的中文注解。
+    2026-08-20 Vic：「我不需要这种中文解释，我不是新手哦」——
+    ＋/－/· 这个记号已经把判断说完了，后面的「缩量=无需求」是给新手看的第二遍。"""
+    parts = str(cell).split()
+    return " ".join(parts[:2]) if len(parts) >= 2 else str(cell)
+
+
+_DUP_SEG = ("距9EMA", "量 ")
+
+
+def setup_struct_short(cell: str) -> str:
+    """结构数据列：去掉与专列重复的段。
+
+    列重排后「距9EMA」和「量比」各有自己的一列，而 pullback 标签的说明正是
+    "距9EMA 0.54% · 量 0.91×" —— **一模一样的两个数字在同一行出现两次**。
+    这里按「；」切段，丢掉整段都在讲这两个数的那些。
+    """
+    segs = [x.strip() for x in str(cell).split("；") if x.strip()]
+    keep = [x for x in segs
+            if not (x.startswith(_DUP_SEG[0]) and _DUP_SEG[1] in x)]
+    return "；".join(keep)
+
+
+# ── 方法5 · X trader setup 提取：改从 xdesk 已抓的数据里取 ──────────────
+# 2026-08-20 Vic：「方法5 我想你直接从这里提取，因为 X 我经常重复刷，不用重复扫」。
+#
+# 🔴 这不只是省一次抓取。**重复扫等于每天换一个随机样本**：X 的时间线不可重放，
+#    盘前那次扫到什么取决于当时的 feed，而 xdesk 已经把当天窗口内的帖子落盘了
+#    （data/cache/x_intraday_YYYYMMDD.json，含 handle/kind/ticker/flag/summary/url）。
+#    从落盘数据取 → 同一份输入任何时候重跑都得到同一个结果，**这份台账才可对账**。
+#    （同「扫描先定名单·不在洪流里捞」那条：靠运气的采样会静默失败。）
+XDESK_CACHE = ROOT / "data" / "cache"
+
+
+def x_from_xdesk(day: str, max_macro: int = 6, max_stock: int = 8):
+    """读当天 xdesk 落盘数据 → (macro_rows, stock_rows, 覆盖说明)。
+
+    返回的两个 list 直接就是 x_sentiment_macro / x_sentiment_stocks 的格式。
+    取不到文件时返回 ([], [], 说明) —— **不静默回退去扫 X**，宁可空着让人看见。
+    """
+    p = XDESK_CACHE / ("x_intraday_%s.json" % day.replace("-", ""))
+    if not p.exists():
+        return [], [], "🔴 xdesk 当天数据不存在（%s）——方法5 本日无输入，先跑 x 盘中。" % p.name
+    d = json.loads(p.read_text(encoding="utf-8"))
+    items = [x for r in (d.get("runs") or []) for x in (r.get("items") or [])]
+    seen, macro, stock = set(), [], []
+    # 排序：flag 优先（hot > pick > 无），其次时间倒序
+    rank = {"hot": 0, "pick": 1}
+    items.sort(key=lambda x: (rank.get(x.get("flag"), 2), x.get("utc") or ""), reverse=False)
+    for it in items:
+        u = it.get("url") or (it.get("handle", "") + (it.get("summary") or "")[:24])
+        if u in seen:
+            continue
+        seen.add(u)
+        t = et_sgt_from_utc(it.get("utc"))
+        kind, tk = it.get("kind"), (it.get("ticker") or "").strip().upper()
+        if kind in ("stock", "ep") and tk:
+            if len(stock) < max_stock:
+                stock.append({"handle": it.get("handle", ""), "time": t, "ticker": tk,
+                              "note": it.get("summary", ""), "aligned": ""})
+        elif kind in ("macro", "congress", "cramer"):
+            if len(macro) < max_macro:
+                macro.append({"handle": it.get("handle", ""), "time": t,
+                              "summary": it.get("summary", "")})
+    note = ("来源：xdesk %s（%d 条原始、%d 个账号），**未重新扫 X**——"
+            "同一份落盘数据重跑结果一致，可对账。" %
+            (day, len(items), len({x.get("handle") for x in items})))
+    return macro, stock, note
+
+
+def et_sgt_from_utc(utc_iso):
+    """UTC ISO → 'HH:MM ET · HH:MM SGT'（SGT 双时区是 CONTEXT 固定规则）。"""
+    if not utc_iso:
+        return ""
+    from datetime import datetime, timedelta
+    try:
+        t = datetime.strptime(str(utc_iso)[:19], "%Y-%m-%dT%H:%M:%S")
+    except ValueError:
+        return str(utc_iso)[:16]
+    et = t - timedelta(hours=4)      # EDT
+    sgt = t + timedelta(hours=8)
+    return "%s ET · %s SGT" % (et.strftime("%H:%M"), sgt.strftime("%H:%M"))
+
+
+# 方法2 表的列序（2026-08-20 重排）：
+#   0 TICKER | 1 Setup | 2 板块 | 3 RS | 4 距9EMA | 5 量比 | 6 结构数据 | 7 评分
+# Setup 提到第 2 列：**它是这一行为什么在这里的原因**，比板块更该先看到。
+SETUP_HEADERS = ["TICKER", "Setup", "板块", "RS(1周)", "距9EMA", "量比", "结构数据", "评分"]
+SETUP_WIDTHS = ["7%", "15%", "13%", "7%", "8%", "6%", "38%", "6%"]
+SETUP_TAG_COL, SETUP_D9_COL = 1, 4
+
+# 🔴 **每组第一个是「规范代码」**——流动性更好、报告里统一用它的那个。
+#    2026-08-20 清理 ETF_Holdings 时踩到：按「本 ETF 里权重更高」去重，
+#    结果 XLC 留 GOOGL、ARKK 留 GOOG，**同一家公司在不同 ETF 解析成不同代码**，
+#    板块归属列又把它拆回两行。去重必须收敛到一个全局唯一的代码。
+SHARE_CLASS_GROUPS = [
+    ("GOOGL", "GOOG"), ("FOXA", "FOX"), ("NWSA", "NWS"), ("BRK.B", "BRK.A"),
+    ("UAA", "UA"), ("LEN", "LEN.B"), ("HEI", "HEI.A"), ("PARA", "PARAA"),
+    ("CWEN", "CWEN.A"), ("LGF.A", "LGF.B"), ("BF.B", "BF.A"),
+    ("RUSHA", "RUSHB"), ("CENT", "CENTA"), ("MOG.A", "MOG.B"), ("Z", "ZG"),
+]
+SHARE_CLASS_OF = {t: g[0] for g in SHARE_CLASS_GROUPS for t in g}
+
+
+def canonical_ticker(tk: str) -> str:
+    """同股不同权 → 规范代码；其余原样返回。"""
+    t = str(tk).strip().upper()
+    return SHARE_CLASS_OF.get(t, t)
+
+
+def dedupe_share_classes(rows: list, tk_col: int = 0):
+    """同一家公司只留评分最高的那个代码。返回 (保留的行, [(丢掉的, 留下的)])。
+    行的顺序必须**已经按想要的优先级排好**——这里只做「首个胜出」。"""
+    seen, out, dropped = {}, [], []
+    for r in rows:
+        tk = str(r[tk_col]).strip().upper()
+        key = SHARE_CLASS_OF.get(tk)
+        if key is None:
+            out.append(r)
+            continue
+        if key in seen:
+            dropped.append((tk, seen[key]))
+            continue
+        seen[key] = tk
+        out.append(r)
+    return out, dropped
+
+
+def top_setups(rows: list, keep: int = 6) -> list:
+    """填评分 + 只留最强的几个（2026-08-17 Vic：「我只要5个，评分里面最强6个」）。
+
+    🔴 此前这张表把机器扫出来的**全部** setup 原样倒出来（8/17 是 18 行，其中 16 行是能源
+       同一个赌注），评分列 18 行全空。**没有评分的全量列表 = 这一步没做过。**
+    🔴 2026-08-20 起**先去同股不同权再截断**——顺序不能反：先截 6 个再去重会剩 5 个，
+       等于让 GOOG 白占一个位又不补人。
+    """
+    scored = []
+    for r in rows:
+        sc = score_setup(r[SETUP_TAG_COL], r[SETUP_D9_COL])
+        scored.append((sc, list(r[:-1]) + [str(sc)]))
+    scored.sort(key=lambda x: -x[0])
+    kept, dropped = dedupe_share_classes([r for _, r in scored])
+    if dropped:
+        print("  同股不同权已合并：%s" % "、".join("%s→%s" % d for d in dropped))
+    return kept[:keep]
+
+def stop_distance_atr(ticker: str, cache: dict, stop: float):
+    """距止损几个 ATR（2026-08-18 Vic：「距离止损x个atr」）。
+
+    **为什么不用百分比**：AMPX 距止损 1.6%（ADR 7.44%）和 TER 距止损 1.6%（ADR 3.5%）
+    是完全不同的两件事——前者半天的正常波动就打到，后者要跌半周。
+    ATR 是把不同波动率的票放到同一把尺上量的唯一办法。
+    """
+    m = (cache.get("metrics") or {}).get(ticker) or {}
+    px, atr = m.get("close"), m.get("atr14")
+    if not (px and atr and stop):
+        return None
+    return (px - stop) / atr
+
+
+def entry_adr_extension(ticker: str, entry_date: str, entry_price: float, bars: list = None):
+    """进场时的 ADR 延伸档位（老师口径：(进场价 − 进场当日最低) ÷ ADR）。
+
+    档位与实测（James Muninn 对 Qullamaggie 900+ 笔）：
+      <0.25 → 8.9% / -0.47R ｜ 0.25-0.50 → 21.1% / +1.66R ｜ 0.50-0.75 → 24.8% / +0.79R
+      0.75-1.00 → 45% / +1.36R ｜ >1.00 → 40.7% / +2.63R
+    返回 (延伸倍数, 档位字符串, 该档胜率文字)，取不到数据返回 (None, None, None)。
+    """
+    if not bars:
+        return (None, None, None)
+    day = next((b for b in bars if str(b.get("date", ""))[:10] == str(entry_date)[:10]), None)
+    if not day:
+        return (None, None, None)
+    win = [b for b in bars if str(b.get("date", "")) <= str(entry_date)][-20:]
+    if not win:
+        return (None, None, None)
+    adr_pct = sum((b["h"] / b["l"] - 1) for b in win) / len(win) * 100
+    adr_pt = adr_pct / 100 * day["c"]
+    if not adr_pt:
+        return (None, None, None)
+    ext = (entry_price - day["l"]) / adr_pt
+    for lo, hi, band, txt in ((0, .25, "<0.25", "🔴最差档 8.9% / -0.47R"),
+                              (.25, .5, "0.25-0.50", "21.1% / +1.66R"),
+                              (.5, .75, "0.50-0.75", "24.8% / +0.79R"),
+                              (.75, 1.0, "0.75-1.00", "🎯最佳胜率档 45% / +1.36R"),
+                              (1.0, 99, ">1.00", "40.7% / +2.63R，赔率最高胜率最低")):
+        if lo <= ext < hi:
+            return (ext, band, txt)
+    return (ext, ">1.00", "40.7% / +2.63R")
+
+# =========================================================================
+# 持仓表 v2（2026-08-18 Vic 改版）
+#   「1字很多呢，需要精简和颜色标识…整行背景用绿色，或者红色，我一看就知道」
+#   「止损30.10距+13.9% 改成距离止损x个atr」
+#   「建仓信息和盈亏不需要」「当日表现/判断这么重要，位置很窄…给他位置大一些」
+# =========================================================================
+
+# 2026-08-18 Vic：「新增一列 adr，你写出这只 adr 是多少%给我，我自己也可以对比」
+# 🔴 2026-08-20 加「距止盈」列（Vic：「试试看吧」）——**只是让规则每天可见，不是改纪律**。
+#    口径 = 成本 ×(1 + 0.6×ADR20)，出处 reference/take_profit_backtest_20260820.md。
+#    影子台账 scripts/tp_shadow.py 独立记账，不看 Vic 有没有照做。
+POS_HEADERS_V2 = ["TICKER", "现价", "ADR%", "距止损", "距止盈", "持有理由", "失效条件",
+                  "当日表现 / 判断"]
+POS_WIDTHS_V2 = ["7%", "8%", "6%", "8%", "8%", "11%", "12%", "40%"]
+TP_MULT = 0.6          # 止盈 = 成本 ×(1 + TP_MULT×ADR20)；改这里一处即可
+
+
+def positions_rows_v2(positions: list, cache: dict, judgments: dict,
+                      extra_price_lookup: dict = None):
+    """→ (rows, row_highlights)。
+
+    列：TICKER / 现价 / 距止损(ATR) / 持有理由 / 失效条件 / 当日表现·判断
+    **成本列删掉**——建仓信息不需要，而且它诱导人去看浮盈，那是已经发生的事。
+
+    🔴 **整行底色 2026-08-18 退役**（Vic：「颜色都删除，基本都上色了，还是不要了」）。
+       8/18 那份 16 笔里 **13 笔上了色**（黄 10 / 红 3），只剩 3 笔白的。
+       **颜色只有在稀有时才是信号**——铺满之后眼睛看到的是一片彩色，等于没标。
+       根因是我把「今天要动手」做成了一种颜色，而它在这套流程里本来就是常态：
+       p14 每天都会判出 peel / 移止损 / 退出，注定铺满。
+       **保留的是数字**：`ADR%` 和 `距止损 X ATR` 两列本来就承担了颜色想说的事，
+       而且可比、可排序、不会因为条数多就失效。
+       函数仍返回 (rows, hl)，但 hl 恒为空 list——**签名不动，免得调用点各自去改**。
+    """
+    M = cache.get("metrics") or {}
+    rows, hl = [], []
+    for p in positions:
+        tk = p["ticker"]
+        m = M.get(tk) or {}
+        px = m.get("close")
+        if px is None and extra_price_lookup:
+            px = extra_price_lookup.get(tk)
+        stop = p.get("stop")
+        datr = stop_distance_atr(tk, cache, stop) if stop else None
+        if not stop:
+            # 篮子仓无止损是配置选择，不是风险缺口（2026-08-18）
+            basket = is_basket(tk)
+            dist_s, bad = ("篮子仓 · 无止损" if basket else "**无止损**"), (not basket)
+        elif px and stop and stop >= px:
+            dist_s, bad = "🔴**止损在现价上方**", True
+        elif datr is None:
+            dist_s, bad = "—", False
+        else:
+            dist_s, bad = "%.1f ATR" % datr, datr < 1.0
+        key = "%s|%s" % (tk, p.get("account"))
+        jd = judgments.get(key) or judgments.get(tk) or ("", "")
+        adr = m.get("adr20_pct")
+        # 距止盈：成本 ×(1 + 0.6×ADR20) 还差几个百分点。**只报数不下指令**——
+        # 规则还在观察期（2026-08-20 起），Vic 明说了不一定跟。
+        cost_ = p.get("cost")
+        if cost_ and adr and px:
+            tp_px = cost_ * (1 + TP_MULT * adr / 100.0)
+            gap = (tp_px / px - 1) * 100
+            tp_s = ("🎯**已触发** %.2f" % tp_px) if gap <= 0 else ("+%.2f%% → %.2f" % (gap, tp_px))
+        else:
+            tp_s = "—"
+        rows.append([tk, ("%.2f" % px) if px is not None else "-",
+                     ("%.2f%%" % adr) if adr else "—", dist_s, tp_s,
+                     p.get("thesis", ""), jd[0], jd[1]])
+    # 底色 2026-08-18 退役，见上方 docstring。hl 恒空。
+    return rows, hl
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 指数面板（2026-08-19 Vic：「voo qqq dia iwm smh rsp qqqe 表格里面好几张，
+#            你先都集中到一个地方」+「指数闸门能用图示吗？一根横轴看位置」）
+# ══════════════════════════════════════════════════════════════════════════
+def index_panel_rows(cache: dict, notes: dict = None, order: list = None) -> list:
+    """七只指数的**唯一**数据源：一行装齐涨跌 / RS / 位置 / 闸门线。
+
+    🔴 **为什么要合并**：改之前同一组 ticker 在一份盘前里画三遍——
+       `gate_scoreboard_rows`（闸门线）、`sector_rs_tables` 的「指数基准」组（涨跌+RS）、
+       `atr_extension_table`（距 50MA 的 ATR 倍数）。三张表各排各的顺序、各自算一遍，
+       读者要跨三处拼才知道某只指数到底什么状态。合并后
+       **「七只指数」这件事在报告里只有一个位置**。
+
+    🎯 **x 轴口径**：`x = (价 - 20MA) / ATR14`，单位是 ATR。
+       之所以用它当横轴，是因为闸门线本来就定义成 20MA ± 1×ATR14
+       （2026-07-07 起改 ATR 口径，Vic 熟 ATR 不熟 SD）——
+       **换算成 ATR 之后，进攻线永远在 +1、谨慎线在 0、降级线在 -1**，
+       七只指数于是共用同一根轴、彼此可比。用绝对价格画就做不到这点
+       （VOO 705 和 QQQE 122 没法放在一根轴上看）。
+
+    闸门线只对 VOO/QQQ/IWM 有意义（框架定义），其余四只 `kind="ref"`：
+    位置照画（位置是位置），但不标进攻/降级标签，也不参与 cross_check 的攻守判定。
+    """
+    M = cache.get("metrics", {})
+    notes = notes or {}
+    out = []
+    for tk in (order or INDEX_ORDER):
+        m = M.get(tk) or {}
+        c_, ma20, ma50, atr = (m.get("close"), m.get("ma20"), m.get("ma50"), m.get("atr14"))
+        if not c_:
+            continue
+        is_gate = tk in ("VOO", "QQQ", "IWM")
+        x_close = (c_ - ma20) / atr if (ma20 and atr) else None
+        x_ma50 = (ma50 - ma20) / atr if (ma20 and ma50 and atr) else None
+        if is_gate and x_close is not None:
+            state, kind = (("进攻区", "attack") if x_close >= 1 else
+                           ("谨慎区", "caution") if x_close >= -1 else ("降级区", "broken"))
+        else:
+            state, kind = "参考", "ref"
+        out.append({
+            "ticker": tk, "kind": "gate" if is_gate else "ref",
+            "close": c_, "t1_pct": m.get("t1_pct"), "d5_pct": m.get("d5_pct"),
+            "d21_pct": m.get("d21_pct"), "rs_1w": rs_week(cache, tk),
+            "ma20": ma20, "ma50": ma50, "atr14": atr,
+            "attack": (ma20 + atr) if (is_gate and ma20 and atr) else None,
+            "caution": ma20 if is_gate else None,
+            "defend": (ma20 - atr) if (is_gate and ma20 and atr) else None,
+            "x_close": x_close, "x_ma50": x_ma50,
+            "dist_ma50_atr": m.get("dist_ma50_atr"),
+            "state": state, "state_kind": kind, "note": notes.get(tk, ""),
+        })
+    return out
+
+
+def index_panel_to_gate_rows(rows: list) -> list:
+    """index_panel_rows → 旧 gate_scoreboard_rows 形状。
+
+    只为 `cross_check_alignment` 复用——它吃的是旧结构，
+    没必要为了换个画法把攻守判定也一起改掉（那是两件事）。
+    """
+    out = []
+    for r in rows:
+        atk, dfd, c_ = r.get("attack"), r.get("defend"), r["close"]
+        out.append({
+            "ticker": r["ticker"], "kind": r["kind"], "close": "%.2f" % c_,
+            "attack": "%.2f" % atk if atk else "—",
+            "dist_attack": "%+.2f%%" % ((c_ / atk - 1) * 100) if atk else "—",
+            "defend": "%.2f" % dfd if dfd else "—",
+            "dist_defend": "%+.2f%%" % ((c_ / dfd - 1) * 100) if dfd else "—",
+            "state": r["state"], "state_kind": r["state_kind"], "note": r["note"],
+        })
+    return out
+
+
+# ══════════════════════════════════════════════════════════════════════════
+# 事件时间：ET 必须同时给 SGT（2026-08-20 Vic 定）
+# ══════════════════════════════════════════════════════════════════════════
+def et_sgt(date_str: str, hhmm: str = None) -> str:
+    """把「美东日期 + 时刻」渲染成 `08-19 14:00 ET · 08-20 02:00 SGT`。
+
+    🔴 **为什么必须双时区**（2026-08-20 Vic）：
+       原话「昨天其实你应该告诉我 fomc 是几点，我可以熬夜看下 minutes 就能再买 purr 了」。
+       8/19 那份报告写的是「FOMC 会议纪要 今天 14:00 ET」——**只有 ET**。
+       他人在 SGT，14:00 ET 是**他这边 8/20 凌晨 02:00**；
+       只写 ET 等于把「今晚要不要熬夜」这个决定藏在一次时区换算后面。
+       当晚 PURR 收 +29.34%、收在区间 98%——**这条信息的代价是可量化的。**
+
+    ⚠️ CONTEXT 2026-07-11「日期用美东时间(ET)不用SGT」那条**没有被推翻**：
+       ET 仍是主口径（外部信源都按 ET 报），SGT 是**附加**的，不是替换。
+    夏令时：3 月第二个周日 ~ 11 月第一个周日 = EDT(UTC-4)，其余 EST(UTC-5)。
+    """
+    from datetime import datetime, timedelta
+    if not hhmm:
+        return "%s ET" % date_str
+    try:
+        d = datetime.strptime("%s %s" % (date_str[-5:] if len(date_str) == 5 else date_str,
+                                         hhmm), "%Y-%m-%d %H:%M")
+    except ValueError:
+        return "%s %s ET" % (date_str, hhmm)
+    y = d.year
+    mar = datetime(y, 3, 8)
+    dst_start = mar + timedelta(days=(6 - mar.weekday()) % 7)      # 3月第二个周日
+    nov = datetime(y, 11, 1)
+    dst_end = nov + timedelta(days=(6 - nov.weekday()) % 7)        # 11月第一个周日
+    off = 4 if dst_start <= d < dst_end else 5                      # ET = UTC-off
+    sgt = d + timedelta(hours=off + 8)
+    same = sgt.date() == d.date()
+    return "%s %s ET · %s%s SGT" % (
+        d.strftime("%m-%d"), hhmm,
+        "" if same else sgt.strftime("%m-%d "), sgt.strftime("%H:%M"))
+
+
+def track_prices(cache: dict) -> dict:
+    """把 setup_track 里还在跟踪、但**不在当日 cache universe** 的票现查一遍收盘价。
+
+    🔴 **这个函数就是为了堵 2026-07-16 那个洞**（Vic：「你怎么都没填现价」）。
+       `setup_a_track_rows` 当时加了 `extra_prices` 参数，**但盘后模板从来没传过**——
+       参数存在、调用方不接，等于洞没堵。8/20 Vic 再次问「为什么不填呢」，同一个洞。
+       所以这次把「怎么拿到价」也写成函数，模板只要调一次，不用每次自己想。
+
+    只查 status=="tracking" 且 cache 里没有的票；查的是**口径日的收盘**，
+    不是「此刻的价」——`cache["data_date"]` 之后的 bar 一律丢弃
+    （2026-08-09 那次 9 行填成次日价就是栽在这里）。
+    """
+    asof = cache.get("data_date")
+    have = cache.get("metrics") or {}
+    need = sorted({e["ticker"] for e in _load_setup_track()["entries"]
+                   if e.get("status") == "tracking" and e["ticker"] not in have})
+    if not need or not asof:
+        return {}
+    out = {}
+    try:
+        from longport.openapi import QuoteContext, Config, Period, AdjustType
+        ctx = QuoteContext(Config.from_apikey_env())
+        for tk in need:
+            try:
+                bars = ctx.candlesticks(tk + ".US", Period.Day, 6, AdjustType.NoAdjust)
+                keep = [b for b in bars if str(b.timestamp)[:10] <= asof]
+                if keep and str(keep[-1].timestamp)[:10] == asof:
+                    out[tk] = float(str(keep[-1].close))
+            except Exception:
+                continue
+    except Exception:
+        return {}
+    return out
+
+
+def track_day_pct(cache: dict, extra_prices: dict = None) -> dict:
+    """跟踪票的当日涨跌%，口径同 track_prices（只认口径日那根 bar）。"""
+    asof = cache.get("data_date")
+    have = cache.get("metrics") or {}
+    out = {}
+    for tk, m in have.items():
+        if m.get("t1_pct") is not None:
+            out[tk] = m["t1_pct"]
+    need = [tk for tk in (extra_prices or {}) if tk not in out]
+    if not need or not asof:
+        return out
+    try:
+        from longport.openapi import QuoteContext, Config, Period, AdjustType
+        ctx = QuoteContext(Config.from_apikey_env())
+        for tk in need:
+            try:
+                bars = [b for b in ctx.candlesticks(tk + ".US", Period.Day, 6,
+                                                    AdjustType.NoAdjust)
+                        if str(b.timestamp)[:10] <= asof]
+                if len(bars) >= 2 and str(bars[-1].timestamp)[:10] == asof:
+                    c, p = float(str(bars[-1].close)), float(str(bars[-2].close))
+                    out[tk] = round((c / p - 1) * 100, 2)
+            except Exception:
+                continue
+    except Exception:
+        pass
+    return out
+
+
+# 形态名（2026-08-20 起的五个）——从台账 setup 原文里认出来用的
+SETUP_FORMS = ("pullback", "tight", "spring", "shakeout+burst", "2 wick")
+
+
+def parse_setup_text(text: str):
+    """setup 原文 → (形态名, 5日区间%, 区间ATR)。
+
+    🔴 2026-08-20 Vic：「6.62%/1.22ATR 你有位置放分开一列吗？」——
+       原来这两个数字埋在一长串散文里，既扫不到也没法跨行比较。
+       **拆成独立两列之后才能排序**（谁最紧一眼可见）。
+       标签改成形态名之后 Setup 列变短，宽度正好腾得出来。
+
+    形态名兼容两种写法：新的（pullback / tight / …）和历史的（Setup A+B）。
+    """
+    t = (text or "")
+    forms = [f for f in SETUP_FORMS if f in t.lower()]
+    if True:                                        # 历史写法：Setup A / Setup B+A
+        # 🔴 两种写法要**合并**不是二选一：8/19 那批写的是
+        #    「**Setup B+A · tight 4.54%…**」——字面上有 "tight"，
+        #    如果因此跳过字母解析，就会漏掉 A（pullback）那一半。
+        legacy = {"A": "pullback", "B": "tight", "C": "spring",
+                  "D": "pullback", "E": "shakeout+burst", "W": "2 wick"}
+        seen = []
+        for seg in re.findall(r"Setup\s*([A-Z](?:\s*[+/&、·,]\s*[A-Z])*)", t):
+            for ch in re.findall(r"[A-Z]", seg):
+                if ch in legacy and legacy[ch] not in seen:
+                    seen.append(legacy[ch])
+        for f in seen:                           # 合并，保持出现顺序、不重复
+            if f not in forms:
+                forms.append(f)
+    rng_pct = rng_atr = None
+    m = re.search(r"区间\s*\**\s*([\d.]+)\s*%\s*/\s*([\d.]+)\s*ATR", t.replace("*", ""))
+    if not m:
+        m = re.search(r"([\d.]+)\s*%\s*/\s*([\d.]+)\s*ATR", t.replace("*", ""))
+    if m:
+        try:
+            rng_pct, rng_atr = float(m.group(1)), float(m.group(2))
+        except ValueError:
+            pass
+    return (" · ".join(forms) if forms else "-"), rng_pct, rng_atr
+
+
+def parse_price_from_text(text, near=None, band=0.30):
+    """从散文里抠一个价（入场位 / 失效位都用它）。
+
+    🔴 **必须只有这一个解析器**：2026-08-20 `settle_track.py` 自己又写了一个 `_num`，
+       用「最后一个小数」，结果 IOT 的失效位从 38.10 抠成 2.91
+       （句尾是「…max(0.5ATR,1%)=2.91%」）。**两个解析器必然漂移。**
+
+    三道过滤，每一道都是被真实写法逼出来的：
+      ① 必须带小数点        —— 排除「9EMA」里的 9
+      ② 后面不能紧跟 %      —— 排除「（约 -4.3%）」「=2.91%」这类
+      ③ near 给了就挑离它最近的，且要在 ±band 内 —— 自校验：
+         价格必然在现价附近；差太远说明**这段文字里根本没有绝对价格**
+         （AMAT 写的是「0.5ADR = 当日低点 +14.4 点」），这时返回 None 而不是垃圾数。
+    near 为 None 时退回「最后一个候选」。
+    """
+    if text in (None, "", "-", "—"):
+        return None
+    try:
+        return float(text)
+    except (TypeError, ValueError):
+        pass
+    t = str(text).replace("*", "")
+    # 🔴 开头就是价的写法最强：「577.50（信号日低 584.86 下方 0.5ATR）」——
+    #    括号里那个是**解释用的参照**，不是位。开头带小数的数字直接采信。
+    #    （「9EMA 588.92 上方」不会误命中：9 后面是字母，不匹配 \d\.\d+）
+    _lead = re.match(r"\s*([\d,]*\d\.\d+)", t)
+    if _lead:
+        try:
+            return float(_lead.group(1).replace(",", ""))
+        except ValueError:
+            pass
+    # 🔴 关键词锚定：「跌破 38.10（8/13 低点 39.34 …）」两个数都贴着现价，
+    #    靠「离现价最近」会挑成 39.34。**但「跌破」这个词已经指明了是哪个数**。
+    #    先按锚点取，取不到再退回下面的就近匹配。
+    for kw in ("收盘跌破", "跌破", "失效位", "失效", "止损", "上方企稳", "上方"):
+        m = re.search(re.escape(kw) + r"\s*([\d,]*\d\.\d+)", t)
+        if m:
+            try:
+                return float(m.group(1).replace(",", ""))
+            except ValueError:
+                pass
+    cands = []
+    for m in re.finditer(r"\d[\d,]*\.\d+", t):
+        if t[m.end():m.end() + 1] == "%":
+            continue
+        try:
+            cands.append(float(m.group(0).replace(",", "")))
+        except ValueError:
+            pass
+    if not cands:
+        return None
+    if near is None:
+        return cands[-1]
+    best = min(cands, key=lambda v: abs(v - float(near)))
+    return best if abs(best - float(near)) / float(near) <= band else None

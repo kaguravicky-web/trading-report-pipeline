@@ -24,6 +24,11 @@ import sys, statistics, argparse
 sys.stdout.reconfigure(encoding="utf-8")
 from longport.openapi import QuoteContext, Config, Period, AdjustType
 
+# 🔴 K线复权口径统一走 fetch_market_data.BARS_ADJUST（2026-08-19 定）——
+#    这里原本写死 NoAdjust，窗口跨过拆股就整段作废（CRWD 距50MA 报 -42% 真值 +11%）。
+import report_helpers as _H  # noqa: E402
+_ADJUST = _H.bars_adjust()
+
 LOOKBACK = 14
 FWD = (5, 10, 20)
 PANEL = ["QQQ", "VOO", "IWM", "DIA", "RSP", "QQQE"]
@@ -37,7 +42,7 @@ _cache = {}
 def bars_of(tk, n=BARS):
     if tk in _cache:
         return _cache[tk]
-    bs = ctx.candlesticks(f"{tk}.US", Period.Day, n, AdjustType.NoAdjust)
+    bs = ctx.candlesticks(f"{tk}.US", Period.Day, n, _ADJUST)
     r = [{"d": str(b.timestamp)[:10], "h": float(b.high), "l": float(b.low),
           "c": float(b.close), "v": float(b.volume)} for b in bs]
     _cache[tk] = r

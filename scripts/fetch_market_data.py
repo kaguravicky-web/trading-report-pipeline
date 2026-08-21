@@ -17,6 +17,11 @@
     python scripts/fetch_market_data.py --quick    # 只跑指数+ML+篮子（跳过58只板块全量）
 
 凭证走环境变量 LONGPORT_APP_KEY/SECRET/ACCESS_TOKEN（见CONTEXT.md「历史K线正式方案」）。
+
+🔴 **K线口径 = 前复权（ForwardAdjust），2026-08-19 从 NoAdjust 改过来**。
+   见下方 BARS_ADJUST 的注释和 CONTEXT.md「K线必须前复权」一节。
+   输出 JSON 里带 `adjust_type` 字段；**没有这个字段的历史 cache 一律是 NoAdjust 口径**，
+   跨 cache 比较拆过股的标的时要当心。
 """
 import glob
 import json
@@ -56,8 +61,14 @@ GROUP3 = ["NASA", "ITA", "AIRR", "XOP", "OIH", "TAN", "LIT", "COPX", "REMX", "SL
 # ML Market Leader 名单。2026-08-05 Vic 加 ANET；2026-08-10 Vic 加 NET 和 PLTR
 # ——三只正好卡在两条主线的三个层：ANET=AI网络层硬件 / NET=网安+AI骨干 / PLTR=AI应用软件。
 # 🔴 这份名单的用途是**判断主线还在不在**，不是候选池；要买走 A/B/C 的止损距离门槛。
-ML_LEADERS = ["ANET", "NET", "PLTR",
-              "MRVL", "NBIS", "SNDK", "NOK", "MU", "CRDO", "STM", "BB", "GLW",
+# 2026-08-17 Vic：「market leader加crwd panw nbis」——CRWD/PANW 新增，NBIS 本来就在。
+# 2026-08-20 Vic 发自选股截图「ml 更新」：TEAM / GTLB / AMZN 三只新增。
+#   截图上的 9 只是 TEAM SNDK PLTR NET NBIS GTLB DELL ANET AMZN，
+#   **列表是可滚动的、截断在 AMZN**，所以按「加」处理不按「换」——
+#   要真砍掉 CRWD/PANW 那批，等 Vic 明说（8/17 才刚加的 CRWD/PANW，不能自己判死）。
+ML_LEADERS = ["ANET", "NET", "PLTR", "CRWD", "PANW", "NBIS",
+              "TEAM", "GTLB", "AMZN",
+              "MRVL", "SNDK", "NOK", "MU", "CRDO", "STM", "BB", "GLW",
               "INTC", "DELL", "PWR", "FIX", "ASX"]
 DEFENSIVE = ["PM", "KO", "PG", "TLT", "XLU", "XLP"]
 LAODENG = ["BRK.B", "SCHD", "WMT", "WM", "MCD", "KO", "COR"]  # BRK.B单独试，MCP工具查不了但SDK可能行
@@ -71,8 +82,46 @@ LAODENG = ["BRK.B", "SCHD", "WMT", "WM", "MCD", "KO", "COR"]  # BRK.B单独试�
 OPTICAL_CHAIN = ["AVGO", "ANET", "CRDO", "GLW", "MTSI", "FN", "LITE", "MRVL",
                  "CIEN", "COHR", "AAOI", "POET"]
 
-SECTOR_SCAN = list(dict.fromkeys(XL_SECTORS + GROUP2 + GROUP3 + OPTICAL_CHAIN))  # 单边扫描范围
+SECTOR_SCAN = list(dict.fromkeys(XL_SECTORS + GROUP2 + GROUP3 + OPTICAL_CHAIN))  # 要拉行情的范围
+# 🔴 单边**板块**榜的票池 = 只有 ETF，不含 OPTICAL_CHAIN 那 12 只个股
+#    （2026-08-14 Vic：「里面 mrvl 不是板块吧」——他是对的）。
+#    OPTICAL_CHAIN 仍留在 SECTOR_SCAN：它需要被拉进 metrics 供持仓/候选查价，
+#    只是**不参与板块排名**。个股的单边得分和 ETF 本来就不可比（个股波动天然更大、
+#    更容易凑满 4/4），混在一起等于让个股挤掉真正的板块。两个用途分开，别再合成一个清单。
+UNILATERAL_SCAN_UNIVERSE = list(dict.fromkeys(XL_SECTORS + GROUP2 + GROUP3))
 BARS_NEEDED = 260  # 2026-07-15从220加到260：52周高点需要252根（200MA只要200根）
+
+# ---------------- K线复权口径（2026-08-19定，起因是CRWD/XL*那批脏数据） ----------------
+# 🔴 **一直用的是 NoAdjust（不复权），窗口里只要有拆股，整段派生指标就全是废的。**
+#    2026-08-18 那份 cache 实测被污染 6 只：CRWD（2026-07-02 四拆一）+
+#    XLY/XLU/XLB/XLK/XLE（2025-12-05 二拆一，SPDR 那批）。
+#    CRWD 最严重——ma50 报 367.53 实际 191.22、距50MA 报 -42.07% 实际 **+11.35%**、
+#    Weinstein 报 Stage 4 实际 Stage 2。**判断整个反过来了**，而它当天在 ML Leader 名单上。
+#
+# 为什么选 ForwardAdjust（前复权）而不是自己检测拆股再回算：
+#   · 实测 ForwardAdjust 的结果跟独立源（Yahoo 复权收盘）对得上——CRWD 无分红，
+#     ma50/ma200 分文不差（191.22 / 137.91）；
+#   · **没拆股的标的两种口径逐根完全相同**（PLTR 260 根 bar、ma50、ma200、52周高全等），
+#     所以这次切换只动"真拆过股的那几只的历史段"，不是全盘换基准；
+#   · 自己检测再回算 = 重新实现一遍公司行为处理（比例推断、反向拆股、
+#     一个窗口里多次拆股、以及"把真崩盘当拆股修掉"的风险）——券商已经发了复权序列，
+#     没有理由重造这个轮子。
+# **代价（实测，要知道）**：LongPort 的前复权**连分红一起复权**。
+#   高股息标的的深历史会被往下修：XLU 200MA 前复权 44.33 vs 纯价格口径 44.76（差 ~1%），
+#   XLK 157.63 vs 157.90。50MA 上这个影响基本看不见（最多一个季度的分红，通常是 0），
+#   200MA 上高息 ETF（XLU/XLP/TLT）会差 ~1%——**距200MA 这一列对这几只不要抠到小数点**。
+#   不复权的老口径在拆股面前是**整段作废**，1% 的分红偏差换它，明显划算。
+#
+# 想临时对照老口径：`python scripts/fetch_market_data.py --no-adjust`（会写进输出的 adjust_type）。
+BARS_ADJUST = "forward"     # "forward" = 前复权（默认）｜ "none" = 不复权（仅对照用）
+
+
+def _adjust_type(mode: str = None):
+    """把 BARS_ADJUST 翻译成 SDK 枚举。**故障时不许静默退回不复权**——
+    退回去正是这次 bug 的形态（数据看着正常、其实整段是废的）。"""
+    from longport.openapi import AdjustType
+    return AdjustType.NoAdjust if (mode or BARS_ADJUST) == "none" else AdjustType.ForwardAdjust
+
 
 def position_tickers():
     """持仓票永远要在监控范围内，哪怕不在任何预设清单里。
@@ -103,6 +152,20 @@ def stdev(vals, n):
     window = vals[-n:]
     m = sum(window) / n
     return math.sqrt(sum((x - m) ** 2 for x in window) / n)
+
+
+def adr20(bars, n=20):
+    """ADR% = 近 n 日 (High/Low - 1) 的均值。
+
+    🔴 2026-08-13 加：Vic 老师那份《Trend Continuation 交易教學》（Qullamaggie 风格）
+    把止损上限定为 **min(1×ATR, 1×ADR)**，理想 0.5 ATR——**ADR 常常比 ATR 更紧**
+    （ANET 实测 ADR20 5.31% = 10.81 点 vs ATR14 11.73 点），
+    只看 ATR 会放过一部分「其实已经入场太迟」的交易。
+    """
+    seg = [b for b in bars[-n:] if b.get("l")]
+    if not seg:
+        return None
+    return sum((b["h"] / b["l"] - 1) * 100 for b in seg) / len(seg)
 
 
 def atr14(bars):
@@ -157,6 +220,79 @@ def pct(a, b):
     return (a - b) / b * 100
 
 
+# ---------------- 拆股检测（2026-08-19新增，独立于复权口径的兜底） ----------------
+# 🔴 这个检测**在换成前复权之后仍然要跑**，而且正是因为换了才更要跑：
+#    它现在的身份是「复权到底有没有生效」的绊线。券商没复权、复权漏了一次、
+#    或者哪天有人把 BARS_ADJUST 改回 "none"——这三种情况数据看上去都完全正常，
+#    只有这条会响。实测：改成前复权后 CRWD 全窗口最大跳空从 -74.9% 降到 12.8%，
+#    XLU 从 -50.5% 降到 -4.1%，都进不了 35% 的门——**它安静下来才说明复权是通的**。
+SPLIT_GAP_PCT = 35.0        # 日间收盘跳空多大才值得排查
+SPLIT_VOL_TOLERANCE = 2.5   # 按隐含比例还原后的量 ≤ 这个倍数的基线 = 「什么都没发生」= 拆股
+SPLIT_VOL_BASELINE = 20     # 还原量跟跳空**之前**这么多根的均量比
+# 常见拆股比例，只用来给人读，不作判据（反向拆股/奇怪比例也要能抓）
+_COMMON_RATIOS = [(4, 1), (3, 1), (2, 1), (3, 2), (5, 1), (10, 1), (20, 1),
+                  (1, 2), (1, 3), (1, 4), (1, 5), (1, 10), (1, 20)]
+
+
+def _ratio_label(factor):
+    """factor = 昨收/今收。4.0 → "4:1"（四拆一）；0.1 → "1:10"（十合一）。"""
+    best, err = None, None
+    for a, b in _COMMON_RATIOS:
+        e = abs(factor - a / b) / (a / b)
+        if err is None or e < err:
+            best, err = (a, b), e
+    return ("%d:%d" % best) if err is not None and err <= 0.08 else "%.2f:1" % factor
+
+
+def detect_split(bars):
+    """扫日间收盘跳空，挑出「价格断了层、但成交量说什么都没发生」的那一根。
+
+    判据两条，都要满足：
+      ① |今收/昨收 - 1| ≥ SPLIT_GAP_PCT（35%）
+      ② 把当日成交量按**隐含拆股比例还原**后，仍然是平常的量
+         （还原量 ≤ SPLIT_VOL_TOLERANCE × 跳空前20日均量）
+
+    ②才是真正分开「拆股」和「真实暴跌」的那一刀，光看跌幅一定会误伤：
+    同一份 cache 里 CRCL -55% / SLV -47.7% / IBIT -49% / RKLB -47.6% 都是**真实回撤**，
+    按跌幅筛会把它们全部误报。
+    拆股时股数变 N 倍、成交额连续，还原后的量回到日常水平（实测 CRWD 四拆一那天
+    量 268万→1043万，除以 3.98 = 262万，跟前一日 268万 基本一样）；
+    真崩盘则是量能爆炸，还原后依旧远高于基线。
+
+    返回 list（可能一个窗口里拆过不止一次），每条带 bars_ago 和 affected_windows——
+    **拆股点离今天多远，决定了哪些窗口废了**：实测 CRWD（34根前）50/150/200/252 全废、
+    XLU（176根前）只有 200/252 废而 50MA/RSI/Stage 都是对的。
+    """
+    out = []
+    for i in range(1, len(bars)):
+        prev, cur = bars[i - 1], bars[i]
+        if not prev.get("c") or not cur.get("c"):
+            continue
+        gap_pct = (cur["c"] / prev["c"] - 1) * 100
+        if abs(gap_pct) < SPLIT_GAP_PCT:
+            continue
+        factor = prev["c"] / cur["c"]          # 4:1 拆股 → 4.0；1:10 合股 → 0.1
+        base_bars = [b for b in bars[max(0, i - SPLIT_VOL_BASELINE):i] if b.get("v")]
+        baseline = (sum(b["v"] for b in base_bars) / len(base_bars)) if base_bars else None
+        restored = (cur["v"] / factor) if (cur.get("v") and factor) else None
+        restored_x = (restored / baseline) if (restored and baseline) else None
+        # 量还原后仍然平常 = 价格是被"改写"的，不是被"交易"出来的
+        if restored_x is None or restored_x > SPLIT_VOL_TOLERANCE:
+            continue
+        bars_ago = len(bars) - i
+        out.append({
+            "date": cur["date"], "prev_date": prev["date"],
+            "gap_pct": round(gap_pct, 2),
+            "implied_ratio": _ratio_label(factor),
+            "vol_restored_x": round(restored_x, 2),
+            "bars_ago": bars_ago,
+            # 长度 N 的窗口取 bars[-N:]，跨过跳空（即 N ≥ bars_ago+1）就废了
+            "affected_windows": [n for n in (20, 50, 150, 200, 252)
+                                 if n >= bars_ago + 1 and n <= len(bars)],
+        })
+    return out
+
+
 def weinstein_stage(close, ma150, slope_pct):
     """Weinstein四阶段（2026-07-27新增）。用30周均线(≈150交易日)与其10日斜率判定：
       Stage 2 上升 = 价在均线上 且 均线上行(斜率>+0.5%)
@@ -176,6 +312,7 @@ def weinstein_stage(close, ma150, slope_pct):
 
 def analyze(bars):
     """bars: [{date, o, h, l, c}]，按时间升序。返回单标的全部指标。"""
+    splits = detect_split(bars)
     closes = [b["c"] for b in bars]
     last = bars[-1]
     prev_c = closes[-2] if len(closes) >= 2 else None
@@ -336,6 +473,8 @@ def analyze(bars):
         "weinstein_stage": weinstein_stage(last["c"], ma150, ma150_slope),
         "atr14": round(atr, 3) if atr else None,
         "atr14_pct": round(atr / last["c"] * 100, 2) if atr else None,
+        # 2026-08-13 加，供教材 p11 的止损上限 min(1×ATR, 1×ADR) 与 p16 七问用
+        "adr20_pct": round(adr20(bars), 2) if adr20(bars) else None,
         "dist_ma20_atr": round((last["c"] - ma20) / atr, 2) if (ma20 and atr) else None,
         "dist_ma50_atr": round((last["c"] - ma50) / atr, 2) if (ma50 and atr) else None,
         "ema9": round(ema9, 2) if ema9 else None,
@@ -360,6 +499,10 @@ def analyze(bars):
         "lower_lows_10": lower_lows,
         "above_ma20_10": above20,
         "bars": len(bars),
+        # 🔴 拆股绊线（2026-08-19加）。True = 这一只的滚动窗口指标**不可发表**，
+        #    报告侧 report_helpers 会拒绝渲染距52周高/距50MA（见 SPLIT_BLOCKED）。
+        "split_suspect": bool(splits),
+        "split_detail": splits or None,
     }
 
 
@@ -513,39 +656,16 @@ def fetch_stockbee(days: int = 40):
 
 
 def fetch_maket_breath(days: int = 10):
-    """"Maket breath"tab → 结构化历史序列（newest first）：SPX/NDX/IWM的>20MA(TW)/>50MA(FI)。
-    2026-07-27新增。用途=市宽表的「前一日」对照列。"""
-    import csv
-    import io
-    import urllib.request
+    """🔴 已退役 2026-08-14（Vic：「以后只用 stockbee，其他删除」）。
 
-    def num(s):
-        try:
-            return float(str(s).replace(",", "").strip())
-        except (ValueError, AttributeError):
-            return None
+    Vic 自建 Sheet 的「Maket breath」tab（表名拼写有误是原样，不是笔误），
+    存 SPX/NDX/IWM 的 >20MA(TW)/>50MA(FI)，需要每日 EOD 手工更新。
+    **最后一条停在 2026-08-11**——靠人更新的源，漏更新时报告无法自知，
+    只会把三天前的数字当今天的渲染出去。这正是它被删掉的原因。
 
-    try:
-        raw = urllib.request.urlopen(MAKET_BREATH_SHEET, timeout=30).read().decode("utf-8")
-        rows = list(csv.reader(io.StringIO(raw)))
-        out = []
-        for r in rows[1:]:  # 跳过表头
-            if not r or not r[0].strip():
-                continue
-            try:
-                out.append({
-                    "date": r[0].strip(),
-                    "s5tw": num(r[1]), "s5fi": num(r[2]),
-                    "ndtw": num(r[3]), "ndfi": num(r[4]),
-                    "r2tw": num(r[5]), "r2fi": num(r[6]),
-                })
-            except IndexError:
-                continue
-            if len(out) >= days:
-                break
-        return {"rows": out}
-    except Exception as e:
-        return {"error": str(e)}
+    原供市宽 15 项 checklist 的 ①-⑥；那六项已随本次一起退役，checklist 变 9 项。
+    """
+    return {"retired": "2026-08-14", "reason": "依赖手工 EOD 更新，停在 2026-08-11；市宽改为单一源 Stockbee"}
 
 
 def family_correlations(bars_by_ticker: dict, window: int = 60):
@@ -659,82 +779,15 @@ def fetch_combined_breadth(days: int = 25):
 
 
 def fetch_sp500_breadth():
-    """Vic的Google Sheet新增tab「S&P 500 LIVE MARKET BREADTH」（2026-07-21接入，Vic:"增加了更多
-    market breath数据，很有价值"）→ 全量500只的市宽仪表盘，数据源同为Longbridge OpenAPI。
+    """🔴 已退役 2026-08-14（Vic：「以后只用 stockbee，其他删除」）。
 
-    返回 {"live": {...}, "stages": [...], "history": [...]}，失败返回{"error": ...}。
-    按标记文字定位各段（不写死行号，Vic改表时不会一改就崩）：
-      live    5项指标(New Highs/Advance/Up from Open/Up on Volume/Up 4%) + MARKET SCORE/REGIME/RISK MODE
-      stages  Weinstein四阶段分类计数（Stage 2=上升趋势 / Stage 4=下降趋势）
-      history 近1个月逐日（newest first），含Daily Score与Stage2%/Stage4%趋势
+    老师 Google Sheet 的「S&P 500 LIVE MARKET BREADTH」tab，2026-07-21 接入。
+    **自 2026-07-29 起持续 HTTP 400，再没恢复过**——挂了十几个交易日，
+    期间每天都要在报告里写一句「这个源今天还是 400」，纯噪音。
+
+    留空壳不删函数：区分「主动退役」和「漂移丢失」是本仓库的一贯做法。
     """
-    import csv
-    import io
-    import urllib.request
-
-    def num(s):
-        s = str(s).strip().replace(",", "").replace("%", "")
-        if not s:
-            return None
-        try:
-            return float(s) if "." in s else int(s)
-        except ValueError:
-            return None
-
-    try:
-        raw = urllib.request.urlopen(SP500_BREADTH_SHEET, timeout=30).read().decode("utf-8")
-        rows = list(csv.reader(io.StringIO(raw)))
-
-        def cell(r, i):
-            return r[i].strip() if len(r) > i else ""
-
-        live = {"metrics": [], "status": "", "updated": "", "session": ""}
-        stages, history = [], []
-        hist_hdr = None
-
-        for r in rows:
-            c0 = cell(r, 0)
-            if c0 in ("New Highs vs New Lows", "Advance vs Decline", "Up from Open vs Down",
-                      "Up on Volume vs Down on Volume", "Up 4% vs Down 4%"):
-                live["metrics"].append({
-                    "metric": c0, "positive": num(cell(r, 1)), "negative": num(cell(r, 2)),
-                    "positive_pct": cell(r, 3), "net": num(cell(r, 4)), "signal": cell(r, 5)})
-                # 右侧COVERAGE键值对(Session/Universe/Received/Stale/Status)散落在6/7列
-                k, v = cell(r, 6), cell(r, 7)
-                if k == "Session":
-                    live["session"] = v
-                elif k == "Status":
-                    live["status"] = v
-            elif c0 == "MARKET SCORE":
-                live["score"] = cell(r, 2)
-                live["regime"] = cell(r, 6)
-                live["risk_mode"] = cell(r, 10)
-            elif c0.startswith("Stage ") and num(cell(r, 2)) is not None:
-                stages.append({"stage": c0, "count": num(cell(r, 2)), "share": cell(r, 4)})
-                if cell(r, 6) == "Updated (ET)":
-                    live["updated"] = cell(r, 9)
-            elif c0 == "Classified Total":
-                live["classified"] = num(cell(r, 2))
-                if cell(r, 6) == "Updated (ET)":
-                    live["updated"] = cell(r, 9)
-            elif cell(r, 6) == "Updated (ET)" and cell(r, 9):
-                live["updated"] = cell(r, 9)
-            elif c0 == "Date" and cell(r, 1) == "New Highs":
-                hist_hdr = True
-            elif hist_hdr and re.match(r"\d{4}-\d{2}-\d{2}$", c0):
-                history.append({
-                    "date": c0, "new_highs": num(cell(r, 1)), "new_lows": num(cell(r, 2)),
-                    "advance": num(cell(r, 3)), "decline": num(cell(r, 4)),
-                    "advance_pct": cell(r, 5), "up_open": num(cell(r, 6)),
-                    "down_open": num(cell(r, 7)), "up_volume": num(cell(r, 8)),
-                    "down_volume": num(cell(r, 9)), "stage2_pct": cell(r, 10),
-                    "stage4_pct": cell(r, 11), "score": num(cell(r, 12))})
-
-        if not live["metrics"] and not history:
-            return {"error": "parsed 0 rows — sheet layout may have changed"}
-        return {"live": live, "stages": stages, "history": history}
-    except Exception as e:
-        return {"error": str(e)}
+    return {"retired": "2026-08-14", "reason": "自 2026-07-29 起 HTTP 400；市宽改为单一源 Stockbee"}
 
 
 def fetch_adanos(metrics_by_ticker):
@@ -846,11 +899,13 @@ def update_signal_history(metrics_by_ticker):
 
 
 # ---------------- SDK ----------------
-def fetch_bars(ctx, ticker, count):
-    from longport.openapi import Period, AdjustType
+def fetch_bars(ctx, ticker, count, adjust: str = None):
+    """🔴 复权口径见模块顶部 BARS_ADJUST——**不要在这里写死 NoAdjust**，
+    那正是 2026-08-19 之前的样子（CRWD 距50MA 报 -42% 实际 +11%）。"""
+    from longport.openapi import Period
     sym = f"{ticker}.US"
     try:
-        raw = ctx.candlesticks(sym, Period.Day, count, AdjustType.NoAdjust)
+        raw = ctx.candlesticks(sym, Period.Day, count, _adjust_type(adjust))
         time.sleep(0.12)  # 控制调用频率
         return [{"date": str(b.timestamp)[:10], "o": float(str(b.open)), "h": float(str(b.high)),
                  "l": float(str(b.low)), "c": float(str(b.close)), "v": float(str(b.volume))} for b in raw]
@@ -861,8 +916,13 @@ def fetch_bars(ctx, ticker, count):
 
 def main():
     quick = "--quick" in sys.argv
+    global BARS_ADJUST
+    if "--no-adjust" in sys.argv:      # 只用来跟老口径对照，不要拿它产出报告
+        BARS_ADJUST = "none"
     from longport.openapi import QuoteContext, Config
     ctx = QuoteContext(Config.from_apikey_env())
+    print(f"K线复权口径：{BARS_ADJUST}"
+          + ("  ← 🔴不复权，拆股过的标的指标不可用，仅供对照" if BARS_ADJUST == "none" else "（前复权）"))
 
     tickers = universe(quick)
     print(f"fetching {len(tickers)} tickers (quick={quick}) ...")
@@ -873,9 +933,9 @@ def main():
             metrics[t] = analyze(bars)
             bars_by[t] = bars
 
-    # 单边板块排行榜
+    # 单边**板块**排行榜——顾名思义只放 ETF，票池见 UNILATERAL_SCAN_UNIVERSE
     scan = []
-    for t in SECTOR_SCAN:
+    for t in UNILATERAL_SCAN_UNIVERSE:
         m = metrics.get(t)
         if not m:
             continue
@@ -907,6 +967,10 @@ def main():
         "generated_at": datetime.now().isoformat(timespec="seconds"),
         "data_date": metrics.get("SPY", {}).get("date"),
         "quick": quick,
+        # 🔴 2026-08-19起记口径。**没有这个字段的历史 cache 一律是 "none"（不复权）**，
+        #    那些 cache 里拆过股的标的（CRWD/XLY/XLU/XLB/XLK/XLE …）派生指标是废的，
+        #    别拿它们跟新 cache 做同比。
+        "adjust_type": BARS_ADJUST,
         "metrics": metrics,
         "unilateral_scan": scan,
         "gate_reference": gates,
@@ -924,7 +988,21 @@ def main():
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     out_path = CACHE_DIR / f"market_{date.today().strftime('%Y%m%d')}.json"
     out_path.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"wrote {out_path}  (tickers={len(metrics)}, data_date={out['data_date']})")
+    print(f"wrote {out_path}  (tickers={len(metrics)}, data_date={out['data_date']}, adjust={BARS_ADJUST})")
+
+    # 🔴 拆股绊线必须**大声**——静默写进 JSON 等于没查（这次 bug 的教训就是
+    #    "数字看着正常所以没人看第二眼"）。前复权正常工作时这里应该一只都不打印。
+    suspect = {t: m for t, m in metrics.items() if m.get("split_suspect")}
+    if suspect:
+        print("")
+        print(f"🔴 疑似拆股未复权 {len(suspect)} 只——这些标的的滚动窗口指标不可发表：")
+        for t, m in sorted(suspect.items()):
+            for d in (m.get("split_detail") or []):
+                print(f"    {t:6} {d['prev_date']}→{d['date']}  跳空 {d['gap_pct']:+.1f}%"
+                      f"  隐含 {d['implied_ratio']}  还原量 {d['vol_restored_x']}×基线"
+                      f"  {d['bars_ago']}根前  废掉的窗口 {d['affected_windows']}")
+        if BARS_ADJUST != "none":
+            print("    ⚠️ 已经是前复权还被抓到 = 券商那边没复权或漏了一次，别直接发报告。")
     print("top unilateral candidates:")
     for s in scan[:8]:
         ext = s["extension"]

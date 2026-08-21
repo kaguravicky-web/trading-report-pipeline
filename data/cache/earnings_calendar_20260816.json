@@ -1,0 +1,25 @@
+{
+ "universe_size": 885,
+ "calendar": {
+  "2026-08-14": [
+   {
+    "symbol": "LWLG",
+    "name": "Lightwave Logic, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   },
+   {
+    "symbol": "HIVE",
+    "name": "HIVE Digital Technologies Ltd",
+    "time": "after-hours",
+    "eps_forecast": "($0.20)"
+   },
+   {
+    "symbol": "DGXX",
+    "name": "Digi Power X Inc.",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   }
+  ]
+ }
+}

@@ -1,0 +1,1265 @@
+{
+ "date": "2026-08-20",
+ "runs": [
+  {
+   "run_id": 1,
+   "run_at": "2026-08-20T13:45+08:00",
+   "window": "8/19 20:00 – 8/20 05:41 UTC（8/20 04:00–13:41 SGT，美股收盘到现在）",
+   "accounts_checked": [
+    "RichardMoglen",
+    "spluscollective",
+    "KobeissiLetter"
+   ],
+   "accounts_no_new": [],
+   "items": [
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T22:00:00.000Z",
+     "kind": "macro",
+     "ticker": "MRNA",
+     "flag": "hot",
+     "summary": "Moderna 盘后涨幅扩大到 +212%——首个用于预防癌症的 mRNA 疗法三期结果转阳。当日市值增加超 500 亿美元。",
+     "url": "https://x.com/KobeissiLetter/status/2090197114387382477",
+     "media": [
+      "https://pbs.twimg.com/media/HQHYtiaXUAAAO1w.jpg"
+     ],
+     "full_text": "BREAKING: Moderna stock, $MRNA, extends gains to +212% on the day in after hours trading following positive phase 3 results of first the mRNA treatment to prevent cancer.\n\nThe stock has now added over +$50 billion in market cap today. https://t.co/eKEU0ZjYqm"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T23:03:00.000Z",
+     "kind": "macro",
+     "flag": "hot",
+     "summary": "美国财政部当天宣布长债回购后，黄金+白银合计市值增加 1.3 万亿美元。原文观点：联储已按不住收益率、政府又负担不起更高收益率，最后只有资产持有者获益。（引用的是其 7/31 那条「长端借贷成本触及 2008 水平、会出现政府干预」的预测帖）",
+     "url": "https://x.com/KobeissiLetter/status/2090212967317115053",
+     "media": [
+      "https://pbs.twimg.com/media/HQHaM_IWkAEdSfE.jpg",
+      "https://pbs.twimg.com/media/HQHaM_NWMAAONpw.jpg"
+     ],
+     "full_text": "Gold and silver added a combined +$1.3 trillion in market cap after the US Treasury's announcement this morning.\n\nThe Fed can no longer contain yields and the US government cannot afford higher yields.\n\nAsset owners will be the only winners. https://t.co/x6Alhhtg4L",
+     "quoted": "@KobeissiLetter：It's official.\n\nOn July 31st, we called for US government intervention as long-term borrowing costs hit 2008 levels.\n\nToday, it happened. The US Treasury is DOUBLING buybacks to $4 billion per operation for \"liquidity support.\"\n\nWhat comes next? Let us explain.\n\n(a thread) https:"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T23:04:12.000Z",
+     "kind": "macro",
+     "flag": "hot",
+     "summary": "特朗普宣布对伊朗「史上最具摧毁性的经济行动」，称任何与伊朗做生意的国家都将承担「巨大经济后果」，自称「经济版 D-Day」。",
+     "url": "https://x.com/KobeissiLetter/status/2090213270883909721",
+     "media": [
+      "https://pbs.twimg.com/media/HQHt5DxWQAAHGXQ.jpg"
+     ],
+     "full_text": "BREAKING: President Trump announces “the most crushing economic operation ever taken against a country” on Iran.\n\nTrump says any country that does business with Iran will face “tremendous economic consequences.”\n\nThis is “Economic D-Day” President Trump says. https://t.co/sp8PWZBnwO"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T22:36:00.000Z",
+     "kind": "macro",
+     "summary": "据彭博，特朗普将把加拿大进口汽车关税从 25% 降到 15%，作为更广泛贸易协议的一部分。",
+     "url": "https://x.com/KobeissiLetter/status/2090206172196266376",
+     "full_text": "BREAKING: President Trump is set to reduce tariffs on automobiles imported from Canada from 25% to 15% as part of a broader trade deal with the country, per Bloomberg.\n\nDetails include:\n\n1. Currently the US has imposed a 25% tariff on the non-US content of vehicles produces in"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T00:44:10.000Z",
+     "kind": "macro",
+     "summary": "标普 500 自 2019 年末以来累计 +141%，按此速度本十年将收在约 +277%，为有记录以来第二好的十年。",
+     "url": "https://x.com/KobeissiLetter/status/2090238429426483621",
+     "media": [
+      "https://pbs.twimg.com/media/HQFzuz1WkAAV6tQ.jpg"
+     ],
+     "full_text": "US stocks are having one of their best decades in history:\n\nThe S&amp;P 500 has gained +141.0% so far since the end of 2019.\n\nIf this pace continues, the index will finish the decade with a cumulative gain of roughly +277%.\n\nThis would rank as the 2nd-best decade on record, trailing https://t.co/B0sa044laq"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T03:00:54.000Z",
+     "kind": "macro",
+     "summary": "原话：跑这个市场的是 30 年期国债不是 AI。财政部当天宣布加大长债回购、30 年收益率回落、股票才拿到买盘；但随后的联储纪要仍表示若通胀居高愿意加息。",
+     "url": "https://x.com/spluscollective/status/2090272837982695588",
+     "full_text": "Last night I said the 30 year was running the market, not AI. Today Treasury said they are buying more of those long bonds back. The 30 year yield came down. Stocks caught a bid today.\n\nThen the Fed minutes came out and they still sound willing to hike if inflation stays hot. So"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T20:15:18.000Z",
+     "kind": "stock",
+     "ticker": "MRNA",
+     "flag": "pick",
+     "summary": "「好多年没见过这种 K 线了。怪物级长阳。」配日线图。",
+     "url": "https://x.com/spluscollective/status/2090170763571765261",
+     "media": [
+      "https://pbs.twimg.com/media/HQHHOElacAAHhuf.png"
+     ],
+     "full_text": "$MRNA It's been years since I have seen a candle like this. Years! \n\nMonster candle! https://t.co/1EWQlV1aUz"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T02:09:12.000Z",
+     "kind": "stock",
+     "ticker": "HIMS",
+     "summary": "HIMS 当日 +13%。作者自己持多，但明说这仍是个「乱」的票：营收增长快，可这种日子只对已经持有的人爽，不构成追高理由——他更在意生意本身有没有变健康。",
+     "url": "https://x.com/spluscollective/status/2090259825410375821",
+     "media": [
+      "https://pbs.twimg.com/media/HQIYOnBbcAA5wtO.png"
+     ],
+     "full_text": "$HIMS 13% today.\n\nI am Long but this is still a messy name. Revenue is growing fast. \n\nDays like this feel great if you already own it. They are a terrible reason to chase it. I care more about whether the business is actually getting healthier than whether it ripped one session. https://t.co/yfOGBThequ"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T20:54:50.000Z",
+     "kind": "stock",
+     "ticker": "NDSN",
+     "summary": "NDSN 财报：营收 8.177 亿 vs 预期 7.957 亿（超 3%）、EPS 3.25 vs 3.17（超 3%）、同比 +20%，盘后 +6%。",
+     "url": "https://x.com/spluscollective/status/2090180715526656427",
+     "media": [
+      "https://pbs.twimg.com/media/HQHQSO6XgAATTq9.jpg"
+     ],
+     "full_text": "$NDSN ER is out.\n\nRevenue $817.7M vs $795.7M  ·  Beat 3%\nEPS $3.25 vs $3.17  ·  Beat 3%\n\n+20% YoY\nAfter hours +6% https://t.co/5myKcNfTuw"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T23:56:19.000Z",
+     "kind": "stock",
+     "ticker": "ETH",
+     "summary": "ETH 从这个位置突破「不难理解」，本周若能收在 2100 上方会很好。（加密，非美股主线）",
+     "url": "https://x.com/spluscollective/status/2090226385650610491",
+     "media": [
+      "https://pbs.twimg.com/media/HQH5scUa0AAHw-z.png"
+     ],
+     "full_text": "$ETH Not a rocket science from where it's breaking out. A close above 2100 this week would be fantastic. https://t.co/eHgT5BumNV"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-19T20:34:40.000Z",
+     "kind": "stock",
+     "ticker": "MRNA",
+     "summary": "MRNA 分钟图（开盘后第一张）。",
+     "url": "https://x.com/RichardMoglen/status/2090175640393887842",
+     "media": [
+      "https://pbs.twimg.com/media/HQHLqeBb0AEykwh.jpg"
+     ],
+     "full_text": "$MRNA 1 minute chart https://t.co/aYfCNU9QpN"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-19T20:35:05.000Z",
+     "kind": "stock",
+     "ticker": "MRNA",
+     "summary": "MRNA 开盘 1 分钟图（同一时段第二张，看的是开盘那段量价）。",
+     "url": "https://x.com/RichardMoglen/status/2090175744886579624",
+     "media": [
+      "https://pbs.twimg.com/media/HQHLwxPbEAAYlmy.jpg"
+     ],
+     "full_text": "$MRNA open 1 minute chart https://t.co/BhlWgNXyEO"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T00:47:18.000Z",
+     "kind": "stock",
+     "ticker": "MRNA",
+     "summary": "配图问「二次增发什么时候公布」——暗示他预期这波暴涨后公司会趁机增发融资，这是对追高者的风险提示，不是看多喊单。",
+     "url": "https://x.com/RichardMoglen/status/2090239214927630565",
+     "media": [
+      "https://pbs.twimg.com/media/HQIFXjWbAAEIDsh.jpg"
+     ],
+     "full_text": "$MRNA when will the secondary be announced? https://t.co/gwyAE1dCfN"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-19T21:02:54.000Z",
+     "kind": "stock",
+     "flag": "pick",
+     "summary": "「今天领涨主题里出现显著摆动」——点名基因组学、矿业、加密三个方向，配 Deepvue 图。",
+     "url": "https://x.com/RichardMoglen/status/2090182742155899359",
+     "media": [
+      "https://pbs.twimg.com/media/HQHR4kXbkAAewby.jpg"
+     ],
+     "full_text": "Significant swings today in leading themes\n\nGenomics, Miners, Crypto https://t.co/QHjIYnjUdl"
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T00:12:41.000Z",
+     "kind": "stock",
+     "summary": "发 Deepvue Leaders 热力图讲怎么用热力图筛市场/追轮动，格子是「距开盘涨跌幅 + 相对成交量」。方法论帖，图本身可当轮动快照看。",
+     "url": "https://x.com/RichardMoglen/status/2090230503337246994",
+     "media": [
+      "https://pbs.twimg.com/media/HQH9ZKIbsAAscT3.jpg"
+     ],
+     "full_text": "Heatmaps are a visual way of screening the market and tracking rotation\n\nHere is the Deepvue Leaders and stock cells are % from the open &amp; relative volume. https://t.co/XEAOO2UdAV"
+    }
+   ],
+   "takeaway": "这一轮只有一条主线：**MRNA**。三个账号从三个不同角度同时在说它——@KobeissiLetter 报事件（首个预防癌症的 mRNA 疗法三期转阳、盘后 +212%、市值 +500 亿）、@spluscollective 说「好多年没见过这种 K 线」、@RichardMoglen 连发两张分钟图之后补了一句「二次增发什么时候公布」。注意第三个角度是**冷水不是助攻**：暴涨后趁机增发是这类生物科技的标准动作，他在提示追高者。三号共振但没有一个在喊买。\n\n第二条线是宏观：财政部宣布加大长债回购 → 30 年收益率回落 → 股票才拿到买盘（@spluscollective 的原话是「跑这个市场的是 30 年国债不是 AI」），同一件事让金银合计市值 +1.3 万亿（@KobeissiLetter）。但联储纪要随后仍留了加息的口子，这个组合对「利率见顶」的叙事是打折的。伊朗「经济 D-Day」和加拿大汽车关税 25%→15% 都是当天新增的政策变量，暂时看不出对我们持仓的直接映射。\n\n🔴 今天（8/20）的盘前报告还没生成，所以上面这些**没有跟当日主线做过交叉校验**——等盘前跑完再回来对一次。\n\n🔴 **数字更正**：上面「盘后 +212%」是引 @KobeissiLetter 帖子的原话，指的是盘中/盘后高点。同日盘前扫描核到的收盘数据是 **+176.97%、收 $174.38、市值 $69.2B**——引用照原样留着，但别把 212% 当收盘涨幅用。",
+   "notes": "本轮是新管道的首次验证跑，只查了 3 个账号（RichardMoglen / spluscollective / KobeissiLetter），不是完整 13 号池。窗口取「美股收盘到现在」而不是常规的 1-2 小时，因为现在是 SGT 13:41、美股已收盘 9 小时，按 2 小时窗口会是空的。纯闲聊回复（@某人 的一句话互动、二选一投票）已过滤，未计入。"
+  },
+  {
+   "run_id": "盘前",
+   "label": "盘前扫描（导入，未重复跑）",
+   "run_at": "2026-08-20T12:00+08:00",
+   "window": "盘前扫描的近一周窗口",
+   "source": "x_scan",
+   "accounts_checked": [
+    "KobeissiLetter",
+    "zerohedge",
+    "spotgamma",
+    "NickTimiraos",
+    "WatcherGuru",
+    "bluechipdaily",
+    "WalterDeemer",
+    "RichardMoglen",
+    "ohiain",
+    "spluscollective",
+    "aleabitoreddit",
+    "BillAckman",
+    "unusual_whales",
+    "jimcramer"
+   ],
+   "accounts_no_new": [
+    "BillAckman（本周全为家庭/个人/网球票价/税收政策评论，无任何个股或市场相关内容）"
+   ],
+   "items": [
+    {
+     "handle": "盘前扫描归纳",
+     "utc": null,
+     "time": "归纳",
+     "time_approx": true,
+     "kind": "ep",
+     "ticker": "MRNA",
+     "summary": "催化剂：与Merck联合宣布黑色素瘤mRNA癌症疫苗三期临床阳性结果（预防扩散）；盘后BofA评级从Underperform上调至Neutral、目标价$40→$170，Morgan Stanley目标价$39→$89（维持Equal Weight）　走势：8/19收盘+176.97%报$174.38，市值$69.2B；盘中/盘后一度冲高至+212%　量：未给出具体成交量数字，但@unusual_whales披露单份期权合约当日涨711,500%（$0.01→$70），@RichardMoglen连发1/5分钟图强调走势极端　出处：@WatcherGuru/@KobeissiLetter/@RichardMoglen/@unusual_whales 2026-08-19；评级信息来自X上二手转述（BofA/Morgan Stanley研报），未直接核实原始研报",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "盘前扫描归纳",
+     "utc": null,
+     "time": "归纳",
+     "time_approx": true,
+     "kind": "ep",
+     "ticker": "GDX",
+     "summary": "催化剂：金价当日突破$4,500带动金矿股板块，$GDX为@bluechipdaily付费站12天前给出的满仓买入信号　走势：单日+8%突破　量：未记录　出处：@bluechipdaily 2026-08-19T14:54:40Z",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "盘前扫描归纳",
+     "utc": null,
+     "time": "归纳",
+     "time_approx": true,
+     "kind": "ep",
+     "ticker": "HYPE",
+     "summary": "催化剂：特朗普称CFTC正推动将其引入美国监管　走势：15分钟内+15%至$69　量：未记录　出处：@WatcherGuru 2026-08-19T19:18:36Z-19:29:05Z",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "盘前扫描归纳",
+     "utc": null,
+     "time": "归纳",
+     "time_approx": true,
+     "kind": "ep",
+     "ticker": "BULL",
+     "summary": "催化剂：Webull财报大超预期，转为GAAP口径盈利　走势：8/20盘前+14.47%（美股盘前，收盘价基础）　量：未记录具体数字　出处：定向搜索\"earnings gap up\"，非固定账号，来源@mayaivanoff 2026-08-20T03:31:20Z，未交叉验证，仅供参考",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "盘前扫描归纳",
+     "utc": null,
+     "time": "归纳",
+     "time_approx": true,
+     "kind": "ep",
+     "ticker": "CART",
+     "summary": "催化剂：财报后gap up，据发帖者量能柱显示上涨趋势正在加速　走势：未给出具体百分比　量：发帖者称\"volume bars\"显示放量但无具体数字　出处：定向搜索\"earnings gap up\"，来源@artisanwill12 2026-08-20T01:46:03Z，未交叉验证",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spotgamma",
+     "utc": "2026-08-18T12:18:18Z",
+     "time": "2026-08-18T12:18:18Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "VIX到期+下周NVDA财报/Jackson Hole，多个波动率指标处于低位，预计这些事件会让波动率维持到下周，之后看Warsh",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WalterDeemer",
+     "utc": "2026-08-18T13:38:59Z",
+     "time": "2026-08-18T13:38:59Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "$SPY需涨到772.51、$QQQ需涨到729.27才能补上当天缺口——缺口补的快慢反映原趋势强弱",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-18T18:42:15Z",
+     "time": "2026-08-18T18:42:15Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "SEC正式提出为加密货币建立清晰监管框架的新规则",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-18T20:18:49Z",
+     "time": "2026-08-18T20:18:49Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "阿联酋暂停与伊朗的一切商业活动和金融往来（早于8/19晚特朗普对伊朗\"经济D-Day\"表态一天多，可能是同一条主线的前置信号）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-18T21:31:27Z",
+     "time": "2026-08-18T21:31:27Z",
+     "time_approx": false,
+     "kind": "cramer",
+     "ticker": "META",
+     "summary": "META诉讼股价重挫时逆势偏多（认为最终未必扛得住最高法院复审）",
+     "url": null,
+     "media": [],
+     "demoted": true
+    },
+    {
+     "handle": "@aleabitoreddit",
+     "utc": "2026-08-19T02:51:57Z",
+     "time": "2026-08-19T02:51:57Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "Unitree(688836)/CCXI",
+     "summary": "Unitree在A股上市，涨+492.18%后估值~$53.3B，被称为人形机器人赛道首个重要公开对标；对比英伟达/亚马逊背书的Agility(经CCXI)预计Q4以$2.5B估值上市——promoter类账号降权",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-19T08:46:46Z",
+     "time": "2026-08-19T08:46:46Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "SK Hynix",
+     "summary": "SK海力士推出大规模回购，需观察卖方是否被安抚",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spotgamma",
+     "utc": "2026-08-19T12:54:46Z",
+     "time": "2026-08-19T12:54:46Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "VIX 8/19 9:30ET到期，约42%总合约到期，16 strike持仓集中，VIX报15.5附近",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-19T13:53:34Z",
+     "time": "2026-08-19T13:53:34Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "TGT",
+     "summary": "\"Target现在走上正轨了\"",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@bluechipdaily",
+     "utc": "2026-08-19T14:54:40Z",
+     "time": "2026-08-19T14:54:40Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "$GDX突破+8%单日，12天前在其付费站已给出满仓买入信号，200日均线回收曾是其关键买入信号，现更偏向趋势突破",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@bluechipdaily",
+     "utc": "2026-08-19T15:02:23Z",
+     "time": "2026-08-19T15:02:23Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "过去30天5笔科技股买入4笔浮亏（2笔突破后反转），但能源/银行/医疗/金矿股/$RSP仓位更大抵消了亏损",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-19T15:03:25Z",
+     "time": "2026-08-19T15:03:25Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "SPCX",
+     "summary": "SPCX在10/21EMA上方构筑区间",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-19T15:11:55Z",
+     "time": "2026-08-19T15:11:55Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "财政部回购公告的时点耐人寻味——正好卡在两次季度再融资公告中间、且在$16B 20年期国债拍卖前几小时，暗示官员\"不喜欢看到\"的东西（指长端收益率走势）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T15:32:55Z",
+     "time": "2026-08-19T15:32:55Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "XLV/XLB/XLP",
+     "summary": "当日最强板块之一，包括平时最闷的XLP",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@aleabitoreddit",
+     "utc": "2026-08-19T15:49:36Z",
+     "time": "2026-08-19T15:49:36Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "MRVL/GOOGL",
+     "summary": "MRVL给GOOGL价值$12.2B的期权用于购买公司股份，交易覆盖TPU相关处理器/存储/网络技术，估算潜在~$120（数字被截断）——promoter类账号，看多倾向按惯例降权",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T15:53:12Z",
+     "time": "2026-08-19T15:53:12Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普称美国和加拿大已达成新贸易协议（与Kobeissi的加拿大汽车关税下调消息相互印证）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "定向搜索\"Trump tariff\"，来源@BullTheoryio（未交叉验证）",
+     "utc": "2026-08-19T16:02:53Z",
+     "time": "2026-08-19T16:02:53Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普宣布与加拿大达成协议，取消原定当天生效的50%关税；美国对加拿大农产品出口关税降至零，同时下调对加拿大汽车的关税",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T16:23:08Z",
+     "time": "2026-08-19T16:23:08Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "AMD",
+     "summary": "必须守住467-463区间，守不住会自由落体跌到430附近",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WalterDeemer",
+     "utc": "2026-08-19T16:28:34Z",
+     "time": "2026-08-19T16:28:34Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "$SPY距离补上前一日缺口仅差0.04点（视为已补），$QQQ仍需涨到729.27才能补缺口",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T16:52:53Z",
+     "time": "2026-08-19T16:52:53Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "OCC将为加密稳定币发行方建立监管框架",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T16:53:00Z",
+     "time": "2026-08-19T16:53:00Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美国政府每天付$3.8B利息，预计2028年涨到~$5B/天，超过其他所有支出类别",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T18:00:01Z",
+     "time": "2026-08-19T18:00:01Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "财政部把回购操作规模从$2B/次翻倍到至少$4B/次（9/9起生效至11/4），Kobeissi称这是债市干预新时代的开始，是特朗普政府第二次notable的债市干预（第一次是2025年4月90天关税暂停）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T18:13:54Z",
+     "time": "2026-08-19T18:13:54Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美联储官员称若通胀不回落可能仍需进一步加息",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T18:27:12Z",
+     "time": "2026-08-19T18:27:12Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "WDC",
+     "summary": "回踩50日均线的round trip是不必要的走势，现在不值得碰，看空",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T18:30:04Z",
+     "time": "2026-08-19T18:30:04Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美联储称美股估值接近互联网泡沫水平",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "定向搜索\"White House OR SEC OR CFTC announcement\"，来源SEC官方账号@SECGov",
+     "utc": "2026-08-19T18:40:48Z",
+     "time": "2026-08-19T18:40:48Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "SEC官方确认提出\"Regulation Crypto Assets\"新规，为涉及加密资产的特定投资合同建立清晰监管框架（与@WatcherGuru该条互相印证，为一手信源）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@ohiain",
+     "utc": "2026-08-19T18:44:01Z",
+     "time": "2026-08-19T18:44:01Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "SPCX",
+     "summary": "65分钟50EMA附近可能出现launchpad结构，等待shakeout/stress test回踩日线9EMA后再确认，判断IPO AVWAP空头已被套",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-19T18:58:00Z",
+     "time": "2026-08-19T18:58:00Z",
+     "time_approx": false,
+     "kind": "congress",
+     "ticker": null,
+     "summary": "MRNA期权异动：一份合约从$0.01涨到$70，涨幅711,500%，若8/18花$1可赚约$7000；本周未见任何国会议员交易披露内容",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@NickTimiraos",
+     "utc": "2026-08-19T19:09:39Z",
+     "time": "2026-08-19T19:09:39Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "7月FOMC纪要评论：比预期温和一点点，但Warsh据报正考虑明年起把FOMC会议从8次改成6次，纪要显示委员会已开始为更多鹰派立场做铺垫，3名鹰派异议票可能继续增加同伴",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:12:06Z",
+     "time": "2026-08-19T19:12:06Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "黄金突破$4,500",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:18:36Z",
+     "time": "2026-08-19T19:18:36Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "HYPE",
+     "summary": "特朗普称CFTC正推动把Hyperliquid引入美国（HYPE暴涨的触发消息本身）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-19T19:20:48Z",
+     "time": "2026-08-19T19:20:48Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普：\"这事结束后油价会低很多\"",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "定向搜索\"Trump crypto OR bitcoin\"，来源@CoinDesk",
+     "utc": "2026-08-19T19:22:41Z",
+     "time": "2026-08-19T19:22:41Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普称其政府已\"结束对加密货币的战争\"，并表示希望美国不仅在比特币/加密领域、也在预测市场和人工智能技术领域保持\"无可争议的领导者\"地位",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:23:54Z",
+     "time": "2026-08-19T19:23:54Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "BTC",
+     "summary": "特朗普称美国要确保在比特币/加密领域保持\"无可争议的领导者\"地位",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:29:05Z",
+     "time": "2026-08-19T19:29:05Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "HYPE",
+     "summary": "特朗普称CFTC正推动把Hyperliquid引入美国后，HYPE 15分钟内暴涨15%至$69（比价格反应早约11分钟发布）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-19T19:30:12Z",
+     "time": "2026-08-19T19:30:12Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "CAKE",
+     "summary": "目标看120+",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-19T19:37:43Z",
+     "time": "2026-08-19T19:37:43Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "据Axios，美国已进行隐秘行动通过霍尔木兹海峡运输石油",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:38:04Z",
+     "time": "2026-08-19T19:38:04Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "BTC",
+     "summary": "特朗普称美国正考虑购买\"可观数量\"的比特币及其他加密货币",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T19:43:56Z",
+     "time": "2026-08-19T19:43:56Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普呼吁国会通过Crypto Clarity Act",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T20:14:17Z",
+     "time": "2026-08-19T20:14:17Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美国国债正式突破$40万亿",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-19T20:28:59Z",
+     "time": "2026-08-19T20:28:59Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "MRNA",
+     "summary": "连发1分钟/5分钟图，\"print it out and study it\"——对MRNA当日的极端走势做技术复盘素材",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-19T20:31:00Z",
+     "time": "2026-08-19T20:31:00Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "BTC",
+     "summary": "特朗普称美国政府正考虑购买并囤积\"可观数量\"的比特币及其他加密货币（与WatcherGuru 19:38条互相印证）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T20:38:00Z",
+     "time": "2026-08-19T20:38:00Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美国总债务首次突破$40万亿，人均$119,699，2020年以来+$17万亿",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-19T21:22:31Z",
+     "time": "2026-08-19T21:22:31Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "BTC突破$70,000（自6/2以来首次），24小时内$2.7B空头爆仓",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-19T21:31:00Z",
+     "time": "2026-08-19T21:31:00Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普谈债市：美国人不该担心波动",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T21:50:05Z",
+     "time": "2026-08-19T21:50:05Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "BTC触及$70,000",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-19T23:08:20Z",
+     "time": "2026-08-19T23:08:20Z",
+     "time_approx": false,
+     "kind": "cramer",
+     "ticker": "TGT/HD",
+     "summary": "对Target/Home Depot财报罕见强烈看多用词（\"dazzling\"/\"amazing\"），按大反指框架属情绪过热提示，非机械反做",
+     "url": null,
+     "media": [],
+     "demoted": true
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-19T23:11:06Z",
+     "time": "2026-08-19T23:11:06Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": "",
+     "summary": "特朗普警告任何帮伊朗规避制裁的国家将面临\"巨大经济后果\"，\"你知道你是谁\"",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@WatcherGuru",
+     "utc": "2026-08-20T00:05:19Z",
+     "time": "2026-08-20T00:05:19Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "过去24小时加密市场总市值增加$190B",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T00:23:36Z",
+     "time": "2026-08-20T00:23:36Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "美国总利息支出$1.4万亿/年，预计2028年超过社保成为最大支出项（$1.6万亿/年）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T00:28:38Z",
+     "time": "2026-08-20T00:28:38Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "财政部周一半年付息约$85B创纪录（对比2025年8月$75B、2月$80B）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@RichardMoglen",
+     "utc": "2026-08-20T00:43:01Z",
+     "time": "2026-08-20T00:43:01Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "MRNA/SNDK",
+     "summary": "发起投票：从今日收盘起12个月后MRNA和SNDK哪个更高（无明确立场，仅提问）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-20T01:31:00Z",
+     "time": "2026-08-20T01:31:00Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "长端国债需求疲软，交易商被迫消化更多供给，这通常在真实买家重新入场前对收益率保持上行压力",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@bluechipdaily",
+     "utc": "2026-08-20T01:44:38Z",
+     "time": "2026-08-20T01:44:38Z",
+     "time_approx": false,
+     "kind": "stock",
+     "ticker": "MSTR",
+     "summary": "回复网友：若BTC持续突破200日均线，MSTR现在可能是时候了，当日大量",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T03:05:43Z",
+     "time": "2026-08-20T03:05:43Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "高beta动量股即将跌破7月低点，配文\"Leopold 2.0?\"（暗示类似此前一次动量崩塌）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T03:35:07Z",
+     "time": "2026-08-20T03:35:07Z",
+     "time_approx": false,
+     "kind": "macro",
+     "ticker": null,
+     "summary": "系统性/趋势跟踪基金遭遇2023年以来最差单日，另一轮动量瓦解（Blood In The Streets标题）",
+     "url": null,
+     "media": [],
+     "demoted": null
+    }
+   ],
+   "takeaway": null,
+   "notes": "从 `x_scan_20260820.json` 导入，没有重新开浏览器。这些条目是老格式（无 tweet 链接），所以没有图。"
+  },
+  {
+   "run_id": 2,
+   "run_at": "2026-08-20T21:25+08:00",
+   "window": "8/20 03:35 – 13:22 UTC（11:35–21:22 SGT，美股开盘前 8 分钟收口）",
+   "accounts_checked": [
+    "KobeissiLetter",
+    "zerohedge",
+    "spotgamma",
+    "NickTimiraos",
+    "bluechipdaily",
+    "WalterDeemer",
+    "RichardMoglen",
+    "ohiain",
+    "spluscollective",
+    "aleabitoreddit",
+    "BillAckman",
+    "unusual_whales",
+    "jimcramer",
+    "markminervini",
+    "jasongoepfert"
+   ],
+   "accounts_no_new": [
+    "RichardMoglen",
+    "NickTimiraos",
+    "WalterDeemer",
+    "markminervini",
+    "jasongoepfert",
+    "bluechipdaily（仅一条回复，非 setup）",
+    "BillAckman（全为致谢回复/基金会董事介绍，无交易内容）"
+   ],
+   "items": [
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:42:18Z",
+     "kind": "macro",
+     "summary": "🔴「散场了」——30 年期美债把财政部宣布回购带来的涨幅**全部抹掉**。（引用的是它自己那条「um, guys...」）",
+     "url": "https://x.com/zerohedge/status/2090419149486842002",
+     "flag": "hot",
+     "full_text": "And scene\n\n*US 30-YEAR TREASURIES ERASE GAINS FROM BUYBACK ANNOUNCEMENT",
+     "quoted": "@zerohedge：um, guys... https://t.co/0I67Pag9jd"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:05:00Z",
+     "kind": "macro",
+     "summary": "长债续跌，30 年收益率再涨 6bp 到 **5.25%**。",
+     "url": "https://x.com/zerohedge/status/2090409769865506841",
+     "flag": "hot",
+     "full_text": "*US LONG BONDS EXTEND FALL; 30Y YIELD RISES 6BPS TO 5.25%",
+     "quoted": "@zerohedge：um, guys... https://t.co/0I67Pag9jd"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T13:00:25Z",
+     "kind": "macro",
+     "summary": "「你没法编出这种事」：昨天美东 8:15，10 年期还在 4.68%，财政部宣布把回购加到 40 亿美元、承诺提供「流动性支持」，收益率一度跌到 4.63%——整整 24 小时之后（配图对比）。",
+     "url": "https://x.com/KobeissiLetter/status/2090423712549937252",
+     "flag": "hot",
+     "media": [
+      "https://pbs.twimg.com/media/HQKtScyWUAAO9la.png"
+     ],
+     "full_text": "You can't make this up:\n\nAt 8:15 AM ET yesterday, the 10Y Note Yield was trading at 4.68% when the US Treasury announced it would be increasing bond buybacks to $4 billion.\n\nThe yield fell to a low of 4.63% as the US Treasury pledged to provide \"liquidity support.\"\n\nExactly 24 https://t.co/em738sU23Z",
+     "quoted": "@KobeissiLetter：It's official.\n\nOn July 31st, we called for US government intervention as long-term borrowing costs hit 2008 levels.\n\nToday, it happened. The US Treasury is DOUBLING buybacks to $4 billion per operation for \"liquidity support.\"\n\nWhat comes next? Let us explain.\n\n(a thread) https:"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T13:05:06Z",
+     "kind": "macro",
+     "summary": "高盛警告：Bessent 这套扭曲操作可能是死胡同式的创可贴——驱动长端收益率的是**财政担忧不是技术性故障**，「期限溢价会一直留在这里」。",
+     "url": "https://x.com/zerohedge/status/2090424891354775714",
+     "full_text": "Is Bessent's Twist A Dead-End Band-Aid? Fiscal Fears Not Technical Glitch Driving Long-End Yields, Goldman Warns 'Term Premia Here To Stay' https://t.co/bsD5UttFDe"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:30:06Z",
+     "kind": "macro",
+     "summary": "期货下挫：收益率飙升抹掉 Bessent 的干预效果，油价上涨是推手。",
+     "url": "https://x.com/zerohedge/status/2090416079810019434",
+     "full_text": "Futures Slide As Treasury Yields Surge, Erasing Bessent Intervention, Driven By Oil Spike https://t.co/eDFmnFz0rj"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T11:57:00Z",
+     "kind": "macro",
+     "summary": "隔夜要闻：美国国债总额触及创纪录的 **40 万亿美元**，举债速度处于历史高位，市场对财政状况的担忧升温。",
+     "url": "https://x.com/zerohedge/status/2090407996153041322",
+     "full_text": "Top Overnight News\n\nThe US’s national debt has hit a record $40tn as borrowing rises at a historic pace, fuelling investor concerns about the state of America’s public finances despite Donald Trump’s vow to bring spending under control. FT\n\nScott Bessent’s shock Treasury"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T11:41:02Z",
+     "kind": "macro",
+     "summary": "德国 5 年期收益率上行 1bp 触及 **3%，2008 年以来首次**——不是只有美国长端在动。",
+     "url": "https://x.com/zerohedge/status/2090403905490329924",
+     "full_text": "*GERMAN 5-YEAR YIELD UP 1BP TO HIT 3% FOR FIRST TIME SINCE 2008"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T11:59:32Z",
+     "kind": "stock",
+     "summary": "🔴 沃尔玛 $WMT 跌超 **-8%**：罕见的季度销售 miss，美国业务增速掉到 **6 年最低**。原帖问：消费者是不是没钱了？",
+     "url": "https://x.com/KobeissiLetter/status/2090408388165337537",
+     "ticker": "WMT",
+     "flag": "hot",
+     "media": [
+      "https://pbs.twimg.com/media/HQKe0SRWkAAimzg.jpg"
+     ],
+     "full_text": "BREAKING: Walmart stock, $WMT, falls over -8% after posting a rare quarterly sales miss, with US growth falling to a 6-year low.\n\nAre consumers running out of money? https://t.co/zVJjIBmuUz"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T11:41:00Z",
+     "kind": "stock",
+     "summary": "WMT 细节：美国门店二季度同店销售（除油）**+2.6%，预期 +3.67%**；全年调整后 EPS 指引 2.80–2.87（原 2.75–2.85）。",
+     "url": "https://x.com/zerohedge/status/2090403734673125773",
+     "ticker": "WMT",
+     "full_text": "*WALMART-ONLY US STORES 2Q COMP SALES EX-GAS +2.6%, EST +3.67%\n\n*WALMART SEES FY ADJ EPS $2.80 TO $2.87, SAW $2.75 TO $2.85"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T11:29:50Z",
+     "kind": "stock",
+     "summary": "WMT 财报：营收 1879.4 亿 vs 预期 1887.9 亿（miss）、EPS 0.81 vs 0.75（超 8%）、同比 +13%，盘前 -6%。",
+     "url": "https://x.com/spluscollective/status/2090400912900603997",
+     "ticker": "WMT",
+     "media": [
+      "https://pbs.twimg.com/media/HQKYjZVXEAAWeTr.jpg"
+     ],
+     "full_text": "$WMT ER is out.\n\nRevenue $187.94B vs $188.79B  ·  Miss\nEPS $0.81 vs $0.75  ·  Beat 8%\n\n+13% YoY\nPre-market -6% https://t.co/J53QuBPHMH"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T11:00:17Z",
+     "kind": "stock",
+     "summary": "迪尔 $DE 财报：营收 110.0 亿 vs 预期 110.5 亿（miss）、EPS 5.10 vs 4.84（超 5%）、同比 -12%，盘前 +4%。",
+     "url": "https://x.com/spluscollective/status/2090393480191156341",
+     "ticker": "DE",
+     "media": [
+      "https://pbs.twimg.com/media/HQKRyvzW8AAKhLg.jpg"
+     ],
+     "full_text": "$DE ER is out.\n\nRevenue $11.00B vs $11.05B  ·  Miss\nEPS $5.10 vs $4.84  ·  Beat 5%\n\n-12% YoY\nPre-market +4% https://t.co/eg7n7hLBke"
+    },
+    {
+     "handle": "@spluscollective",
+     "utc": "2026-08-20T11:00:13Z",
+     "kind": "stock",
+     "summary": "阿里 $BABA 财报：营收 2664.5 亿 vs 预期 2743.2 亿（miss 3%）、EPS 8.47 vs 10.62（**miss 20%**）、同比 +13%，盘前 -1%。",
+     "url": "https://x.com/spluscollective/status/2090393463434932322",
+     "ticker": "BABA",
+     "media": [
+      "https://pbs.twimg.com/media/HQKRxyDWEAAUaa5.jpg"
+     ],
+     "full_text": "$BABA ER is out.\n\nRevenue $266.45B vs $274.32B  ·  Miss 3%\nEPS $8.47 vs $10.62  ·  Miss 20%\n\n+13% YoY\nPre-market -1% https://t.co/NZbxtP5mQn"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:30:19Z",
+     "kind": "macro",
+     "summary": "初请失业金 **206K，预期 210K**；续请 1799K，预期 1788K。",
+     "url": "https://x.com/zerohedge/status/2090416137464848741",
+     "full_text": "Initial Claims 206K, Exp. 210K\nContinuing Claims 1799K, Exp. 1788K"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:38:06Z",
+     "kind": "macro",
+     "summary": "配文：在劳动力市场信号越来越脆弱的背景下，初请数据「眼都不眨」。",
+     "url": "https://x.com/zerohedge/status/2090418095093375273",
+     "full_text": "Initial Jobless Claims Refuse To Blink Amid Increasingly Fragile Labor Market Signals https://t.co/1XXNjrDSTL"
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-20T04:58:00Z",
+     "kind": "macro",
+     "summary": "美银调查：**滞胀**仍是对未来 12 个月的主导描述，58% 受访者这么看（5 月是 69%）。",
+     "url": "https://x.com/unusual_whales/status/2090302305463881778",
+     "full_text": "According to BofA, stagflation remains the dominant description of the next 12 months, cited by 58% of respondents, though down from 69% in May\n\nRead more: https://t.co/U3z8i8hQaM"
+    },
+    {
+     "handle": "@ohiain",
+     "utc": "2026-08-20T11:18:00Z",
+     "kind": "stock",
+     "summary": "🎯 $UBER 正在测试 Stage 1 突破枢轴：7 个多月的底部 + 自低点的楔形反弹 + EMA 回穿，直接顶到前期供给区。**80 是那个位置**；只要板块右侧继续上翘、并且它能站稳，就变得相当有意思。（配 $UBER 图）",
+     "url": "https://x.com/ohiain/status/2090398158987645240",
+     "ticker": "UBER",
+     "flag": "pick",
+     "media": [
+      "https://pbs.twimg.com/media/HQKV-VPXEAAoQfG.jpg"
+     ],
+     "full_text": "$UBER testing the Stage 1 b/o pivot after building a 7+ month base + a wedge pop off lows &amp; EMA crossback right into prior supply.\n\n80 is the spot, clear that while the group continues curling off the right side, and this gets pretty interesting.\n\nChart: $UBER. https://t.co/uzpIHWmoqE"
+    },
+    {
+     "handle": "@spotgamma",
+     "utc": "2026-08-20T13:01:00Z",
+     "kind": "stock",
+     "summary": "上 CNBC 谈 $SPCX 今天的解禁，以及为什么 **150 是短期阻力**。",
+     "url": "https://x.com/spotgamma/status/2090423923020034283",
+     "ticker": "SPCX",
+     "full_text": "on @CNBC this am discussing $SPCX lockup today \n\n&amp; why $150 is short term resistance\n\nhttps://t.co/2euUWrWI1Z"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T13:11:40Z",
+     "kind": "stock",
+     "summary": "*超微 $SMCI 称高级管理层此前不知情转移方案。zerohedge 配文：「监管做得真好啊？」",
+     "url": "https://x.com/zerohedge/status/2090426543596052691",
+     "ticker": "SMCI",
+     "full_text": "*SUPER MICRO SAYS SENIOR MGMT DIDN'T KNOW OF DIVERSION SCHEME\n\nso... great supervision there?"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:02:00Z",
+     "kind": "stock",
+     "summary": "MSTR（只发了图，无文字论点）。",
+     "url": "https://x.com/zerohedge/status/2090409178091213153",
+     "ticker": "MSTR",
+     "media": [
+      "https://pbs.twimg.com/tweet_video_thumb/HQKgD9lWEAAHq1_.jpg"
+     ],
+     "full_text": "MSTR https://t.co/GQ4ZSQWV61"
+    },
+    {
+     "handle": "@KobeissiLetter",
+     "utc": "2026-08-20T12:22:00Z",
+     "kind": "macro",
+     "summary": "比特币升破 **72,000**，6 月 1 日以来首次；24 小时杠杆爆仓 34 亿美元。",
+     "url": "https://x.com/KobeissiLetter/status/2090414041776935159",
+     "media": [
+      "https://pbs.twimg.com/media/HQKfaj0XwAEy1Qu.jpg"
+     ],
+     "full_text": "BREAKING: Bitcoin surges above $72,000 for the first time since June 1st as levered liquidations hit $3.4 billion in 24 hours. https://t.co/00OlVfqt2O"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T13:20:07Z",
+     "kind": "macro",
+     "summary": "伊朗外长回击特朗普的「经济 D-Day」威胁，称是转移视线且注定失败；同时一艘新航母抵达中东水域。",
+     "url": "https://x.com/zerohedge/status/2090428666983432588",
+     "full_text": "Iran FM Blasts Trump's Economic D-Day Threat 'Diversion' Which Will Fail, As New Carrier Arrives In Mideast Waters https://t.co/bLscqRJYou"
+    },
+    {
+     "handle": "@zerohedge",
+     "utc": "2026-08-20T12:30:37Z",
+     "kind": "macro",
+     "summary": "乔治·华盛顿号航母抵达阿拉伯海。",
+     "url": "https://x.com/zerohedge/status/2090416211041345800",
+     "full_text": "US Aircraft Carrier George Washington Arrives in Arabian Sea"
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-20T10:37:00Z",
+     "kind": "macro",
+     "summary": "据 CNN，伊朗已大幅失去对霍尔木兹海峡的控制。",
+     "url": "https://x.com/unusual_whales/status/2090387617569558895",
+     "full_text": "Iran has lost significant control of the Strait of Hormuz, per CNN"
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-20T12:17:00Z",
+     "kind": "macro",
+     "summary": "彭博整理的「AI 交易的循环性」（配图）——谁投谁、钱怎么转圈。",
+     "url": "https://x.com/unusual_whales/status/2090412783951085982",
+     "media": [
+      "https://pbs.twimg.com/media/HP9EmdGagAEtbEZ.jpg"
+     ],
+     "full_text": "The circular nature of AI deals, per Bloomberg: https://t.co/0OQmfiLFBs"
+    },
+    {
+     "handle": "@unusual_whales",
+     "utc": "2026-08-20T11:37:00Z",
+     "kind": "macro",
+     "summary": "据彭博：AI 正在带来**史上最大的资本开支驱动型 GDP 提振**。",
+     "url": "https://x.com/unusual_whales/status/2090402717201997833",
+     "full_text": "BREAKING: AI is delivering the largest capex-driven boost to GDP in history, per Bloomberg."
+    },
+    {
+     "handle": "@jimcramer",
+     "utc": "2026-08-20T12:55:00Z",
+     "kind": "cramer",
+     "summary": "人在博伊西美光工厂，配图发「Micron Manufacturing Might!!」；当天另有 09:17「和美光 CEO 在博伊西，巨型晶圆厂日」和 13:17「博伊西的大日子」。按反指框架，这种高调造势属于情绪过热提示，不是机械反做。",
+     "url": "https://x.com/jimcramer/status/2090422379583603029",
+     "ticker": "MU",
+     "demoted": true,
+     "media": [
+      "https://pbs.twimg.com/media/HQKsENUaoAAEeea.jpg"
+     ],
+     "full_text": "to this moonscape: Micron Manufacturing Might!! https://t.co/nCtcaeaiIL"
+    },
+    {
+     "handle": "@aleabitoreddit",
+     "utc": "2026-08-20T09:45:00Z",
+     "kind": "stock",
+     "summary": "「很高兴杠杆客从 AI 股转回 Hyperliquid 和 $MRNA 这类生物科技，也许能看到更快的修复。」另称 $EWY 上涨主因 SK 海力士回购、三星代工约 +10~15%。（promoter 账号，降权）",
+     "url": "https://x.com/aleabitoreddit/status/2090374603264929981",
+     "ticker": "MRNA/EWY",
+     "demoted": true,
+     "full_text": "I'm glad the leverage bros moved from AI stocks back to Hyerliquid and biotech like $MRNA, so maybe we'll see a faster recovery. \n\nAside from that just some TLDR stuff:\n\n- $EWY up, primarily from SK Hynix buybacks (they're just too profitable), and Samsung Foundry roughly ~10-15%"
+    }
+   ],
+   "takeaway": "这一轮只有一条线，而且它把昨天那条线**推翻了一半**。\n\n昨天 @spluscollective 说「跑这个市场的是 30 年期国债不是 AI」，当时的论据是财政部宣布加大长债回购、收益率回落、股票才拿到买盘。今天这套东西**不到 24 小时就被抹光**：30 年期把回购宣布带来的涨幅全部吐回去，收益率反而涨到 5.25%，@KobeissiLetter 专门做了张 24 小时前后对比图。高盛的说法更直接——驱动长端的是**财政担忧不是技术性故障**，期限溢价不会走。同一天美国国债总额创纪录 40 万亿、德国 5 年期 2008 年以来首次上 3%。所以昨天股票那口买盘的地基，今天已经不在了。\n\n第二件事是 $WMT：罕见的季度销售 miss，美国同店 +2.6% 对预期 +3.67%，增速 6 年最低，盘前 -8%。但**同一时段初请失业金 206K 好于预期 210K**——消费端在走弱、就业端没走弱，这两个信号方向不一致，先并列记着，别急着拼成一个「消费者撑不住了」的故事。\n\n昨天那条 MRNA 共振**今天没有延续**：主流账号没人跟进，只有 @aleabitoreddit（promoter，降权）在说「杠杆客转去生物科技」。\n\n@ohiain 给了本轮唯一一个成型 setup：$UBER 7 个多月底部 + 楔形反弹 + EMA 回穿顶到前期供给，**80 是那个位置**。这需要按我们自己的选股规则二次验证，不能直接当候选。\n\n@jimcramer 今天人在美光工厂连发三条造势——反指框架下记为情绪过热提示。",
+   "notes": "扫了全部 15 个账号（含新加的 @markminervini / @jasongoepfert，两个在本窗口内都没发帖）。\n\n🔴 **覆盖缺口**：@zerohedge 发帖量太大，后台标签页只滚出 11:41–13:20 这一段，03:35–11:41 没有逐条上溯（用 computer.scroll 强制加载过一次，仍到 11:41 为止）。其余账号都覆盖到窗口起点。\n\n已过滤掉的：@BillAckman 的致谢类回复、@ohiain 的方法论帖和一句话互动、@unusual_whales 的泛新闻（蓝莓召回、司法部选举监察员、朝鲜劳工等，与交易无关）。",
+   "cost_log": [
+    {
+     "account": "全部15号",
+     "tool_calls": 26,
+     "approx_chars": "仅取链接+时间戳，正文和图由 x_hydrate 补"
+    }
+   ]
+  }
+ ]
+}

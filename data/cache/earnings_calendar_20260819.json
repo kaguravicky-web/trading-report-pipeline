@@ -1,0 +1,109 @@
+{
+ "universe_size": 729,
+ "calendar": {
+  "2026-08-19": [
+   {
+    "symbol": "ADI",
+    "name": "Analog Devices, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$3.33"
+   },
+   {
+    "symbol": "TJX",
+    "name": "TJX Companies, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": "$1.18"
+   },
+   {
+    "symbol": "LOW",
+    "name": "Lowe's Companies, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$4.22"
+   },
+   {
+    "symbol": "TGT",
+    "name": "Target Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$2.30"
+   },
+   {
+    "symbol": "EL",
+    "name": "Estee Lauder Companies, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": "$0.32"
+   },
+   {
+    "symbol": "NDSN",
+    "name": "Nordson Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$3.09"
+   },
+   {
+    "symbol": "PURR",
+    "name": "Hyperliquid Strategies Inc",
+    "time": "not-supplied",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-20": [
+   {
+    "symbol": "WMT",
+    "name": "Walmart Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.73"
+   },
+   {
+    "symbol": "DE",
+    "name": "Deere & Company",
+    "time": "pre-market",
+    "eps_forecast": "$4.79"
+   },
+   {
+    "symbol": "ROST",
+    "name": "Ross Stores, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.93"
+   },
+   {
+    "symbol": "AAP",
+    "name": "Advance Auto Parts Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.81"
+   },
+   {
+    "symbol": "HOV",
+    "name": "Hovnanian Enterprises Inc",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-21": [
+   {
+    "symbol": "BJ",
+    "name": "BJ's Wholesale Club Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.15"
+   },
+   {
+    "symbol": "BKE",
+    "name": "Buckle, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-25": [
+   {
+    "symbol": "INTU",
+    "name": "Intuit Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.14"
+   },
+   {
+    "symbol": "DKS",
+    "name": "Dick's Sporting Goods Inc",
+    "time": "pre-market",
+    "eps_forecast": "$3.80"
+   }
+  ]
+ }
+}

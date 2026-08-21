@@ -1,0 +1,165 @@
+{
+ "universe_size": 886,
+ "calendar": {
+  "2026-08-20": [
+   {
+    "symbol": "WMT",
+    "name": "Walmart Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.73"
+   },
+   {
+    "symbol": "DE",
+    "name": "Deere & Company",
+    "time": "pre-market",
+    "eps_forecast": "$4.79"
+   },
+   {
+    "symbol": "ROST",
+    "name": "Ross Stores, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.93"
+   },
+   {
+    "symbol": "AAP",
+    "name": "Advance Auto Parts Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.81"
+   },
+   {
+    "symbol": "HOV",
+    "name": "Hovnanian Enterprises Inc",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-21": [
+   {
+    "symbol": "BJ",
+    "name": "BJ's Wholesale Club Holdings, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$1.16"
+   },
+   {
+    "symbol": "BKE",
+    "name": "Buckle, Inc. (The)",
+    "time": "pre-market",
+    "eps_forecast": ""
+   }
+  ],
+  "2026-08-24": [
+   {
+    "symbol": "CHRN",
+    "name": "ChronoScale Holdings Corporation",
+    "time": "not-supplied",
+    "eps_forecast": "($0.06)"
+   }
+  ],
+  "2026-08-25": [
+   {
+    "symbol": "INTU",
+    "name": "Intuit Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.14"
+   },
+   {
+    "symbol": "DKS",
+    "name": "Dick's Sporting Goods Inc",
+    "time": "pre-market",
+    "eps_forecast": "$3.80"
+   }
+  ],
+  "2026-08-26": [
+   {
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "time": "after-hours",
+    "eps_forecast": "$2.01"
+   },
+   {
+    "symbol": "CRWD",
+    "name": "CrowdStrike Holdings, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.05"
+   },
+   {
+    "symbol": "CRM",
+    "name": "Salesforce, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.35"
+   },
+   {
+    "symbol": "SNPS",
+    "name": "Synopsys, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$2.67"
+   },
+   {
+    "symbol": "A",
+    "name": "Agilent Technologies, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.48"
+   },
+   {
+    "symbol": "VEEV",
+    "name": "Veeva Systems Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.62"
+   },
+   {
+    "symbol": "WSM",
+    "name": "Williams-Sonoma, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$2.05"
+   },
+   {
+    "symbol": "HPQ",
+    "name": "HP Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.66"
+   },
+   {
+    "symbol": "OKTA",
+    "name": "Okta, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$0.44"
+   },
+   {
+    "symbol": "FIVE",
+    "name": "Five Below, Inc.",
+    "time": "not-supplied",
+    "eps_forecast": "$1.28"
+   },
+   {
+    "symbol": "SJM",
+    "name": "The J.M. Smucker Company ",
+    "time": "pre-market",
+    "eps_forecast": "$2.21"
+   },
+   {
+    "symbol": "URBN",
+    "name": "Urban Outfitters, Inc.",
+    "time": "after-hours",
+    "eps_forecast": "$1.72"
+   },
+   {
+    "symbol": "ANF",
+    "name": "Abercrombie & Fitch Company",
+    "time": "pre-market",
+    "eps_forecast": "$1.90"
+   },
+   {
+    "symbol": "BBWI",
+    "name": "Bath & Body Works, Inc.",
+    "time": "pre-market",
+    "eps_forecast": "$0.24"
+   },
+   {
+    "symbol": "KSS",
+    "name": "Kohl's Corporation",
+    "time": "pre-market",
+    "eps_forecast": "$0.56"
+   }
+  ]
+ }
+}

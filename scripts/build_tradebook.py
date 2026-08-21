@@ -42,6 +42,16 @@ v4（2026-08-07，Vic："输入太多，几个trade输入半天，有时候不�
 ⑤已平仓卡片默认折叠成一行摘要（ticker+日期+盈亏+R），点击展开
 ⑥KPI区下加月度盈亏柱状图+按setup类型的胜率分解表
 
+v6（2026-08-20，Vic："有时候有几个setup叠加，你帮让我多选好吗"）：setup_type 从单选字符串
+改成数组，表单里换成 tagbtn 点选（跟执行动作/状态两组一致），值存 state 不再从DOM读。
+老数据在 migrate() 里包成单元素数组，值一个不改、幂等。「按Setup类型分解」表改成叠加单在
+每个成分里各记一次（同A级复盘的共振单算法），所以各行笔数之和会大于总笔数。
+「待补齐」那一列太窄放不下多选：只叠了0~1个的仍给下拉（选一个=替换），已叠多个的只读显示，
+要改去卡片里点，免得一个下拉把叠加的冲掉。
+同日还改了A级复盘的Setup分类：去掉A/B/C/D/E/W字母前缀只写名字；回踩类只留 pullback 一个
+（9ema/20ema/50ma 全并进去）；新增 episodic pivot（判据是「催化剂+当天放量突破/跳空」，
+光看"财报"会误判——PNC/BNY是tight/三重底、EQT那条是"本周无财报"）。
+
 v3.3（2026-07-30，卖后追踪改互斥单选）：Vic反馈"卖飞了吗/是shakeout or liquidity grab吗/是否卖在
 突破向下"这几个问题不会同时发生，undercut后追入了吗是shakeout的二阶追问，之前4个都平级摆成独立
 是/否/未评，容易填出自相矛盾的组合（比如同一笔既标是shakeout又标卖在突破向下）。改成一个互斥单选
@@ -80,7 +90,11 @@ def migrate(store):
                                  if t.get("stop_initial") else [])
         t.setdefault("review", {"sell_fly": None, "undercut": None, "chase_reentry": None,
                                 "breakdown_sell": None, "note": ""})
-        t["review"].setdefault("window", None)   # 复盘周期 3d/1w/2w（2026-08-08 Vic）
+        t["review"].setdefault("window", None)   # 复盘周期（2026-08-08 Vic）
+        # 2026-08-20 Vic："3天5天不再区分"——3d/5d 合并成 3-5d。1w/2w 那7笔保持原样
+        # （UI里当"旧"标签显示）。幂等：已经是 3-5d 的不动。
+        if t["review"].get("window") in ("3d", "5d"):
+            t["review"]["window"] = "3-5d"
         for l in t.get("legs", []):
             l.setdefault("decision_score", None)
         # v4（2026-08-07）：决策分从"每leg一个"改成"每笔交易一个"（Vic：一天4进4出要评8次受不了）。
@@ -105,6 +119,15 @@ def migrate(store):
         if t.get("no_setup") and not t.get("setup_type"):
             t["setup_type"] = "No Setup"
         t.setdefault("no_setup", False)      # 已退役，保留字段只为兼容老数据不报错
+        # 2026-08-20：setup_type 从单选改多选（Vic："有时候有几个setup叠加"）。
+        # 存成数组，老数据的字符串原样包成单元素数组，值一个都不改。幂等。
+        _st = t.get("setup_type")
+        if _st is None or _st == "":
+            t["setup_type"] = []
+        elif isinstance(_st, str):
+            t["setup_type"] = [_st]
+        elif isinstance(_st, list):
+            t["setup_type"] = [s for s in _st if s]
         # catalyst字段2026-08-08废弃（Vic："催化剂我会在买入逻辑里面写"），
         # 不再有输入框；老数据里已有的值保留不删，卡片上还照常显示。
         t.setdefault("catalyst", "")
@@ -229,6 +252,9 @@ body{font-size:16px}
 .tagbtn{cursor:pointer;border:1px dashed var(--line);background:#fff;border-radius:7px;padding:3px 10px;font-size:12.5px;color:var(--muted)}
 .tagbtn:hover{background:var(--blue-bg);border-color:#c3d6f5;color:var(--blue)}
 .tagbtn.on{border-style:solid;background:var(--red-bg);border-color:#eccabf;color:var(--red);font-weight:700}
+/* 2026-08-20 Vic："setup类型，我不想要选择的是红色…改成蓝色"——红那套是执行动作/状态在用
+   （记的是做错了什么，红才对），setup 没有好坏之分，用跟卡片上 .chip.setup 同一个蓝 */
+.tagbtn.setupbtn.on{background:var(--blue-bg);border-color:#c3d6f5;color:var(--blue)}
 /* v5.1 表单控件统一：字段行 + 分段按钮，所有控件等高，不再混裸checkbox */
 .frow{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:4px}
 .fld{display:flex;flex-direction:column;min-width:0}
@@ -403,7 +429,18 @@ pre.dstext.vic{background:var(--blue-bg)}
 <footer class="source"><p>数据单一来源：data/tradebook.json。Claude的盘后脚本会保留你在这里做的所有修改。</p></footer>
 </main>
 <script>
-const SETUPS = ["Momentum Burst","Episodic Pivot","Base Breakout","Pullback","No Setup"];
+// 2026-08-20 Vic 加了 Spring / Shakeout。**这两个是按跌破后收回的快慢分的**（Vic原话：
+// "spring是很快收回，shakeout是好几天的"）——不是同一件事的两种叫法，别再合并。
+// 大小写跟这一行原有的几个保持一致，免得分解表里混着大小写。No Setup 固定放最后。
+const SETUPS = ["Momentum Burst","Episodic Pivot","Base Breakout","Pullback","Spring","Shakeout","No Setup"];
+// 2026-08-20 Vic：「有时候有几个setup叠加」——setup_type 从单选字符串改成数组。
+// 老数据（字符串/null）在 migrate() 里已经统一成数组，但页面可能碰到没跑过migrate的
+// 手改数据，所以读的时候一律过这个函数，别直接用 t.setup_type。
+function setupsOf(t){
+  const v = t && t.setup_type;
+  if(Array.isArray(v)) return v.filter(Boolean);
+  return v ? [v] : [];
+}
 let state = __DATA__;
 // 2026-07-28 Vic：「tradebook里面开一个新的标签页，继续setup A历史」——
 // 数据源是 data/setup_track.json（Claude维护的Setup台账），构建时独立注入，
@@ -416,7 +453,7 @@ let searchQuery = "";
 let closedFilters = new Set();  // 已平仓筛选：daytrade/mentor/win/lose/sellfly/shakeout/breakdown
 let expandedIds = new Set();    // 已平仓卡片默认折叠，点击展开的id集合
 const EXIT_TAGS = ["板块转弱","fakeout","大市不好","减仓观望","setup failed"];
-const ENTRY_TAGS = ["突破buy point","tight盘整","shakeout+LG","板块强势","回踩支撑","巨量","财报事件","日内突破"];
+const ENTRY_TAGS = ["突破buy point","tight盘整","shakeout+LG","板块强势","回踩支撑","巨量","财报事件","日内突破","朋友喊单"];
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -469,7 +506,7 @@ function collapsedRow(t, c){
   const mini = [];
   if(t.day_trade) mini.push('<span class="chip daytrade">日内</span>');
   if(t.mentor) mini.push('<span class="chip setup">👨‍🏫</span>');
-  if(t.setup_type) mini.push('<span class="chip setup">'+esc(t.setup_type)+'</span>');
+  setupsOf(t).forEach(s=>mini.push('<span class="chip setup">'+esc(s)+'</span>'));
   if(OC[oc]) mini.push('<span class="chip '+(oc==='breakdown'?'planned':'unplanned')+'">'+OC[oc]+'</span>');
   const pnl = c.realized==null ? '<span class="pnl">—</span>'
     : '<span class="pnl '+(c.realized>0?'up':'dn')+'">'+(c.realized>=0?'+':'')+fmt(c.realized)
@@ -490,13 +527,10 @@ function tradeCard(t){
   if(t.status==="closed" && !expandedIds.has(t.id)) return collapsedRow(t, c);
   const hd = holdDays(t);
   const chips = [];
-  if(t.setup_type) chips.push('<span class="chip setup">'+esc(t.setup_type)+'</span>');
+  setupsOf(t).forEach(s=>chips.push('<span class="chip setup">'+esc(s)+'</span>'));
   if((t.catalyst||"").trim()) chips.push('<span class="chip">催化：'+esc(t.catalyst)+'</span>');
-  // 日内/跟老师的没有planned一说，只有自主非日内交易才显示
-  if(!t.day_trade && !t.mentor){
-    if(t.planned===true) chips.push('<span class="chip planned">Planned</span>');
-    if(t.planned===false) chips.push('<span class="chip unplanned">Unplanned</span>');
-  }
+  // Planned/Unplanned chip 2026-08-20 撤掉（见 tradeForm 里的说明）。
+  // .chip.planned/.chip.unplanned 这两个CSS类别删——下面的执行动作和折叠行的结果chip还在用。
   (t.execution_flags||[]).forEach(f=>chips.push('<span class="chip unplanned">'+esc(f)+'</span>'));
   if(t.mentor) chips.push('<span class="chip setup">👨‍🏫 跟老师</span>');
   if(t.day_trade) chips.push('<span class="chip daytrade">日内</span>');
@@ -652,15 +686,23 @@ function tradeForm(t){
   const seg = (opts, cur, onclickFn) => '<div class="seg">'+opts.map(([v,l])=>
     '<button type="button" class="segbtn'+(v===cur?' on':'')+'" onclick="'+onclickFn+'(\''+t.id+'\',\''+v+'\')">'+esc(l)+'</button>').join('')+'</div>';
   const tog = (on, label, fn) => '<button type="button" class="segbtn tog'+(on?' on':'')+'" onclick="'+fn+'(\''+t.id+'\')">'+esc(label)+'</button>';
-  const marks = '<div class="seg">'+tog(dt,'日内','toggleDT')+tog(mentor,'跟单','toggleMentor')
-    +(noLogic?'':tog(t.planned===true,'Planned','togglePlanned'))+'</div>';
+  // planned 2026-08-20 退役（Vic："planned按钮没有用，市场是很多变的"）——按钮和卡片chip都撤了，
+  // 字段和老数据保留不删（同 no_setup 的处理），免得历史记录里那些标记凭空消失。
+  const marks = '<div class="seg">'+tog(dt,'日内','toggleDT')+tog(mentor,'跟单','toggleMentor')+'</div>';
   return '<div class="trade"><div class="editform">'
     +'<div class="frow">'
     +'<div class="fld grow"><label>Ticker</label><input id="f_ticker" value="'+esc(t.ticker)+'"></div>'
     +'<div class="fld"><label>账户</label>'+seg([["moomoo","moomoo"],["longbridge","LongBridge"]], t.account, "setAccount")+'</div>'
     +'<div class="fld"><label>标记</label>'+marks+'</div>'
     +(dt ? '<div class="fld"><label>交易日期</label><input type="date" id="f_tradedate" value="'+esc(tradeDate)+'"></div>' : '')
-    +(dt ? '' : '<div class="fld grow"><label>Setup类型</label><select id="f_setup" onchange="onSetupChange(\''+t.id+'\')"><option value=""'+(t.setup_type==null?' selected':'')+'>-</option>'+SETUPS.map(s=>opt(s,t.setup_type)).join('')+'</select></div>')
+    // Setup 多选（2026-08-20）：跟"执行动作/状态"那两组一样用 tagbtn 点选，值存在 state 里，
+    // 不是 DOM 控件——所以 commitFormLight/saveEdit 不要再去读 #f_setup。
+    +(dt ? '' : '<div class="fld grow" style="flex-basis:100%"><label>Setup类型（可多选叠加）</label>'
+        +'<div class="tagbtns" id="f_setup">'+SETUPS.map(s=>{
+            const on = setupsOf(t).includes(s);
+            return '<span class="tagbtn setupbtn'+(on?' on':'')+'" onclick="toggleSetup(\''+t.id+'\',\''+s+'\')">'
+                   +(on?'✓ ':'+ ')+esc(s)+'</span>';
+          }).join('')+'</div></div>')
     +'</div>'
     +'<div class="dslabel">LEGS</div>'
     +'<table class="mini"><thead><tr>'+(dt?'':'<th>日期</th>')+'<th>动作</th><th>股数</th><th>价格</th><th>执行笔记</th><th></th></tr></thead><tbody>'+legRows+'</tbody></table>'
@@ -685,10 +727,11 @@ function tradeForm(t){
 }
 
 // 复盘（2026-08-08合并：原来"卖后复盘"标题下面还有个"卖后结果"标签，同一件事写了两行，Vic抓到了）。
-// 复盘周期：原为3天/1周/2周；2026-08-11 Vic改成**只看3天和5天**。
-// 旧的1w/2w已有7笔选过（5笔1周、2笔2周），不删也不硬改成新值——把旧标签当成额外一个按钮
-// 显示出来（灰色标"旧"），数据看得见、点一下能取消，不至于变成看不见的孤儿。
-const REVIEW_WINDOWS = [["3d","3天"],["5d","5天"]];
+// 复盘周期：原为3天/1周/2周；2026-08-11 改成只看3天和5天；
+// 2026-08-20 Vic："3天5天不再区分"——并成一个"3-5天"。老的 3d/5d 在 migrate() 里统一
+// 迁成 3-5d（63笔：37笔3天+26笔5天），只是两个桶合一，没有笔数丢失。
+// 1w/2w 那7笔仍按旧规矩当额外按钮显示（灰色标"旧"），看得见也点得掉，不留看不见的孤儿。
+const REVIEW_WINDOWS = [["3-5d","3-5天"]];
 const LEGACY_WINDOWS = {"1w":"1周","2w":"2周"};
 function reviewBlock(t){
   const oc = outcomeFromReview(t.review);
@@ -714,8 +757,7 @@ function setReviewWindow(id, w){
 }
 function setAccount(id, acct){ commitFormLight(id); const t=state.trades.find(x=>x.id===id);
   t.account = acct; markDirty(); render(); }
-function togglePlanned(id){ commitFormLight(id); const t=state.trades.find(x=>x.id===id);
-  t.planned = !(t.planned===true); markDirty(); render(); }
+// togglePlanned 2026-08-20 随按钮一起删（Vic："planned按钮没有用，市场是很多变的"）
 
 // 执行质量：3档 + 问题标签。**刻意跟盈亏解耦**——
 // 2026-08-07 Vic："很多我不知道怎么评12345，我都写了3…基本上亏钱就是1，赚钱就是5，我觉得这个逻辑上要改的"。
@@ -774,8 +816,18 @@ function toggleExecFlag(id, f){
   if(i>=0) t.execution_flags.splice(i,1); else t.execution_flags.push(f);
   markDirty(); render();
 }
-function onSetupChange(id){ commitFormLight(id); const t = state.trades.find(x=>x.id===id);
-  t.setup_type = $("#f_setup").value || null; markDirty(); render(); }
+// Setup 多选：点一下加，再点一下去掉（2026-08-20 Vic："有时候有几个setup叠加"）。
+// 先 commitFormLight 捕获表单里已填的其他字段，否则点标签触发 render 会把没保存的输入冲掉
+// （跟 ticker 那个老bug同类，见 v3.1 说明）。
+function toggleSetup(id, s){
+  commitFormLight(id);
+  const t = state.trades.find(x=>x.id===id);
+  const cur = setupsOf(t);
+  const i = cur.indexOf(s);
+  if(i>=0) cur.splice(i,1); else cur.push(s);
+  t.setup_type = cur;
+  markDirty(); render();
+}
 
 function readTri(id){ const v = $("#"+id).value; return v==="yes" ? true : (v==="no" ? false : null); }
 
@@ -812,9 +864,8 @@ function commitEdit(id){
   });
   t.stop_history = (t.stop_history||[]).filter(s=>s.stop!=null);  // 没填数字的占位行自动清掉
   t.ticker = $("#f_ticker").value.trim().toUpperCase();
-  t.setup_type = $("#f_setup") ? ($("#f_setup").value || null) : t.setup_type;
-  // 日内/跟单没有planned一说，字段留null
-  if(t.day_trade || t.mentor) t.planned = null;
+  // setup_type 现在是 tagbtn 多选、值直接存在 state 里（见 toggleSetup），
+  // 这里千万别再从 #f_setup 读 .value——它已经是个 div，读出来是 undefined，会把整个数组清空。
   t.entry_logic = $("#f_entry_logic") ? $("#f_entry_logic").value : t.entry_logic;
   t.exit_logic = $("#f_exit_logic") ? $("#f_exit_logic").value : t.exit_logic;
   t.execution_note = $("#f_exec_note") ? $("#f_exec_note").value : t.execution_note;
@@ -846,9 +897,9 @@ function startEdit(id){
 }
 function cancelEdit(){ editing = null; render(); }
 function toggleDT(id){ commitFormLight(id); const t = state.trades.find(x=>x.id===id);
-  t.day_trade = !t.day_trade; if(t.day_trade) t.planned = null; markDirty(); render(); }
+  t.day_trade = !t.day_trade; markDirty(); render(); }
 function toggleMentor(id){ commitFormLight(id); const t = state.trades.find(x=>x.id===id);
-  t.mentor = !t.mentor; if(t.mentor) t.planned = null; markDirty(); render(); }
+  t.mentor = !t.mentor; markDirty(); render(); }
 function addExitTag(id, tag){
   commitFormLight(id);
   const t = state.trades.find(x=>x.id===id);
@@ -889,7 +940,7 @@ function commitFormLight(id){
     if($("#f_entry_logic")) t.entry_logic=$("#f_entry_logic").value;
     if($("#f_exit_logic")) t.exit_logic=$("#f_exit_logic").value;
     if($("#f_exec_note")) t.execution_note=$("#f_exec_note").value;
-    if($("#f_setup")) t.setup_type=$("#f_setup").value||null;
+    // setup_type 不在这里读——它是 tagbtn 多选，值已经在 state 里（见 toggleSetup）
     if(!t.day_trade) applyReviewOutcome(t);
   }catch(e){}
 }
@@ -897,12 +948,17 @@ function addTrade(){
   const id = "NEW-"+Date.now();
   const today = new Date().toISOString().slice(0,10);
   state.trades.unshift({id, ticker:"", account:"moomoo", status:"open", entry_date:today, exit_date:null,
-    setup_type:null, planned:false, day_trade:false, mentor:false, stop_initial:null, target:null,
+    setup_type:[], planned:null, day_trade:false, mentor:false, stop_initial:null, target:null,
     thesis:"", entry_logic:"", exit_logic:"",
     stop_history:[{date:today, stop:null, note:"初始止损"}],
     legs:[{date:today, action:"buy", qty:0, price:null, decision_score:null, note:""}],
     review:{sell_fly:null,undercut:null,chase_reentry:null,breakdown_sell:null,note:""},
     execution_grade:null, execution_score:null, execution_quality:null, execution_flags:[]});
+  // 🔴2026-08-14修Vic报的"点新交易点不了"：搜索框有内容时，新建的交易ticker还是空的、
+  // 不匹配搜索词，会被过滤掉不显示——交易其实建出来了，但看起来像按钮坏了，
+  // 而且那笔空白交易还会悄悄堆在数据里。新建时直接清掉搜索词，保证新表单一定看得见。
+  searchQuery = "";
+  const sb = $("#searchbox"); if(sb) sb.value = "";
   editing = id; activeTab = "open"; markDirty(); render();
 }
 
@@ -982,7 +1038,7 @@ function matchesSearch(t){
   return (t.ticker||"").toLowerCase().includes(q)
     || (t.entry_logic||"").toLowerCase().includes(q)
     || (t.exit_logic||"").toLowerCase().includes(q)
-    || (t.setup_type||"").toLowerCase().includes(q);
+    || setupsOf(t).join(" ").toLowerCase().includes(q);
 }
 function matchesClosedFilters(t, c){
   for(const f of closedFilters){
@@ -1024,7 +1080,7 @@ function reviewOverdue(t){
 function todoMissing(t){
   const miss = [];
   if(t.status!=="closed") return miss;
-  if(!t.day_trade && !t.setup_type) miss.push("setup");
+  if(!t.day_trade && !setupsOf(t).length) miss.push("setup");
   // 日内和跟老师的都不写买卖逻辑（日内：Vic"没有买入逻辑和卖出逻辑，只写执行笔记"）
   if(!t.day_trade && !t.mentor && !(t.entry_logic||"").trim()) miss.push("买入逻辑");
   if(!t.mentor && !t.execution_quality) miss.push("执行质量");
@@ -1036,7 +1092,9 @@ function todoMissing(t){
 function updateTodoField(id, field, value){
   const t = state.trades.find(x=>x.id===id);
   if(!t) return;
-  if(field==="setup") t.setup_type = value||null;
+  // 「待补齐」表格一行太窄放不下多选，这里选一个就**替换**整个数组。
+  // 已经叠了多个的行不给下拉（见 todoRow），免得一不小心把叠加的几个冲成一个。
+  if(field==="setup") t.setup_type = value ? [value] : [];
   else if(field==="execq"){ t.execution_quality = value||null; if(value==="clean"||!value) t.execution_flags=[]; }
   else if(field==="entry") t.entry_logic = value;
   else if(field==="outcome"){
@@ -1056,7 +1114,10 @@ function todoRow(t){
     +'<td><b>'+esc(t.ticker)+'</b><br><span class="muted" style="font-size:11.5px">'+esc(t.exit_date||t.entry_date||'')+'</span></td>'
     +'<td class="'+(c.realized>0?'up':(c.realized<0?'dn':''))+'" style="font-variant-numeric:tabular-nums;font-weight:700">'+pnl+'</td>'
     +(t.day_trade ? '<td class="muted">日内</td>'
-      : '<td><select onchange="updateTodoField(\''+t.id+'\',\'setup\',this.value)"><option value=""'+(t.setup_type==null?' selected':'')+'>-</option>'+SETUPS.map(s=>opt(s,t.setup_type)).join('')+'</select></td>')
+      : setupsOf(t).length>1
+        // 已经叠了多个：只读显示，改要去卡片里点（下拉一选就会把叠加的冲掉）
+        ? '<td>'+setupsOf(t).map(s=>'<span class="chip setup">'+esc(s)+'</span>').join(' ')+'</td>'
+        : '<td><select onchange="updateTodoField(\''+t.id+'\',\'setup\',this.value)"><option value=""'+(setupsOf(t).length?'':' selected')+'>-</option>'+SETUPS.map(s=>opt(s,setupsOf(t)[0]||null)).join('')+'</select></td>')
     +((t.mentor||t.day_trade) ? '<td class="muted">'+(t.mentor?'跟老师':'日内')+'</td>'
       : '<td><input placeholder="标签/短语" value="'+esc(t.entry_logic||"")+'" onchange="updateTodoField(\''+t.id+'\',\'entry\',this.value)"></td>')
     +(t.mentor ? '<td class="muted">—</td>'
@@ -1094,8 +1155,10 @@ function monthlyChart(done){
 function setupBreakdown(done){
   const by = {};
   done.forEach(x=>{
-    const k = x.t.day_trade ? '日内' : (x.t.setup_type || '未标注');
-    (by[k] = by[k]||[]).push(x);
+    // 多选后一笔可能叠了几个setup，每个都记一次（跟A级复盘的共振单同样算法）。
+    // 所以各行笔数之和会大于总笔数——问的是"哪个方法赚钱"，叠加单要在每个成分里都算。
+    const ks = x.t.day_trade ? ['日内'] : (setupsOf(x.t).length ? setupsOf(x.t) : ['未标注']);
+    ks.forEach(k=>(by[k] = by[k]||[]).push(x));
   });
   const rows = Object.entries(by).sort((a,b)=>b[1].length-a[1].length).map(([k,xs])=>{
     const wins = xs.filter(x=>x.c.realized>0).length;
@@ -1122,19 +1185,24 @@ function saScore(items){
   const dec = h+p+m;
   return {h,p,m,e,n,dec, rate: dec?h/dec:null, weighted: dec?(h+0.5*p)/dec:null};
 }
-// Setup字母的全名（2026-08-08 Vic："我一直忘记他们是什么"）。保留字母前缀方便跟报告里的写法对上，
-// 后面接一个短到能塞进表格的中文描述——定义见CONTEXT.md「选股规则」。
+// Setup字母的全名（2026-08-08 Vic："我一直忘记他们是什么"）。
 // 全部用Vic自己的叫法（2026-08-08他口述：a=9ema pullback / b=tight / c=fakeout /
 // d=pullback / e=spring / w=double wick）。注意两点：
 // ①W他叫double wick，台账旧条目写的是"双底/三重底"，指同一个东西；
 // ②B他明确"只有tight"——不追已经突破跑远的（见CONTEXT.md Setup B 2026-08-08修订）。
+// 2026-08-20 Vic：表里不再显示 A/B/C/D/E/W 字母前缀，只写名字（字母仍是内部key，
+// 报告正文里"Setup A + B"那种写法不受影响）。
+// 同日Vic定：回踩类**只保留 pullback 一个类别**——9ema(原A)/20ema/50ma 全并进去，
+// 跟台账那边的 setup 下拉框（Momentum Burst/Episodic Pivot/Base Breakout/Pullback/No Setup）
+// 保持一套词表。所以这里没有 A，A 在 saSetupTags 末尾被改写成 D。
 const SETUP_FULL = {
-  A: "A·9ema pb",
-  B: "B·tight",
-  C: "C·fakeout",
-  D: "D·pullback",
-  E: "E·spring",
-  W: "W·2 wick",
+  EP: "episodic pivot",
+  SHK: "shakeout",
+  B: "tight",
+  C: "fakeout",
+  D: "pullback",
+  E: "spring",
+  W: "2 wick",
 };
 const setupLabel = k => SETUP_FULL[k] || k;
 
@@ -1149,12 +1217,39 @@ function saSetupTags(s){
     if(/^(A|B|C|D|E|EW|W)$/.test(up)) tags.add(up==='EW'?'E':up);
   });
   // 中文描述兜底（有些条目只写了形态没写字母）
-  if(/回踩9EMA/.test(txt)) tags.add('A');
+  if(/回踩\s*9\s*EMA/i.test(txt)) tags.add('A');
+  // 20ema/50ma 回踩也算 pullback(D)（2026-08-20 Vic：不单独成类，前后一套词表）。
+  // 下面那条 D 的规则只认"突破+回踩"连写，抓不到"回踩50MA 支撑"这种，所以单独补。
+  // 必须锚定"回踩/pullback"再接均线，不能只匹配 20MA/50MA——报告里那几处是**距离度量**
+  // （"距20MA 仅0.69ATR"、"距50MA 2.16ATR"），是 Setup A/W 的佐证数据不是回踩形态，
+  // 只认均线名会把它们误判成 pullback。
+  if(/(?:回踩|pullback\s*(?:to\s*)?)\s*(?:20|50)\s*(?:EMA|MA|日均线|日线)/i.test(txt)
+     || /(?:20|50)\s*(?:EMA|MA)\s*(?:回踩|pb\b|pullback)/i.test(txt)) tags.add('D');
   if(/tight/i.test(txt)) tags.add('B');
   if(/undercut/i.test(txt)) tags.add('C');
   if(/突破.*回踩|回踩.*突破/.test(txt)) tags.add('D');
-  if(/shakeout|burst/i.test(txt)) tags.add('E');
+  // spring vs shakeout（2026-08-20 Vic：「spring是很快收回，shakeout是好几天的」——
+  // 按跌破后收回的快慢分，是两种setup不是一种）。他要改盘前报告的写法，之后直接从正文抓。
+  // 判据只认**写在setup名位置**的 "Setup spring" / "Setup shakeout"：全量71条里这两个标记
+  // 都是0命中，所以新规则一条历史都不会重新归类；而裸 shakeout 有2条（EQT/GOOGL）是
+  // 描述性用词（Setup E 四层里的一层），不能拿来当判据。
+  // 老写法兜底：没写明是哪种时，shakeout/burst 仍照原样归 spring(E)，历史分类原封不动。
+  const spExplicit = /Setup\s*spring|\bspring\b/i.test(txt);
+  const shkExplicit = /Setup\s*shakeout/i.test(txt);
+  if(shkExplicit) tags.add('SHK');
+  if(spExplicit) tags.add('E');
+  if(!spExplicit && !shkExplicit && /shakeout|burst/i.test(txt)) tags.add('E');
   if(/双底|三重底|W底/.test(txt)) tags.add('W');
+  // episodic pivot（2026-08-20 Vic加）。光看"财报"会误判——PNC/BNY 是 tight/三重底，
+  // 财报只是佐证；EQT 那条更是"本周**无**财报"。EP 的本质是「催化剂 + 当天放量突破/跳空」，
+  // 所以要求两者同时出现，并排除"无财报"。历史59条里只有 ALAB 命中（原本掉在未标注）。
+  const epCat = /财报验证|财报\s*beat|业绩\s*beat|新闻催化|guidance/i.test(txt)
+                && !/无财报|没有财报/.test(txt);
+  const epSurge = /放量突破|跳空|gap\s*up/i.test(txt);
+  if(/\bEP\b|episodic\s*pivot/i.test(txt) || (epCat && epSurge)) tags.add('EP');
+  // 2026-08-20 Vic：取消 9ema pb 这个类别，回踩 9/20/50 均线一律并成 pullback。
+  // A 仍然要认（报告正文和历史条目里到处是"Setup A"、"回踩9EMA"），只是不再单独成行。
+  if(tags.has('A')){ tags.delete('A'); tags.add('D'); }
   return tags.size ? [...tags] : ['未标注'];
 }
 // sector也是自由文本（"XLF/IAK保险"、"网安CIBR + 软件IGV"），抽主板块代码
@@ -1377,10 +1472,14 @@ const REQUIRED_RE = /^(f_ticker|lg_q_\d+|lg_p_\d+|st_s_0)$/;
 // 日内是当天进出，止损位不构成过夜风险边界，R 也算不出有意义的值；
 // 填了只是为了让红框消失的假数据。**非日内仍然必填**，那是真正的风控。
 const REQUIRED_RE_DT = /^(f_ticker|lg_q_\d+|lg_p_\d+)$/;
+// 宽基指数ETF不设止损（2026-08-14 Vic："qqq voo我都不会设置止损的"）——长持仓位，
+// 不靠止损位管风险，也就不该标红逼着填。跟日内一样走免填名单。
+const NO_STOP_TICKERS = ["QQQ","VOO"];
 function paintEmpty(){
   // 日内标记在 state 里（分段按钮 toggleDT），不是 DOM checkbox——从正在编辑的那笔读
   const et = editing ? state.trades.find(x=>x.id===editing) : null;
-  const re = (et && et.day_trade) ? REQUIRED_RE_DT : REQUIRED_RE;
+  const noStop = et && (et.day_trade || NO_STOP_TICKERS.includes((et.ticker||"").toUpperCase()));
+  const re = noStop ? REQUIRED_RE_DT : REQUIRED_RE;
   document.querySelectorAll('.editform').forEach(form=>{
     form.querySelectorAll('input:not([type=checkbox]), textarea, select').forEach(el=>{
       if(!el.id || !re.test(el.id)){ el.classList.remove('empty-field'); return; }
@@ -1574,10 +1673,91 @@ loadFresh();
 """
 
 
+def check_integrity(store):
+    """录入体检（2026-08-19加）。
+
+    起因：查出两类**不报错、只让统计悄悄偏乐观**的历史错误——
+      - ARKK：买50股却记成卖58股（笔误），一笔止损亏损被算成 +502.50 的盈利，
+        金额和胜率同时被污染；对券商历史成交才发现实际是 -121.41。
+      - META：同一笔仓位被误拆成两笔，三条peel腿在两笔里各录了一次，
+        盈亏从真实的 +313.10 虚增成 +3777.36。
+    两者的共同特征是「买卖数量不平」，这一条检查很便宜，所以做成构建时硬闸门：
+    数量对不上就让 build 直接失败，而不是写进文档靠人记得去看。
+
+    硬失败：数量不平 / 状态与净持仓矛盾 / id重复（都是不会有例外的错）
+    只告警：跨交易的完全相同腿（重复录入的特征，但同价同量同日也可能是巧合，不拦构建）
+    """
+    trades = store.get("trades", [])
+    errors, warnings = [], []
+
+    seen_ids = {}
+    for t in trades:
+        tid = t.get("id")
+        if tid in seen_ids:
+            errors.append(f"id 重复：{tid}（{t.get('ticker')}）")
+        seen_ids[tid] = t
+
+    for t in trades:
+        tid, tk = t.get("id"), t.get("ticker")
+        legs = t.get("legs") or []
+        buy = sum(l.get("qty", 0) for l in legs if l.get("action") == "buy")
+        sell = sum(l.get("qty", 0) for l in legs if l.get("action") == "sell")
+        net = buy - sell
+        status = t.get("status")
+        if status == "closed":
+            if net != 0:
+                errors.append(
+                    f"{tk} {tid}：已平仓但买卖数量不平（买{buy}/卖{sell}，净{net:+d}）"
+                    f"——盈亏和胜率都会算错，核对券商成交记录后修正")
+            if not t.get("exit_date"):
+                errors.append(f"{tk} {tid}：状态是 closed 但 exit_date 是空的")
+        elif status == "open":
+            if legs and net <= 0:
+                errors.append(
+                    f"{tk} {tid}：状态是 open 但净持仓{net}（已经卖光了，应该标 closed 并填 exit_date）")
+            if t.get("exit_date"):
+                errors.append(f"{tk} {tid}：状态是 open 却填了 exit_date={t['exit_date']}")
+
+    # 空白腿：页面上点「加一笔」但没填完就保存，会留下 qty=0 / price 为空的腿。
+    # 不影响净持仓和盈亏（0股算出来就是0），所以硬闸门抓不到，但它是没录完的半成品，
+    # 每次构建提醒一次，别让它一直躺在数据里（2026-08-20 PURR 出现过）。
+    for t in trades:
+        for l in (t.get("legs") or []):
+            if not l.get("qty") or l.get("price") in (None, ""):
+                warnings.append(
+                    f"{t.get('ticker')} {t.get('id')}：有一条没填完的腿"
+                    f"（{l.get('date')} {l.get('action')} 数量={l.get('qty')} 价格={l.get('price')}）"
+                    f"——补完或删掉")
+
+    # 跨交易的完全相同腿：同一个 ticker+账户，同日同方向同量同价出现在两笔里 —— META那类重复录入的特征
+    by_leg = {}
+    for t in trades:
+        for l in (t.get("legs") or []):
+            key = (t.get("ticker"), t.get("account"), l.get("date"),
+                   l.get("action"), l.get("qty"), l.get("price"))
+            by_leg.setdefault(key, []).append(t.get("id"))
+    for key, ids in by_leg.items():
+        uniq = sorted(set(ids))
+        if len(uniq) > 1:
+            tk, acct, date, action, qty, price = key
+            warnings.append(
+                f"{tk}({acct}) {date} {action} {qty}@{price} 同时出现在 {len(uniq)} 笔里："
+                f"{', '.join(uniq)} —— 疑似同一批成交被重复录入，请核对")
+
+    for w in warnings:
+        print(f"  [告警] {w}")
+    if errors:
+        raise SystemExit(
+            "录入体检未通过，已中止构建（data/tradebook.json 未被改动）：\n  "
+            + "\n  ".join(f"[错误] {e}" for e in errors))
+    return len(warnings)
+
+
 def build():
     store = migrate(json.loads(TB_PATH.read_text(encoding="utf-8")))
     # 2026-08-08：改成导入**周报**总结（不再是每日盘后全文——Vic说日总结那页他不看）。
     import_summaries(store)
+    check_integrity(store)
     TB_PATH.write_text(json.dumps(store, ensure_ascii=False, indent=2), encoding="utf-8")
     data_js = json.dumps(store, ensure_ascii=False).replace("</", "<\\/")
     # Setup A历史（2026-07-28）：来源是 data/setup_track.json，构建时独立注入，

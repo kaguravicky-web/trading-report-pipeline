@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""反例测试：新加的检查到底抓不抓得住。
-   不测就等于又加了一条自我感觉良好的检查（2026-08-07 Vic：「你都是选个容易qa的qa」）。
-
-   加新 @check 时，在这里加一组反例——**至少要有一个「该抓」和一个「不该抓」**。
-"""
+"""反例测试：新加的检查到底抓不抓得住。\n不测就等于又加了一条自我感觉良好的检查（2026-08-07 Vic：「你都是选个容易qa的qa」）。\n\n加新 @check 时，在这里加一组反例——**至少要有一个「该抓」和一个「不该抓」**。\n"""
 import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.path.insert(0, r"D:\交易为生\scripts")
@@ -125,6 +121,117 @@ try:
     report("还原后重新变干净", False, bool(check_phase("", {})), "确认前面的改动已还原")
 finally:
     _H.PHASE1_FIELDS[:] = _p1
+
+# ==========================================================================
+# ④ 广度类对账条目每份最多 1 条（2026-08-17 定规则，2026-08-19 变成会失败的检查）
+#
+#    它要防的是「一个预测拆成三条，赌一次押三倍」——T2108 / 涨跌4%+家数 / 5日10日 ratio
+#    本来就是同一批数据的不同切法，对会一起对、错会一起错。
+#    **同时要测「盘后不查」**：recon_rows 是对盘前台账的机械复制，prob 和 claim 都不许改，
+#    在盘后报这个错等于让它为盘前的设计背锅，而且当天无法修复。
+# ==========================================================================
+print("\n── 广度类对账条目每份最多 1 条 ──")
+_HH = Q.helpers
+
+
+def _mk(*claims):
+    return [{"claim": c, "prob": 0.55} for c in claims]
+
+
+def _has_breadth_err(items, where="recon_ledger"):
+    return any("广度类押了" in e for e in _HH.validate_recon_ledger(items, where))
+
+
+_THREE = _mk("**今日涨 4%+ 家数回到 250 以上**", "**T2108 今日收盘 ≥50**",
+             "**10日 ratio 今日不跌破 1.80**", "**XLE 今日收在区间 50% 上方**")
+_TWO = _mk("**T2108 今日仍低于 50**", "**跌 4%+ 家数今日回落到 250 以下**",
+           "**SMH 今日收盘仍在 50MA 上方**", "**IGV 今日收盘区间位置 ≥40%**")
+_ONE = _mk("**T2108 今日仍低于 50**", "**SMH 今日收盘仍在 50MA 上方**",
+           "**IGV 今日收盘区间位置 ≥40%**", "**XLE 今日收在区间 50% 上方**")
+
+report("三条广度（8/17 真实台账）", True, _has_breadth_err(_THREE), "涨4%+ / T2108 / 10日ratio")
+report("两条广度（8/18 真实台账）", True, _has_breadth_err(_TWO), "T2108 / 跌4%+家数")
+report("只有一条广度", False, _has_breadth_err(_ONE), "这是规则允许的形态，不许误报")
+report("零条广度也不该抓", False,
+       _has_breadth_err(_mk("**SMH 今日收盘仍在 50MA 上方**", "**IGV 收盘区间 ≥40%**",
+                            "**XLE 收在区间 50% 上方**", "**VOO 守住 20MA**")), "全是价格类")
+report("盘后 recon_rows 不查这条", False, _has_breadth_err(_TWO, "recon_rows"),
+       "机械复制盘前台账，当天改不了")
+
+# ==========================================================================
+# ⑤ 拆股绊线：存疑的票不许印距52周高／距50MA（2026-08-19 建）
+#
+#    「该抓」用的是**真实的那次事故**：CRWD 2026-07-02 四拆一，
+#    不复权K线让距50MA 报 -42.07%（真值 +11.35%）、距52周高 报 -72.91%（真值 -6.41%）。
+#    「不该抓」两种都要测：没标记的票照印不算错、标记了但印 SPLIT_BLOCKED 是**正确写法**。
+# ==========================================================================
+print("")
+print("── 拆股存疑不许印距52周高／距50MA ──")
+check_split = next(f for n, f, _ in Q.CHECKS if n.startswith("拆股存疑的票"))
+_real_cache_for_report = Q._cache_for_report
+FAKE_DAY = "2026-08-18"
+FAKE_CACHE = {"data_date": FAKE_DAY, "adjust_type": "none", "metrics": {
+    "CRWD": {"close": 212.92, "off_52w_high_pct": -72.91, "dist_ma50_pct": -42.07,
+             "split_suspect": True,
+             "split_detail": [{"date": "2026-07-02", "prev_date": "2026-07-01",
+                               "gap_pct": -74.9, "implied_ratio": "4:1",
+                               "vol_restored_x": 0.74, "bars_ago": 33,
+                               "affected_windows": [50, 150, 200, 252]}]},
+    "PLTR": {"close": 171.54, "off_52w_high_pct": -17.34, "dist_ma50_pct": 25.83,
+             "split_suspect": False},
+}}
+# 打在 _cache_for_report 上：盘前/盘后的口径日解析规则不同（见该函数注释），
+# 打在 _cache_for_day 上盘前那条路根本不经过它
+Q._cache_for_report = lambda data: FAKE_CACHE if (data or {}).get("date") == FAKE_DAY else None
+_B = Q.helpers.SPLIT_BLOCKED
+
+
+def _d(rows):
+    return {"date": FAKE_DAY, "report_type": "premarket",
+            "ml_leaders_table": {"headers": [], "rows": rows}}
+
+
+report("存疑票印了距52周高", True,
+       bool(check_split("", _d([["CRWD", "212.92", "-72.91%", "读数"]]))), "CRWD -72.91%")
+report("存疑票印了距50MA(ATR)", True,
+       bool(check_split("", _d([["CRWD", "212.92", "-2.34×ATR", "读数"]]))), "CRWD -2.34×ATR")
+report("存疑票印 SPLIT_BLOCKED", False,
+       bool(check_split("", _d([["CRWD", "212.92", _B, "读数"]]))), "正确写法，不许误报")
+report("没标记的票照印", False,
+       bool(check_split("", _d([["PLTR", "171.54", "-17.34%", "读数"]]))), "PLTR 数据是好的")
+report("cache 里没人存疑", False,
+       bool(check_split("", {"date": "2026-01-01", "report_type": "premarket"})), "查不到 cache 不误报")
+
+Q._cache_for_report = _real_cache_for_report
+
+# ==========================================================================
+# ⑥ 距52周高 vs 独立源（2026-08-19 建）
+#
+#    这条**要联网**（Yahoo Chart API）。取不到独立源时它自己降级成提醒，
+#    所以这里两种结果都算通过——测的是「取到了的话判得对不对」。
+#    fixture 直接用真实的 2026-08-18 cache：CRWD 差 66.5pp 该抓、PLTR 差 0.0pp 不该抓。
+# ==========================================================================
+print("")
+print("── 距52周高 vs 独立源 ──")
+check_off52 = next(f for n, f, _ in Q.CHECKS if n.startswith("距52周高必须跟独立源"))
+_probe = Q._yahoo_off_52w("PLTR", "2026-08-18")
+if _probe is None:
+    print("   （独立源取不到——离线或被限流，本组跳过；这正是它降级成提醒的那条路径）")
+else:
+    def _d52(tk, val):
+        return {"date": "2026-08-18", "report_type": "premarket",
+                "ml_leaders_table": {"headers": [], "rows": [[tk, "1.00", val]]}}
+
+    r_bad = check_off52("", _d52("CRWD", "-72.91%"))
+    report("CRWD（cache -72.91 / 真值 -6.41）", True,
+           bool(r_bad) and not str(r_bad).startswith(Q.WARN_PREFIX), str(r_bad or "")[:44])
+    r_ok = check_off52("", _d52("PLTR", "-17.34%"))
+    report("PLTR（cache 和真值一致）", False,
+           bool(r_ok) and not str(r_ok).startswith(Q.WARN_PREFIX), str(r_ok or "")[:44])
+    r_slv = check_off52("", _d52("SLV", "-47.70%"))
+    report("SLV -47.7% 是真实回撤", False,
+           bool(r_slv) and not str(r_slv).startswith(Q.WARN_PREFIX), "不许把真跌当脏数据")
+
 
 print()
 print("反例测试" + ("全部通过——这些检查确实会抓东西" if ok else "有不通过项，检查逻辑要改"))

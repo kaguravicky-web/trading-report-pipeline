@@ -11,7 +11,8 @@
 
 一屏之内回答：
   ①口径日的 cache 在不在、data_date 对不对（价格必须来自口径日，2026-08-09 定）
-  ②三个前置脚本跑了没（fetch_market_data / fetch_earnings_calendar --date / scan_semis_rsi）
+  ②前置脚本跑了没（fetch_market_data / fetch_earnings_calendar --date / scan_semis_rsi
+    / position_manage —— 最后这个 2026-08-14 加，它的口径日在文件内容里不在文件名里）
   ③当天盘前 JSON 在不在、recon_ledger 有几条（盘后要逐条对，plan/prob 机械复制不许改）
   ④Setup A 台账：盘前B 有没有漏跑 sync、今天有没有满窗待评定
   ⑤tradebook 持仓数 + 当天有没有成交腿（没有 ≠ 没交易，只是提醒你确认）
@@ -108,6 +109,15 @@ def main():
         if not fresh:
             print(f"         → {hint}")
 
+    # 持仓管理执行表（2026-08-14 接入 04 持仓跟踪）。单文件不带日期，口径靠里面的 data_date，
+    # 所以不能跟上面的 glob 一起查——不新鲜时报告那张表会整表空着显示 nodata。
+    pmf = CACHE / "position_manage.json"
+    pmd = json.loads(pmf.read_text(encoding="utf-8")).get("data_date") if pmf.exists() else None
+    print(f"    {mark(pmd == day)} {'持仓管理执行表（p14）':<22} "
+          f"{('data_date=' + pmd) if pmd else '-'}")
+    if pmd != day:
+        print(f"         → python scripts/position_manage.py")
+
     print(f"[3] 当天盘前 JSON（对账台账的来源）")
     pmp = DAILY / f"{day}-premarket.json"
     if pmp.exists():
@@ -117,7 +127,8 @@ def main():
               f"（模板会机械复制 plan+prob，**盘后不许改 prob**）")
         for it in led:
             print(f"         · [{it.get('prob')}] {str(it.get('claim'))[:46]}")
-        av = (pm.get("today_position") or {}).get("avoid") or []
+        tp = pm.get("today_position")
+        av = (tp.get("avoid") or []) if isinstance(tp, dict) else []
         if av:
             print(f"    提醒 盘前 avoid 清单 {len(av)} 条——**写迭代前先读一遍**，"
                   f"看正文和台账有没有自相矛盾（2026-08-10 就栽在这）")

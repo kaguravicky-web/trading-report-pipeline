@@ -41,6 +41,11 @@ ROOT = Path(__file__).resolve().parent.parent
 
 from longport.openapi import AdjustType, Config, Period, QuoteContext
 
+# 🔴 K线复权口径统一走 fetch_market_data.BARS_ADJUST（2026-08-19 定）——
+#    这里原本写死 NoAdjust，窗口跨过拆股就整段作废（CRWD 距50MA 报 -42% 真值 +11%）。
+import report_helpers as _H  # noqa: E402
+_ADJUST = _H.bars_adjust()
+
 
 def get_watchlist_symbols(ctx):
     symbols = []
@@ -131,7 +136,7 @@ def main():
         v = snap[tk]
         v["vol20"], v["vol_ratio_pm"] = None, None
         try:
-            bars = ctx.candlesticks(f"{tk}.US", Period.Day, 21, AdjustType.NoAdjust)
+            bars = ctx.candlesticks(f"{tk}.US", Period.Day, 21, _ADJUST)
             vols = [float(str(b.volume)) for b in bars if b.volume]
             if len(vols) >= 15:  # 新股/停牌股可能凑不满21根，15根起也能算个粗略基准
                 vol20 = sum(vols) / len(vols)

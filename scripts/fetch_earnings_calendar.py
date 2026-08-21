@@ -38,6 +38,28 @@ def fetch_day(d: str) -> list:
         return []
 
 
+# 🔴 主线读数股（2026-08-19 加，事故驱动）。
+# 事故：Fabrinet(FN) 2026-08-17 盘后发财报，营收/EPS 都超预期但毛利、自由现金流和下季利润指引不行，
+# 盘后先跌 ~7%、8/18 收跌 **-19.38%**，把整层 AI 光连接拖下水（AAOI -15.16%，同日 Vic 还日内做了两笔），
+# 也是 SMH 当天 -4.09% 丢掉 50MA 的直接推手之一。
+# **而 FN 在 8/17、8/18 两份财报日历里一次都没出现过**——因为 followed universe =
+# 持仓 + ML Leader + 防御篮子 + XL 板块成分；FN 是标普中盘股，三样都不沾。
+# 两个结构性缺口：
+#   ①票池只认「已经买了的」——**清仓之后财报雷达跟着一起清空**，恰恰是最需要盯住刚退出那一层的时候；
+#   ②一层里真正定价的往往是上游/代工（光模块看 FN、设备看 AMAT/LRCX），它们不在任何一只 XL 成分里。
+# 所以票池要额外常驻这批「读数股」：不持有也要知道它们哪天报、报完那层怎么走。
+READTHROUGH = [
+    # 光通信 / AI 连接（FN 是整层的代工枢纽）
+    "FN", "COHR", "LITE", "AAOI", "CRDO", "ALAB",
+    # 半导体设备 / 测试
+    "AMAT", "LRCX", "KLAC", "ASML", "TER", "KEYS", "ADI",
+    # 存储
+    "MU", "SNDK", "WDC", "STX",
+    # AI 算力主线
+    "NVDA", "AVGO", "MRVL", "AMD", "TSM", "SMCI", "DELL", "ANET",
+]
+
+
 def load_universe() -> set:
     """watchlist + 持仓 + ML Leader + 防御篮子 + ETF_Holdings.csv全部成分股——跟snap_premarket.py的
     Premarket Movers扫描范围同一套逻辑（2026-07-15 Vic扩大过一次）。**必须包含ETF_Holdings**：
@@ -56,6 +78,7 @@ def load_universe() -> set:
     sys.path.insert(0, str(ROOT / "scripts"))
     import fetch_market_data as F
     tickers |= set(F.ML_LEADERS) | set(F.DEFENSIVE) | set(F.LAODENG)
+    tickers |= set(READTHROUGH)   # 主线读数股常驻，不随持仓增减（2026-08-19，FN 事故）
 
     holdings_path = ROOT / "reference" / "ETF_Holdings.csv"
     if holdings_path.exists():

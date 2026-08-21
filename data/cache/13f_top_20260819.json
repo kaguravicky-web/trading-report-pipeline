@@ -1,0 +1,551 @@
+{
+ "Duquesne Family Office": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 89,
+  "aum_m": 5,
+  "top": [
+   {
+    "issuer": "NATERA INC",
+    "usd_m": 0.9,
+    "pct": 16.6
+   },
+   {
+    "issuer": "INSMED INC",
+    "usd_m": 0.3,
+    "pct": 5.68
+   },
+   {
+    "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+    "usd_m": 0.3,
+    "pct": 5.4
+   },
+   {
+    "issuer": "ISHARES INC",
+    "usd_m": 0.3,
+    "pct": 5.07
+   },
+   {
+    "issuer": "AMAZON COM INC",
+    "usd_m": 0.2,
+    "pct": 4.58
+   },
+   {
+    "issuer": "STMICROELECTRONICS N V",
+    "usd_m": 0.2,
+    "pct": 4.46
+   },
+   {
+    "issuer": "INVESCO EXCHANGE TRADED FD T",
+    "usd_m": 0.2,
+    "pct": 3.66
+   },
+   {
+    "issuer": "FOX CORP",
+    "usd_m": 0.1,
+    "pct": 2.78
+   },
+   {
+    "issuer": "YPF SOCIEDAD ANONIMA",
+    "usd_m": 0.1,
+    "pct": 2.74
+   },
+   {
+    "issuer": "CDW CORP",
+    "usd_m": 0.1,
+    "pct": 2.68
+   },
+   {
+    "issuer": "BBB FOODS INC",
+    "usd_m": 0.1,
+    "pct": 2.32
+   },
+   {
+    "issuer": "ALPHABET INC",
+    "usd_m": 0.1,
+    "pct": 2.31
+   },
+   {
+    "issuer": "SEAGATE TECHNOLOGY HLDNGS PL",
+    "usd_m": 0.1,
+    "pct": 2.26
+   },
+   {
+    "issuer": "UNITED AIRLS HLDGS INC",
+    "usd_m": 0.1,
+    "pct": 2.07
+   },
+   {
+    "issuer": "SEA LTD",
+    "usd_m": 0.1,
+    "pct": 2.02
+   }
+  ]
+ },
+ "Bridgewater Associates": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 990,
+  "aum_m": 24376,
+  "top": [
+   {
+    "issuer": "STATE STR SPDR S&AMP;P 500 ETF T",
+    "usd_m": 3973.0,
+    "pct": 16.3
+   },
+   {
+    "issuer": "ISHARES TR",
+    "usd_m": 2494.6,
+    "pct": 10.23
+   },
+   {
+    "issuer": "NVIDIA CORPORATION",
+    "usd_m": 773.6,
+    "pct": 3.17
+   },
+   {
+    "issuer": "ALPHABET INC",
+    "usd_m": 498.7,
+    "pct": 2.05
+   },
+   {
+    "issuer": "BROADCOM INC",
+    "usd_m": 497.8,
+    "pct": 2.04
+   },
+   {
+    "issuer": "ISHARES INC",
+    "usd_m": 496.5,
+    "pct": 2.04
+   },
+   {
+    "issuer": "AMAZON COM INC",
+    "usd_m": 482.8,
+    "pct": 1.98
+   },
+   {
+    "issuer": "LAM RESEARCH CORP",
+    "usd_m": 406.6,
+    "pct": 1.67
+   },
+   {
+    "issuer": "VANGUARD INDEX FDS",
+    "usd_m": 314.8,
+    "pct": 1.29
+   },
+   {
+    "issuer": "ADVANCED MICRO DEVICES INC",
+    "usd_m": 312.9,
+    "pct": 1.28
+   },
+   {
+    "issuer": "MICROSOFT CORP",
+    "usd_m": 265.6,
+    "pct": 1.09
+   },
+   {
+    "issuer": "NEWMONT CORP",
+    "usd_m": 251.7,
+    "pct": 1.03
+   },
+   {
+    "issuer": "APPLIED MATLS INC",
+    "usd_m": 210.7,
+    "pct": 0.86
+   },
+   {
+    "issuer": "ORACLE CORP",
+    "usd_m": 210.0,
+    "pct": 0.86
+   },
+   {
+    "issuer": "SEAGATE TECHNOLOGY HLDNGS PL",
+    "usd_m": 192.8,
+    "pct": 0.79
+   }
+  ]
+ },
+ "Situational Awareness LP": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 24,
+  "aum_m": 20242,
+  "top": [
+   {
+    "issuer": "SANDISK CORP",
+    "usd_m": 5673.7,
+    "pct": 28.03
+   },
+   {
+    "issuer": "MICRON TECHNOLOGY INC",
+    "usd_m": 5573.8,
+    "pct": 27.54
+   },
+   {
+    "issuer": "BLOOM ENERGY CORP",
+    "usd_m": 1942.9,
+    "pct": 9.6
+   },
+   {
+    "issuer": "TAIWAN SEMICONDUCTOR MANUFAC",
+    "usd_m": 1289.0,
+    "pct": 6.37
+   },
+   {
+    "issuer": "NEBIUS GROUP N.V.",
+    "usd_m": 1232.9,
+    "pct": 6.09
+   },
+   {
+    "issuer": "COREWEAVE INC",
+    "usd_m": 744.5,
+    "pct": 3.68
+   },
+   {
+    "issuer": "CORE SCIENTIFIC INC NEW",
+    "usd_m": 665.6,
+    "pct": 3.29
+   },
+   {
+    "issuer": "STMICROELECTRONICS",
+    "usd_m": 584.3,
+    "pct": 2.89
+   },
+   {
+    "issuer": "APPLIED DIGITAL CORP",
+    "usd_m": 469.0,
+    "pct": 2.32
+   },
+   {
+    "issuer": "RIOT PLATFORMS INC",
+    "usd_m": 468.2,
+    "pct": 2.31
+   },
+   {
+    "issuer": "SHARONAI HOLDINGS INC",
+    "usd_m": 456.8,
+    "pct": 2.26
+   },
+   {
+    "issuer": "IREN LIMITED",
+    "usd_m": 433.3,
+    "pct": 2.14
+   },
+   {
+    "issuer": "CLEANSPARK INC",
+    "usd_m": 178.6,
+    "pct": 0.88
+   },
+   {
+    "issuer": "KEEL INFRASTRUCTURE CORP",
+    "usd_m": 151.8,
+    "pct": 0.75
+   },
+   {
+    "issuer": "SOLARIS ENERGY INFRAS INC",
+    "usd_m": 90.9,
+    "pct": 0.45
+   }
+  ]
+ },
+ "Jane Street Group": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 4259,
+  "aum_m": 1205634,
+  "top": [
+   {
+    "issuer": "STATE STR SPDR S&AMP;P 500 ETF T",
+    "usd_m": 203494.1,
+    "pct": 16.88
+   },
+   {
+    "issuer": "INVESCO QQQ TR",
+    "usd_m": 66914.2,
+    "pct": 5.55
+   },
+   {
+    "issuer": "ISHARES TR",
+    "usd_m": 63852.4,
+    "pct": 5.3
+   },
+   {
+    "issuer": "MICRON TECHNOLOGY INC",
+    "usd_m": 61758.0,
+    "pct": 5.12
+   },
+   {
+    "issuer": "NVIDIA CORPORATION",
+    "usd_m": 39465.8,
+    "pct": 3.27
+   },
+   {
+    "issuer": "ADVANCED MICRO DEVICES INC",
+    "usd_m": 35400.7,
+    "pct": 2.94
+   },
+   {
+    "issuer": "ALPHABET INC",
+    "usd_m": 29994.9,
+    "pct": 2.49
+   },
+   {
+    "issuer": "TESLA INC",
+    "usd_m": 27398.3,
+    "pct": 2.27
+   },
+   {
+    "issuer": "SANDISK CORP",
+    "usd_m": 25342.8,
+    "pct": 2.1
+   },
+   {
+    "issuer": "SPDR GOLD TR",
+    "usd_m": 22864.9,
+    "pct": 1.9
+   },
+   {
+    "issuer": "AMAZON COM INC",
+    "usd_m": 21222.0,
+    "pct": 1.76
+   },
+   {
+    "issuer": "MICROSOFT CORP",
+    "usd_m": 19867.3,
+    "pct": 1.65
+   },
+   {
+    "issuer": "APPLE INC",
+    "usd_m": 17270.4,
+    "pct": 1.43
+   },
+   {
+    "issuer": "META PLATFORMS INC",
+    "usd_m": 17249.6,
+    "pct": 1.43
+   },
+   {
+    "issuer": "VANECK ETF TRUST",
+    "usd_m": 16064.0,
+    "pct": 1.33
+   }
+  ]
+ },
+ "ARK Investment": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 189,
+  "aum_m": 15403,
+  "top": [
+   {
+    "issuer": "TESLA INC",
+    "usd_m": 1160.8,
+    "pct": 7.54
+   },
+   {
+    "issuer": "ADVANCED MICRO DEVICES INC",
+    "usd_m": 822.8,
+    "pct": 5.34
+   },
+   {
+    "issuer": "SPACE EXPLORATION TECHNOLOGIES CORP",
+    "usd_m": 765.1,
+    "pct": 4.97
+   },
+   {
+    "issuer": "TEMPUS AI INC",
+    "usd_m": 580.6,
+    "pct": 3.77
+   },
+   {
+    "issuer": "ROBINHOOD MARKETS INC",
+    "usd_m": 525.1,
+    "pct": 3.41
+   },
+   {
+    "issuer": "CRISPR THERAPEUTICS AG",
+    "usd_m": 516.0,
+    "pct": 3.35
+   },
+   {
+    "issuer": "SHOPIFY INC",
+    "usd_m": 474.5,
+    "pct": 3.08
+   },
+   {
+    "issuer": "TWIST BIOSCIENCE CORP",
+    "usd_m": 468.1,
+    "pct": 3.04
+   },
+   {
+    "issuer": "ALPHABET INC",
+    "usd_m": 418.7,
+    "pct": 2.72
+   },
+   {
+    "issuer": "10X GENOMICS INC",
+    "usd_m": 383.5,
+    "pct": 2.49
+   },
+   {
+    "issuer": "AMAZON.COM INC",
+    "usd_m": 379.2,
+    "pct": 2.46
+   },
+   {
+    "issuer": "PALANTIR TECHNOLOGIES INC",
+    "usd_m": 374.8,
+    "pct": 2.43
+   },
+   {
+    "issuer": "COINBASE GLOBAL INC",
+    "usd_m": 367.1,
+    "pct": 2.38
+   },
+   {
+    "issuer": "ROBLOX CORP",
+    "usd_m": 351.6,
+    "pct": 2.28
+   },
+   {
+    "issuer": "BEAM THERAPEUTICS INC",
+    "usd_m": 351.3,
+    "pct": 2.28
+   }
+  ]
+ },
+ "NVIDIA": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 8,
+  "aum_m": 63440,
+  "top": [
+   {
+    "issuer": "INTEL CORP",
+    "usd_m": 29989.3,
+    "pct": 47.27
+   },
+   {
+    "issuer": "SPACE EXPLORATION TECHN CORP",
+    "usd_m": 20975.6,
+    "pct": 33.06
+   },
+   {
+    "issuer": "COREWEAVE INC",
+    "usd_m": 4699.6,
+    "pct": 7.41
+   },
+   {
+    "issuer": "COHERENT CORP",
+    "usd_m": 3072.2,
+    "pct": 4.84
+   },
+   {
+    "issuer": "NOKIA CORP",
+    "usd_m": 2209.7,
+    "pct": 3.48
+   },
+   {
+    "issuer": "SYNOPSYS INC",
+    "usd_m": 2150.8,
+    "pct": 3.39
+   },
+   {
+    "issuer": "NEBIUS GROUP N.V.",
+    "usd_m": 328.8,
+    "pct": 0.52
+   },
+   {
+    "issuer": "GENERATE BIOMEDICINES INC",
+    "usd_m": 14.1,
+    "pct": 0.02
+   }
+  ]
+ },
+ "Pershing Square": {
+  "status": "本季未申报"
+ },
+ "Berkshire Hathaway": {
+  "status": "ok",
+  "filed": "2026-08-14",
+  "n": 26,
+  "aum_m": 299254,
+  "top": [
+   {
+    "issuer": "APPLE INC",
+    "usd_m": 65950.3,
+    "pct": 22.04
+   },
+   {
+    "issuer": "AMERICAN EXPRESS CO",
+    "usd_m": 51282.3,
+    "pct": 17.14
+   },
+   {
+    "issuer": "ALPHABET INC",
+    "usd_m": 37764.1,
+    "pct": 12.62
+   },
+   {
+    "issuer": "COCA COLA CO",
+    "usd_m": 32508.0,
+    "pct": 10.86
+   },
+   {
+    "issuer": "BANK OF AMER CORP",
+    "usd_m": 27543.8,
+    "pct": 9.2
+   },
+   {
+    "issuer": "CHEVRON CORPORATION",
+    "usd_m": 13986.1,
+    "pct": 4.67
+   },
+   {
+    "issuer": "OCCIDENTAL PETE CORP",
+    "usd_m": 12868.2,
+    "pct": 4.3
+   },
+   {
+    "issuer": "CHUBB LIMITED",
+    "usd_m": 11670.1,
+    "pct": 3.9
+   },
+   {
+    "issuer": "MOODYS CORP",
+    "usd_m": 11173.4,
+    "pct": 3.73
+   },
+   {
+    "issuer": "KRAFT HEINZ CO",
+    "usd_m": 7691.5,
+    "pct": 2.57
+   },
+   {
+    "issuer": "DAVITA INC",
+    "usd_m": 6425.3,
+    "pct": 2.15
+   },
+   {
+    "issuer": "DELTA AIR LINES INC",
+    "usd_m": 5368.6,
+    "pct": 1.79
+   },
+   {
+    "issuer": "SIRIUSXM HOLDINGS INC",
+    "usd_m": 3686.8,
+    "pct": 1.23
+   },
+   {
+    "issuer": "VERISIGN INC",
+    "usd_m": 2261.5,
+    "pct": 0.76
+   },
+   {
+    "issuer": "KROGER CO",
+    "usd_m": 2165.7,
+    "pct": 0.72
+   }
+  ]
+ }
+}

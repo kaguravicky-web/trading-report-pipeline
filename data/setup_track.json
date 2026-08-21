@@ -621,8 +621,8 @@
    "entry": "盘中放量动量bar触发；@bluechipdaily 的周线新高线 **203.08 已站上**（8/4收211.22）",
    "invalid": "跌破 197.36（9EMA）且不收回",
    "target": "235（前高区）",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-05",
@@ -634,8 +634,8 @@
    "entry": "回踩 9EMA 177.19 缩量不破",
    "invalid": "跌破 173.50（9EMA 下方留 0.5ATR）",
    "target": "215",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-05",
@@ -647,8 +647,8 @@
    "entry": "盘中放量动量bar触发",
    "invalid": "跌破 115.91（9EMA）",
    "target": "135",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-05",
@@ -660,8 +660,8 @@
    "entry": "**等回踩** —— 现价距52周高仍 -27.59%，但 8/4 单日已 +12.65%",
    "invalid": "跌破 8/4 缺口下沿",
    "target": "—",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-06",
@@ -673,8 +673,8 @@
    "entry": "—",
    "invalid": "—",
    "target": "—",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-07",
@@ -686,8 +686,8 @@
    "entry": "盘前 +0.02%，约 357.8",
    "invalid": "跌破 **349.80**（信号日低点 356.88 下方 0.5×ATR）",
    "target": "382",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "miss"
   },
   {
    "date": "2026-08-07",
@@ -699,8 +699,8 @@
    "entry": "盘前 +0.28%，约 388.0",
    "invalid": "跌破 **380.20**（信号日低点 384.78 下方 0.5×ATR）",
    "target": "410",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "partial"
   },
   {
    "date": "2026-08-07",
@@ -712,8 +712,8 @@
    "entry": "盘前 +0.17%，约 583.8",
    "invalid": "跌破 **568.60**（信号日低点 577.81 下方 0.5×ATR）",
    "target": "615",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "partial"
   },
   {
    "date": "2026-08-10",
@@ -725,8 +725,8 @@
    "entry": "盘前 +0.69%，约 430.7",
    "invalid": "跌破 **413.31**（8/7 低点下方 0.5×ATR）",
    "target": null,
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "expired"
   },
   {
    "date": "2026-08-10",
@@ -738,8 +738,8 @@
    "entry": "盘前 +0.72%，约 356.8",
    "invalid": "跌破 **347.35**（8/7 低点下方 0.5×ATR）",
    "target": null,
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "miss"
   },
   {
    "date": "2026-08-10",
@@ -751,8 +751,8 @@
    "entry": "盘前 +0.19%，约 160.0",
    "invalid": "跌破 **155.00**（8/7 低点下方 0.5×ATR）",
    "target": null,
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "miss"
   },
   {
    "date": "2026-08-11",
@@ -764,8 +764,8 @@
    "entry": "盘前 -0.33%（357.52 → 约 356.3）。**回踩型不追**，开盘后在 9EMA 355.6 上方企稳再看",
    "invalid": "**收盘跌破 9EMA 355.60**（回踩论点直接作废）",
    "target": "前高 366.5 附近，R:R 约 1.9",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "miss"
   },
   {
    "date": "2026-08-12",
@@ -777,8 +777,8 @@
    "entry": "—",
    "invalid": "—",
    "target": "—",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "无候选（占位记录，非跟踪标的）"
   },
   {
    "date": "2026-08-13",
@@ -790,8 +790,8 @@
    "entry": "🔴**触发：决定性收上 214.89**（8/05 高点）后进，约 215.00",
    "invalid": "**跌破 197.90**（8/12 低点 203.76 下方 2.88% ≈ 0.54ATR，满足框架的最小缓冲）",
    "target": "前高上方无阻力参照，先按 1:2 看约 237",
-   "status": "tracking",
-   "verdict": null
+   "status": "closed",
+   "verdict": "miss"
   },
   {
    "date": "2026-08-13",
@@ -803,6 +803,240 @@
    "entry": "突破 5 日高点确认后进",
    "invalid": "跌破 5 日低点",
    "target": "—",
+   "status": "closed",
+   "verdict": "miss"
+  },
+  {
+   "date": "2026-08-14",
+   "ticker": "IOT",
+   "grade": "A",
+   "source": "**Vic 自选**（8/14 盘中给的七只之一）",
+   "setup": "**Setup A：回踩 9EMA**。tight5 成立、5 日区间 6.62%/1.22ATR、Stage 2 上升",
+   "sector": "XLK / 软件（Samsara）",
+   "entry": "🔴**不追现价 41.14。等回踩 9EMA 39.38 附近**（约 -4.3%）",
+   "invalid": "**跌破 38.10**（8/13 低点 39.34 下方 3.15%，过硬校验的 max(0.5ATR,1%)=2.91%）",
+   "target": "前高上方无参照，按 1:2 看约 41.9（自 9EMA 入场算）",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-14",
+   "ticker": "ADP",
+   "grade": "A",
+   "source": "**Vic 自选**",
+   "setup": "**Setup A + B：tight 整理 + 回踩 9EMA**。5 日区间 3.97%/1.45ATR（全组最紧）",
+   "sector": "XLI / 人力资本软件",
+   "entry": "🔴**不追现价 276.23。等回踩 9EMA 270.60**（约 -2.0%）",
+   "invalid": "**跌破 264.20**（8/13 低点 268.73 下方 1.69%，硬校验要求 ≥1.62%）",
+   "target": "—",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-17",
+   "ticker": "MRAM",
+   "grade": "A",
+   "source": "🎯**Vic 自选**",
+   "setup": "**8/14 突破日**：实体 **+10.73%**、收当日区间 **98%**、量比 1.25×（放量）。Stage 2，距 50MA 仅 -0.3ATR（正在收复）",
+   "sector": "存储 · MRAM/MLCC",
+   "entry": "ADR **8.68%** ｜ **0.5ADR = 当日低点 +0.82 点** ｜ **1.0ADR = +1.64 点**（周五低点 17.04 → 17.86 / 18.68；今天开盘后用当日低点重算）",
+   "invalid": "**跌破 16.25**（8/14 低点 17.04 下方 4.63%，过硬校验的 max(0.5ATR,1%)=4.50%）",
+   "target": "—",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-17",
+   "ticker": "SPCX",
+   "grade": "A",
+   "source": "🎯**Vic 自选 + @RichardMoglen 同日点名**",
+   "setup": "「**tightening in a range**」（他原话）。收区间 53%、量比 0.86×（缩量）、距 9EMA +4.98%",
+   "sector": "太空",
+   "entry": "ADR **8.01%** ｜ **0.5ADR = 当日低点 +5.60 点** ｜ **1.0ADR = +11.21 点**（周五低点 135.50 → 141.10 / 146.71）",
+   "invalid": "**跌破 129.80**（周五低点 135.50 下方 4.21%，过硬校验的 max(0.5ATR,1%)=4.01%）",
+   "target": "—",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-18",
+   "ticker": "AMAT",
+   "grade": "A",
+   "source": "方法1 · 单边榜第一 EUV → 下钻成分股",
+   "setup": "**Stage 2，距 9EMA 仅 +1.37%**、周一 +5.55% 收区间 **82%**、放量 **1.25×**、距 50MA -0.7ATR（**和 SMH 一样正在收复**）",
+   "sector": "半导体设备（EUV 下钻）",
+   "entry": "ADR **5.38%** ｜ **0.5ADR = 当日低点 +14.4 点** ｜ **1.0ADR = +28.8 点**（开盘后用当日低点重算，别用周一的）",
+   "invalid": "**跌破 497.50**（周一低点 515.12 下方 3.42%，过硬校验的 max(0.5ATR,1%)=3.18%）",
+   "target": "—",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-19",
+   "ticker": "TMO",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B+A · tight 4.54%/1.88ATR ＋ 贴9EMA(+0.02%)**（＋W 三重底）",
+   "sector": "XLV",
+   "entry": "9EMA **588.92** 上方",
+   "invalid": "**577.50**（信号日低 584.86 下方 0.5ATR）",
+   "target": "612.00",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-19",
+   "ticker": "ZBH",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup A · 缩量回踩9EMA**（＋W 三重底）",
+   "sector": "XLV",
+   "entry": "9EMA **98.23** 上方企稳的第一根 bar；开盘不追高",
+   "invalid": "**96.70**（信号日低 98.27 下方 0.5ATR）",
+   "target": "104.50",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-19",
+   "ticker": "CTSH",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B+A · tight 6.13%/1.44ATR ＋ 缩量回踩9EMA**（＋W 三重底）",
+   "sector": "XLK",
+   "entry": "9EMA **57.30** 上方",
+   "invalid": "**55.45**（信号日低 56.76 下方 0.5ATR）",
+   "target": "60.50",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-19",
+   "ticker": "ELV",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B+A · tight 4.74%/1.64ATR ＋ 回踩9EMA(+1.01%)**（＋W 三重底）",
+   "sector": "XLV",
+   "entry": "9EMA **394.29** 上方",
+   "invalid": "**385.50**（信号日低 391.77 下方 0.5ATR）",
+   "target": "415.00",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-19",
+   "ticker": "MSI",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B · tight 3.33%/1.25ATR，放量突破尝试**（＋W 三重底）",
+   "sector": "XLK",
+   "entry": "469.50 上方延续",
+   "invalid": "**451.50**（信号日低 458.89 下方 1.74%）",
+   "target": "490.00",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-20",
+   "ticker": "KDP",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**pullback · 2 wick** —— 缩量回踩 ＋ 双底未破前低",
+   "sector": "XLP",
+   "entry": "9EMA **30.62** 上方企稳的第一根 bar",
+   "invalid": "**30.03**（双底 L2）",
+   "target": "32.80",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-20",
+   "ticker": "VZ",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**2 wick** —— 双底未破前低",
+   "sector": "XLC",
+   "entry": "49.36 上方延续",
+   "invalid": "**48.00**",
+   "target": "52.00",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-20",
+   "ticker": "DIS",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**tight · 2 wick** —— 高位收紧 ＋ 双底",
+   "sector": "XLC",
+   "entry": "106.93 上方延续",
+   "invalid": "**102.60**（信号日低 103.96 下方 1.31%）",
+   "target": "113.00",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-20",
+   "ticker": "SLB",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**tight · pullback · 2 wick** —— 三标签共振",
+   "sector": "XLE",
+   "entry": "9EMA **52.79** 上方",
+   "invalid": "**51.60**",
+   "target": "56.50",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-20",
+   "ticker": "SOFI",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**tight · 2 wick**",
+   "sector": "ARKK",
+   "entry": "18.42 上方延续",
+   "invalid": "**17.40**（信号日低 17.84 下方 2.47%）",
+   "target": "20.20",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-21",
+   "ticker": "CLSK",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B · spring ＋ shakeout+burst** —— 支撑 11.27 假破 2.17% 后收回，8/20 burst **+7.97%、量 1.31×、收区间 80%**",
+   "sector": "WGMI / 加密矿商",
+   "entry": "**收上 8/20 高点后进**（burst 的第二根）。🔴 开盘跳空超过 +3% 就不追，等回踩 9EMA 12.22",
+   "invalid": "**跌破 10.90**（spring 支撑 11.27 下方 3.3%，过硬校验的 max(0.5ATR=0.59, 1%)）",
+   "target": "20MA 12.85 上方无参照，按 1:2 看约 14.9",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-21",
+   "ticker": "PLTR",
+   "grade": "A",
+   "source": "方法2 ＋ X trader 共振",
+   "setup": "**Setup A ＋ B · tight 整理（5日 5.98%/1.38ATR）＋ 2 wick 三重底（L1 168.34 · L2 169.77）**，量比 0.58× 缩量",
+   "sector": "ARKK / IGV / XLK",
+   "entry": "**9EMA 170.43 上方企稳的第一根 bar**；不追现价 173.96",
+   "invalid": "**跌破 164.50**（L1 168.34 下方 2.28%，过硬校验）",
+   "target": "前高上方无参照，按 1:2 看约 192.9",
+   "status": "tracking",
+   "verdict": null
+  },
+  {
+   "date": "2026-08-21",
+   "ticker": "MO",
+   "grade": "A",
+   "source": "方法2",
+   "setup": "**Setup B · 2 wick 双底**（L1 64.34 于 8/12 · L2 63.92 于 8/17），8/20 +1.38%、收区间 75%、量能中性",
+   "sector": "XLP",
+   "entry": "**收上 20MA 68.03**；或 9EMA 66.10 上方连续两根企稳",
+   "invalid": "**跌破 63.00**（L2 63.92 下方 1.44%，过硬校验的 max(0.5ATR=0.87, 1%)）",
+   "target": "68.03（20MA）→ 前高约 70.5",
    "status": "tracking",
    "verdict": null
   }

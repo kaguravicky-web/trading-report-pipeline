@@ -215,6 +215,54 @@ search 返回 0 **不等于**这个号没发帖。必须用 profile 核它的 `n
 
 ---
 
+## 3.5 没有浏览器怎么接手：每天一个交接包
+
+接手人没有浏览器时，**第 3 节（采集）由 Claude 做，接手人从第 4 节（hydrate）开始**。
+但 **只有 id 是跑不完的** —— 有两样东西 id 里带不出来，而且都是浏览器活：
+
+1. **零更新的核实**。search 返回 0 不等于那个号没发帖（坑二），
+   要用 profile 核 `newestAll` 才能判定。没核过就写进 `accounts_no_new` 是在造假数据。
+2. **窗口边界**。`window_text` 要写进落盘的 `window` 字段，
+   `window_iso` 要用来做 hydrate 之后的 `created_at` 复筛（坑五）。
+
+所以每天交的是一个包，放在本仓库 `handoff/xdesk-YYYYMMDD.json`：
+
+```json
+{
+  "date": "2026-10-27",
+  "run_at": "2026-10-27T12:30+08:00",
+  "window_text": "10/26 03:30–10/27 04:08 UTC（11:30–12:08 SGT）· 含周一 10/26 完整现金交易日 · 价格对齐 10/26 收盘",
+  "window_iso": { "start": "2026-10-26T03:30:00", "end": "2026-10-27T04:08:59" },
+  "zeros_verified": { "WalterDeemer": "2026-10-24T02:14:18.000Z",
+                      "OliverKell_": "2026-05-13T13:20:46.000Z" },
+  "will_drop_at_created_at_gate": { "...": "过闸门会掉的那几条，掉了是对的" },
+  "counts_at_collection": { "zerohedge": 106, "...": 0 },
+  "ids": { "KobeissiLetter": ["2114710153417118191", "..."], "...": [] }
+}
+```
+
+**`ids` 是采集原样，没过 `created_at` 闸门** —— 故意的，这样那道闸门在接手人这边才真的生效。
+`counts_at_collection` 就是「按号对条数」的**第一次**读数；
+第二次读数在第 8 节，拿渲染出来的页面对。
+
+从包到页面：
+
+```bash
+# ④ 用 ids 建骨架（13 个号都要有键，空数组就是零更新），然后补全
+python scripts/x_hydrate.py --file data/cache/x_intraday_YYYYMMDD.json
+
+# 坑五：hydrate 之后按 window_iso 复筛
+#   run['items'] = [it for it in run['items']
+#                   if start <= (it.get('utc') or '')[:19] <= end]
+
+# ⑤ 填 kind/ticker/summary/flag，剔三类，按时间升序（次级键 status id）
+# ⑥ 渲染    python scripts/render_x_intraday.py --date YYYY-MM-DD
+# ⑦ 按号对条数（第二次，拿页面对）＋ 聊天简报
+```
+
+⚠ **包里的 id 是那个窗口的，不能隔天复用** —— 窗口起点是「上次真的扫到哪」，
+隔天就变了。每天要一个新包。
+
 ## 4. 补全正文和图：走 syndication 端点，不用登录
 
 **浏览器那边只负责滚出 id**。正文、图片 URL、精确时间全部交给：

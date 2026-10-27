@@ -215,9 +215,42 @@ search 返回 0 **不等于**这个号没发帖。必须用 profile 核它的 `n
 
 ---
 
-## 3.5 没有浏览器怎么接手：每天一个交接包
+## 3.4 第一天先做这个自检：你的浏览器是不是 X 的登录态
 
-接手人没有浏览器时，**第 3 节（采集）由 Claude 做，接手人从第 4 节（hydrate）开始**。
+「能开浏览器」和「能采集」是两件事。**真正的卡点是登录态，不是有没有浏览器。**
+登出态的 X 长这样（实测）：**search 被直接重定向到登录页，profile 只给 5 条
+而且没有 `<time datetime>`** —— 没有时间戳，窗口判据就无从下手。
+
+所以第一天先跑这一下，30 秒出结果。拿任意一个号、随便一个过去的时间窗：
+
+```
+https://x.com/search?q=from%3AKobeissiLetter%20since_time%3A1792985400%20until_time%3A1793074080&f=live
+```
+
+等 9 秒后在页面里跑：
+
+```js
+await new Promise(r=>setTimeout(r,9000));
+({url: location.href,
+  redirected_to_login: /\/(login|i\/flow\/login)/.test(location.href),
+  arts: document.querySelectorAll('article').length,
+  times: document.querySelectorAll('time[datetime]').length})
+```
+
+三种结果，对应三条路：
+
+| 结果 | 含义 | 怎么走 |
+|---|---|---|
+| `arts > 0` 且 `times > 0` | **登录态，能采集** | 第 3 节你自己做，**不需要交接包** |
+| `redirected_to_login: true`，或 `arts > 0` 但 `times === 0` | **登出态** | 走 3.5 节的交接包。🔴 **不要去登录、不要输入任何凭据**（第 9 节第 1 条） |
+| 浏览器工具根本不在，或 x.com 打不开 | 没有通路 | 走 3.5 节的交接包 |
+
+⚠ `arts > 0` 但 `times === 0` 这一格最阴：**页面看着有内容，采集器却一条都拿不到**，
+而且不报错 —— 和坑二是同一类的静默失败。**所以 `times` 必须单独看，不能只看 `arts`。**
+
+## 3.5 不能采集时怎么接手：每天一个交接包
+
+**这是 3.4 自检没过时的退路，不是默认路径。** 接手人不能采集时，**第 3 节（采集）由 Claude 做，接手人从第 4 节（hydrate）开始**。
 但 **只有 id 是跑不完的** —— 有两样东西 id 里带不出来，而且都是浏览器活：
 
 1. **零更新的核实**。search 返回 0 不等于那个号没发帖（坑二），

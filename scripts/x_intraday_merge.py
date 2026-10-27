@@ -217,7 +217,22 @@ def load_intraday(date):
     return p, {"date": date.isoformat(), "runs": []}
 
 
-def coverage(date, d=None, look_back_days=3):
+def _newest_utc(run) -> str:
+    """一轮里最新的可信 UTC；没有就回 ""。
+
+    🔴 2026-08-28 修：原来是
+        max(... for it in items if it.get("utc") and not time_approx) if items else ""
+    —— `if items else ""` 只挡住「列表为空」，**挡不住「过滤后为空」**。
+    今天第 2 轮跑 --status 当场 ValueError: max() arg is empty：
+    某一轮 items 非空、但里面没有一条带可信 utc（全是 time_approx 或缺字段）。
+    **抛异常的覆盖检查等于没有覆盖检查**，而它正是「先查覆盖再开浏览器」那一步的地基。
+    """
+    vals = [it.get("utc") for it in (run.get("items") or [])
+            if it.get("utc") and not it.get("time_approx")]
+    return max(vals) if vals else ""
+
+
+def coverage(date, d=None, look_back_days=10):
     """算已经覆盖到哪个 UTC 时刻。近似时间戳（只有日期没有时分）不算数。
 
     🔴 **跨天必须往回看**（2026-08-21 修）：只看当天文件的话，早上第一次跑
@@ -226,14 +241,17 @@ def coverage(date, d=None, look_back_days=3):
     把昨晚的盘中全漏掉，而且漏得静悄悄。所以当天没有覆盖时，往前找最近几天的
     `x_intraday_*.json`，用它们的最后一条当起点。
 
+    🔴 **2026-09-01 把回看从 3 天放到 10 天**：上一轮跑在 8/31，但记在 `x_intraday_20260828.json`
+    里（当天没建新文件），9/1 早上回看 3 天只查 8/31–8/29 三个不存在的文件，于是又退回
+    「回溯 2 小时」——整个 8/31 美股盘中差点静悄悄漏掉。**同一个坑在更长的间隔上复发了一次。**
+
     传 d 就用传进来的（`--status` 要算「导入之后」的覆盖，那份还没落盘）。
     """
     if d is None:
         _, d = load_intraday(date)
     latest, srcs = None, []
     for r in d.get("runs") or []:
-        best = max((it.get("utc") or "") for it in (r.get("items") or [])
-                   if it.get("utc") and not it.get("time_approx")) if r.get("items") else ""
+        best = _newest_utc(r)
         if best:
             srcs.append((r.get("label") or ("第 %s 轮" % r.get("run_id")), best))
             latest = max(latest or "", best)
@@ -243,9 +261,7 @@ def coverage(date, d=None, look_back_days=3):
             prev = date - datetime.timedelta(days=back)
             _, pd_ = load_intraday(prev)
             for r in pd_.get("runs") or []:
-                best = max((it.get("utc") or "") for it in (r.get("items") or [])
-                           if it.get("utc") and not it.get("time_approx")) \
-                    if r.get("items") else ""
+                best = _newest_utc(r)
                 if best:
                     latest = max(latest or "", best)
             if latest:
@@ -323,6 +339,21 @@ def status(date):
         f = (lambda t: t[11:16]) if same else (lambda t: t[5:10] + " " + t[11:16])
         print("\n🔴 只需要扫：%s → %s UTC（缺口 %d 小时 %d 分）"
               % (f(latest), f(nows), h, m))
+        # 🔴 2026-09-09 加：跨美东日提醒。
+        # Vic 9/9 问「$INTC 那条我 9/6 怎么没看到」——那条发在 9/6 16:11 UTC，
+        # 比当轮窗口尾巴晚 59 分钟；接着下一轮 Chrome 断线没跑成，拖到 9/8 才补进来。
+        # 窗口尾巴切在美东白天／傍晚是常态（喊「x」的时候是新加坡的白天），
+        # 所以这里只做一件事：把「这一轮会跨几个美东交易日」直接说出来，
+        # 让我在写简报时知道里面必然有「发布日 != 送达轮」的条目。渲染层会给这些条目打「补录」chip。
+        _ET = datetime.timezone(datetime.timedelta(hours=-4))
+        _a = datetime.datetime.fromisoformat(latest.replace("Z", "+00:00")).astimezone(_ET)
+        _b = now.astimezone(_ET)
+        _span = (_b.date() - _a.date()).days
+        if _span >= 1:
+            print("   \u26a0 这一轮跨 %d 个美东日（%s \u2192 %s ET）——"
+                  "里面会有发布日早于本轮的条目，渲染时自动打「补录」chip，"
+                  "写简报别说成「他今天说」。" % (_span, _a.strftime("%m-%d %H:%M"),
+                                                _b.strftime("%m-%d %H:%M")))
     else:
         print("\n🔴 今天还没有任何覆盖，按默认回溯 2 小时扫。")
 

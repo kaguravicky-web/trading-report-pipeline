@@ -172,6 +172,16 @@ a:hover{text-decoration:underline}
   border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted)}
 .filters button.on{background:var(--blue);border-color:var(--blue);color:#fff}
 
+/* 🔤 2026-08-23 Vic：「x 的也没对齐」。跟索引页同一个病：
+   顶部 callout 来自 report.css 的 max-width:calc(--measure + 12em) = 850px，
+   而推文卡片 .tw 没限宽，撑满 1160 容器的 1120px —— **同一页两种盒子宽度**。
+   修法跟索引页一致：**限宽收在容器上，让所有盒子共用一条边**，不给盒子各自限宽。
+   算式：wrap 780 − padding 40 = 740 一条边；callout 取 min(850,740)=740，
+   推文卡片也是 740；卡片正文 = 740 − 32 padding − 62 时间列 − 14 gap = 632px，
+   14.5px 字号 → 每行约 43 字。 */
+/* 2026-08-23 Vic：「现在改 x 盘中和盘前」——跟报告统一，不再单独收窄到 780。
+   容器由 report.css 的 .wrap{max-width:1200px} 定，所有盒子铺满，左右都对齐。 */
+
 .run{margin:0 0 26px}
 .run-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;padding:11px 16px;
   background:#e7ecf3;border:1px solid #d5dde7;border-radius:12px;margin-bottom:12px}
@@ -198,6 +208,7 @@ a:hover{text-decoration:underline}
   border:1px solid transparent;line-height:1.5}
 .chip.tk{color:var(--blue);background:var(--blue-bg);border-color:#c3d6f5}
 .chip.new{color:var(--green);background:var(--green-bg);border-color:#bfe0cd}
+.chip.late{color:#8a5a00;background:#fff4e0;border-color:#f0d9a8}
 
 .shots{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 /* flex:0 0 auto 是必须的：默认的 flex-shrink 会在手机宽度下把并排的两张图
@@ -265,7 +276,31 @@ LB_JS = """
 """
 
 
-def render_item(it, date, no_media):
+LATE_HOURS = 24     # 发布到送达超过这么久 = 跨轮补录，卡片上打 chip
+
+def _ts(iso):
+    """任意带时区的 ISO 串 → aware datetime；解析不了返回 None。"""
+    import datetime as _dt
+    try:
+        t = _dt.datetime.fromisoformat(str(iso).replace("Z", "+00:00"))
+        return t.replace(tzinfo=_dt.timezone.utc) if t.tzinfo is None else t
+    except Exception:
+        return None
+
+
+def _lag_hours(item_utc, run_at):
+    """条目从发布到这一轮送达之间隔了多少小时；算不出来返回 None。
+
+    🔴 判据是滞后时长，不是日历日。第一版按美东日比较，结果把「xdesk 文件按新加坡日期命名、
+    内容天然是前一个美东日」这个时区差也标成了补录（9/1 那页 112 条标了 59 条），是错的。
+    """
+    a, b = _ts(item_utc), _ts(run_at)
+    if not a or not b:
+        return None
+    return (b - a).total_seconds() / 3600.0
+
+
+def render_item(it, date, no_media, run_at=""):
     kind = it.get("kind") or "other"
     kname, kcls = KINDS.get(kind, KINDS["other"])
     # 时间列很窄：主行是时分，副行（<i>）是月日。
@@ -286,6 +321,13 @@ def render_item(it, date, no_media):
     chips = "".join('<span class="chip tk">$%s</span>' % esc(t) for t in tickers_of(it))
     if it.get("new_to_ledger"):
         chips += '<span class="chip new">未入台账</span>'
+    # 2026-09-09 加：跨轮补录标记。Vic 问「$INTC 那条我 9/6 怎么没看到」——
+    # 那条发在 9/6 16:11 UTC，比当轮窗口尾巴晚 59 分钟，接着下一轮 Chrome 断线没跑成，
+    # 拖到 9/8 才补进来。发布日不等于送达轮，必须在卡片上看得见，不能靠正文里记得写。
+    _lag = _lag_hours(it.get("utc"), run_at)
+    if _lag is not None and _lag >= LATE_HOURS:
+        chips += ('<span class="chip late">补录 · 迟 %d 小时</span>'
+                  % round(_lag))
 
     # 图片：只搬 URL，下载和显示都不经过模型
     cells, failed = [], 0
@@ -349,10 +391,27 @@ def render_run(run, date, no_media, fallback_id):
         len(items), len(checked), len(nonew),
         (" · %d 次调用" % ncalls) if ncalls else "")
 
+    # 🔴 2026-10-15 Vic：「其实我不需要你的x总结，所以总结可以不总结，或者说在每轮最后
+    #    才总结宏观」。原来 takeaway 顶在条目上面当「本轮判断」，等于先读一篇综述再读原文；
+    #    他要的是条目本身（原话＋核过的价）。现在移到条目之后，且内容只写宏观——
+    #    交易员那部分已经在条目里，不在这里重述。位置改在渲染层收口，不靠我记得。
     take = run.get("takeaway")
-    tk = '<div class="callout"><b>本轮判断</b><br>%s</div>' % linkify(take) if take else ""
+    tk = '<div class="callout"><b>宏观小结</b><br>%s</div>' % linkify(take) if take else ""
 
-    cards = ("\n".join(render_item(it, date, no_media) for it in items) if items
+    # 🔴 2026-10-16 Vic：「x 你按时间顺序排，我从上开始读，读到下面都是不想继续刷了」。
+    #    以前是按我组装时的顺序渲染 —— 而我是按主题分组写的（PPI / 利率 / CoreWeave /
+    #    韩国 / 交易员 / Cramer…），结果他读到一半停下来就整块主题、整个账号全丢了
+    #    （Cramer 永远在最底下，不管他是几点说的）。
+    #    改成按发布时间升序：停在哪里都只是「这一天读到一半」，不会漏掉整类内容。
+    #    收口在渲染层，不靠我组装时记得排。
+    #    想换成最新在上只要把 reverse=True 加回来。
+    #    次级键用 status id（snowflake 本身就是毫秒级时间戳）——`utc` 字段只精确到分钟，
+    #    同一分钟有并列时（实测 121 条里有 8 条）光按 utc 排会保留组装顺序、顺序不确定。
+    def _seq(i):
+        sid = (i.get("url") or "").rsplit("/", 1)[-1]
+        return (i.get("utc") or "", int(sid) if sid.isdigit() else 0)
+    items = sorted(items, key=_seq)
+    cards = ("\n".join(render_item(it, date, no_media, at) for it in items) if items
              else '<div class="miss">这一轮账号池里没有新的实质内容。</div>')
 
     cov = ""
@@ -361,15 +420,90 @@ def render_run(run, date, no_media, fallback_id):
                % "".join("<div>%s · 无更新</div>" % esc(h) for h in nonew))
     note = run.get("notes")
     nt = '<div class="note" style="margin-top:8px">%s</div>' % linkify(note) if note else ""
-    return '<section class="run">%s%s%s%s%s</section>' % (bar, tk, cards, cov, nt)
+    return '<section class="run">%s%s%s%s%s</section>' % (bar, cards, cov, tk, nt)
 
 
-def build_day(date, no_media=False):
+# ── 广告／拉客帖闸门（2026-09-25 Vic：「广告帖子以后过滤掉」）──────────────
+# 这些号一边发盘面一边卖服务。推销帖占版位、又没有信息量，一律不收录。
+# 写成会失败的检查，而不是写进文档——漏掉一条渲染就红。
+# 2026-10-20 误报修正：`subscribe` 会匹配进 `oversubscribed` 里面。
+#   当天 @zerohedge 写「400x oVerSUbScrIbeD」（韩国最大 IPO 首日 −32%）被判广告、整轮渲染失败。
+#   用 (?<!over) 把它挡掉：真正的 CTA「Subscribe below」照样命中，「oversubscribed」放行。
+#   不要改成 --allow-promo 了事 —— 那会把整轮的闸门一起关掉。
+PROMO_PAT = re.compile(
+    r"(7\s*days?\s*free|free\s*trial|trade\s*live\s*with\s*(me|us)"
+    r"|join\s*(us|our|the)\s*(team|group|discord|room)|sign\s*up"
+    r"|(?<!over)subscribe|promo\s*code|use\s*code|link\s*in\s*bio"
+    r"|members?\s*(only|and\s*me|area)|my\s*service|our\s*service"
+    r"|mentorship|join\s*the\s*\w+\s*team|turn\s*those\s*losses"
+    r"|beating\s*\$?SPX|vs\.?\s*\$?SPX.*(ytd|basis\s*points)"
+    r"|tracked\s*24/7|options?\s*flow\s*reviews?"
+    r"|coming\s*soo+n|waitlist|early\s*access|webinar|masterclass"
+    r"|disclaimer\s*:)",
+    re.I)
+
+
+def promo_hits(runs):
+    """返回疑似广告帖 [(handle, url, 命中的词)]。"""
+    out = []
+    for r in runs:
+        for it in (r.get("items") or []):
+            blob = " ".join(str(it.get(k) or "") for k in ("full_text", "summary", "quoted"))
+            m = PROMO_PAT.search(blob)
+            if m:
+                out.append((it.get("handle", "?"), it.get("url", "?"), m.group(0)))
+    return out
+
+
+# ── 名单闸门（2026-09-27）──────────────────────────────────────────────
+# 名单以前只写在 CONTEXT.md 正文和每轮的一次性脚本里，加人/删人全靠我记得。
+# 现在单一来源是 data/x_accounts.json，这里核对每轮的 accounts_checked：
+# 少扫一个号就渲染失败，而不是页面上少一行、谁也看不出来。
+ROSTER_FILE = ROOT / "data" / "x_accounts.json"
+
+
+def roster():
+    if not ROSTER_FILE.exists():
+        return []
+    d = json.loads(ROSTER_FILE.read_text(encoding="utf-8"))
+    return [a["handle"] for a in d.get("accounts", [])]
+
+
+def roster_gaps(runs):
+    want = {h.lower(): h for h in roster()}
+    if not want:
+        return []
+    out = []
+    for r in runs:
+        if r.get("label"):          # 盘前/盘后导入的段不按 xdesk 名单要求
+            continue
+        got = {str(a).lstrip("@").lower() for a in (r.get("accounts_checked") or [])}
+        miss = [want[k] for k in sorted(want) if k not in got]
+        if miss:
+            out.append((r.get("run_id"), miss))
+    return out
+
+
+def build_day(date, no_media=False, allow_promo=False, allow_roster_gap=False):
     src = CACHE / ("x_intraday_%s.json" % date.replace("-", ""))
     if not src.exists():
         raise SystemExit("没有 %s —— 先跑扫描落盘再渲染。" % src)
     d = json.loads(src.read_text(encoding="utf-8"))
     runs = sorted(d.get("runs") or [], key=lambda r: r.get("run_at", ""), reverse=True)
+
+    gaps = roster_gaps(runs)
+    if gaps and not allow_roster_gap:
+        raise SystemExit(
+            "🔴 有轮次没扫全 data/x_accounts.json 的名单——\n%s\n"
+            "补扫后再渲染；这一轮确实不打算扫全就加 --allow-roster-gap。"
+            % "\n".join("  第 %s 轮少了：%s" % (rid, "、".join(m)) for rid, m in gaps))
+
+    hits = promo_hits(runs)
+    if hits and not allow_promo:
+        raise SystemExit(
+            "🔴 疑似广告／拉客帖 %d 条，不许收录（Vic 2026-09-25）——\n%s\n"
+            "从 data/cache 里删掉这些条目再渲染；确实是盘面内容就加 --allow-promo。"
+            % (len(hits), "\n".join("  %s %s  ← 命中「%s」" % h for h in hits)))
 
     # 跨轮去重：两轮窗口万一重叠（补跑/时钟漂移），同一条推只留最新那轮的版本。
     # 正常情况下窗口不重叠，这里只是保险，不该出现的重复也不会在页面上刷两遍。
@@ -479,8 +613,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=datetime.date.today().isoformat())
     ap.add_argument("--no-media", action="store_true", help="不下载图片，直接引用 X 的 CDN")
+    ap.add_argument("--allow-promo", action="store_true",
+                    help="放行广告帖闸门（默认拦截，只有误判时才用）")
+    ap.add_argument("--allow-roster-gap", action="store_true",
+                    help="放行名单闸门（默认要求扫全 data/x_accounts.json）")
     a = ap.parse_args()
-    out, nruns, nitems, nimg = build_day(a.date, a.no_media)
+    out, nruns, nitems, nimg = build_day(a.date, a.no_media, a.allow_promo, a.allow_roster_gap)
     build_index()
     print("✅ %s" % out)
     print("   %d 轮 · %d 条 · %d 张图" % (nruns, nitems, nimg))

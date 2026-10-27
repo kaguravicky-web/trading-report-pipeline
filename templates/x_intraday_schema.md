@@ -32,12 +32,18 @@ python scripts/x_intraday_merge.py            # 导入盘前扫描（当天重�
 
 ## 1. 账号池
 
-盘前那 13 个照搬（`x_scan_*.json` 的 `accounts_scanned`）：
+盘前那份名单照搬（`x_scan_*.json` 的 `accounts_scanned`）：
 
 ```
 KobeissiLetter  zerohedge  spotgamma  NickTimiraos  bluechipdaily  WalterDeemer
-RichardMoglen  ohiain  spluscollective  aleabitoreddit  BillAckman  unusual_whales  jimcramer
+RichardMoglen  ohiain  spluscollective  aleabitoreddit  unusual_whales  jimcramer
 ```
+
+🔴 **@BillAckman 2026-08-23 从 xdesk 池删除**（Vic：「删掉」）。CONTEXT.md 1253 行早在
+**2026-08-17** 就把他移出盘前扫描池了（「@BillAckman 的选股不再提取」），这份 schema 没跟上，
+于是 8/20–8/22 三轮 xdesk 全都还在扫他（三轮 0 条市场内容，全是 TBI 公益/私人回复）。
+**历史台账条目和历史 run 记录都不删**——那是已经发生的事，删了会让统计失真。
+教训跟 `feedback_format_qa_gate` 一条：名单只要写在两个地方，就一定会漂。
 
 **2026-08-20 Vic 圈定新增 2 个**（xdesk 专用，暂不改盘前那份名单）：
 
@@ -46,14 +52,15 @@ markminervini    # Stage/领导股，跟 Vic 的框架同源，常配图
 jasongoepfert    # SentimenTrader，统计型情绪/广度信号
 ```
 
-→ **xdesk 账号池 = 15 个**。
+→ **xdesk 账号池 = 14 个**（盘前 12 + xdesk 专用 2）。
 
 🔴 **再扩充必须 Vic 逐个点头才进池**（`feedback_scan_roster_not_firehose`：名单先定死，
 不在洪流里捞人）。8/20 提过但**他没圈、所以不扫**的：@DeItaone、@FirstSquawk、
 @charliebilello、@Barchart。
 
 **低产账号观察中（没他发话不要自己剔）**：@bluechipdaily（最近一条真正的标的评论停在 8/12）、
-@BillAckman（本周全是政策评论/转发）、@unusual_whales（国会/期权异动整周 0 条）。
+@WalterDeemer、@jasongoepfert（8/23 那轮三个号窗口内均 0 条）。
+（@unusual_whales 的国会/期权异动 8/22 已恢复，不再算低产。）
 每轮扫到就记进 `accounts_no_new`，攒够几轮再拿数据找他定去留。
 
 **降权标记**：`aleabitoreddit` = promoter，`jimcramer` = 反指——渲染时 `demoted: true`

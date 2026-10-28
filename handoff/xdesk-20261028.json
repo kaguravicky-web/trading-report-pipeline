@@ -7,13 +7,13 @@
   "start": "2026-10-27T03:58:00",
   "end": "2026-10-28T04:18:59"
  },
- "_window_iso_用法": "hydrate 之后拿它按精确 created_at 再筛一遍窗口（坑五）。本包 237 条进，预计剔 9 条、留 228。",
+ "_window_iso_用法": "hydrate 之后拿它按精确 created_at 再筛一遍窗口（坑五）。**实测：237 条进、剔 5 条、留 232。**（我原先预测剔 9 留 228 是错的——把 unusual_whales 四条 10/26 的条目当成越界了，其实它们在窗口内。闸门的结果才是准的，不要照预测去核。）",
  "zeros_verified": {
   "_说明": "search 返回 0 不等于没发帖（坑二）。下面是用 profile 核过 newestAll 的真零，直接进 accounts_no_new。其余 12 个号都有条目。",
   "OliverKell_": "2026-05-13T13:20:46.000Z"
  },
  "will_drop_at_created_at_gate": {
-  "_说明": "这些是搜索页里嵌的旧引用推，过闸门时会掉。掉了是对的，不是丢数据。",
+  "_说明": "实测被闸门剔掉的 5 条（搜索页里嵌的旧引用推）。掉了是对的，不是丢数据。",
   "markminervini": [
    "2107495091958907190",
    "2112177273705259392"
@@ -23,12 +23,7 @@
    "2114753472394666003",
    "2114776385826734120"
   ],
-  "unusual_whales": [
-   "2114937885652856945",
-   "2114944680173469727",
-   "2114952985054748732",
-   "2114959779974000908"
-  ]
+  "_更正": "原先这里还列了 unusual_whales 四条，那是我预测错的——它们在窗口内，没有被剔。"
  },
  "collection_notes": [
   "search 本轮漏 30 条（unusual_whales 16 · zerohedge 14），所以必须取并集——search 不收回复。",
@@ -314,5 +309,6 @@
    "2115283700128600401",
    "2115294770947916155"
   ]
- }
+ },
+ "_本轮结果": "Claude 自己跑完了（Vic 10/28：「不用 ds 了，你跑」）。232 条进过滤、留 143 条渲染；逐号：zerohedge 62 · unusual_whales 29 · KobeissiLetter 12 · ohiain 10 · jimcramer 7 · aleabitoreddit 6 · NickTimiraos 5 · bluechipdaily 5 · RichardMoglen/LeifSoreide/markminervini 各 2 · WalterDeemer 1 · OliverKell_ 0。"
 }
